@@ -10,143 +10,856 @@
 body{
   font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
     'Noto Sans SC',sans-serif;
-  background:#05090f;color:#b8ccd8;min-height:100vh;font-size:13px;line-height:1.6;
+  background:#05090f;color:#c0d4e0;min-height:100vh;font-size:14px;line-height:1.7;
 }
+
+/* ── 顶部导航栏 ── */
 .topbar{
-  background:#070d18;border-bottom:1px solid #0f2035;
-  padding:10px 24px;display:flex;align-items:center;
-  justify-content:space-between;gap:12px;flex-wrap:wrap;
+  position:sticky;top:0;z-index:100;
+  background:#070d18ee;backdrop-filter:blur(8px);
+  border-bottom:1px solid #0f2035;
+  padding:0 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
 }
-.topbar-back a{color:#3a7aaa;font-size:11px;text-decoration:none;letter-spacing:1px;}
-.topbar-back a:hover{color:#6aaad4;}
-.topbar-brand{font-size:11px;color:#1e4060;letter-spacing:2px;text-transform:uppercase;}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 0;
+  color:#5aaad4;font-size:13px;font-weight:600;text-decoration:none;
+  letter-spacing:0.5px;white-space:nowrap;transition:color 0.15s;
+}
+.back-btn:hover{color:#8ac8f0;}
+.back-btn svg{flex-shrink:0;}
+.topbar-brand{font-size:11px;color:#1e4060;letter-spacing:3px;text-transform:uppercase;margin-left:auto;}
+
+/* ── 品牌头部 ── */
 .masthead{
-  background:linear-gradient(180deg,#080f1e 0%,#050a14 100%);
-  border-bottom:2px solid #0f2035;padding:28px 24px 20px;text-align:center;
+  background:linear-gradient(160deg,#08101e 0%,#040a12 100%);
+  border-bottom:1px solid #0f2035;padding:32px 24px 24px;text-align:center;
 }
-.mast-eyebrow{font-size:10px;color:#2a5070;letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;}
+.mast-eyebrow{font-size:10px;color:#2a5070;letter-spacing:5px;text-transform:uppercase;margin-bottom:12px;}
 .mast-title{
-  font-size:28px;letter-spacing:8px;color:#c8a84a;
-  font-family:Georgia,'Times New Roman',serif;font-weight:400;margin-bottom:6px;
+  font-size:34px;letter-spacing:10px;color:#c8a84a;
+  font-family:Georgia,'Times New Roman',serif;font-weight:400;margin-bottom:8px;
 }
-.mast-subtitle{font-size:11px;color:#2a6080;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
-.mast-meta{
-  display:flex;align-items:center;justify-content:center;gap:20px;
-  flex-wrap:wrap;padding-top:12px;border-top:1px solid #0f2035;
+.mast-subtitle{font-size:11px;color:#2a6080;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;}
+.mast-stats{
+  display:inline-flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center;
+  background:#060e1a;border:1px solid #0f2035;border-radius:6px;
+  padding:10px 20px;
 }
-.mast-meta-item{font-size:10px;color:#1e4060;}
-.mast-meta-val{color:#4a8aaa;font-weight:600;}
-/* 评分说明 */
-.score-legend{
-  max-width:820px;margin:16px auto 0;padding:0 16px;
-  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+.stat-item{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.stat-val{font-size:20px;font-weight:700;color:#4a9fd4;line-height:1;}
+.stat-lbl{font-size:9px;color:#2a5070;letter-spacing:2px;text-transform:uppercase;}
+.stat-sep{width:1px;height:32px;background:#0f2035;flex-shrink:0;}
+
+/* ── 分类导航 tabs ── */
+.cat-nav{
+  position:sticky;top:45px;z-index:90;
+  background:#060d1aee;backdrop-filter:blur(6px);
+  border-bottom:1px solid #0a1f35;
+  padding:0 24px;display:flex;gap:4px;overflow-x:auto;
+  scrollbar-width:none;
 }
-.legend-item{
-  display:flex;align-items:center;gap:5px;font-size:10px;color:#2a5070;
+.cat-nav::-webkit-scrollbar{display:none;}
+.nav-tab{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 14px;font-size:12px;font-weight:600;
+  color:#2a5878;text-decoration:none;border-bottom:2px solid transparent;
+  white-space:nowrap;transition:all 0.15s;
 }
-.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.content{max-width:820px;margin:0 auto;padding:20px 16px 60px;}
-/* 分类版块 */
-.cat-section{margin-bottom:28px;}
+.nav-tab:hover{color:#6aaad4;border-bottom-color:#2a5070;}
+.nav-tab-audio{color:#2a7850;}
+.nav-tab-audio:hover{color:#4ab876;border-bottom-color:#2a7850;}
+.nav-count{
+  font-size:10px;font-weight:700;
+  background:#0a1f35;padding:1px 6px;border-radius:10px;
+}
+
+/* ── 主内容 ── */
+.content{max-width:860px;margin:0 auto;padding:24px 16px 100px;}
+
+/* ── 分类版块 ── */
+.cat-section{margin-bottom:36px;scroll-margin-top:100px;}
 .cat-header{
-  display:flex;align-items:center;gap:12px;padding:12px 16px;
-  background:#080f1c;border:1px solid #0f2035;border-radius:4px 4px 0 0;
+  display:flex;align-items:center;gap:14px;padding:14px 18px;
+  background:#080f1c;border:1px solid #0f2035;border-radius:6px 6px 0 0;
 }
 .cat-icon-wrap{
-  width:32px;height:32px;border-radius:4px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;flex-shrink:0;
+  width:36px;height:36px;border-radius:6px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
 }
 .cat-labels{flex:1;}
-.cat-name{font-size:15px;font-weight:700;color:#d0dde8;letter-spacing:1px;line-height:1.2;}
-.cat-en{font-size:9px;color:#2a5070;letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
-.cat-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:0.5px;flex-shrink:0;}
-/* 论文表格 */
-.paper-table{
-  width:100%;border-collapse:collapse;
-  border:1px solid #0f2035;border-top:none;border-radius:0 0 4px 4px;overflow:hidden;
+.cat-name{font-size:16px;font-weight:700;color:#d8e8f0;letter-spacing:1px;line-height:1.2;}
+.cat-en{font-size:9px;color:#2a5070;letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+.cat-badge{font-size:12px;font-weight:700;padding:4px 12px;border-radius:12px;flex-shrink:0;}
+
+/* ── 论文卡片 ── */
+.papers-grid{
+  border:1px solid #0f2035;border-top:none;border-radius:0 0 6px 6px;
+  overflow:hidden;
 }
-.paper-row{border-top:1px solid #0a1a28;}
-.paper-row:hover td{background:#070f1c;}
-.paper-num{
-  width:36px;text-align:center;vertical-align:top;
-  padding:14px 0 14px 12px;
-  font-size:11px;color:#1e4060;font-family:monospace;font-weight:700;
+.paper-card{
+  padding:16px 20px;border-top:1px solid #0a1828;
+  transition:background 0.12s;
 }
-.paper-body{padding:12px 16px 12px 8px;}
-.paper-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.paper-card:first-child{border-top:none;}
+.paper-card:hover{background:#070f1c;}
+.paper-meta{
+  display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;
+}
 .paper-type{
-  font-size:9px;font-weight:700;padding:1px 6px;border-radius:2px;
-  border:1px solid;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;
+  font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;
+  border:1px solid;letter-spacing:1.5px;text-transform:uppercase;flex-shrink:0;
 }
 .hf-badge{
-  font-size:10px;font-weight:700;color:#ff9d00;
+  font-size:11px;font-weight:700;color:#ff9d00;
   background:#2a1800;border:1px solid #ff9d0040;
-  padding:1px 7px;border-radius:10px;flex-shrink:0;
+  padding:2px 8px;border-radius:10px;flex-shrink:0;
+}
+.audio-badge{
+  font-size:10px;font-weight:600;color:#4ab876;
+  background:#062214;border:1px solid #4ab87640;
+  padding:2px 7px;border-radius:10px;flex-shrink:0;
 }
 .inst-badge{
-  font-size:9px;font-weight:700;color:#c8a84a;
+  font-size:10px;font-weight:700;color:#c8a84a;
   background:#1e1400;border:1px solid #c8a84a40;
-  padding:1px 6px;border-radius:2px;flex-shrink:0;
+  padding:2px 7px;border-radius:3px;flex-shrink:0;
 }
-.paper-src{font-size:10px;color:#2a5878;}
-.paper-date{font-size:10px;color:#1a3848;margin-left:auto;}
-.paper-title-zh{
-  display:block;font-size:14px;font-weight:600;color:#8abcd4;
-  text-decoration:none;line-height:1.5;margin-bottom:4px;
+.paper-src{font-size:11px;color:#2a5878;}
+.paper-date{font-size:11px;color:#1a3848;margin-left:auto;font-family:monospace;}
+.paper-title{
+  display:block;font-size:15px;font-weight:700;color:#7ab8d8;
+  text-decoration:none;line-height:1.55;margin-bottom:5px;
+  transition:color 0.12s;
 }
-.paper-title-zh:hover{color:#b8daf0;text-decoration:underline;}
-.paper-title-en{font-size:10px;color:#1e4060;margin-bottom:7px;font-style:italic;line-height:1.4;}
-.paper-abstract{font-size:12px;color:#4a7090;line-height:1.7;}
+.paper-title:hover{color:#a8d4f0;}
+.paper-title-en{
+  font-size:11px;color:#1e4060;margin-bottom:9px;
+  font-style:italic;line-height:1.5;
+}
+.paper-abstract{
+  font-size:13px;color:#4a7090;line-height:1.8;
+  background:#04080f;border-left:2px solid #0f2035;
+  padding:8px 12px;border-radius:2px;
+}
+
+/* ── 悬浮返回按钮 ── */
+.float-back{
+  position:fixed;bottom:28px;right:24px;z-index:200;
+  display:inline-flex;align-items:center;gap:8px;
+  background:#9a1515;color:#fff;
+  padding:12px 20px;border-radius:28px;
+  font-size:13px;font-weight:700;text-decoration:none;
+  box-shadow:0 4px 20px #9a151566;letter-spacing:0.5px;
+  transition:background 0.15s,transform 0.15s,box-shadow 0.15s;
+}
+.float-back:hover{background:#c01c1c;transform:translateY(-2px);box-shadow:0 6px 24px #9a151588;}
+
+/* ── 图例 ── */
+.legend-bar{
+  max-width:860px;margin:0 auto;padding:12px 16px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid #070f1c;
+}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:#1e4060;}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* ── 社区讨论卡片 ── */
+.discuss-card{
+  padding:14px 20px;border-top:1px solid #0a1828;
+  transition:background 0.12s;
+}
+.discuss-card:first-child{border-top:none;}
+.discuss-card:hover{background:#070f1c;}
+.discuss-title{
+  font-size:14px;font-weight:600;color:#d0d8e0;
+  line-height:1.5;margin:7px 0 4px;
+}
+.discuss-title-en{
+  font-size:11px;color:#1e4060;margin-bottom:10px;
+  font-style:italic;line-height:1.4;
+}
+.discuss-score{font-size:11px;margin-left:auto;}
+.discuss-actions{
+  display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;
+}
+.discuss-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 14px;border-radius:5px;font-size:12px;font-weight:600;
+  text-decoration:none;transition:all 0.12s;white-space:nowrap;
+}
+.discuss-btn-primary{
+  background:#0a1f35;border:1px solid #1a4060;color:#5aaad4;
+}
+.discuss-btn-primary:hover{background:#0f2d4a;border-color:#2a6090;}
+.discuss-btn-discuss{
+  background:#1a0e00;border:1px solid #5a3010;color:#e8922a;
+  font-size:13px;padding:6px 16px;
+}
+.discuss-btn-discuss:hover{background:#261500;border-color:#8a5020;}
+
+/* ── Footer ── */
 footer{
-  border-top:1px solid #0a1a28;padding:16px 24px;
+  border-top:1px solid #0a1828;padding:16px 24px;
   display:flex;justify-content:space-between;align-items:center;
   flex-wrap:wrap;gap:8px;font-size:10px;color:#1a3050;
 }
-@media(max-width:600px){
-  .mast-title{font-size:22px;letter-spacing:4px;}
-  .topbar{flex-direction:column;gap:6px;}
+
+@media(max-width:640px){
+  .mast-title{font-size:26px;letter-spacing:6px;}
+  .cat-nav{top:50px;}
+  .float-back{bottom:16px;right:16px;padding:10px 16px;font-size:12px;}
+  .paper-title{font-size:14px;}
   .paper-date{margin-left:0;}
-  .score-legend{justify-content:center;}
+  .mast-stats{gap:12px;padding:8px 14px;}
 }
 </style>
 </head>
 <body>
-<div class="topbar">
-  <div class="topbar-back"><a href="latest.html">&#8592; 返回景報</a></div>
-  <div class="topbar-brand">景報 Jae Daily</div>
-</div>
 
+<!-- 顶部导航 -->
+<nav class="topbar">
+  <a href="latest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    返回景報
+  </a>
+  <span class="topbar-brand">景報 Jae Daily</span>
+</nav>
+
+<!-- 品牌头部 -->
 <div class="masthead">
-  <div class="mast-eyebrow">Special Report</div>
-  <div class="mast-title">AI&nbsp;&nbsp;研&nbsp;&nbsp;报</div>
-  <div class="mast-subtitle">Research Digest &middot; 人工智能学术前沿追踪</div>
-  <div class="mast-meta">
-    <span class="mast-meta-item">日期&nbsp;<span class="mast-meta-val">2026年03月16日</span></span>
-    <span class="mast-meta-item">arXiv 论文&nbsp;<span class="mast-meta-val">30 篇</span></span>
-    <span class="mast-meta-item">机构博客&nbsp;<span class="mast-meta-val">10 篇</span></span>
-    <span class="mast-meta-item">🤗 HF 精选&nbsp;<span class="mast-meta-val">8 篇</span></span>
+  <div class="mast-eyebrow">Special Research Report</div>
+  <div class="mast-title">AI &nbsp;研&nbsp;报</div>
+  <div class="mast-subtitle">Research Digest &middot; 人工智能学术前沿追踪 &middot; 2026年03月16日</div>
+  <div class="mast-stats">
+    <div class="stat-item">
+      <div class="stat-val">36</div>
+      <div class="stat-lbl">arXiv 论文</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-val">10</div>
+      <div class="stat-lbl">机构博客</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-val">12</div>
+      <div class="stat-lbl">🤗 HF 精选</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-val" style="color:#4ab876;">16</div>
+      <div class="stat-lbl">🎧 音频语音</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-val" style="color:#e8682a;">4</div>
+      <div class="stat-lbl">💬 社区讨论</div>
+    </div>
   </div>
 </div>
 
-<div class="score-legend">
+<!-- 分类导航 tabs -->
+<div class="cat-nav">
+  <a href="#audio" class="nav-tab nav-tab-audio">&#127925; 语音与音频<span class="nav-count">16</span></a><a href="#llm" class="nav-tab">&#129504; 大语言模型<span class="nav-count">10</span></a><a href="#vision" class="nav-tab">&#128065; 视觉生成<span class="nav-count">10</span></a><a href="#eng" class="nav-tab">&#9881; 工程进展<span class="nav-count">10</span></a><a href="#discuss" class="nav-tab">&#128172; 社区讨论<span class="nav-count">4</span></a>
+</div>
+
+<!-- 图例 -->
+<div class="legend-bar">
   <span class="legend-item">
     <span class="legend-dot" style="background:#ff9d00;"></span>
-    🤗&nbsp;HF 精选：Hugging Face 社区每日精选 + 点赞数
+    🤗 HF 精选 + 点赞数
   </span>
   <span class="legend-item">
-    <span class="legend-dot" style="background:#4a8aaa;"></span>
-    评分 = HF点赞×3 + HF收录(+20) + 顶级机构(+5) + 时效(0~10)
+    <span class="legend-dot" style="background:#4ab876;"></span>
+    🎧 音频关键词加权（你的专业领域）
+  </span>
+  <span class="legend-item">
+    <span class="legend-dot" style="background:#c8a84a;"></span>
+    顶级机构加权
+  </span>
+  <span class="legend-item" style="margin-left:auto;">
+    评分 = HF点赞×3 + HF收录+20 + 机构+5 + 音频+20/+10 + 时效0~10
   </span>
 </div>
 
+<!-- 主内容 -->
 <div class="content">
-  <section class="cat-section"><div class="cat-header" style="border-left:4px solid #4a9fd4;"><div class="cat-icon-wrap" style="background:#0d2a4a;color:#4a9fd4;">&#129504;</div><div class="cat-labels"><div class="cat-name">大语言模型</div><div class="cat-en">LARGE LANGUAGE MODELS</div></div><div class="cat-badge" style="background:#0d2a4a;color:#4a9fd4;">10 篇</div></div><table class="paper-table"><tbody><tr class="paper-row"><td class="paper-num">01</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span><span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&nbsp;32♥</span><span class="paper-src">arXiv · cs.CL</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.12572v1" target="_blank" rel="noopener">LMEB：长时程记忆嵌入基准</a><div class="paper-title-en">LMEB: Long-horizon Memory Embedding Benchmark</div><p class="paper-abstract">现有文本嵌入基准主要关注传统段落检索，未能评估模型处理碎片化、上下文依赖且时间跨度长的记忆检索任务的能力。</p></td></tr><tr class="paper-row"><td class="paper-num">02</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span><span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&nbsp;19♥</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · eess.AS</span><span class="paper-date">2026-03-09</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.08397v1" target="_blank" rel="noopener">NLE：基于非自回归大语言模型的转录编辑语音识别</a><div class="paper-title-en">NLE: Non-autoregressive LLM-based ASR by Transcript Editing</div><p class="paper-abstract">提出NLE，一种非自回归方法，将语音识别建模为条件转录编辑，实现完全并行预测，以降低自回归系统的高延迟。</p></td></tr><tr class="paper-row"><td class="paper-num">03</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span><span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&nbsp;7♥</span><span class="paper-src">arXiv · cs.AI</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13224v1" target="_blank" rel="noopener">Visual-ERM：面向视觉等价性的奖励建模</a><div class="paper-title-en">Visual-ERM: Reward Modeling for Visual Equivalence</div><p class="paper-abstract">针对视觉到代码任务中强化学习因奖励错位而面临的挑战，提出Visual-ERM，为视觉保真度提供对齐的奖励信号。</p></td></tr><tr class="paper-row"><td class="paper-num">04</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span><span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&nbsp;2♥</span><span class="paper-src">arXiv · eess.AS</span><span class="paper-date">2026-03-12</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.12046v1" target="_blank" rel="noopener">Dr. SHAP-AV：基于Shapley值解码视听语音识别中的模态贡献</a><div class="paper-title-en">Dr. SHAP-AV: Decoding Relative Modality Contributions via Shapley Attribution in Audio-Visual Speech Recognition</div><p class="paper-abstract">提出Dr. SHAP-AV框架，利用Shapley值分析视听语音识别模型中音频与视觉模态的贡献，揭示其平衡机制。</p></td></tr><tr class="paper-row"><td class="paper-num">05</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span><span class="inst-badge">Meta</span><span class="paper-src">arXiv · cs.CL</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13173v1" target="_blank" rel="noopener">智能体AI中的语义不变性</a><div class="paper-title-en">Semantic Invariance in Agentic AI</div><p class="paper-abstract">本文提出“语义不变性”概念，强调大语言模型作为自主推理智能体时，需在语义等效输入下保持推理稳定性。</p></td></tr><tr class="paper-row"><td class="paper-num">06</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.CL</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13168v1" target="_blank" rel="noopener">开发与评估支持孕产保健的聊天机器人</a><div class="paper-title-en">Developing and evaluating a chatbot to support maternal health care</div><p class="paper-abstract">开发支持孕产保健的聊天机器人面临技术挑战，包括用户查询简短、信息不足及多语言混杂。本文提出相应解决方案。</p></td></tr><tr class="paper-row"><td class="paper-num">07</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.CL</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13154v1" target="_blank" rel="noopener">ESG-Bench：用于缓解幻觉的长上下文ESG报告基准</a><div class="paper-title-en">ESG-Bench: Benchmarking Long-Context ESG Reports for Hallucination Mitigation</div><p class="paper-abstract">ESG报告日益重要，但其长度和复杂性使其难以处理。本文提出ESG-Bench，用于评估模型在长上下文ESG分析中的幻觉问题。</p></td></tr><tr class="paper-row"><td class="paper-num">08</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.CL</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13045v1" target="_blank" rel="noopener">弥补漏洞：缓解多语言翻译强化学习中的奖励黑客问题</a><div class="paper-title-en">Mending the Holes: Mitigating Reward Hacking in Reinforcement Learning for Multilingual Translation</div><p class="paper-abstract">针对低资源语言翻译中高质量平行数据稀缺的问题，本文提出方法以缓解强化学习训练中出现的奖励黑客现象。</p></td></tr><tr class="paper-row"><td class="paper-num">09</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.AI</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13126v1" target="_blank" rel="noopener">开发PsyCogMetrics AI实验室以评估大语言模型并推进认知科学</a><div class="paper-title-en">Developing the PsyCogMetrics AI Lab to Evaluate Large Language Models and Advance Cognitive Science -- A Three-Cycle Action Design…</div><p class="paper-abstract">本研究通过三轮行动设计科学方法，开发了PsyCogMetrics AI实验室，一个基于云的心理测量与认知科学大模型评估平台。</p></td></tr><tr class="paper-row"><td class="paper-num">10</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.AI</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13119v1" target="_blank" rel="noopener">VideoLLM中几何引导的相机运动理解</a><div class="paper-title-en">Geometry-Guided Camera Motion Understanding in VideoLLMs</div><p class="paper-abstract">针对视频大语言模型对相机运动表征不足的问题，提出包含基准测试、诊断与注入的框架，以增强其几何运动理解能力。</p></td></tr></tbody></table></section><section class="cat-section"><div class="cat-header" style="border-left:4px solid #9a7ae0;"><div class="cat-icon-wrap" style="background:#200d4a;color:#9a7ae0;">&#128065;</div><div class="cat-labels"><div class="cat-name">视觉生成</div><div class="cat-en">VISION & GENERATION</div></div><div class="cat-badge" style="background:#200d4a;color:#9a7ae0;">10 篇</div></div><table class="paper-table"><tbody><tr class="paper-row"><td class="paper-num">01</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span><span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&nbsp;8♥</span><span class="paper-src">arXiv · cs.CV</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13089v1" target="_blank" rel="noopener">V-Bridge：将视频生成先验桥接至通用少样本图像复原</a><div class="paper-title-en">V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration</div><p class="paper-abstract">提出V-Bridge，利用大规模视频生成模型学习到的丰富视觉先验，将其迁移至少样本图像复原任务，实现通用视觉学习。</p></td></tr><tr class="paper-row"><td class="paper-num">02</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span><span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&nbsp;3♥</span><span class="paper-src">arXiv · cs.CV</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13032v1" target="_blank" rel="noopener">多模态OCR：解析文档中的任意内容</a><div class="paper-title-en">Multimodal OCR: Parse Anything from Documents</div><p class="paper-abstract">提出多模态OCR范式，将文本与图形（如图表、图标）联合解析为统一文本表示，超越传统OCR仅识别文本的局限。</p></td></tr><tr class="paper-row"><td class="paper-num">03</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span><span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&nbsp;2♥</span><span class="paper-src">arXiv · cs.AI</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13131v1" target="_blank" rel="noopener">Steve-Evolving：通过细粒度诊断与双轨知识蒸馏实现开放世界具身自进化</a><div class="paper-title-en">Steve-Evolving: Open-World Embodied Self-Evolution via Fine-Grained Diagnosis and Dual-Track Knowledge Distillation</div><p class="paper-abstract">提出Steve-Evolving框架，通过细粒度执行诊断与双轨知识蒸馏的紧密耦合，实现开放世界具身智能体的非参数化自进化。</p></td></tr><tr class="paper-row"><td class="paper-num">04</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.AI</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13065v1" target="_blank" rel="noopener">L2GTX：从局部到全局的时间序列解释</a><div class="paper-title-en">L2GTX: From Local to Global Time Series Explanations</div><p class="paper-abstract">针对时间序列分类模型解释的挑战，提出L2GTX方法，克服现有方法在捕捉跨实例重复模式与时间依赖性方面的局限。</p></td></tr><tr class="paper-row"><td class="paper-num">05</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.AI</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13044v1" target="_blank" rel="noopener">通用视觉模型足以胜任2D医学图像分割吗？一项跨数据集实证研究</a><div class="paper-title-en">Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation? A Cross-Dataset Empirical Study</div><p class="paper-abstract">本文通过跨数据集实证研究，探讨通用视觉模型与专用医学图像分割架构在应对低对比度、小结构等挑战上的性能差异。</p></td></tr><tr class="paper-row"><td class="paper-num">06</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.CV</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13108v1" target="_blank" rel="noopener">四足机器人的全景多模态语义占据预测</a><div class="paper-title-en">Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots</div><p class="paper-abstract">提出PanoMMOcc，首个真实世界全景多模态语义占据预测基准与模型，增强四足机器人在复杂环境中的感知鲁棒性。</p></td></tr><tr class="paper-row"><td class="paper-num">07</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.CV</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13070v1" target="_blank" rel="noopener">通过区域感知提示增强与多模态复制检测缓解文生图扩散模型的记忆问题</a><div class="paper-title-en">Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection</div><p class="paper-abstract">提出方法缓解文生图扩散模型对训练图像的记忆与复制风险，通过区域感知提示增强与多模态复制检测，平衡防复制与图像保真度。</p></td></tr><tr class="paper-row"><td class="paper-num">08</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.AI</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13028v1" target="_blank" rel="noopener">净化一次，自由编辑：模型不匹配下的图像保护破解</a><div class="paper-title-en">Purify Once, Edit Freely: Breaking Image Protections under Model Mismatch</div><p class="paper-abstract">研究发现，针对扩散模型编辑的图像保护方法在模型不匹配的实际场景中存在脆弱性，攻击者可利用单次净化实现自由编辑。</p></td></tr><tr class="paper-row"><td class="paper-num">09</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.AI</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.13024v1" target="_blank" rel="noopener">SAW：通过可控可扩展视频生成构建手术动作世界模型</a><div class="paper-title-en">SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation</div><p class="paper-abstract">提出SAW，旨在构建能生成逼真手术动作视频的世界模型，精确控制工具-组织交互，以解决手术AI中的数据稀缺与仿真到现实差距等挑战。</p></td></tr><tr class="paper-row"><td class="paper-num">10</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.CL</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.12920v1" target="_blank" rel="noopener">HMS-BERT：用于多语言多标签网络欺凌检测的混合多任务自训练方法</a><div class="paper-title-en">HMS-BERT: Hybrid Multi-Task Self-Training for Multilingual and Multi-Label Cyberbullying Detection</div><p class="paper-abstract">针对网络欺凌的多语言、多标签特性，提出HMS-BERT，一种混合多任务自训练方法，提升在现实复杂场景下的检测效果。</p></td></tr></tbody></table></section><section class="cat-section"><div class="cat-header" style="border-left:4px solid #4ab876;"><div class="cat-icon-wrap" style="background:#062214;color:#4ab876;">&#127925;</div><div class="cat-labels"><div class="cat-name">语音与音频</div><div class="cat-en">SPEECH & AUDIO</div></div><div class="cat-badge" style="background:#062214;color:#4ab876;">10 篇</div></div><table class="paper-table"><tbody><tr class="paper-row"><td class="paper-num">01</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span><span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&nbsp;4♥</span><span class="paper-src">arXiv · eess.AS</span><span class="paper-date">2026-03-11</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.10420v1" target="_blank" rel="noopener">FireRedASR2S：一体化工业级自动语音识别系统</a><div class="paper-title-en">FireRedASR2S: A State-of-the-Art Industrial-Grade All-in-One Automatic Speech Recognition System</div><p class="paper-abstract">我们推出FireRedASR2S，一个一体化工业级自动语音识别系统。它集成了ASR、VAD、LID和标点预测四个模块，所有模块在基准测试中均达到SOTA性能。</p></td></tr><tr class="paper-row"><td class="paper-num">02</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · cs.CL</span><span class="paper-date">2026-03-12</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.12350v1" target="_blank" rel="noopener">TASTE-Streaming：面向流式语音建模的文本对齐语音分词与嵌入</a><div class="paper-title-en">TASTE-Streaming: Towards Streamable Text-Aligned Speech Tokenization and Embedding for Spoken Language Modeling</div><p class="paper-abstract">本文提出TASTE-Streaming，旨在通过文本对齐的语音分词与嵌入，解决语音单元序列远长于文本标记的模态不匹配问题，以促进语音语言建模。</p></td></tr><tr class="paper-row"><td class="paper-num">03</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · eess.AS</span><span class="paper-date">2026-03-11</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.11378v1" target="_blank" rel="noopener">低资源斯瓦希里语ASR的持续预训练：用最少标注数据实现SOTA</a><div class="paper-title-en">Continued Pretraining for Low-Resource Swahili ASR: Achieving State-of-the-Art Performance with Minimal Labeled Data</div><p class="paper-abstract">我们研究通过持续预训练将wav2vec2-bert-2.0适配于斯瓦希里语ASR。结合无标签音频与有限标注数据，仅用2万样本即在Common Voice上将WER相对降低82%。</p></td></tr><tr class="paper-row"><td class="paper-num">04</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · eess.AS</span><span class="paper-date">2026-03-10</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.09505v1" target="_blank" rel="noopener">噪声环境下基于空间先验的端到端方向感知关键词检测</a><div class="paper-title-en">End-to-End Direction-Aware Keyword Spotting with Spatial Priors in Noisy Environments</div><p class="paper-abstract">本文提出一种端到端多通道关键词检测系统，通过引入空间先验和联合优化前端增强与检测，以提升噪声环境下的鲁棒性。</p></td></tr><tr class="paper-row"><td class="paper-num">05</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · eess.AS</span><span class="paper-date">2026-03-10</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.09120v1" target="_blank" rel="noopener">Emotion-Aware Prefix：面向语音转换模型的显式情感控制</a><div class="paper-title-en">Emotion-Aware Prefix: Towards Explicit Emotion Control in Voice Conversion Models</div><p class="paper-abstract">我们提出Emotion-Aware Prefix方法，在一个两阶段语音转换骨干网络中实现显式情感控制，将情感转换性能提升一倍。</p></td></tr><tr class="paper-row"><td class="paper-num">06</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span><span class="paper-src">arXiv · cs.AI</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.12840v1" target="_blank" rel="noopener">DAST：采用分阶段训练的双流语音匿名化攻击器</a><div class="paper-title-en">DAST: A Dual-Stream Voice Anonymization Attacker with Staged Training</div><p class="paper-abstract">为评估和加强隐私保护，我们提出一个双流攻击器，通过并行编码器融合频谱与自监督特征，并采用三阶段训练策略来识别匿名语音中的说话人模式。</p></td></tr><tr class="paper-row"><td class="paper-num">07</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span><span class="paper-src">arXiv · cs.AI</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.12837v1" target="_blank" rel="noopener">Mask2Flow-TSE：基于掩码与流匹配的两阶段目标说话人提取</a><div class="paper-title-en">Mask2Flow-TSE: Two-Stage Target Speaker Extraction with Masking and Flow Matching</div><p class="paper-abstract">本文提出Mask2Flow-TSE，一个两阶段目标说话人提取框架，结合了判别式掩码方法的快速推理和生成式流匹配的保真度优势。</p></td></tr><tr class="paper-row"><td class="paper-num">08</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · eess.AS</span><span class="paper-date">2026-03-09</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.08683v1" target="_blank" rel="noopener">面向无损全保真音频压缩的语言模型基准测试</a><div class="paper-title-en">Benchmarking Language Modeling for Lossless Compression of Full-Fidelity Audio</div><p class="paper-abstract">我们对基于自回归语言模型的无损音频压缩进行基准测试，评估其在16/24位全保真音频上的表现，并与现有编解码器对比。</p></td></tr><tr class="paper-row"><td class="paper-num">09</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span><span class="inst-badge">MIT</span><span class="paper-src">arXiv · eess.AS</span><span class="paper-date">2026-03-09</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.08231v1" target="_blank" rel="noopener">量化副语言语音任务中的跨语言迁移</a><div class="paper-title-en">Quantifying Cross-Lingual Transfer in Paralinguistic Speech Tasks</div><p class="paper-abstract">本研究量化评估了副语言语音任务（如情感识别）在跨语言条件下的性能变化，揭示了其非微不足道的语言依赖性。</p></td></tr><tr class="paper-row"><td class="paper-num">10</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span><span class="paper-src">arXiv · eess.AS</span><span class="paper-date">2026-03-12</span></div><a class="paper-title-zh" href="https://arxiv.org/abs/2603.11947v1" target="_blank" rel="noopener">在大型音频语言模型中重拾副语言感知能力</a><div class="paper-title-en">Resurfacing Paralinguistic Awareness in Large Audio Language Models</div><p class="paper-abstract">当前以内容为中心的大型音频语言模型通常忽略副语言线索。本文探讨如何让模型感知并利用这些隐含用户上下文的声学线索。</p></td></tr></tbody></table></section><section class="cat-section"><div class="cat-header" style="border-left:4px solid #e09a30;"><div class="cat-icon-wrap" style="background:#261000;color:#e09a30;">&#9881;</div><div class="cat-labels"><div class="cat-name">工程进展</div><div class="cat-en">ENGINEERING ADVANCES</div></div><div class="cat-badge" style="background:#261000;color:#e09a30;">10 篇</div></div><table class="paper-table"><tbody><tr class="paper-row"><td class="paper-num">01</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span><span class="inst-badge">Meta</span><span class="paper-src">Meta Engineering</span><span class="paper-date">2026-03-13</span></div><a class="paper-title-zh" href="https://engineering.fb.com/2026/03/13/android/ai-codemods-secure-by-default-android-apps-meta-tech-podcast/" target="_blank" rel="noopener">为默认安全的安卓应用提供AI代码修改工具</a><div class="paper-title-en">Patch Me If You Can: AI Codemods for Secure-by-Default Android Apps</div><p class="paper-abstract">本文介绍AI代码修改工具，用于自动化、大规模地修复安卓应用中的安全漏洞，特别是与API更新相关的安全问题。</p></td></tr><tr class="paper-row"><td class="paper-num">02</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span><span class="inst-badge">OpenAI</span><span class="paper-src">OpenAI Blog</span><span class="paper-date">2026-03-11</span></div><a class="paper-title-zh" href="https://openai.com/index/rakuten" target="_blank" rel="noopener">Rakuten借助Codex将问题修复速度提升一倍</a><div class="paper-title-en">Rakuten fixes issues twice as fast with Codex</div><p class="paper-abstract">Rakuten使用OpenAI的Codex智能体来更快、更安全地交付软件，将平均修复时间减少50%，并自动化CI/CD审查。</p></td></tr><tr class="paper-row"><td class="paper-num">03</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span><span class="inst-badge">OpenAI</span><span class="paper-src">OpenAI Blog</span><span class="paper-date">2026-03-11</span></div><a class="paper-title-zh" href="https://openai.com/index/wayfair" target="_blank" rel="noopener">Wayfair利用OpenAI提升目录准确性与支持速度</a><div class="paper-title-en">Wayfair boosts catalog accuracy and support speed with OpenAI</div><p class="paper-abstract">Wayfair使用OpenAI模型改进电商客户支持与产品目录准确性，自动化工单分类并大规模增强数百万产品属性。</p></td></tr><tr class="paper-row"><td class="paper-num">04</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span><span class="inst-badge">OpenAI</span><span class="paper-src">OpenAI Blog</span><span class="paper-date">2026-03-11</span></div><a class="paper-title-zh" href="https://openai.com/index/equip-responses-api-computer-environment" target="_blank" rel="noopener">从模型到智能体：为Responses API配备计算机环境</a><div class="paper-title-en">From model to agent: Equipping the Responses API with a computer environment</div><p class="paper-abstract">介绍OpenAI如何利用Responses API、Shell工具和托管容器构建智能体运行时，以运行具备文件、工具和状态的安全、可扩展智能体。</p></td></tr><tr class="paper-row"><td class="paper-num">05</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span><span class="inst-badge">Google DeepMind</span><span class="paper-src">Google DeepMind</span><span class="paper-date">2026-03-09</span></div><a class="paper-title-zh" href="https://deepmind.google/blog/10-years-of-alphago/" target="_blank" rel="noopener">从围棋到生物学：AlphaGo问世十年的影响</a><div class="paper-title-en">From games to biology and beyond: 10 years of AlphaGo’s impact</div><p class="paper-abstract">AlphaGo问世十年，我们探讨它如何催化科学发现并为通往通用人工智能铺平道路。</p></td></tr><tr class="paper-row"><td class="paper-num">06</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span><span class="inst-badge">OpenAI</span><span class="paper-src">OpenAI Blog</span><span class="paper-date">2026-03-09</span></div><a class="paper-title-zh" href="https://openai.com/index/openai-to-acquire-promptfoo" target="_blank" rel="noopener">OpenAI将收购AI安全平台Promptfoo</a><div class="paper-title-en">OpenAI to acquire Promptfoo</div><p class="paper-abstract">OpenAI宣布收购Promptfoo，这是一个帮助企业在开发过程中识别和修复AI系统漏洞的AI安全平台。</p></td></tr><tr class="paper-row"><td class="paper-num">07</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span><span class="inst-badge">OpenAI</span><span class="paper-src">OpenAI Blog</span><span class="paper-date">2026-03-06</span></div><a class="paper-title-zh" href="https://openai.com/index/codex-security-now-in-research-preview" target="_blank" rel="noopener">Codex Security：现已进入研究预览阶段</a><div class="paper-title-en">Codex Security: now in research preview</div><p class="paper-abstract">Codex Security是一个AI应用安全智能体，通过分析项目上下文，以更高置信度和更低误报率检测、验证并修复复杂漏洞。</p></td></tr><tr class="paper-row"><td class="paper-num">08</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span><span class="inst-badge">OpenAI</span><span class="paper-src">OpenAI Blog</span><span class="paper-date">2026-03-05</span></div><a class="paper-title-zh" href="https://openai.com/index/ai-education-opportunity" target="_blank" rel="noopener">确保教育领域AI应用带来机遇</a><div class="paper-title-en">Ensuring AI use in education leads to opportunity</div><p class="paper-abstract">OpenAI分享新工具、认证和评估资源，以帮助学校和大学弥合AI能力差距并扩大机遇。</p></td></tr><tr class="paper-row"><td class="paper-num">09</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span><span class="inst-badge">OpenAI</span><span class="paper-src">OpenAI Blog</span><span class="paper-date">2026-03-05</span></div><a class="paper-title-zh" href="https://openai.com/index/the-five-ai-value-models-driving-business-reinvention" target="_blank" rel="noopener">驱动业务重塑的五大AI价值模型</a><div class="paper-title-en">The five AI value models driving business reinvention</div><p class="paper-abstract">五大AI价值模型展示了领导者如何从培养员工AI素养到流程重塑来部署AI，从而构建持久的业务优势。</p></td></tr><tr class="paper-row"><td class="paper-num">10</td><td class="paper-body"><div class="paper-header"><span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span><span class="inst-badge">OpenAI</span><span class="paper-src">OpenAI Blog</span><span class="paper-date">2026-03-05</span></div><a class="paper-title-zh" href="https://openai.com/index/introducing-the-adoption-news-channel" target="_blank" rel="noopener">推出“应用实践”新闻频道</a><div class="paper-title-en">Introducing the Adoption news channel</div><p class="paper-abstract">本频道提供实用见解和框架，旨在将AI进展转化为商业优势。</p></td></tr></tbody></table></section>
+  <section class="cat-section" id="audio">
+  <div class="cat-header" style="border-left:4px solid #4ab876;">
+    <div class="cat-icon-wrap" style="background:#062214;color:#4ab876;">&#127925;</div>
+    <div class="cat-labels">
+      <div class="cat-name">语音与音频</div>
+      <div class="cat-en">SPEECH & AUDIO</div>
+    </div>
+    <div class="cat-badge" style="background:#062214;color:#4ab876;">16 篇</div>
+  </div>
+  <div class="papers-grid"><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;16♥</span>
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">03-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.10256v1" target="_blank" rel="noopener">ID-LoRA：基于上下文LoRA的身份驱动音视频个性化</a>
+  <div class="paper-title-en">ID-LoRA: Identity-Driven Audio-Video Personalization with In-Context LoRA</div>
+  <p class="paper-abstract">现有视频个性化方法分别处理视频和音频，导致音画不同步。ID-LoRA利用视觉场景信息，通过上下文LoRA实现音视频同步与风格控制。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;4♥</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-11</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.10420v1" target="_blank" rel="noopener">FireRedASR2S：一体化工业级自动语音识别系统</a>
+  <div class="paper-title-en">FireRedASR2S: A State-of-the-Art Industrial-Grade All-in-One Automatic Speech Recognition System</div>
+  <p class="paper-abstract">我们提出FireRedASR2S，一个一体化工业级ASR系统，集成了ASR、VAD、LID和标点预测模块，所有模块在基准测试中均达到SOTA性能。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;2♥</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.12046v1" target="_blank" rel="noopener">Dr. SHAP-AV：基于Shapley值的视听语音识别模态贡献解码</a>
+  <div class="paper-title-en">Dr. SHAP-AV: Decoding Relative Modality Contributions via Shapley Attribution in Audio-Visual Speech Recognition</div>
+  <p class="paper-abstract">我们提出Dr. SHAP-AV框架，利用Shapley值分析视听语音识别中不同模态的贡献，揭示了模型在噪声下平衡声学和视觉信息的方式。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;2♥</span>
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">03-11</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.11042v1" target="_blank" rel="noopener">V2M-Zero：无需配对数据的时序对齐视频配乐生成</a>
+  <div class="paper-title-en">V2M-Zero: Zero-Pair Time-Aligned Video-to-Music Generation</div>
+  <p class="paper-abstract">现有文本到音乐模型缺乏细粒度时序控制。V2M-Zero是一种零配对视频到音乐生成方法，可输出与视频事件时间对齐的音乐。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-11</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.11378v1" target="_blank" rel="noopener">持续预训练提升低资源斯瓦希里语ASR：用少量标注数据实现SOTA</a>
+  <div class="paper-title-en">Continued Pretraining for Low-Resource Swahili ASR: Achieving State-of-the-Art Performance with Minimal Labeled Data</div>
+  <p class="paper-abstract">我们研究通过持续预训练将wav2vec2-bert-2.0适配到斯瓦希里语ASR。结合未标注音频与有限标注数据，仅用2万标注样本将词错误率相对降低82%。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.09234v1" target="_blank" rel="noopener">StuPASE：迈向低幻听、录音室质量的生成式语音增强</a>
+  <div class="paper-title-en">StuPASE: Towards Low-Hallucination Studio-Quality Generative Speech Enhancement</div>
+  <p class="paper-abstract">生成式语音增强在保持高感知质量的同时避免幻听是一大挑战。StuPASE在PASE基础上构建，实现了录音室级质量并保留了低幻听特性。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.09120v1" target="_blank" rel="noopener">情感感知前缀：实现语音转换模型的显式情感控制</a>
+  <div class="paper-title-en">Emotion-Aware Prefix: Towards Explicit Emotion Control in Voice Conversion Models</div>
+  <p class="paper-abstract">零样本语音转换在情感控制方面潜力初显，但表达能力有限导致性能不佳。我们提出情感感知前缀，在两阶段语音转换框架中实现显式情感控制，性能翻倍。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.12840v1" target="_blank" rel="noopener">DAST：采用分阶段训练的双流语音匿名化攻击器</a>
+  <div class="paper-title-en">DAST: A Dual-Stream Voice Anonymization Attacker with Staged Training</div>
+  <p class="paper-abstract">语音匿名化旨在掩盖说话人特征，但仍可能泄露特定模式。我们提出双流攻击器，融合频谱和自监督特征，通过三阶段训练策略评估和加强隐私保护。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.12565v1" target="_blank" rel="noopener">通过直接偏好优化实现日语语音大语言模型的语音友好对齐</a>
+  <div class="paper-title-en">Speech-Worthy Alignment for Japanese SpeechLLMs via Direct Preference Optimization</div>
+  <p class="paper-abstract">语音大语言模型通常结合ASR编码器和文本LLM，继承了不适合语音合成的书面风格。这在口语与书面语差异显著的日语中尤为突出。我们通过DPO实现对齐。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.11947v1" target="_blank" rel="noopener">在大型音频语言模型中重拾副语言感知能力</a>
+  <div class="paper-title-en">Resurfacing Paralinguistic Awareness in Large Audio Language Models</div>
+  <p class="paper-abstract">大型音频语言模型将人机交互扩展到语音模态，副语言线索蕴含丰富的用户上下文信息。然而，当前以内容为中心的范式通常忽略了这些线索。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.11841v1" target="_blank" rel="noopener">ReDimNet2：通过时间维度池化扩展说话人验证</a>
+  <div class="paper-title-en">ReDimNet2: Scaling Speaker Verification via Time-Pooled Dimension Reshaping</div>
+  <p class="paper-abstract">我们提出ReDimNet2，一种改进的说话人表征提取网络。关键改进是在一维处理路径中引入时间维度池化，保留了特征的一维性质并提升了性能。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.11678v1" target="_blank" rel="noopener">RAF：用于通用语音合成的相对论对抗反馈</a>
+  <div class="paper-title-en">RAF: Relativistic Adversarial Feedback For Universal Speech Synthesis</div>
+  <p class="paper-abstract">我们提出相对论对抗反馈，一种新的GAN声码器训练目标，提升了域内保真度和对未见场景的泛化能力。RAF利用相对论判别器促进可泛化表征学习。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.11683v1" target="_blank" rel="noopener">文本到语音的因果韵律调节：FastSpeech2中时长、音高和能量的反事实训练</a>
+  <div class="paper-title-en">Causal Prosody Mediation for Text-to-Speech:Counterfactual Training of Duration, Pitch, and Energy in FastSpeech2</div>
+  <p class="paper-abstract">我们提出一种新颖的因果韵律调节框架，用于富有表现力的TTS合成。该方法为FastSpeech2引入显式情感条件，并采用反事实训练目标分离情感韵律与语言内容。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">03-11</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.11168v1" target="_blank" rel="noopener">基于生物标志物监督的亨廷顿病自动语音识别</a>
+  <div class="paper-title-en">Huntington Disease Automatic Speech Recognition with Biomarker Supervision</div>
+  <p class="paper-abstract">病理语音的ASR研究不足，亨廷顿病的语音不规则性对现有模型构成挑战。我们利用高保真临床语音语料库，首次对HD进行端到端ASR训练的系统性研究。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">03-11</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.10904v1" target="_blank" rel="noopener">微调何时失效何时泛化：数据多样性与混合训练在基于LLM的TTS中的作用</a>
+  <div class="paper-title-en">When Fine-Tuning Fails and when it Generalises: Role of Data Diversity and Mixed Training in LLM-based TTS</div>
+  <p class="paper-abstract">大语言模型越来越多地用作神经TTS的语义主干。我们的实验表明，微调TTS的语言模型主干能提升音色一致性，但数据多样性和混合训练至关重要。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4ab876;border-color:#4ab87640;background:#4ab87612;">arXiv</span>
+    
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">03-11</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.11123v1" target="_blank" rel="noopener">Uni-ASR：基于LLM的非流式与流式自动语音识别统一架构</a>
+  <div class="paper-title-en">Uni-ASR: Unified LLM-Based Architecture for Non-Streaming and Streaming Automatic Speech Recognition</div>
+  <p class="paper-abstract">ASR与LLM的深度融合提升了准确性，但在低延迟流式场景部署仍具挑战。我们提出Uni-ASR，一个基于LLM的统一框架，集成了非流式和流式ASR。</p>
+</div></div>
+</section><section class="cat-section" id="llm">
+  <div class="cat-header" style="border-left:4px solid #4a9fd4;">
+    <div class="cat-icon-wrap" style="background:#0d2a4a;color:#4a9fd4;">&#129504;</div>
+    <div class="cat-labels">
+      <div class="cat-name">大语言模型</div>
+      <div class="cat-en">LARGE LANGUAGE MODELS</div>
+    </div>
+    <div class="cat-badge" style="background:#0d2a4a;color:#4a9fd4;">10 篇</div>
+  </div>
+  <div class="papers-grid"><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;34♥</span>
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.12572v1" target="_blank" rel="noopener">LMEB：长时程记忆嵌入基准</a>
+  <div class="paper-title-en">LMEB: Long-horizon Memory Embedding Benchmark</div>
+  <p class="paper-abstract">现有文本嵌入基准主要评估传统段落检索，忽视了长时程记忆检索任务。本文提出LMEB基准，专门评估模型处理碎片化、上下文依赖及时间跨度大的记忆检索能力。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;19♥</span><span class="audio-badge">🎧 音频相关</span><span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-09</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.08397v1" target="_blank" rel="noopener">NLE：基于转录编辑的非自回归大语言模型语音识别</a>
+  <div class="paper-title-en">NLE: Non-autoregressive LLM-based ASR by Transcript Editing</div>
+  <p class="paper-abstract">为解决自回归系统延迟高的问题，本文提出NLE，将语音识别建模为条件转录编辑任务，实现完全并行预测，在保持高精度的同时显著降低延迟。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;13♥</span><span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13023v1" target="_blank" rel="noopener">daVinci-Env：大规模开放式软件工程环境合成</a>
+  <div class="paper-title-en">daVinci-Env: Open SWE Environment Synthesis at Scale</div>
+  <p class="paper-abstract">为训练软件工程智能体，本文提出daVinci-Env，大规模合成可执行、可验证的环境，提供动态反馈循环以支持迭代代码编辑、测试执行和方案优化。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;10♥</span>
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13224v1" target="_blank" rel="noopener">Visual-ERM：面向视觉等价性的奖励建模</a>
+  <div class="paper-title-en">Visual-ERM: Reward Modeling for Visual Equivalence</div>
+  <p class="paper-abstract">针对视觉到代码任务中奖励失准问题，本文提出Visual-ERM，通过视觉等价性奖励建模，提升强化学习在结构化视觉输入重建任务中的性能。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;10♥</span>
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.11647v2" target="_blank" rel="noopener">OmniForcing：释放实时音视频联合生成潜力</a>
+  <div class="paper-title-en">OmniForcing: Unleashing Real-time Joint Audio-Visual Generation</div>
+  <p class="paper-abstract">针对现有联合音视频扩散模型延迟高的问题，本文提出OmniForcing框架，将离线双向扩散模型蒸馏为高保真流式自回归模型，实现实时生成。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;9♥</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13089v1" target="_blank" rel="noopener">V-Bridge：将视频生成先验桥接至通用少样本图像复原</a>
+  <div class="paper-title-en">V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration</div>
+  <p class="paper-abstract">本文提出V-Bridge，利用大规模视频生成模型学习到的丰富视觉先验，通过轻量级适配器将其迁移至少样本图像复原任务，实现通用视觉学习。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;3♥</span>
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13131v1" target="_blank" rel="noopener">Steve-Evolving：通过细粒度诊断与双轨知识蒸馏实现开放世界具身自进化</a>
+  <div class="paper-title-en">Steve-Evolving: Open-World Embodied Self-Evolution via Fine-Grained Diagnosis and Dual-Track Knowledge Distillation</div>
+  <p class="paper-abstract">本文提出Steve-Evolving框架，通过细粒度执行诊断与双轨知识蒸馏的紧密耦合，使开放世界具身智能体能自主组织并进化交互经验以解决长程任务。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span>
+    <span class="audio-badge">🎧 音频相关</span><span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.12342v1" target="_blank" rel="noopener">MamTra：用于语音合成的混合Mamba-Transformer骨干网络</a>
+  <div class="paper-title-en">MamTra: A Hybrid Mamba-Transformer Backbone for Speech Synthesis</div>
+  <p class="paper-abstract">为解决自回归Transformer二次计算复杂度问题，本文提出MamTra混合骨干，结合Mamba的线性复杂度与Transformer的全局上下文建模能力，实现高效且富有表现力的语音合成。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span>
+    <span class="audio-badge">🎧 音频相关</span>
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.11661v1" target="_blank" rel="noopener">Resonate：通过大型音频语言模型的在线反馈强化文本到音频生成</a>
+  <div class="paper-title-en">Resonate: Reinforcing Text-to-Audio Generation via Online Feedback from Large Audio Language Models</div>
+  <p class="paper-abstract">本文提出Resonate，首次将在线强化学习应用于文本到音频生成，利用大型音频语言模型提供反馈，有效提升生成音频的质量与对齐度。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#4a9fd4;border-color:#4a9fd440;background:#4a9fd412;">arXiv</span>
+    <span class="audio-badge">🎧 音频相关</span>
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">03-11</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.10827v1" target="_blank" rel="noopener">基于语音感知大语言模型的说话人验证：评估与增强</a>
+  <div class="paper-title-en">Speaker Verification with Speech-Aware LLMs: Evaluation and Augmentation</div>
+  <p class="paper-abstract">本文提出一种模型无关的评分协议，评估语音感知大语言模型对说话人身份的编码能力，并设计增强方法以提升其说话人验证性能。</p>
+</div></div>
+</section><section class="cat-section" id="vision">
+  <div class="cat-header" style="border-left:4px solid #9a7ae0;">
+    <div class="cat-icon-wrap" style="background:#200d4a;color:#9a7ae0;">&#128065;</div>
+    <div class="cat-labels">
+      <div class="cat-name">视觉生成</div>
+      <div class="cat-en">VISION & GENERATION</div>
+    </div>
+    <div class="cat-badge" style="background:#200d4a;color:#9a7ae0;">10 篇</div>
+  </div>
+  <div class="papers-grid"><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;4♥</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13032v1" target="_blank" rel="noopener">多模态OCR：解析文档中的任意内容</a>
+  <div class="paper-title-en">Multimodal OCR: Parse Anything from Documents</div>
+  <p class="paper-abstract">本文提出多模态OCR范式，将文本与图形元素（如图表、图标）统一解析为结构化文本表示，超越传统OCR仅识别文本的局限。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span>
+    <span class="audio-badge">🎧 音频相关</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">03-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.09508v1" target="_blank" rel="noopener">用于语音修复的插值随机微分方程扩散模型快速求解器</a>
+  <div class="paper-title-en">A Fast Solver for Interpolating Stochastic Differential Equation Diffusion Models for Speech Restoration</div>
+  <p class="paper-abstract">针对扩散模型反向过程计算开销大的问题，本文提出一种快速求解器，用于插值随机微分方程扩散模型，显著加速语音修复过程。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13065v1" target="_blank" rel="noopener">L2GTX：从局部到全局的时间序列解释</a>
+  <div class="paper-title-en">L2GTX: From Local to Global Time Series Explanations</div>
+  <p class="paper-abstract">本文提出L2GTX方法，通过识别跨实例重复的局部模式并聚合为全局解释，解决现有方法在解释时间序列分类模型决策行为时的局限性。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13044v1" target="_blank" rel="noopener">通用视觉模型足以完成2D医学图像分割吗？一项跨数据集的实证研究</a>
+  <div class="paper-title-en">Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation? A Cross-Dataset Empirical Study</div>
+  <p class="paper-abstract">本文通过跨数据集实证研究，评估通用视觉模型在医学图像分割任务上的表现，挑战了领域专用架构的必要性假设。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13028v1" target="_blank" rel="noopener">一次净化，自由编辑：模型失配下的图像保护破解</a>
+  <div class="paper-title-en">Purify Once, Edit Freely: Breaking Image Protections under Model Mismatch</div>
+  <p class="paper-abstract">针对主动图像保护方法，本文揭示其在模型失配现实场景下的脆弱性，提出只需一次净化即可有效移除对抗扰动，从而恢复对受保护图像的编辑能力。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13024v1" target="_blank" rel="noopener">SAW：通过可控可扩展视频生成构建手术动作世界模型</a>
+  <div class="paper-title-en">SAW: Toward a Surgical Action World Model via Controllable and Scalable Video Generation</div>
+  <p class="paper-abstract">本文提出SAW，旨在构建能生成逼真手术动作视频的世界模型，通过精确控制器械-组织交互，解决手术AI中的数据稀缺和仿真到现实迁移等挑战。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13108v1" target="_blank" rel="noopener">四足机器人的全景多模态语义占据预测</a>
+  <div class="paper-title-en">Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots</div>
+  <p class="paper-abstract">本文提出PanoMMOcc，首个真实世界全景多模态语义占据预测基准与方法，融合RGB与深度线索，提升四足机器人在复杂环境中的感知鲁棒性。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.13070v1" target="_blank" rel="noopener">通过区域感知提示增强与多模态复制检测缓解文生图扩散模型的记忆效应</a>
+  <div class="paper-title-en">Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection</div>
+  <p class="paper-abstract">为缓解文生图模型记忆训练图像的风险，本文提出区域感知提示增强与多模态复制检测方法，在降低复制的同时保持图像-提示对齐与整体保真度。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.12920v1" target="_blank" rel="noopener">HMS-BERT：用于多语言多标签网络欺凌检测的混合多任务自训练</a>
+  <div class="paper-title-en">HMS-BERT: Hybrid Multi-Task Self-Training for Multilingual and Multi-Label Cyberbullying Detection</div>
+  <p class="paper-abstract">针对网络欺凌的多语言与多标签特性，本文提出HMS-BERT，通过混合多任务自训练框架，提升模型在现实复杂场景下的检测效果。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#9a7ae0;border-color:#9a7ae040;background:#9a7ae012;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2603.12918v1" target="_blank" rel="noopener">VIRD：通过双轴变换实现跨视角姿态估计的视角不变表示</a>
+  <div class="paper-title-en">VIRD: View-Invariant Representation through Dual-Axis Transformation for Cross-View Pose Estimation</div>
+  <p class="paper-abstract">本文提出VIRD，通过双轴变换学习视角不变表示，解决跨视角姿态估计中因视角差异导致的匹配难题，提升定位精度。</p>
+</div></div>
+</section><section class="cat-section" id="eng">
+  <div class="cat-header" style="border-left:4px solid #e09a30;">
+    <div class="cat-icon-wrap" style="background:#261000;color:#e09a30;">&#9881;</div>
+    <div class="cat-labels">
+      <div class="cat-name">工程进展</div>
+      <div class="cat-en">ENGINEERING ADVANCES</div>
+    </div>
+    <div class="cat-badge" style="background:#261000;color:#e09a30;">10 篇</div>
+  </div>
+  <div class="papers-grid"><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">Meta</span>
+    <span class="paper-src">Meta Engineering</span>
+    <span class="paper-date">03-13</span>
+  </div>
+  <a class="paper-title" href="https://engineering.fb.com/2026/03/13/android/ai-codemods-secure-by-default-android-apps-meta-tech-podcast/" target="_blank" rel="noopener">尽你所能修补：用于构建默认安全Android应用的AI代码修改</a>
+  <div class="paper-title-en">Patch Me If You Can: AI Codemods for Secure-by-Default Android Apps</div>
+  <p class="paper-abstract">在处理数百万行代码和数千名工程师时，即使像更新API这样简单的任务也可能变得艰巨，尤其是在涉及安全变更时。这在移动安全领域尤为明显。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">NVIDIA Blog</span>
+    <span class="paper-src">NVIDIA Blog</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://blogs.nvidia.com/blog/industrial-ai-digital-twins-omniverse/" target="_blank" rel="noopener">进入Omniverse：工业AI与数字孪生如何加速跨行业设计、工程与制造</a>
+  <div class="paper-title-en">Into the Omniverse: How Industrial AI and Digital Twins Accelerate Design, Engineering and Manufacturing Across Industries</div>
+  <p class="paper-abstract">工业AI、数字孪生、AI物理和加速AI基础设施正赋能各行业公司，在现实建造之前加速并规模化产品、流程和设施的设计、仿真与优化。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">Google</span>
+    <span class="paper-src">Google Research</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://research.google/blog/protecting-cities-with-ai-driven-flash-flood-forecasting/" target="_blank" rel="noopener">利用AI驱动的山洪预报保护城市</a>
+  <div class="paper-title-en">Protecting cities with AI-driven flash flood forecasting</div>
+  <p class="paper-abstract">气候与可持续性</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">Google</span>
+    <span class="paper-src">Google Research</span>
+    <span class="paper-date">03-12</span>
+  </div>
+  <a class="paper-title" href="https://research.google/blog/introducing-groundsource-turning-news-reports-into-data-with-gemini/" target="_blank" rel="noopener">介绍Groundsource：使用Gemini将新闻报道转化为数据</a>
+  <div class="paper-title-en">Introducing Groundsource: Turning news reports into data with Gemini</div>
+  <p class="paper-abstract">气候与可持续性</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">Google</span>
+    <span class="paper-src">Google Research</span>
+    <span class="paper-date">03-11</span>
+  </div>
+  <a class="paper-title" href="https://research.google/blog/exploring-the-feasibility-of-conversational-diagnostic-ai-in-a-real-world-clinical-study/" target="_blank" rel="noopener">探索对话式诊断AI在真实临床研究中的可行性</a>
+  <div class="paper-title-en">Exploring the feasibility of conversational diagnostic AI in a real-world clinical study</div>
+  <p class="paper-abstract">生成式AI在真实临床研究中探索对话式诊断的可行性。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">OpenAI</span>
+    <span class="paper-src">OpenAI Blog</span>
+    <span class="paper-date">03-11</span>
+  </div>
+  <a class="paper-title" href="https://openai.com/index/wayfair" target="_blank" rel="noopener">Wayfair借助OpenAI提升目录准确性与支持速度</a>
+  <div class="paper-title-en">Wayfair boosts catalog accuracy and support speed with OpenAI</div>
+  <p class="paper-abstract">Wayfair运用OpenAI模型优化电商支持与产品目录准确性，自动化工单分诊并大规模增强数百万产品属性。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">NVIDIA Blog</span>
+    <span class="paper-src">NVIDIA Blog</span>
+    <span class="paper-date">03-10</span>
+  </div>
+  <a class="paper-title" href="https://blogs.nvidia.com/blog/jetson-generative-ai-edge-oss/" target="_blank" rel="noopener">开源模型引爆AI热潮，NVIDIA Jetson将其带入边缘端</a>
+  <div class="paper-title-en">As Open Models Spark AI Boom, NVIDIA Jetson Brings It to Life at the Edge</div>
+  <p class="paper-abstract">Cat 306 CR微型挖掘机重约八吨，可装入标准集装箱，适用于狭窄工地作业。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">NVIDIA Blog</span>
+    <span class="paper-src">NVIDIA Blog</span>
+    <span class="paper-date">03-10</span>
+  </div>
+  <a class="paper-title" href="https://blogs.nvidia.com/blog/gdc-2026-virtual-game-development/" target="_blank" rel="noopener">NVIDIA以RTX PRO服务器虚拟化游戏开发</a>
+  <div class="paper-title-en">NVIDIA Virtualizes Game Development With RTX PRO Server</div>
+  <p class="paper-abstract">面对更宏大的游戏世界、更复杂的管线与更分散的团队，NVIDIA在GDC展示新方案以整合分布式开发流程。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">NVIDIA Blog</span>
+    <span class="paper-src">NVIDIA Blog</span>
+    <span class="paper-date">03-10</span>
+  </div>
+  <a class="paper-title" href="https://blogs.nvidia.com/blog/nvidia-thinking-machines-lab/" target="_blank" rel="noopener">NVIDIA与Thinking Machines Lab宣布长期千兆瓦级战略合作</a>
+  <div class="paper-title-en">NVIDIA and Thinking Machines Lab Announce Long-Term Gigawatt-Scale Strategic Partnership</div>
+  <p class="paper-abstract">双方达成多年战略合作，将部署至少一千兆瓦的NVIDIA Vera Rubin系统，以支持前沿模型训练和大规模可定制AI平台。</p>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">NVIDIA Blog</span>
+    <span class="paper-src">NVIDIA Blog</span>
+    <span class="paper-date">03-10</span>
+  </div>
+  <a class="paper-title" href="https://blogs.nvidia.com/blog/ai-5-layer-cake/" target="_blank" rel="noopener">AI是一个五层蛋糕</a>
+  <div class="paper-title-en">AI Is a 5-Layer Cake</div>
+  <p class="paper-abstract">AI是塑造当今世界的最强大力量之一，它并非单一应用或模型，而是如同电力和互联网般的关键基础设施。</p>
+</div></div>
+</section><section class="cat-section" id="discuss">
+  <div class="cat-header" style="border-left:4px solid #e8682a;">
+    <div class="cat-icon-wrap" style="background:#280e00;color:#e8682a;">&#128172;</div>
+    <div class="cat-labels">
+      <div class="cat-name">社区讨论</div>
+      <div class="cat-en">HN & REDDIT COMMUNITY</div>
+    </div>
+    <div class="cat-badge" style="background:#280e00;color:#e8682a;">4 篇</div>
+  </div>
+  <div class="papers-grid"><div class="discuss-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e8682a;border-color:#e8682a40;background:#e8682a12;">&#9650;&thinsp;Hacker News</span>
+    
+    <span class="paper-date">03-10</span>
+    <span class="discuss-score" style="color:#e8682a;">▲ 240 pts · 152 comments</span>
+  </div>
+  <div class="discuss-title">Launch HN: RunAnywhere (YC W26) – Faster AI Inference on Apple Silicon</div>
+  
+  <div class="discuss-actions">
+    <a class="discuss-btn discuss-btn-primary" href="https://github.com/RunanywhereAI/rcli" target="_blank" rel="noopener">→ 查看原文</a>
+    <a class="discuss-btn discuss-btn-discuss" href="https://news.ycombinator.com/item?id=47326101" target="_blank" rel="noopener">💬 查看讨论</a>
+  </div>
+</div><div class="discuss-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e8682a;border-color:#e8682a40;background:#e8682a12;">&#9650;&thinsp;Hacker News</span>
+    
+    <span class="paper-date">03-11</span>
+    <span class="discuss-score" style="color:#e8682a;">▲ 155 pts · 54 comments</span>
+  </div>
+  <div class="discuss-title">Show HN: Open-source browser for AI agents</div>
+  
+  <div class="discuss-actions">
+    <a class="discuss-btn discuss-btn-primary" href="https://github.com/theredsix/agent-browser-protocol" target="_blank" rel="noopener">→ 查看原文</a>
+    <a class="discuss-btn discuss-btn-discuss" href="https://news.ycombinator.com/item?id=47336171" target="_blank" rel="noopener">💬 查看讨论</a>
+  </div>
+</div><div class="discuss-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e8682a;border-color:#e8682a40;background:#e8682a12;">&#9650;&thinsp;Hacker News</span>
+    
+    <span class="paper-date">03-13</span>
+    <span class="discuss-score" style="color:#e8682a;">▲ 92 pts · 61 comments</span>
+  </div>
+  <div class="discuss-title">Show HN: Context Gateway – Compress agent context before it hits the LLM</div>
+  
+  <div class="discuss-actions">
+    <a class="discuss-btn discuss-btn-primary" href="https://github.com/Compresr-ai/Context-Gateway" target="_blank" rel="noopener">→ 查看原文</a>
+    <a class="discuss-btn discuss-btn-discuss" href="https://news.ycombinator.com/item?id=47367526" target="_blank" rel="noopener">💬 查看讨论</a>
+  </div>
+</div><div class="discuss-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e8682a;border-color:#e8682a40;background:#e8682a12;">&#9650;&thinsp;Hacker News</span>
+    
+    <span class="paper-date">03-12</span>
+    <span class="discuss-score" style="color:#e8682a;">▲ 70 pts · 36 comments</span>
+  </div>
+  <div class="discuss-title">Launch HN: IonRouter (YC W26) – High-throughput, low-cost inference</div>
+  
+  <div class="discuss-actions">
+    <a class="discuss-btn discuss-btn-primary" href="https://ionrouter.io" target="_blank" rel="noopener">→ 查看原文</a>
+    <a class="discuss-btn discuss-btn-discuss" href="https://news.ycombinator.com/item?id=47355410" target="_blank" rel="noopener">💬 查看讨论</a>
+  </div>
+</div></div>
+</section>
 </div>
 
+<!-- 悬浮返回按钮 -->
+<a href="latest.html" class="float-back">
+  ← 返回景報
+</a>
+
 <footer>
-  <span>景報 Jae Daily &middot; AI 研报</span>
-  <span>数据来源：arXiv API · Hugging Face Daily Papers · OpenAI / DeepMind / Meta · 翻译：DeepSeek</span>
+  <span>景報 Jae Daily &middot; AI 研报专刊</span>
+  <span>arXiv · Hugging Face · OpenAI · DeepMind · Meta · Microsoft · NVIDIA · 翻译：DeepSeek</span>
 </footer>
 </body>
 </html>
