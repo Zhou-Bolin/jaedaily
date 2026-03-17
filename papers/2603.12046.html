@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Dr. SHAP-AV：通过Shapley归因解码音视频语音识别中的相对模态贡献 · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* Q&A 深度问答 */
+.qa-card{
+  background:#0f172a;border-radius:6px;border:1px solid #1e3a5f;
+  margin-bottom:14px;overflow:hidden;
+}
+.qa-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#7dd3fc;
+  font-family:sans-serif;padding:12px 18px;
+  background:#0f172a;border-bottom:1px solid #1e3a5f;text-transform:uppercase;
+}
+.qa-item{
+  padding:16px 18px;border-bottom:1px solid #1e3a5f20;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.6;margin-bottom:10px;
+}
+.qa-num{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:#1d4ed8;color:#fff;font-size:10px;font-weight:800;
+  font-family:sans-serif;margin-top:2px;
+}
+.qa-a{
+  font-size:13px;color:#94a3b8;line-height:1.8;padding-left:30px;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2603.12046</div>
+    <div class="paper-title-zh">Dr. SHAP-AV：通过Shapley归因解码音视频语音识别中的相对模态贡献</div>
+    <div class="paper-title-en">Dr. SHAP-AV: Decoding Relative Modality Contributions via Shapley Attribution in Audio-Visual Speech Recognition</div>
+    <div class="one-liner">💡 首个用Shapley值系统量化AVSR多模态贡献的三维诊断框架</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2026-03-12</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">eess.AS · cs.CV · cs.SD</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">Umberto Cappellazzo, Stavros Petridis, Maja Pantic</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2603.12046" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2603.12046" target="_blank" rel="noopener">⬇ PDF</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">即使在-10 dB极端噪声下AVSR模型音频贡献仍达38-46%，音频偏置顽固存在而非随噪声消失</li><li class="ta-item">Shapley值满足四条博弈论公理，是比模态消融实验更严格的performance-agnostic归因工具</li><li class="ta-item">Generative SHAP揭示模态贡献在自回归解码过程中动态演化，不同架构呈现截然不同的时序模式</li><li class="ta-item">SNR是驱动模态平衡的主导因素，同SNR下识别难度对模态权重影响极小，可指导噪声自适应融合设计</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)领域核心挑战：AVSR通过融合音频与唇动视觉信息提升噪声鲁棒性，但模型如何动态平衡两种模态始终不透明，缺乏可解释性工具。(2)现有方法局限：现有研究要么针对单一模型（如仅分析AV-HuBERT的viseme编码），要么依赖启发式消融（直接丢弃模态），缺乏满足数学公理的归因框架；实验表明，去除视频token后WER上升1-2个数量级，而去除音频token后WER几乎不变，说明存在严重的音频偏置，但其程度无法被精确量化。(3)核心问题：如何在不同SNR条件、解码过程中、输入时序维度上，用统一的数学框架定量刻画音视频模态贡献？(4)时机重要性：LLM-based AVSR模型（Llama-AVSR、Omni-AVSR等）的兴起使架构多样化，亟需跨架构统一诊断工具；Shapley值在视觉-语言模型中的成功应用（MM-SHAP）为迁移至AVSR提供了方法论基础。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)整体方法流程：Dr. SHAP-AV以Shapley矩阵$\Phi \in \mathbb{R}^{N \times T}$为核心数据结构，其中$N=N_A+N_V$为音视频特征总数，$T$为生成token数；通过Permutation SHAP（M=2000次采样）近似计算每个输入特征对每个生成token的贡献值，再从三个粒度提取分析指标。(2)三个关键技术创新点：①Global SHAP——将$\Phi$在所有特征和token维度聚合，得到标量A-SHAP和V-SHAP，量化整体模态平衡；创新在于将performance-agnostic的Shapley归因引入AVSR，与消融实验本质区别在于不改变模型输入分布而是测量内部预测贡献；②Generative SHAP——沿token维度$t$追踪模态贡献动态，揭示自回归解码过程中模态依赖的演化规律；现有工作仅给出静态全局归因，本方法首次捕捉生成时序动态；③Temporal Alignment SHAP——保留特征位置维度，分析输入特征位置与输出token的对应关系，验证时序对齐结构在噪声下的鲁棒性；这是对MM-SHAP框架的实质性扩展，超越了仅区分模态类别的粗粒度分析。(3)直觉有效性：Shapley值满足效率、对称性、线性性、零贡献者四条公理，保证归因的唯一性与公平性，避免了启发式方法的任意性；performance-agnostic特性使其能独立于转录准确率分析模型内部行为。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">核心特征函数定义为：对生成token $y_t$，$$f_{\mathbf{x}}^t(\mathcal{C}) = \mathbb{E}[\log p(y_t \mid \mathbf{X}_{\mathcal{C}}, y_{<t}) \mid \mathbf{X}_{\mathcal{C}} = \mathbf{x}_{\mathcal{C}}]$$其中$\mathcal{C} \subseteq \mathcal{F}$为当前可观测特征子集，$\mathcal{F}=A\cup V$，不在$\mathcal{C}$中的特征被mask为0。特征$i$对token $t$的Shapley值为：$$\phi_{i,t} = \sum_{\mathcal{C} \subseteq \mathcal{F}\setminus\{i\}} \frac{|\mathcal{C}|!(N-|\mathcal{C}|-1)!}{N!}[f_{\mathbf{x}}^t(\mathcal{C}\cup\{i\}) - f_{\mathbf{x}}^t(\mathcal{C})]$$权重$\frac{|\mathcal{C}|!(N-|\mathcal{C}|-1)!}{N!}$对所有大小为$|\mathcal{C}|$的联盟赋予相等权重，保证公平性。Permutation SHAP近似：$$\phi_i \approx \frac{1}{M}\sum_{m=1}^{M}[f_{\mathbf{x}}(\mathcal{P}_i^{\pi_m}\cup\{i\}) - f_{\mathbf{x}}(\mathcal{P}_i^{\pi_m})]$$其中$\mathcal{P}_i^{\pi_m}$为排列$\pi_m$中特征$i$之前的特征集合，$M=2000$保证收敛。全局模态贡献通过对$\Phi$在音频行$A$和视觉行$V$分别求和再归一化得到A-SHAP和V-SHAP。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">基准数据集：LRS2（BBC新闻，约224小时，约45k句）和LRS3（TED演讲，约433小时，约151k句），均为标准AVSR基准。噪声测试：使用NOISEX-92数据库中的白噪声、babble噪声等多种噪声类型，SNR范围从clean到-10 dB（含0、5、10、20 dB等多档）。视觉输入：96×96像素灰度唇部ROI视频，25fps。音频输入：16kHz单声道波形。Shapley计算在推理阶段进行，每个样本需M=2000次前向传播，实验在六个预训练模型上直接评估，无需重新训练。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">分析对象涵盖两类架构共六个模型：(1)Encoder-Decoder类：AV-HuBERT（自监督预训练，Transformer编码器+解码器，跨注意力融合）、Auto-AVSR（CTC/Attention混合）、Whisper-Flamingo（Whisper骨干+Flamingo式视觉交叉注意力）；(2)LLM-based类：Llama-AVSR、Llama-SMoP（稀疏混合投影器）、Omni-AVSR（统一多任务LLM）。对于LLM-based模型，音视频特征经投影器映射到LLM token空间后拼接输入；对于Encoder-Decoder模型，音视频编码器输出通过交叉注意力被解码器查询。Dr. SHAP-AV框架统一处理两类架构，关键扩展在于将Shapley归因从LLM token级别推广到跨注意力编码器表示级别，实现跨架构可比分析。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">Dr. SHAP-AV本身为推理时分析框架，不涉及模型训练。六个被分析模型均使用其原始发布的预训练权重。Shapley值计算超参数：M=2000次排列/联盟采样（参照MM-SHAP系列工作设定），同时对比Permutation SHAP与Sampling SHAP两种近似方法以验证稳定性。计算开销：每个样本需2000次前向传播，对LLM-based大模型（如Llama-AVSR）计算成本显著，论文未明确报告总GPU时长，但指出这是框架的主要实际限制。实验在LRS2和LRS3测试集上进行，覆盖多SNR档位和多噪声类型。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">核心发现量化：(1)即使在-10 dB极端噪声下，音频贡献仍维持38-46%，远高于预期的视觉主导水平，揭示持续性音频偏置；(2)Whisper-Flamingo和Omni-AVSR在解码过程中音频贡献随token位置递增，而AV-HuBERT保持稳定平衡；(3)时序对齐结构在噪声下保持鲁棒；(4)不同噪声类型（babble vs. white noise）导致不同程度的视觉依赖偏移；(5)SNR是模态平衡的主导因素，识别难度（WER高低）在同一SNR档内影响极小。消融对比：去除视频token后WER上升1-2个数量级，去除音频token后WER接近AVSR全模态，与Shapley分析结论一致。项目主页开源：https://umbertocappellazzo.github.io/Dr-SHAP-AV，提供代码与可视化工具。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">Umberto Cappellazzo（第一作者/通讯作者）：英国帝国理工学院 & NatWest AI Research，专注LLM-based AVSR，发表Llama-AVSR、Omni-AVSR等多篇顶会论文；Stavros Petridis：英国帝国理工学院 & NatWest AI Research，AVSR领域资深研究者，AV-HuBERT等奠基工作参与者；Maja Pantic：英国帝国理工学院 & NatWest AI Research，情感计算与多模态感知领域国际顶级学者，IEEE Fellow。三位作者均来自帝国理工学院，该团队是全球AVSR领域最具影响力的研究组之一，近年持续产出AVSR领域ICASSP/Interspeech/NeurIPS顶会成果。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">直接影响：为AVSR社区提供首个跨架构、跨SNR的标准化模态诊断工具，将Shapley归因确立为AVSR可解释性的基准方法。新研究方向：①基于Shapley反馈设计自适应模态加权机制，在推理时动态调整音视频融合权重；②利用Generative SHAP揭示的解码动态设计token级别的模态调度策略；③将Temporal Alignment SHAP扩展至多说话人、多语言AVSR场景；④探索Shapley引导的训练目标以缓解音频偏置。产业落地：噪声环境下的视频会议、助听设备、车载语音交互的模态可靠性实时监控。现有局限：每样本2000次前向传播计算成本高昂，限制大规模部署；mask策略（置零）可能引入分布偏移。未来工作：作者明确呼吁将Shapley归因作为AVSR标准诊断，并开发显式模态加权训练机制。</div>
+</div>
+  <div class="qa-card"><div class="qa-title">THREE KEY QUESTIONS · 深度问答</div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q1</span>问题1：Permutation SHAP以M=2000次采样近似计算Shapley值，但AVSR特征空间维度N=N_A+N_V可能极高，该采样数是否足以保证归因估计的统计可靠性？其理论误差界如何影响「音频贡献维持38-46%」这一核心结论的置信度？</div><div class="qa-a">这是方法论的核心脆弱点。Permutation SHAP的估计方差与特征数N正相关，理论上误差界为O(1/√M)量级，但在高维特征空间中收敛速度会显著退化。论文选择M=2000的依据未见充分的敏感性分析——若N_A+N_V达到数百甚至数千维（如Whisper-Flamingo的音频token序列），2000次采样可能导致单个特征的Shapley估计标准差达到真实值的10-20%。「38-46%」这一区间本身宽达8个百分点，部分可能源于采样噪声而非真实的模型行为差异。更深层的问题在于：论文将音视频特征分组聚合（A-SHAP/V-SHAP），这种组级归因虽降低了方差，但掩盖了组内特征间的交互效应（Shapley值假设特征独立性，而音视频token在注意力机制中存在强耦合）。建议的改进方向是：报告bootstrap置信区间、进行M从500到5000的收敛曲线分析，以及采用KernelSHAP等方差更低的替代估计器作为对照验证。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q2</span>问题2：论文以「去除视频token后WER接近AVSR全模态」作为消融实验与Shapley分析结论一致的证据，但这两种方法测量的是根本不同的量——消融改变了输入分布而Shapley不改变，这种「一致性」是否构成循环论证，还是真正的交叉验证？</div><div class="qa-a">这是实验设计中最值得深究的逻辑问题。论文明确声称Shapley归因的核心优势是「performance-agnostic」且「不改变模型输入分布」，与消融实验「本质区别」在于此。然而，当论文用消融结果（去音频→WER崩溃，去视频→WER接近全模态）来「验证」Shapley结论（音频贡献主导）时，实际上是在用一个不同假设下的测量来背书另一个——两者测量的是不同的因果量：消融测量的是模态的「必要性」（interventional effect），Shapley测量的是模态的「边际贡献」（marginal contribution under coalition averaging）。在音视频强耦合的模型中，这两个量可以系统性地不一致：例如视频模态可能对音频预测有强调制作用（高Shapley值），但单独存在时因分布偏移而失效（消融WER高）。论文缺少一个关键实验：在中等SNR（如0dB）条件下，Shapley预测的视觉贡献提升是否与消融实验中去除视频后WER的增幅呈单调对应关系，这才是真正的定量交叉验证。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q3</span>问题3：Dr. SHAP-AV揭示了「持续性音频偏置」并呼吁「ad-hoc模态加权机制」，但Shapley归因本身能否直接指导训练时的模态平衡干预？将推理时的归因分析转化为训练目标面临哪些根本性挑战？</div><div class="qa-a">这是从诊断工具到实际改进的关键鸿沟。Dr. SHAP-AV定位为「诊断框架」，但其最终价值取决于能否闭环指导模型改进。核心挑战有三层：第一，计算成本壁垒——M=2000次前向传播用于推理分析已属昂贵，若将Shapley归因引入训练循环（如作为正则化项约束A-SHAP/V-SHAP比例），每个训练步的计算开销将增加3-4个数量级，实践上不可行；第二，目标定义模糊——「平衡」的最优A-SHAP/V-SHAP比例是多少？论文发现SNR是主导因素，意味着最优比例应随噪声动态变化，静态平衡目标可能适得其反；第三，归因与性能的解耦——论文发现即使在-10dB下音频贡献仍达38-46%，但这是否真的「有害」？若模型在此条件下WER已经最优，强制提升视觉贡献可能降低性能。更有前景的研究方向是：将Dr. SHAP-AV用于数据集诊断（识别哪些样本导致模态偏置）、用于模型选择（比较不同架构的模态利用效率），或开发轻量级代理指标替代全量Shapley计算，使其能够嵌入训练监控流程。</div></div></div>
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-03-17 17:00<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2603.12046" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+</body>
+</html>
