@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>收藏夹 · Jae Daily 论文</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='serif' font-size='54' fill='%23f5ead0'%3E★%3C/text%3E%3C/svg%3E"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 主体 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a,#8a1212 60%,#7a0e0e);
+  border-bottom:2px solid #5a0a0a;
+  padding:28px 24px 22px;text-align:center;
+}
+.masthead-title{
+  font-size:22px;font-weight:700;color:#f5ead0;margin-bottom:6px;
+}
+.masthead-sub{
+  font-size:12px;color:rgba(245,234,208,.55);letter-spacing:.5px;
+}
+.container{max-width:960px;margin:0 auto;padding:28px 20px 56px;}
+
+/* ── 空状态 ── */
+.empty-state{
+  text-align:center;padding:64px 20px;color:#94a3b8;
+}
+.empty-icon{font-size:48px;margin-bottom:16px;}
+.empty-title{font-size:16px;font-weight:600;color:#64748b;margin-bottom:8px;}
+.empty-desc{font-size:13px;line-height:1.7;}
+.empty-link{
+  display:inline-block;margin-top:20px;padding:8px 20px;
+  background:#8a1212;color:#f5ead0;border-radius:5px;text-decoration:none;font-size:13px;font-weight:600;
+}
+.empty-link:hover{background:#6e0a0a;}
+
+/* ── 分类区块 ── */
+.cat-section{margin-bottom:32px;}
+.cat-header{
+  display:flex;align-items:center;gap:12px;
+  padding:0 0 12px;border-bottom:2px solid;margin-bottom:16px;
+}
+.cat-icon{font-size:18px;}
+.cat-name{font-size:15px;font-weight:800;letter-spacing:.5px;}
+.cat-count{
+  margin-left:auto;font-size:11px;font-family:sans-serif;font-weight:700;
+  padding:2px 9px;border-radius:12px;
+}
+
+/* ── 卡片 ── */
+.papers-grid{
+  display:grid;grid-template-columns:1fr;gap:10px;
+}
+@media(min-width:640px){.papers-grid{grid-template-columns:1fr 1fr;}}
+@media(min-width:960px){.papers-grid{grid-template-columns:1fr 1fr 1fr;}}
+
+.paper-card{
+  background:#fff;border-radius:8px;border:1px solid #e8e0d4;
+  overflow:hidden;transition:box-shadow .15s;display:flex;flex-direction:column;
+}
+.paper-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);}
+.card-body{
+  padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:6px;
+  text-decoration:none;color:inherit;
+}
+.card-body:hover .card-title{color:#8a1212;}
+.card-date{font-size:10px;color:#94a3b8;font-family:sans-serif;}
+.card-title{font-size:13px;font-weight:700;color:#1e1a16;line-height:1.45;}
+.card-title-en{font-size:11px;color:#9a8878;font-style:italic;line-height:1.4;}
+.card-oneliner{
+  font-size:12px;color:#374151;background:#f8f6f2;
+  border-left:3px solid;border-radius:0 3px 3px 0;
+  padding:5px 9px;line-height:1.5;margin-top:2px;
+}
+.card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 14px;border-top:1px solid #f0ece4;background:#faf8f5;
+}
+.card-arxiv{
+  font-size:10px;color:#94a3b8;font-family:monospace;text-decoration:none;
+}
+.card-arxiv:hover{color:#8a1212;}
+.card-remove{
+  background:none;border:none;cursor:pointer;font-size:11px;
+  color:#cbd5e1;padding:2px 6px;border-radius:3px;transition:all .15s;
+}
+.card-remove:hover{color:#dc2626;background:#fee2e2;}
+
+/* ── 统计栏 ── */
+.stats-bar{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:14px 20px;background:#fff;border-bottom:1px solid #e8e0d4;
+  font-size:12px;color:#64748b;
+}
+.stat-item{display:flex;align-items:center;gap:5px;}
+.stat-num{font-weight:700;color:#1e1a16;}
+
+/* ── 清空按钮 ── */
+.clear-btn{
+  margin-left:auto;padding:5px 12px;border-radius:4px;font-size:11px;
+  font-weight:600;cursor:pointer;color:#dc2626;
+  background:none;border:1px solid #fca5a5;transition:all .15s;font-family:inherit;
+}
+.clear-btn:hover{background:#fee2e2;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    AI 研报
+  </a>
+  <span class="topbar-brand">JAE DAILY · ⭐ 收藏夹</span>
+</div>
+
+<div class="masthead">
+  <div class="masthead-title">⭐ 我的论文收藏</div>
+  <div class="masthead-sub" id="masthead-count">加载中...</div>
+</div>
+
+<div id="stats-bar" class="stats-bar" style="display:none;">
+  <span class="stat-item">收藏 <span class="stat-num" id="total-count">0</span> 篇</span>
+  <span id="cat-stats"></span>
+  <button class="clear-btn" onclick="clearAll()">清空全部</button>
+</div>
+
+<div class="container" id="main-container">
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div class="empty-icon">☆</div>
+    <div class="empty-title">收藏夹还是空的</div>
+    <div class="empty-desc">
+      在论文解读页面点击右上角的「☆ 收藏」按钮<br/>
+      即可将感兴趣的论文保存到这里
+    </div>
+    <a href="ai-digest.html" class="empty-link">去 AI 研报看看</a>
+  </div>
+  <div id="sections-container"></div>
+</div>
+
+<script>
+var FAV_KEY = 'jd_favorites';
+
+// 分类顺序与样式
+var CAT_META = {
+  '语音与音频': {icon:'🎵', color:'#0d4a28', bg:'#e8f5ee', order:0},
+  '大语言模型': {icon:'🧠', color:'#1c3d6e', bg:'#e8eef5', order:1},
+  '视觉生成':   {icon:'👁', color:'#5a2d82', bg:'#f0eaf8', order:2},
+  '工程进展':   {icon:'⚙️', color:'#b8940e', bg:'#fdf5dc', order:3},
+  '其他':       {icon:'📄', color:'#374151', bg:'#f1f5f9', order:99},
+};
+
+// arXiv 分类代码 → 友好名称映射
+var ARXIV_CAT_MAP = {
+  'cs.CL':'大语言模型','cs.AI':'大语言模型','cs.CV':'视觉生成',
+  'eess.AS':'语音与音频','cs.SD':'语音与音频',
+  'cs.LG':'大语言模型','cs.NE':'大语言模型',
+  'cs.RO':'工程进展','cs.SY':'工程进展',
+};
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function normCategory(paper) {
+  // 优先用已识别的分类，其次尝试 arXiv 分类代码
+  var cat = paper.category || '';
+  if (CAT_META[cat]) return cat;
+  // 尝试 arXiv 格式（如 "cs.CL"）
+  var mapped = ARXIV_CAT_MAP[cat];
+  if (mapped) return mapped;
+  return '其他';
+}
+
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
+               .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function removeOne(id) {
+  var favs = getFavs();
+  delete favs[id];
+  localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+  render();
+}
+
+function clearAll() {
+  if (!confirm('确定清空全部收藏吗？')) return;
+  localStorage.removeItem(FAV_KEY);
+  render();
+}
+
+function render() {
+  var favs   = getFavs();
+  var papers = Object.values(favs);
+  var statsBar = document.getElementById('stats-bar');
+  var emptyState = document.getElementById('empty-state');
+  var sectionsContainer = document.getElementById('sections-container');
+  var mastheadCount = document.getElementById('masthead-count');
+
+  if (papers.length === 0) {
+    mastheadCount.textContent = '暂无收藏';
+    statsBar.style.display = 'none';
+    emptyState.style.display = 'block';
+    sectionsContainer.innerHTML = '';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  statsBar.style.display = 'flex';
+  mastheadCount.textContent = '共收藏 ' + papers.length + ' 篇论文';
+  document.getElementById('total-count').textContent = papers.length;
+
+  // 按分类分组
+  var groups = {};
+  papers.forEach(function(p) {
+    var cat = normCategory(p);
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(p);
+  });
+
+  // 分类统计
+  var catStatsHtml = '';
+  Object.keys(groups).forEach(function(cat) {
+    var m = CAT_META[cat] || CAT_META['其他'];
+    catStatsHtml += '<span class="stat-item" style="color:' + m.color + ';">'
+      + m.icon + ' ' + cat + ' <span class="stat-num">' + groups[cat].length + '</span></span>';
+  });
+  document.getElementById('cat-stats').innerHTML = catStatsHtml;
+
+  // 按分类顺序渲染
+  var catOrder = Object.keys(groups).sort(function(a, b) {
+    return (CAT_META[a]||{order:99}).order - (CAT_META[b]||{order:99}).order;
+  });
+
+  var html = '';
+  catOrder.forEach(function(cat) {
+    var meta   = CAT_META[cat] || CAT_META['其他'];
+    var items  = groups[cat];
+    // 同分类内，按收藏时间倒序
+    items.sort(function(a, b) {
+      return (b.saved_at||'') > (a.saved_at||'') ? 1 : -1;
+    });
+
+    var cards = items.map(function(p) {
+      var paperUrl = 'papers/' + p.id + '.html';
+      var arxivUrl = 'https://arxiv.org/abs/' + p.id;
+      var oneliner = p.one_liner
+        ? '<div class="card-oneliner" style="border-color:' + meta.color + ';">'
+          + escHtml(p.one_liner) + '</div>'
+        : '';
+      return (
+        '<div class="paper-card">'
+        + '<a class="card-body" href="' + paperUrl + '">'
+        + '<div class="card-date">' + (p.published||'') + ' · 解读 ' + (p.analyzed||'').slice(0,10) + '</div>'
+        + '<div class="card-title">' + escHtml(p.title_zh||p.id) + '</div>'
+        + (p.title_en ? '<div class="card-title-en">' + escHtml(p.title_en.slice(0,80)) + (p.title_en.length>80?'…':'') + '</div>' : '')
+        + oneliner
+        + '</a>'
+        + '<div class="card-footer">'
+        + '<a class="card-arxiv" href="' + arxivUrl + '" target="_blank" rel="noopener">arXiv:' + p.id + ' ↗</a>'
+        + '<button class="card-remove" onclick="removeOne(\'' + p.id + '\')" title="取消收藏">✕ 取消</button>'
+        + '</div>'
+        + '</div>'
+      );
+    }).join('');
+
+    html += (
+      '<div class="cat-section">'
+      + '<div class="cat-header" style="border-color:' + meta.color + ';">'
+      + '<span class="cat-icon">' + meta.icon + '</span>'
+      + '<span class="cat-name" style="color:' + meta.color + ';">' + cat + '</span>'
+      + '<span class="cat-count" style="background:' + meta.bg + ';color:' + meta.color + ';">'
+      + items.length + ' 篇</span>'
+      + '</div>'
+      + '<div class="papers-grid">' + cards + '</div>'
+      + '</div>'
+    );
+  });
+
+  sectionsContainer.innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>
