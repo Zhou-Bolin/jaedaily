@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DeepSeek-R1：通过强化学习激励大语言模型的推理能力 · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2501.12948</div>
+    <div class="paper-title-zh">DeepSeek-R1：通过强化学习激励大语言模型的推理能力</div>
+    <div class="paper-title-en">DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning</div>
+    <div class="one-liner">💡 纯强化学习驱动LLM自主涌现推理能力，性能媲美OpenAI-o1</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2025-01-22</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">cs.CL · cs.AI · cs.LG</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">DeepSeek-AI, Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Peiyi Wang 等200人</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2501.12948" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2501.12948" target="_blank" rel="noopener">⬇ PDF</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">纯强化学习无需监督数据即可驱动LLM自主涌现反思与长链推理能力</li><li class="ta-item">冷启动数据+多阶段RL流水线可将推理性能提升至媲美OpenAI-o1-1217的水平</li><li class="ta-item">800K样本SFT蒸馏使7B小模型推理能力超越GPT-4o，蒸馏效率极高</li><li class="ta-item">大模型发现的推理模式对小模型至关重要，直接蒸馏优于对小模型直接施加RL</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">当前LLM推理能力提升主要依赖大量人工标注的监督数据（如Chain-of-Thought示例），数据收集成本高昂且耗时。OpenAI o1系列通过推理时扩展（inference-time scaling）实现了显著突破，但其技术细节未公开，学术界尚无方法能复现其通用推理性能。现有探索方向（过程奖励模型、蒙特卡洛树搜索等）均未能达到o1级别的推理水平。核心挑战在于：能否在完全不依赖监督数据的前提下，仅通过强化学习让LLM自主发展出强大的推理能力？同时如何解决纯RL训练带来的可读性差、语言混杂等问题，并将推理能力高效迁移至小模型？</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">论文提出两阶段方案：第一阶段DeepSeek-R1-Zero以DeepSeek-V3-Base为基座，采用GRPO（Group Relative Policy Optimization）框架进行纯强化学习训练，完全不使用监督数据，仅依靠规则型奖励（格式奖励+准确性奖励）驱动模型自主涌现反思、验证、长链推理等行为，证明了LLM推理能力可从RL中自发涌现。第二阶段DeepSeek-R1在此基础上引入多阶段训练流水线：①收集少量冷启动数据进行SFT初始化；②执行推理导向的RL训练；③通过拒绝采样生成新SFT数据并混合通用数据重新微调；④针对全场景执行二次RL（含规则奖励+人类偏好奖励模型）。与现有工作的本质区别在于：无需过程监督标注，奖励信号完全来自结果验证，且通过冷启动数据解决了纯RL的格式崩溃问题。此外，论文还探索了知识蒸馏路径，用DeepSeek-R1生成800K样本对Qwen/Llama小模型进行SFT蒸馏，7B蒸馏模型即可超越GPT-4o。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">核心算法为GRPO（Group Relative Policy Optimization），其目标函数为：$$\mathcal{J}_{GRPO}(\theta) = \mathbb{E}\left[\frac{1}{G}\sum_{i=1}^{G}\min\left(\frac{\pi_\theta(o_i|q)}{\pi_{\theta_{old}}(o_i|q)}\hat{A}_i,\ \text{clip}\left(\frac{\pi_\theta(o_i|q)}{\pi_{\theta_{old}}(o_i|q)}, 1-\epsilon, 1+\epsilon\right)\hat{A}_i\right) - \beta\, D_{KL}(\pi_\theta \| \pi_{ref})\right]$$其中 $\pi_\theta$ 为当前策略，$\pi_{\theta_{old}}$ 为旧策略，$G$ 为每个问题采样的输出组数，$\hat{A}_i$ 为组内相对优势估计（以组内奖励均值和标准差归一化），$\epsilon$ 为裁剪系数，$\beta$ 为KL散度惩罚系数，$\pi_{ref}$ 为参考策略。奖励函数由准确性奖励（答案正确得1分）和格式奖励（要求输出包含 $\langle think \rangle$ 推理块和 $\langle answer \rangle$ 答案块）组成，不使用神经网络奖励模型以避免reward hacking。评估指标 $\text{pass@1} = \frac{1}{k}\sum_{i=1}^{k}p_i$，其中 $p_i$ 为第 $i$ 次采样的正确性。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">冷启动数据：数千条长链推理格式的SFT样本，用于初始化DeepSeek-R1训练。RL阶段：数学、代码、逻辑推理领域的可验证问题（规模未详述）。拒绝采样阶段：从RL检查点采样生成推理SFT数据，结合DeepSeek-V3的写作、事实问答、自我认知等通用监督数据。蒸馏阶段：由DeepSeek-R1生成800K训练样本，用于微调Qwen2.5系列（1.5B/7B/14B/32B）和Llama系列（8B/70B）。评估数据集涵盖AIME 2024、MATH-500、MMLU、GPQA Diamond、LiveCodeBench、Codeforces、SWE-Bench Verified、AlpacaEval 2.0、ArenaHard等。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">基座模型为DeepSeek-V3-Base（Mixture-of-Experts架构，具体参数规模论文未在摘要章节详述）。DeepSeek-R1-Zero和DeepSeek-R1均在此基座上通过RL/SFT训练获得，输出格式强制包含 $\langle think \rangle...\langle /think \rangle$ 推理过程块和 $\langle answer \rangle...\langle /answer \rangle$ 答案块，最大输出长度32,768 tokens。蒸馏模型系列：DeepSeek-R1-Distill-Qwen-1.5B/7B/14B/32B（基于Qwen2.5）和DeepSeek-R1-Distill-Llama-8B/70B（基于Llama-3系列），均为标准Dense Transformer架构，通过SFT蒸馏获得推理能力，无需修改原始架构。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">DeepSeek-R1-Zero：纯GRPO强化学习，无SFT预热，规则型奖励，训练数千步后收敛。DeepSeek-R1：四阶段流水线——冷启动SFT → 推理RL → 拒绝采样SFT → 全场景二次RL。二次RL阶段同时使用规则奖励（推理域）和奖励模型（通用域）。评估采用温度0.6、top-p 0.95的采样策略，每题生成4至64个响应计算pass@1。具体优化器、学习率、批次大小、GPU型号与数量等训练超参数论文未在所提供章节中详述。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">DeepSeek-R1在AIME 2024达到79.8% pass@1（cons@64进一步提升），略超OpenAI-o1-1217；MATH-500达97.3%，与o1-1217持平；Codeforces Elo 2029分，超越96.3%人类参赛者；MMLU 90.8%、MMLU-Pro 84.0%、GPQA Diamond 71.5%，显著优于DeepSeek-V3；AlpacaEval 2.0长度控制胜率87.6%，ArenaHard胜率92.3%。蒸馏模型：7B模型全面超越GPT-4o-0513；14B模型在所有指标上超越QwQ-32B-Preview；32B和70B模型在密集模型推理基准中创新纪录，显著超越o1-mini。DeepSeek-R1-Zero在AIME 2024从15.6%提升至71.0%（多数投票86.7%），验证纯RL有效性。模型已开源（Qwen和Llama蒸馏系列）。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">前5位作者均来自DeepSeek-AI（深度求索，中国）：Daya Guo（核心研究员）、Dejian Yang（核心研究员）、Haowei Zhang（核心研究员）、Junxiao Song（核心研究员）、Peiyi Wang（核心研究员）。论文署名为DeepSeek-AI集体署名，共约200人参与，未单独指定通讯作者，机构统一为DeepSeek-AI（中国）。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">核心贡献：首次系统证明纯强化学习可驱动LLM自主涌现复杂推理能力（反思、验证、长链思维），无需人工标注推理过程；提出冷启动+多阶段RL的实用训练范式；证明大模型推理能力可通过SFT蒸馏高效迁移至小模型。局限性：对中文以外语言存在语言混杂问题；对prompt敏感，few-shot会降低性能；软件工程任务因评估耗时导致RL规模受限；function calling、多轮对话、复杂角色扮演能力仍弱于DeepSeek-V3。未来方向：扩展长CoT至更多任务类型、解决多语言混杂、引入异步评估加速软件工程RL、对蒸馏模型进一步施加RL以获得额外增益。</div>
+</div>
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-03-17 16:18<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2501.12948" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+</body>
+</html>
