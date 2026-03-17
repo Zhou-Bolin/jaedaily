@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>注意力残差连接 · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* Q&A 深度问答 */
+.qa-card{
+  background:#0f172a;border-radius:6px;border:1px solid #1e3a5f;
+  margin-bottom:14px;overflow:hidden;
+}
+.qa-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#7dd3fc;
+  font-family:sans-serif;padding:12px 18px;
+  background:#0f172a;border-bottom:1px solid #1e3a5f;text-transform:uppercase;
+}
+.qa-item{
+  padding:16px 18px;border-bottom:1px solid #1e3a5f20;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.6;margin-bottom:10px;
+}
+.qa-num{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:#1d4ed8;color:#fff;font-size:10px;font-weight:800;
+  font-family:sans-serif;margin-top:2px;
+}
+.qa-a{
+  font-size:13px;color:#94a3b8;line-height:1.8;padding-left:30px;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2603.15031</div>
+    <div class="paper-title-zh">注意力残差连接</div>
+    <div class="paper-title-en">Attention Residuals</div>
+    <div class="one-liner">💡 用深度维度softmax注意力替代固定权重残差累加，解决PreNorm隐状态膨胀问题</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2026-03-16</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">cs.CL</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">Kimi Team, Guangyu Chen, Yu Zhang, Jianlin Su, Weixin Xu, Siyuan Pan 等37人</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2603.15031" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2603.15031" target="_blank" rel="noopener">⬇ PDF</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">用softmax注意力替代固定权重残差，Block AttnRes等效于基线1.25倍计算量的性能，推理延迟仅增加<2%。</li><li class="ta-item">标准残差和Highway Networks本质上是深度线性注意力，AttnRes完成了深度维度「线性→softmax」的跃迁。</li><li class="ta-item">$N \approx 8$个块即可恢复Full AttnRes大部分收益，内存和通信从$O(Ld)$降至$O(Nd)$，工程可行性强。</li><li class="ta-item">AttnRes使PreNorm隐状态幅值在深度方向保持有界、梯度分布更均匀，可作为诊断和缓解深层LLM训练不稳定的工具。</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)领域核心挑战：现代LLM中残差连接的深度维度信息聚合机制长期被忽视，所有层输出以固定单位权重均匀累加，缺乏选择性。(2)现有方法局限：PreNorm架构下隐状态量级随深度以$O(L)$增长，导致浅层信息被逐渐稀释（dilution），实证上大量层可被剪枝而几乎不损失性能（文献[11]）；Highway Networks等门控方法仅能访问直接前驱$h_{l-1}$，无法选择性恢复任意历史层输出；DenseFormer等跨层访问方法难以规模化。(3)核心问题：如何在深度维度实现类似Transformer在序列维度所做的「从RNN到Attention」的跃迁，即用输入相关的动态权重替代固定权重的深度聚合。(4)时机重要性：大模型规模持续扩大，深度增加使dilution问题愈发严重，且工业级训练基础设施（流水线并行、激活重计算）已成熟，为设计高效的跨层机制提供了工程基础。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)整体方法：AttnRes将标准残差$h_l = \sum_{i} v_i$替换为$h_l = \sum_{i} \alpha_{i \to l} \cdot v_i$，其中$\alpha_{i \to l}$是通过softmax注意力计算的动态权重，每层仅需一个$d$维可学习伪查询向量$w_l$。(2)三个关键创新点：①Full AttnRes：每层用轻量伪查询$w_l$（与输入无关，仅与层索引相关）对所有前驱层输出做softmax注意力，实现内容感知的深度选择；与DenseFormer的深度加权平均本质区别在于权重是通过softmax归一化的动态注意力而非固定标量，且通过RMSNorm防止大幅值层主导注意力。②Block AttnRes：将$L$层分为$N$个块，块内用标准残差累加为单一表示$b_n = \sum_{j \in B_n} f_j(h_j)$，块间做$N$路softmax注意力；内存和通信从$O(Ld)$降至$O(Nd)$，$N \approx 8$即可恢复Full AttnRes大部分收益。③统一理论视角：通过结构化矩阵分析证明标准残差和Highway Networks等价于深度线性注意力，AttnRes将其推广为深度softmax注意力，完成了与序列维度「线性→softmax」相同的跃迁。(3)直觉有效性：不同层（Attention vs MoE）对不同任务的贡献不同，动态权重允许模型按需检索最相关的历史表示，类似于序列注意力允许每个token选择性关注历史token。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">核心注意力权重计算：$$\alpha_{i \to l} = \frac{\phi(q_l, k_i)}{\sum_{j=0}^{l-1} \phi(q_l, k_j)}$$其中核函数$\phi(q, k) = \exp(q^\top \text{RMSNorm}(k))$，$q_l = w_l \in \mathbb{R}^d$为第$l$层可学习伪查询（与输入无关），$k_i = v_i$为第$i$层输出（$i=0$时为token embedding $h_1$，$i \geq 1$时为$f_i(h_i)$）。层输入由加权聚合给出：$$h_l = \sum_{i=0}^{l-1} \alpha_{i \to l} \cdot v_i$$RMSNorm作用于key而非query，防止输出幅值大的层（如深层MoE）通过内积主导注意力分布。Block AttnRes中块表示$b_n = \sum_{j \in B_n} f_j(h_j)$，块间注意力的值矩阵$V$由$[b_0, b_1, \ldots, b_{n-1}]$（及块内偏和$b_n^i$）构成，权重归一化保证$\sum_i \alpha_{i \to l} = 1$，维持残差连接的尺度稳定性。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">预训练数据：1.4T tokens，具体数据集构成未完全披露（遵循Kimi系列惯例，为多源混合语料）。Scaling law实验使用不同规模的子集验证跨计算量的一致性。下游评测基准包括：MMLU-Pro（多任务语言理解）、GPQA（研究生级问答）、HellaSwag（常识推理）、BBH（Big-Bench Hard）、MGSM（多语言数学推理）等标准LLM评测集。数据预处理遵循Kimi Linear架构[69]的标准流程，包含去重、质量过滤等步骤。训练/验证/测试划分未单独说明，评测采用标准zero-shot或few-shot协议。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">基础架构：Kimi Linear（文献[69]），48B总参数/3B激活参数的MoE（Mixture of Experts）模型，结合线性注意力机制。AttnRes改造：在每个Attention层和MoE层之前插入AttnRes操作（$\alpha$），Block AttnRes将$L$层分为$N \approx 8$个块，每块新增一个$d$维伪查询向量$w_l$和对应RMSNorm，额外参数量极小（$L$个$d$维向量）。推理复杂度：Block AttnRes的跨块注意力为$O(N^2)$（$N \ll L$），块内为标准残差；两阶段推理策略（Phase 1批量计算跨块注意力，Phase 2顺序处理块内依赖）将每层I/O从$O(Ld)$降至$O((S+N)d)$，推理延迟开销低于2%。与标准Transformer差异：残差连接被替换为动态深度注意力，其余组件（RoPE、GQA等）保持不变。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">训练配置：基于Kimi Linear架构在1.4T tokens上预训练，采用标准AdamW优化器（具体$\beta$值未披露）。流水线并行下采用跨阶段缓存（cross-stage caching）：每个rank缓存已接收的块表示，阶段切换时仅传输增量块（如$+[b_1, b_2]$）而非完整历史，消除冗余通信。激活重计算场景下Block AttnRes显式保留$N$个块表示（$O(Nd)$），而非$L$个层输出（$O(Ld)$）。Scaling law实验覆盖多个计算量档位验证一致性。训练稳定性：RMSNorm归一化key防止幅值爆炸，softmax归一化保证权重和为1；实验观察到AttnRes使输出幅值在深度方向保持有界，梯度范数分布更均匀，有效缓解PreNorm dilution导致的训练不稳定。具体GPU型号/数量/训练时长未披露。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">Scaling law：Block AttnRes在所有计算量档位下持续优于标准残差基线，等效于基线使用1.25倍计算量的性能（即相同FLOPs下Block AttnRes损失更低）。消融实验：Full AttnRes > Block AttnRes（$N=8$）> 标准残差，$N=8$块即可恢复Full AttnRes大部分收益；内容相关的深度选择（softmax vs 固定权重）贡献显著，验证了动态权重的必要性。48B模型下游评测：AttnRes在所有评测任务（MMLU-Pro、GPQA、HellaSwag、BBH、MGSM等）上均优于基线，具体数值未在截取内容中完整呈现。训练动态分析：AttnRes使隐状态幅值在深度方向保持有界（对比标准残差的$O(L)$增长），梯度范数跨层分布更均匀。推理开销：典型推理负载下延迟增加低于2%。代码开源：https://github.com/MoonshotAI/Attention-Residuals。局限：Full AttnRes在流水线并行下通信开销为$O(Ld)$，当前依赖Block AttnRes近似；未来互联带宽提升后可完全实现Full AttnRes。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">Guangyu Chen（等贡献，Moonshot AI/Kimi团队，中国）、Yu Zhang（等贡献，Moonshot AI，中国）、Jianlin Su（等贡献，Moonshot AI，中国，RoPE位置编码原作者）、Weixin Xu（Moonshot AI，中国）、Siyuan Pan（Moonshot AI，中国）、Yaoyu Wang（Moonshot AI，中国）。全部作者共37人，均来自Moonshot AI（月之暗面）Kimi团队。无单独通讯作者标注，三位等贡献作者（*）为核心贡献者。Moonshot AI是中国顶级大模型创业公司，Kimi系列模型在长上下文和推理能力上具有国际竞争力，Jianlin Su以RoPE等基础工作在LLM社区享有极高声誉。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">直接影响：为LLM残差连接设计提供了理论统一框架（深度线性→softmax注意力），可作为即插即用模块替换现有架构的残差连接。新研究方向：①深度维度注意力机制的进一步探索（如多头深度注意力、稀疏深度注意力）；②将AttnRes与其他跨层方法（DenseFormer、MUDDFormer）结合的混合架构；③基于AttnRes的模型剪枝与层重要性分析（动态权重可直接反映层贡献度）；④将时间-深度对偶性推广至其他序列模型（Mamba、RWKV等）。产业落地：作为drop-in替换，可直接集成到现有LLM训练流程，训练开销边际，推理延迟<2%，工业可行性强。未来工作：作者明确指出随互联带宽提升，Full AttnRes的$O(Ld)$通信将变得实际可行，有望完全释放深度注意力的潜力。</div>
+</div>
+  
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-03-17 16:53<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2603.15031" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+</body>
+</html>
