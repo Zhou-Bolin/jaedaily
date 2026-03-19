@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>语言模型的在线经验学习 · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 收藏按钮 ── */
+.fav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  background:transparent;border:1px solid rgba(245,234,208,.3);
+  color:rgba(245,234,208,.7);cursor:pointer;font-family:inherit;
+  letter-spacing:.3px;transition:all .2s;
+}
+.fav-btn:hover{background:rgba(245,234,208,.12);border-color:rgba(245,234,208,.5);color:#f5ead0;}
+.fav-btn.faved{background:#b8940e28;border-color:#b8940e;color:#e8c87a;}
+.fav-btn .fav-star{font-size:14px;transition:transform .2s;}
+.fav-btn.faved .fav-star{transform:scale(1.2);}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* Q&A 深度问答 */
+.qa-card{
+  background:#0f172a;border-radius:6px;border:1px solid #1e3a5f;
+  margin-bottom:14px;overflow:hidden;
+}
+.qa-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#7dd3fc;
+  font-family:sans-serif;padding:12px 18px;
+  background:#0f172a;border-bottom:1px solid #1e3a5f;text-transform:uppercase;
+}
+.qa-item{
+  padding:16px 18px;border-bottom:1px solid #1e3a5f20;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.6;margin-bottom:10px;
+}
+.qa-num{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:#1d4ed8;color:#fff;font-size:10px;font-weight:800;
+  font-family:sans-serif;margin-top:2px;
+}
+.qa-a{
+  font-size:13px;color:#94a3b8;line-height:1.8;padding-left:30px;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <a href="../favorites.html" style="color:rgba(245,234,208,.6);font-size:12px;
+     text-decoration:none;padding:12px 0;display:inline-flex;align-items:center;gap:5px;">
+    ⭐ 收藏夹
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2603.16856</div>
+    <div class="paper-title-zh">语言模型的在线经验学习</div>
+    <div class="paper-title-en">Online Experiential Learning for Language Models</div>
+    <div class="one-liner">💡 通过提取部署轨迹中的经验知识并蒸馏入模型参数，实现无奖励信号的在线持续学习</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2026-03-17</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">cs.CL</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">Tianzhu Ye, Li Dong, Qingxiu Dong, Xun Wu, Shaohan Huang, Furu Wei</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2603.16856" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2603.16856" target="_blank" rel="noopener">⬇ PDF</a>
+      <button class="fav-btn" id="fav-btn" onclick="toggleFav()">
+        <span class="fav-star">☆</span>
+        <span class="fav-label">收藏</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">提炼后的经验知识远优于原始轨迹，知识提取是OEL成功的核心前提而非可选步骤</li><li class="ta-item">On-policy采样保证训练与推理分布一致，是防止灾难性遗忘、保持OOD性能的关键机制</li><li class="ta-item">OEL同时提升任务准确率与token效率，经验内化后模型响应更简洁，降低推理成本</li><li class="ta-item">无奖励、无环境访问的在线学习范式在工程上可行，为LLM持续进化提供了实用路径</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)领域核心挑战：LLM部署后与真实环境的交互经验被完全丢弃，模型无法从实际使用中持续进化。(2)现有方法局限：离线SFT依赖人工标注，成本高且覆盖有限；离线RL需要可验证奖励函数或仿真环境，无法适配开放世界的文本反馈；两者均在固定数据分布上训练，性能存在天花板。真实部署环境往往只返回自然语言描述（如「撞墙」「掉入洞中」），无法直接提供标量奖励。(3)核心问题：如何在服务端无法访问用户侧环境、无奖励信号、无人工标注的约束下，从纯文本交互轨迹中提取有效训练信号并持续改进模型。(4)时机重要性：随着LLM大规模商业部署，积累的交互数据规模巨大，若能有效利用将形成「部署越广、能力越强」的正向飞轮。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">OEL框架由两阶段迭代构成，形成在线学习闭环。
+
+(1)整体流程：用户侧模型与真实环境交互收集多轮轨迹 → 服务端提取经验知识 → 通过On-Policy Context Distillation将知识固化入模型参数 → 更新后的模型重新部署收集更高质量轨迹，循环迭代。
+
+(2)关键技术创新：
+
+【经验知识累积提取】：模型作为知识提取器，顺序处理轨迹并在条件化前序经验的基础上递归生成新经验（$e_i = [e_{i-1}; e'_i]$）。「是什么」：将原始多轮轨迹压缩为可迁移的结构化/非结构化经验条目。「为什么有效」：原始轨迹含大量冗余和噪声，提炼后的经验聚焦于可泛化规则，实验证明其效果显著优于直接使用原始轨迹。「与现有工作区别」：无需奖励标注，纯文本自举。
+
+【On-Policy Context Distillation】：学生模型仅凭部分轨迹前缀生成响应，以知识条件化的教师模型为目标，通过反向KL散度优化。「是什么」：将上下文中的经验知识蒸馏进模型权重，推理时无需携带知识上下文。「为什么有效」：On-policy采样保证训练分布与推理分布一致，避免分布偏移导致的灾难性遗忘。「与现有工作区别」：无需访问用户侧环境，服务端即可完成全部训练。
+
+(3)直觉：模型通过「经历→反思→内化」的认知循环，将外部环境反馈转化为内部参数知识，类比人类从经验中学习的过程。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">核心损失函数为On-Policy Context Distillation的反向KL散度目标：
+
+$$\mathcal{L}(\theta) = \mathbb{E}_{x\sim\mathcal{D},\, e\sim\mathcal{C},\, y\sim\pi_\theta(\cdot|x)} \left[\frac{1}{|y|}\sum_{t=1}^{|y|} D_{\mathrm{KL}}\!\left(\pi_\theta(\cdot|x, y_{<t}) \,\Big\|\, \pi_{\mathrm{teacher}}(\cdot|e, x, y_{<t})\right)\right]$$
+
+其中：$x$为从用户轨迹中截取的部分展开前缀（partial rollout prefix），代表交互历史；$e$为从集合$\mathcal{C}$中随机采样的经验知识；$y\sim\pi_\theta(\cdot|x)$为学生模型在线采样的响应（on-policy）；$\pi_{\mathrm{teacher}}(\cdot|e,x,y_{<t})$为冻结的初始模型在经验知识条件下的输出分布；$D_{\mathrm{KL}}(P\|Q)$为反向KL散度，促使学生分布覆盖教师的高概率区域；$\frac{1}{|y|}$为响应长度归一化项。经验累积过程：$e'_i \sim \pi_{\mathrm{extract}}(\cdot|\tau_i, e_{i-1})$，$e_i = [e_{i-1}; e'_i]$，递归构建累积经验库$\mathcal{C}$。实现时仅对学生模型概率最高的top-256词表token计算KL散度以提升效率。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">实验环境：TextArena框架下的两个文字游戏——Frozen Lake（网格导航，避开洞穴到达目标）和Sokoban（空间推理推箱子）。游戏不提供显式规则，模型须通过探索自行发现。每轮交互最多5轮，每轮响应最长1024 tokens。训练数据来自模型与环境的在线交互：每轮OEL迭代收集1280或6400条轨迹样本（20或100训练步×64样本/步）。经验提取使用n=25或50条轨迹（结构化格式）或n=15条（非结构化格式），重复K=10次随机种子生成经验集合$\mathcal{C}$。测试集为128张固定地图，评估时取10个随机种子的平均pass rate。OOD评估使用IF-Eval基准（指令遵循，prompt级严格准确率）。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">OEL是一个框架而非单一模型架构，核心组件包括：
+
+(1)策略模型$\pi_\theta$：采用Qwen3系列——Qwen3-1.7B、Qwen3-4B、Qwen3-8B（thinking变体）及Qwen3-4B-Instruct-2507（non-thinking变体），覆盖不同规模与推理模式。
+
+(2)知识提取器$\pi_{\mathrm{extract}}$：默认等于当前部署模型$\pi_\theta$，thinking模式下保留answer部分、去除reasoning部分作为经验知识，避免冗余推理链污染经验库。
+
+(3)教师模型$\pi_{\mathrm{teacher}}$：训练开始前冻结的初始$\pi_\theta$，在推理时额外接收经验知识$e$作为上下文前缀，提供token级稠密监督信号。
+
+(4)设计哲学：推理时学生模型不携带经验上下文（仅输入部分轨迹前缀$x$），知识完全内化于参数，实现零额外推理开销。与标准Transformer无结构差异，创新在于训练范式而非架构本身。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">训练分为迭代式OEL轮次，每轮固定步数（20或100步），批大小64条轨迹样本。优化器未明确说明，学习率在{1e-6, 5e-6}中搜索，不同模型规模和任务配置固定后跨轮次保持不变（Qwen3-4B/8B使用1e-6，Qwen3-1.7B使用5e-6）。采样温度0.7。KL散度计算限制在top-256词表token以控制计算开销。关键稳定性技巧：(1)教师模型完全冻结，避免训练目标漂移；(2)经验知识随机采样自K=10个不同种子生成的集合$\mathcal{C}$，增加多样性；(3)Qwen3-1.7B因容量限制不在提取上下文中包含历史经验，防止长上下文利用不足。计算资源未明确披露GPU型号，但单轮训练仅需服务端轨迹数据，无需环境访问，具备工程可行性。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">主要结果（Frozen Lake，Qwen3-4B）：OEL经多轮迭代后pass rate从基线持续提升，响应长度（token效率）同步下降至约70-80%，表明经验内化后模型更简洁高效。跨模型规模（1.7B/4B/8B）和thinking/non-thinking变体均观察到一致改进。
+
+OOD性能：IF-Eval严格准确率在OEL训练后保持稳定，显著优于off-policy蒸馏基线，验证on-policy一致性对防止灾难性遗忘的关键作用。
+
+关键消融结论：(1)提炼后的经验知识显著优于直接使用原始轨迹作为上下文（证明提取阶段不可或缺）；(2)on-policy采样（学生自生成响应）相比off-policy方案效果更优；(3)结构化经验格式在较大模型上效果更好，非结构化格式适合小模型（1.7B）。
+
+开源地址：https://aka.ms/oel-code（代码已公开）。局限：实验仅在文字游戏环境验证，真实复杂部署场景的泛化性有待验证；经验提取质量依赖模型自身能力，小模型存在瓶颈。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">Tianzhu Ye（微软研究院，中国）与Li Dong（微软研究院，中国）为共同第一作者；Qingxiu Dong（微软研究院）、Xun Wu（微软研究院）、Shaohan Huang（微软研究院）、Furu Wei（微软研究院，通讯作者）。团队隶属微软研究院GeneralAI组，Furu Wei长期主导大规模语言模型基础研究，在预训练、指令微调及推理增强领域发表多篇顶会论文，是业界公认的LLM核心研究团队之一。本文为「Experiential Learning系列」第二部，第一部聚焦On-Policy Context Distillation基础方法。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">直接影响：为LLM部署后持续学习提供了首个无奖励、无环境访问的可行框架，打破「训练-部署」静态范式。
+
+新研究方向：(1)将OEL扩展至对话、代码生成等开放域任务，验证跨场景泛化；(2)研究经验知识的遗忘与更新机制，探索选择性经验保留策略；(3)多智能体场景下的协作经验共享与联邦式在线学习；(4)经验知识质量评估与自动筛选机制，替代当前固定步数采样。
+
+产业落地：客服机器人、代码助手、游戏AI等长期部署场景可直接受益，无需频繁人工标注即可持续优化。
+
+现有局限与克服思路：实验环境较简单，未来需在真实API调用、网页操作等复杂环境验证；经验库规模随迭代增长带来存储压力，可引入经验压缩或遗忘机制。作者明确将扩展至更多真实世界任务作为未来工作。</div>
+</div>
+  <div class="qa-card"><div class="qa-title">THREE KEY QUESTIONS · 深度问答</div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q1</span>On-Policy Context Distillation的核心假设是「学生模型仅凭轨迹前缀生成响应，以知识条件化的教师为目标」，但这一设计在理论上是否真能保证经验知识被内化入参数，而非仅仅学会模仿教师的表面分布？其有效性的根本机制是什么？</div><div class="qa-a">这一设计的有效性依赖于一个关键假设：教师模型（条件化经验知识）与学生模型（无知识上下文）之间的行为差距，恰好对应于「经验知识所提供的信息增益」。通过最小化KL散度 $D_{KL}(\pi_{teacher}||\pi_{student})$，学生被迫将知识压缩进参数空间。On-policy的关键在于：学生自生成的轨迹前缀与其自身参数分布一致，避免了off-policy蒸馏中训练分布与推理分布的协变量偏移（covariate shift）问题——论文消融实验证实off-policy基线导致OOD性能（IF-Eval严格准确率）显著下降，而OEL保持稳定。然而，理论保证仍存在缺口：该框架缺乏对「知识内化完整性」的形式化度量，无法证明所有经验知识均被有效编码而非部分遗失。此外，递归经验累积公式 $e_i = [e_{i-1}; e'_i]$ 随迭代轮次增加会导致上下文长度膨胀，当经验条目超出教师模型上下文窗口时，早期经验可能被截断，造成系统性知识损失，这一边界条件论文未作充分讨论。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q2</span>论文主要在Frozen Lake等文本游戏环境上验证OEL，这类环境具有明确状态转移和有限动作空间，与真实开放世界部署场景存在本质差异。实验设计是否足以支撑「OEL可用于真实部署」的核心主张？消融实验是否覆盖了最关键的混淆变量？</div><div class="qa-a">实验设计存在若干值得审视的局限。第一，Frozen Lake是离散状态、有限动作的确定性/随机网格世界，其轨迹结构高度规则，经验提取器极易归纳出可泛化规则（如「避开冰洞」）；而真实部署中的开放域对话或代码生成任务，轨迹语义空间无限，经验提取的泛化难度本质上更高。第二，论文验证了跨模型规模（1.7B/4B/8B）的一致性，这是加分项，但所有实验均在同一类型环境（文本游戏）中进行，缺乏跨任务域的迁移验证。第三，关键消融「提炼经验 vs. 原始轨迹」证明了提取阶段的价值，但未控制「信息量」变量——提炼后的经验可能仅因更短、噪声更少而表现更好，而非因结构化知识本身更优；若补充「等长随机采样轨迹片段」作为基线，结论将更具说服力。第四，OOD测试仅用IF-Eval一个基准，覆盖面有限，无法排除OEL在其他能力维度（如数学推理）上存在隐性退化的可能性。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q3</span>OEL框架的在线学习闭环依赖「更好的模型→更高质量轨迹→更丰富经验→进一步改进」的正向循环，但这一循环是否存在收敛性问题、经验同质化陷阱或对齐风险？在真实大规模部署中，该范式面临哪些根本性挑战？</div><div class="qa-a">该正向循环面临三个深层风险。第一，「经验泡沫」问题：随迭代推进，模型策略收敛后所采集的轨迹多样性下降，经验提取器将反复提炼相似知识，导致后期迭代边际收益递减乃至停滞——论文Figure 1显示pass rate曲线在后期迭代中增速已有放缓迹象，但未分析收敛机制。第二，错误经验的自我强化：若早期模型因能力不足产生系统性错误轨迹，提取器可能将错误策略归纳为「经验」并固化入参数，形成难以纠正的负向循环；论文的无奖励设计使得此类错误无法被自动识别和过滤。第三，真实部署的隐私与安全约束：用户侧轨迹上传至服务端训练涉及数据隐私合规问题（如GDPR），论文完全未讨论这一工程现实。未来研究的关键方向包括：引入不确定性感知的经验过滤机制以剔除低质量轨迹；设计联邦学习兼容的OEL变体以在本地完成部分知识提取；以及探索多智能体协作场景下的经验共享协议，以突破单一模型经验多样性的天花板。</div></div></div>
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-03-19 09:53<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2603.16856" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+
+<script>
+// ── 收藏功能（localStorage）──────────────────────────────────────────
+var PAPER_META = {
+  id:       '2603.16856',
+  title_zh: "语言模型的在线经验学习",
+  title_en: "Online Experiential Learning for Language Models",
+  one_liner:"通过提取部署轨迹中的经验知识并蒸馏入模型参数，实现无奖励信号的在线持续学习",
+  category: "cs.CL",
+  published:'2026-03-17',
+  analyzed: '2026-03-19 09:53'
+};
+
+var FAV_KEY = 'jd_favorites';
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function isFaved() {
+  return !!getFavs()[PAPER_META.id];
+}
+
+function updateBtn(faved) {
+  var btn = document.getElementById('fav-btn');
+  if (!btn) return;
+  btn.querySelector('.fav-star').textContent  = faved ? '★' : '☆';
+  btn.querySelector('.fav-label').textContent = faved ? '已收藏' : '收藏';
+  faved ? btn.classList.add('faved') : btn.classList.remove('faved');
+}
+
+function toggleFav() {
+  var favs = getFavs();
+  var id = PAPER_META.id;
+  if (favs[id]) {
+    delete favs[id];
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(false);
+    showToast('已取消收藏');
+  } else {
+    favs[id] = Object.assign({saved_at: new Date().toISOString()}, PAPER_META);
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(true);
+    showToast('已收藏 ⭐', true);
+  }
+}
+
+function showToast(msg, gold) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = (
+    'position:fixed;bottom:24px;right:24px;z-index:9999;'
+    + 'padding:10px 18px;border-radius:6px;font-size:13px;font-weight:600;'
+    + 'box-shadow:0 4px 16px rgba(0,0,0,.2);transition:opacity .3s;'
+    + (gold
+       ? 'background:#b8940e;color:#1e1a16;'
+       : 'background:#374151;color:#f0ece4;')
+  );
+  document.body.appendChild(t);
+  setTimeout(function() { t.style.opacity='0'; setTimeout(function(){t.remove();},300); }, 2000);
+}
+
+// 初始化按钮状态
+updateBtn(isFaved());
+</script>
+</body>
+</html>
