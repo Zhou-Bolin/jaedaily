@@ -135,18 +135,28 @@ a:hover{text-decoration:underline;}
   background:var(--card-bg);padding:12px 0 12px 12px;display:flex;flex-direction:column;gap:6px;cursor:pointer;}
 .card-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:6px;}
 .pub-time{font-size:10px;color:var(--text3);font-family:sans-serif;}
-.card-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.6;}
-.card-desc{font-size:12px;color:var(--text2);line-height:1.65;
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-.related-row{font-size:10px;color:var(--text3);font-family:sans-serif;margin-top:2px;}
-/* 折叠摘要 */
+.card-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.55;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-desc{font-size:12px;color:var(--text2);line-height:1.65;}
+.related-row{font-size:10px;color:var(--text3);font-family:sans-serif;}
+/* 卡片折叠展开 */
+.card-expand summary{display:flex;align-items:center;gap:5px;font-size:10px;
+  color:var(--text3);font-family:sans-serif;cursor:pointer;padding:2px 0;
+  list-style:none;user-select:none;margin-top:1px;}
+.card-expand summary::-webkit-details-marker{display:none;}
+.card-expand summary::before{content:"▸";font-size:9px;transition:transform 0.15s;}
+.card-expand[open] summary::before{content:"▾";}
+.card-expand[open] summary{color:var(--text2);}
+.card-expand-body{display:flex;flex-direction:column;gap:6px;padding-top:6px;
+  border-top:1px solid var(--divider);margin-top:4px;}
+/* 折叠摘要（深度，兼容旧版） */
 .full-summary summary{font-size:10px;color:#94a3b8;font-family:sans-serif;
   cursor:pointer;padding:4px 0 2px;list-style:none;user-select:none;}
 .full-summary summary::-webkit-details-marker{display:none;}
 .full-summary[open] summary{color:#4b6080;}
 .full-summary-body{font-size:12px;color:var(--text2);line-height:1.8;
   background:var(--inset-bg);border-left:2px solid var(--border);
-  padding:8px 12px;margin-top:6px;border-radius:2px;}
+  padding:8px 12px;margin-top:2px;border-radius:2px;}
 /* 投资信号折叠 */
 .mobile-heat{display:block;margin-bottom:12px;}
 
@@ -217,8 +227,9 @@ label.toggle-btn:hover{background:#6e0e0e;}
     box-shadow:0 1px 4px var(--card-shadow);
     transition:box-shadow .15s ease,transform .15s ease;}
   .news-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.09);transform:translateY(-2px);}
-  .card-title{font-size:15px;font-weight:700;line-height:1.55;}
-  .card-desc{font-size:12px;line-height:1.6;-webkit-line-clamp:2;}
+  .card-title{font-size:15px;font-weight:700;line-height:1.55;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .card-desc{font-size:12px;line-height:1.6;}
   .mobile-heat{display:none;}
   /* 分区标题 */
   .news-section{margin-bottom:40px;}
@@ -309,6 +320,21 @@ label.toggle-btn:hover{background:#6e0e0e;}
 .so-what{font-size:11px;color:#059669;font-family:sans-serif;
   font-weight:600;margin:3px 0 4px;line-height:1.5;}
 body.dark .so-what{color:#34d399;}
+/* 分享按钮 */
+.share-btn{background:none;border:none;padding:0 2px;cursor:pointer;font-size:11px;
+  color:var(--text3);opacity:0.5;transition:opacity 0.15s;margin-left:2px;}
+.share-btn:hover{opacity:1;}
+.share-btn.copied{color:#059669;opacity:1;}
+/* 分类筛选栏 */
+.filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px;padding:8px 0 4px;
+  border-bottom:1px solid var(--border);}
+.filter-chip{background:var(--bg2);border:1px solid var(--border);border-radius:14px;
+  padding:4px 14px;font-size:11px;font-family:sans-serif;font-weight:600;
+  color:var(--text2);cursor:pointer;transition:all 0.15s;}
+.filter-chip:hover{border-color:var(--text2);color:var(--text);}
+.filter-chip.active{background:#8a1212;border-color:#8a1212;color:#fff;}
+/* 被筛选隐藏的 section */
+.news-section.sec-hidden{display:none;}
 
 /* ══ FAQ ═══════════════════════════════════════════════════════ */
 .faq-section{margin-top:28px;margin-bottom:24px;border-top:1px solid var(--border);padding-top:20px;}
@@ -404,6 +430,69 @@ document.addEventListener('DOMContentLoaded',function(){
     window.scrollTo({top:0, behavior:'smooth'});
   });
 });
+
+// ── 分类筛选 ──────────────────────────────────────────────────
+function filterSec(btn, sec) {
+  document.querySelectorAll('.filter-chip').forEach(function(c) { c.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.news-section').forEach(function(s) {
+    if (sec === 'all' || s.id === sec) {
+      s.classList.remove('sec-hidden');
+    } else {
+      s.classList.add('sec-hidden');
+    }
+  });
+}
+
+// ── 分享卡片 ──────────────────────────────────────────────────
+function shareCard(btn) {
+  var text = btn.dataset.text + (btn.dataset.link ? ' ' + btn.dataset.link : '');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      btn.classList.add('copied');
+      btn.textContent = '✓';
+      setTimeout(function() { btn.classList.remove('copied'); btn.textContent = '🔗'; }, 1500);
+    });
+  }
+  event.stopPropagation();
+}
+
+// ── 键盘导航 j/k/o/e ─────────────────────────────────────────
+(function() {
+  var cards = [];
+  var cur = -1;
+  function getCards() {
+    return Array.from(document.querySelectorAll('.news-card:not(.sec-hidden .news-card)'));
+  }
+  function highlight(idx) {
+    cards = getCards();
+    if (cur >= 0 && cards[cur]) cards[cur].style.outline = '';
+    cur = Math.max(0, Math.min(idx, cards.length - 1));
+    if (cards[cur]) {
+      cards[cur].style.outline = '2px solid #8a1212';
+      cards[cur].scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'j') { highlight(cur < 0 ? 0 : cur + 1); }
+    else if (e.key === 'k') { highlight(cur <= 0 ? 0 : cur - 1); }
+    else if (e.key === 'o') {
+      cards = getCards();
+      if (cur >= 0 && cards[cur]) {
+        var lk = cards[cur].querySelector('a.read-link');
+        if (lk) window.open(lk.href, '_blank');
+      }
+    }
+    else if (e.key === 'e') {
+      cards = getCards();
+      if (cur >= 0 && cards[cur]) {
+        var det = cards[cur].querySelector('details.card-expand');
+        if (det) det.open = !det.open;
+      }
+    }
+  });
+})();
 </script>
 
 <!-- ── 浮动工具栏 ─────────────────────────────────────────── -->
@@ -446,15 +535,26 @@ document.addEventListener('DOMContentLoaded',function(){
     AI EXECUTIVE SUMMARY · Claude 分析
     <span class="summary-toggle-hint"></span>
   </summary>
-  <div class="summary-content"><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【今日核心叙事】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">美国起诉超微员工向中国走私英伟达芯片，科技管制与地缘博弈同步升温。</p><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【三条必读】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">① 美国起诉超微计算机员工非法向中国走私英伟达顶级AI芯片，芯片管制执法进入司法阶段。</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">② 英央行维持利率3.75%不变，中东战争推高能源成本，英国债券大幅下跌。</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">③ 阿里平头哥GPU芯片累计交付47万片，已覆盖互联网、金融、自动驾驶多行业。</p><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【编辑判断】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">芯片走私案叠加稳定币立法僵局，中美科技脱钩执法化信号明确，相关供应链合规成本将持续上升。</p><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【值得盯紧的信号】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">阿联酋瓦解真主党关联组织，叠加霍尔木兹近百艘船舶通行异动，中东金融与航运风险或同步发酵。</p></div>
+  <div class="summary-content"><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【今日核心叙事】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">伊朗冲突引发全球经济分化，俄中美三国利益各异，多国受损同时另有国家从中获益。</p><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【三条必读】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">① 乌克兰2026年已收复俄占领土约400平方公里，同期击落俄无人机数量创纪录，并向海湾地区派遣顾问开辟南线。</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">② 英伟达芯片走私案：三人被控使用虚假文件和伪装设备，计划向中国出售数十亿美元芯片。</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">③ 文科瑞翁在法兰克福上市首日股价上涨，该公司为爱国者导弹系统供应军用电力系统。</p><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【编辑判断】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">欧洲防务股持续受益于地缘冲突，同时美国对华芯片管制执法升级，科技供应链合规风险不可低估。</p><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【值得盯紧的信号】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">斯里兰卡拒绝美军战机降落请求，印度洋战略通道博弈正在悄然升温。</p></div>
 </details>
-      <div class="ep-section"><div class="ep-header"><span class="ep-header-title">AI TODAY'S PICKS · 今日精选</span><span class="ep-header-sub">主编从132条新闻中精选，附来龙去脉与行动建议</span></div><div class="ep-card" style="border-left-color:#8a1212;"><div class="ep-num" style="color:#8a1212;">01</div><div class="ep-body"><div class="ep-why" style="background:#8a121218;color:#8a1212;">芯片走私入刑，供应链合规红线</div><div class="ep-title"><a href="https://www.cnbc.com/2026/03/19/us-tech-execs-smuggled-nvidia-chips-to-china-prosecutors-say.html" target="_blank" rel="noopener" class="ep-title-link">美国起诉超微计算机员工向中国走私英伟达芯片</a></div><div class="ep-context">美国司法部起诉超微计算机员工非法向中国出口英伟达顶级AI芯片，标志着美国对华芯片管制从行政处罚升级至刑事追诉，涉及半导体供应链的企业合规风险骤升。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>审查供应商资质，排查芯片采购合规漏洞</div></div></div><div class="ep-card" style="border-left-color:#0369a1;"><div class="ep-num" style="color:#0369a1;">02</div><div class="ep-body"><div class="ep-why" style="background:#0369a118;color:#0369a1;">英央行按兵不动，债市剧烈震荡</div><div class="ep-title"><a href="https://www.ft.com/content/c0a967b6-19d0-4e50-9a8e-8ae510d43d08" target="_blank" rel="noopener" class="ep-title-link">英央行警示通胀风险 英国债券大幅下跌</a></div><div class="ep-context">英国央行维持利率3.75%不变，但明确警示中东战争推高能源成本带来的通胀风险，英国国债随即大幅下跌，反映市场对滞胀预期升温，对持有英镑资产的投资者构成直接冲击。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>减持英国长债敞口，对冲英镑汇率风险</div></div></div><div class="ep-card" style="border-left-color:#065f46;"><div class="ep-num" style="color:#065f46;">03</div><div class="ep-body"><div class="ep-why" style="background:#065f4618;color:#065f46;">美军或夺伊朗岛屿，霍尔木兹危机升级</div><div class="ep-title"><a href="https://www.chinanews.com.cn/gj/2026/03-20/10589748.shtml" target="_blank" rel="noopener" class="ep-title-link">美媒：美军或夺岛迫伊朗开放霍尔木兹海峡</a></div><div class="ep-context">美媒报道美国增兵中东并研究夺取伊朗石油出口枢纽岛屿以强行开放霍尔木兹海峡，若成真将直接冲击全球约20%石油运输通道，原油价格及航运保险成本将剧烈波动。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>提前锁定能源采购合同，增配原油期货对冲</div></div></div><div class="ep-card" style="border-left-color:#7c3aed;"><div class="ep-num" style="color:#7c3aed;">04</div><div class="ep-body"><div class="ep-why" style="background:#7c3aed18;color:#7c3aed;">OpenAI桌面超级应用，生产力工具格局重塑</div><div class="ep-title"><a href="https://www.theverge.com/ai-artificial-intelligence/897778/openai-chatgpt-codex-atlas-browser-superapp" target="_blank" rel="noopener" class="ep-title-link">OpenAI规划桌面端&quot;超级应用&quot;</a></div><div class="ep-context">OpenAI正开发整合ChatGPT、代码工具Codex与知识管理工具Atlas的桌面「超级应用」，一旦落地将直接挑战微软Office、Notion等主流生产力软件，对企业软件采购策略影响深远。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>暂缓企业生产力软件长期续约，等待产品落地评估</div></div></div><div class="ep-card" style="border-left-color:#b45309;"><div class="ep-num" style="color:#b45309;">05</div><div class="ep-body"><div class="ep-why" style="background:#b4530918;color:#b45309;">油价回落股市反弹，风险资产窗口开启</div><div class="ep-title"><a href="https://www.bloomberg.com/news/articles/2026-03-19/stock-market-today-dow-s-p-live-updates-" target="_blank" rel="noopener" class="ep-title-link">油价回落美股反弹 亚股开盘走高</a></div><div class="ep-context">受中东局势阶段性缓和预期影响，国际油价回落，美股从低位反弹，亚洲股市周五开盘走高，市场情绪短期修复，为近期因地缘风险超卖的风险资产提供再入场机会。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>逢低布局亚太优质股票ETF，设置止损位</div></div></div></div>
-      <div class="narrative-block"><div class="narrative-label">TODAY'S NARRATIVE · 今日故事线</div><p class="narrative-text">霍尔木兹海峡的阴云正在重塑全球秩序的底色。近百艘船舶强行通过这条咽喉水道，华尔街日报随即披露美军或将夺岛施压伊朗——这不仅是军事博弈，更是一场能源定价权的争夺战。与此同时，英国央行按兵不动，将利率维持在3.75%，并将通胀压力直接归因于中东战事推高的能源成本，英债应声大跌；伦敦金融城的焦虑，不过是霍尔木兹紧张态势在西方资本市场的回声。背后是更深的结构性裂变：美国司法部起诉超微员工向中国走私英伟达芯片，技术封锁与地缘冲突在同一时间轴上并行加速。这一切都发生在一个多极化摩擦期——分析师警告，当能源通道、芯片供应链与战场态势同步承压，任何单一事件的溢出效应都将远超以往。</p></div>
-      <div class="briefing-card"><div class="briefing-headline">深度速查 · <a href="https://www.cnbc.com/2026/03/19/us-tech-execs-smuggled-nvidia-chips-to-china-prosecutors-say.html" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">美国起诉超微计算机员工向中国走私英伟达芯片</a></div><div class="briefing-body"><div class="briefing-row"><span class="briefing-label" style="color:#64748b;">背景</span><span class="briefing-val">美国自2022年起对华实施先进AI芯片出口管制，禁止英伟达H100等高端芯片流入中国；部分企业和个人通过第三国转口、伪报货物等方式规避管制，形成灰色走私链条；此案标志着美国执法从规则制定转向刑事追诉，威慑力度显著升级。</span></div><div class="briefing-row"><span class="briefing-label" style="color:#1e293b;">当前</span><span class="briefing-val">美国司法部起诉超微计算机（Super Micro）相关员工，指控其参与将受管制英伟达AI芯片非法出口至中国的走私网络。</span></div><div class="briefing-row"><span class="briefing-label" style="color:#8a1212;">关注</span><span class="briefing-val">关注超微计算机（SMCI）是否发布官方声明或收到SEC问询，以及英伟达是否被要求配合调查——任何一方表态将决定事件是否从个人刑事案件升级为企业合规危机。</span></div><div class="briefing-row"><span class="briefing-label" style="color:#059669;">影响</span><span class="briefing-val">国内AI算力采购风险上升，算力替代国产化提速。</span></div></div></div>
-      <div class="briefing-card" style="border-left-color:#7c3aed;"><div class="briefing-headline" style="color:#7c3aed;">PERSPECTIVE GAP · 媒体视角差异 · 美国起诉芯片走私中国案</div><div class="briefing-body"><div class="briefing-row"><span class="briefing-label" style="color:#1d4ed8;">西方媒体</span><span class="briefing-val">强调执法正当性与国家安全威胁，聚焦中国获取先进AI芯片的风险</span></div><div class="briefing-row"><span class="briefing-label" style="color:#d97706;">非西方媒体</span><span class="briefing-val">质疑美国技术封锁动机，强调科技霸权与供应链武器化对全球贸易的冲击</span></div></div><div style="margin-top:8px;padding:6px 10px;background:#7c3aed18;border-radius:4px;font-size:11px;color:#7c3aed;font-family:sans-serif;">核心分歧：执法正义vs技术霸权的价值归因对立</div><div style="margin-top:6px;font-size:9px;color:#94a3b8;font-family:sans-serif;">基于议题：美国起诉超微计算机员工向中国走私英伟达芯片</div></div>
-      <div class="briefing-card" style="border-left-color:#065f46;padding:0;"><div class="briefing-headline" style="color:#065f46;padding:10px 14px 8px;">CROSS-DOMAIN · 跨领域关联洞察</div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:11px;font-family:sans-serif;font-weight:700;"><span style="background:#8a121228;color:#8a1212;border-radius:3px;padding:1px 7px;">霍尔木兹海峡船舶通行</span><span style="color:#94a3b8;">→</span><span style="background:#8a121218;color:#8a1212;border-radius:3px;padding:1px 7px;">英国债券通胀压力</span></div><div style="font-size:12px;color:var(--text);line-height:1.6;">海峡航运紧张推高油价，直接输入英国能源通胀，强化英央行鹰派立场，债券继续承压</div><div style="margin-top:4px;font-size:10px;color:#8a1212;font-family:sans-serif;">→ 做空英国长债，关注能源ETF</div></div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:11px;font-family:sans-serif;font-weight:700;"><span style="background:#1d4ed828;color:#1d4ed8;border-radius:3px;padding:1px 7px;">超微员工走私英伟达芯片</span><span style="color:#94a3b8;">→</span><span style="background:#1d4ed818;color:#1d4ed8;border-radius:3px;padding:1px 7px;">OpenAI超级应用供应链</span></div><div style="font-size:12px;color:var(--text);line-height:1.6;">芯片走私案触发美国对GPU出口管制收紧，OpenAI桌面超级应用所需算力成本上升，商业化节奏受阻</div><div style="margin-top:4px;font-size:10px;color:#1d4ed8;font-family:sans-serif;">→ 关注英伟达合规出口替代方案</div></div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:11px;font-family:sans-serif;font-weight:700;"><span style="background:#065f4628;color:#065f46;border-radius:3px;padding:1px 7px;">阿联酋瓦解真主党组织</span><span style="color:#94a3b8;">→</span><span style="background:#065f4618;color:#065f46;border-radius:3px;padding:1px 7px;">迪拜奢侈品牌战争危机</span></div><div style="font-size:12px;color:var(--text);line-height:1.6;">阿联酋反恐行动加剧中东地缘风险感知，叠加战争危机预期，高净值客户撤离迪拜，奢侈品消费骤降</div><div style="margin-top:4px;font-size:10px;color:#065f46;font-family:sans-serif;">→ 减持中东奢侈品零售敞口</div></div></div>
-      <div class="briefing-card" style="border-left-color:#3b82f6;padding:0;"><div class="briefing-headline" style="color:#3b82f6;padding:10px 14px 8px;">TIMELINE · 追踪事件演进</div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;"><span style="font-size:9px;background:#93c5fd40;color:#3b82f6;border-radius:3px;padding:1px 7px;font-family:sans-serif;font-weight:700;">持续6天</span><div style="font-size:12px;line-height:1.5;flex:1;"><a href="https://techcrunch.com/2026/03/19/jeff-bezos-reportedly-wants-100-billion-to-buy-and-transform-old-manufacturing-firms-with-ai/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;font-weight:700;">贝索斯欲投100亿美元收购制造企业用AI改造</a></div></div><div style="display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:11px;font-family:sans-serif;"><span style="color:#94a3b8;white-space:nowrap;padding-top:2px;">起因</span><span style="color:var(--text2);line-height:1.5;">全球制造业面临AI转型压力，科技资本加速布局工业领域，贝索斯寻求后亚马逊时代新增长极。</span><span style="color:#1d4ed8;white-space:nowrap;padding-top:2px;">今日</span><span style="color:var(--text);line-height:1.5;font-weight:600;">贝索斯拟斥资百亿美元收购工业企业，以AI技术全面改造传统制造业。</span><span style="color:#d97706;white-space:nowrap;padding-top:2px;">预判</span><span style="color:#d97706;line-height:1.5;">目标收购企业名单或曝光，监管机构及竞争对手将作出初步回应。</span></div></div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;"><span style="font-size:9px;background:#93c5fd40;color:#3b82f6;border-radius:3px;padding:1px 7px;font-family:sans-serif;font-weight:700;">持续3天</span><div style="font-size:12px;line-height:1.5;flex:1;"><a href="https://www.theverge.com/ai-artificial-intelligence/897778/openai-chatgpt-codex-atlas-browser-superapp" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;font-weight:700;">OpenAI规划桌面端&quot;超级应用&quot;</a></div></div><div style="display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:11px;font-family:sans-serif;"><span style="color:#94a3b8;white-space:nowrap;padding-top:2px;">起因</span><span style="color:var(--text2);line-height:1.5;">智利边境管控争议持续发酵，移民涌入引发社会矛盾，当局宣布启动新屏障措施以应对跨境压力，事件已持续三天。</span><span style="color:#1d4ed8;white-space:nowrap;padding-top:2px;">今日</span><span style="color:var(--text);line-height:1.5;font-weight:600;">OpenAI筹划桌面超级应用，整合ChatGPT、Codex及Atlas平台。</span><span style="color:#d97706;white-space:nowrap;padding-top:2px;">预判</span><span style="color:#d97706;line-height:1.5;">OpenAI或发布更多产品细节，边境局势或因国际关注升温而出现新谈判动向。</span></div></div></div>
-      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年03月20日</div><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bbc.com/news/articles/c4geg0eeyjeo?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">近百艘船舶通过霍尔木兹海峡 谁在通行？</a><div class="slim-sowhat">→ 意味着中东航运风险上升，进口石油成本可能增加，关注能源股波动。</div></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.nytimes.com/2026/03/19/world/europe/ukraine-hungary-orban-elections.html" class="slim-title" target="_blank" rel="noopener">乌克兰关键贷款成为匈牙利总理选举筹码</a></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.ft.com/content/c0a967b6-19d0-4e50-9a8e-8ae510d43d08" class="slim-title" target="_blank" rel="noopener">英央行警示通胀风险 英国债券大幅下跌</a><div class="slim-sowhat">→ 意味着英镑贬值趋势可能延续，人民币兑英镑升值，对英出口竞争力提升。</div></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">财经</div><a href="https://www.bbc.com/news/articles/cn0z0x82r00o?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">薪资增长创五年多来最低速度</a></div></div><div class="slim-item"><div class="slim-num">05</div><div class="slim-body"><div class="slim-cat">科技</div><a href="https://www.cnbc.com/2026/03/19/us-tech-execs-smuggled-nvidia-chips-to-china-prosecutors-say.html" class="slim-title" target="_blank" rel="noopener">美国起诉超微计算机员工向中国走私英伟达芯片</a><div class="slim-sowhat">→ 意味着中国芯片进口管制更严，国产替代芯片企业迎来机遇窗口。</div></div></div></div>
+      <div class="ep-section"><div class="ep-header"><span class="ep-header-title">AI TODAY'S PICKS · 今日精选</span><span class="ep-header-sub">主编从149条新闻中精选，附来龙去脉与行动建议</span></div><div class="ep-card" style="border-left-color:#8a1212;"><div class="ep-num" style="color:#8a1212;">01</div><div class="ep-body"><div class="ep-why" style="background:#8a121218;color:#8a1212;">芯片走私案直接冲击中美科技供应链</div><div class="ep-title"><a href="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener" class="ep-title-link">三人因涉嫌走私英伟达芯片至中国被控</a></div><div class="ep-context">三名涉案人员被控使用伪造文件将英伟达芯片走私至中国，涉案金额达数十亿美元。此案将强化美国对华芯片出口管制执法力度，国内AI算力采购渠道面临更严审查。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>排查供应商合规资质，规避采购法律风险</div></div></div><div class="ep-card" style="border-left-color:#0369a1;"><div class="ep-num" style="color:#0369a1;">02</div><div class="ep-body"><div class="ep-why" style="background:#0369a118;color:#0369a1;">34分钟锁单1.5万辆，定价战信号明确</div><div class="ep-title"><a href="http://www.huxiu.com/article/4843852.html?f=wangzhan" target="_blank" rel="noopener" class="ep-title-link">新款小米SU7：&quot;融冰&quot;比销量更重要</a></div><div class="ep-context">新款小米SU7于3月19日发布，售价21.99万至30.39万元，上市34分钟锁单1.5万辆。雷军亲自站台，王传福、何小鹏出席，标志着中国新能源车价格战与智驾竞争进入新阶段。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>评估持仓中传统车企竞争压力，考虑减仓</div></div></div><div class="ep-card" style="border-left-color:#065f46;"><div class="ep-num" style="color:#065f46;">03</div><div class="ep-body"><div class="ep-why" style="background:#065f4618;color:#065f46;">阿里最强AI模型发布，中美差距量化呈现</div><div class="ep-title"><a href="https://www.scmp.com/tech/article/3347272/preview-alibabas-strongest-ai-model-tops-chinese-peers-ranking-lags-us-rivals?utm_source=rss_feed" target="_blank" rel="noopener" class="ep-title-link">阿里巴巴最强AI模型预览版超越中国同行，落后美国对手</a></div><div class="ep-context">阿里巴巴推出迄今最强AI模型预览版，测评显示超越国内同行但仍落后美国头部对手。此次发布时间节点敏感，直接影响国内AI投资赛道估值逻辑与算力需求预判。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>重新评估国内AI标的相对竞争力，调整配置</div></div></div><div class="ep-card" style="border-left-color:#7c3aed;"><div class="ep-num" style="color:#7c3aed;">04</div><div class="ep-body"><div class="ep-why" style="background:#7c3aed18;color:#7c3aed;">301关税新一轮落地，贸易秩序再洗牌</div><div class="ep-title"><a href="https://www.scmp.com/opinion/world-opinion/article/3347181/us-section-301-tariffs-set-trigger-fresh-wave-trade-disruption?utm_source=rss_feed" target="_blank" rel="noopener" class="ep-title-link">美国301条款关税引发新一轮贸易混乱</a></div><div class="ep-context">特朗普政府持续推出301条款新关税措施，波及范围超出此前预期，将进一步扰乱全球贸易秩序。对华出口企业及跨境供应链布局需立即重新评估成本结构与市场策略。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>梳理出口业务关税敞口，加速供应链多元化</div></div></div><div class="ep-card" style="border-left-color:#b45309;"><div class="ep-num" style="color:#b45309;">05</div><div class="ep-body"><div class="ep-why" style="background:#b4530918;color:#b45309;">欧央行加息预警，全球资产重定价风险上升</div><div class="ep-title"><a href="https://www.bloomberg.com/news/articles/2026-03-20/ecb-would-need-april-hike-if-price-outlook-sours-nagel-says" target="_blank" rel="noopener" class="ep-title-link">欧央行官员纳格尔：若物价前景恶化需4月加息</a></div><div class="ep-context">欧央行官员纳格尔明确表示若物价前景恶化将于4月加息，与市场此前降息预期形成背离。欧元区货币政策转向将联动全球债券收益率上行，对权益资产估值构成压制。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>压缩欧元区长久期债券敞口，对冲利率风险</div></div></div></div>
+      <div class="narrative-block"><div class="narrative-label">TODAY'S NARRATIVE · 今日故事线</div><p class="narrative-text">当俄中美三国在伊朗冲突中各谋其利之际，贸易战的硝烟同步升级——美国301条款关税搅动全球供应链，英伟达芯片走私案暴露的正是科技脱钩的现实。与此同时，从乌克兰派驻海湾顾问到斯里兰卡拒绝美国战机，地缘政治的天平在悄然重构。背后是一个更深层的图景：全球化秩序正在碎片化，各国被迫在大国竞争中选边站队。这一切都发生在经济衰退的阴影下——英国借贷超预期、欧央行考虑加息、日本滑雪胜地的通胀怨言——地缘政治冲突正在吞噬本已脆弱的全球增长。</p></div>
+      <div class="briefing-card"><div class="briefing-headline">深度速查 · <a href="https://www.bbc.com/news/articles/c3wlwnn05zqo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">俄中美三国在伊朗冲突中的全球利益分化</a></div><div class="briefing-body"><div class="briefing-row"><span class="briefing-label" style="color:#64748b;">背景</span><span class="briefing-val">伊朗与以色列冲突升级引发中东局势紧张，俄中美三国因地缘政治和经济利益差异采取不同立场。历史上伊朗一直是大国博弈的焦点，石油供应、地缘控制权和战略同盟关系错综复杂。此次冲突重要因为它直接影响全球能源价格、贸易路线安全和大国权力格局。</span></div><div class="briefing-row"><span class="briefing-label" style="color:#1e293b;">当前</span><span class="briefing-val">冲突导致全球经济波动，不同国家因能源依赖度、地缘位置和政治立场差异而受益或受损程度不同。</span></div><div class="briefing-row"><span class="briefing-label" style="color:#8a1212;">关注</span><span class="briefing-val">未来48小时关注伊朗是否进一步升级军事行动，以及国际油价是否突破关键价位（如120美元/桶），这将直接影响全球供应链和股市反应。</span></div><div class="briefing-row"><span class="briefing-label" style="color:#059669;">影响</span><span class="briefing-val">油价上升推高进口成本，能源股和航运股受益；中国对伊朗能源依赖使其面临供应风险和价格压力。</span></div></div></div>
+      <div class="briefing-card" style="border-left-color:#7c3aed;"><div class="briefing-headline" style="color:#7c3aed;">PERSPECTIVE GAP · 媒体视角差异 · 俄中美三国在伊朗冲突中的利益分化</div><div class="briefing-body"><div class="briefing-row"><span class="briefing-label" style="color:#1d4ed8;">西方媒体</span><span class="briefing-val">强调地缘政治风险、能源供应链中断、西方经济利益受损；将冲突归因于俄中扩张主义</span></div><div class="briefing-row"><span class="briefing-label" style="color:#d97706;">非西方媒体</span><span class="briefing-val">强调美国干预主义、西方霸权压制、发展中国家共同利益；将冲突归因于西方单极体系</span></div></div><div style="margin-top:8px;padding:6px 10px;background:#7c3aed18;border-radius:4px;font-size:11px;color:#7c3aed;font-family:sans-serif;">核心分歧：因果链条相反：西方指责非西方行为体主动挑衅；非西方指责西方结构性压迫引发反制</div><div style="margin-top:6px;font-size:9px;color:#94a3b8;font-family:sans-serif;">基于议题：俄中美三国在伊朗冲突中的全球利益分化</div></div>
+      
+      <div class="briefing-card" style="border-left-color:#3b82f6;padding:0;"><div class="briefing-headline" style="color:#3b82f6;padding:10px 14px 8px;">TIMELINE · 追踪事件演进</div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;"><span style="font-size:9px;background:#93c5fd40;color:#3b82f6;border-radius:3px;padding:1px 7px;font-family:sans-serif;font-weight:700;">持续6天</span><div style="font-size:12px;line-height:1.5;flex:1;"><a href="https://techcrunch.com/2026/03/19/jeff-bezos-reportedly-wants-100-billion-to-buy-and-transform-old-manufacturing-firms-with-ai/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;font-weight:700;">贝索斯欲斥资1000亿美元收购工业企业用AI改造</a></div></div><div style="display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:11px;font-family:sans-serif;"><span style="color:#94a3b8;white-space:nowrap;padding-top:2px;">起因</span><span style="color:var(--text2);line-height:1.5;">贝索斯启动新项目，计划通过AI技术改造传统工业企业，抢占制造业数字化转型机遇，成为下一代竞争优势。</span><span style="color:#1d4ed8;white-space:nowrap;padding-top:2px;">今日</span><span style="color:var(--text);line-height:1.5;font-weight:600;">贝索斯宣布投入1000亿美元收购工业企业，利用AI技术进行全面改造升级。</span><span style="color:#d97706;white-space:nowrap;padding-top:2px;">预判</span><span style="color:#d97706;line-height:1.5;">预期引发科技巨头跟风投资工业领域，传统制造业并购潮加速，AI赋能制造成新焦点。</span></div></div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;"><span style="font-size:9px;background:#93c5fd40;color:#3b82f6;border-radius:3px;padding:1px 7px;font-family:sans-serif;font-weight:700;">持续4天</span><div style="font-size:12px;line-height:1.5;flex:1;"><a href="https://www.aljazeera.com/sports/2026/3/20/iran-womens-football-team-feted-in-tehran-after-asylum-battle-at-asian-cup?traffic_source=rss" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;font-weight:700;">伊朗女足队在争取庇护风波后回国受欢迎</a></div></div><div style="display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:11px;font-family:sans-serif;"><span style="color:#94a3b8;white-space:nowrap;padding-top:2px;">起因</span><span style="color:var(--text2);line-height:1.5;">伊朗女足队在澳大利亚参赛期间，多名球员申请庇护引发外交风波。事件涉及难民身份、监护权等复杂问题，持续引发国际关注。</span><span style="color:#1d4ed8;white-space:nowrap;padding-top:2px;">今日</span><span style="color:var(--text);line-height:1.5;font-weight:600;">伊朗女足队在庇护风波后返回伊朗，受到国内欢迎。部分球员最终未获批庇护或主动返国。</span><span style="color:#d97706;white-space:nowrap;padding-top:2px;">预判</span><span style="color:#d97706;line-height:1.5;">伊朗可能加强对归队球员的审查；国际人权组织持续关注；澳大利亚难民政策面临舆论压力。</span></div></div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;"><span style="font-size:9px;background:#93c5fd40;color:#3b82f6;border-radius:3px;padding:1px 7px;font-family:sans-serif;font-weight:700;">持续3天</span><div style="font-size:12px;line-height:1.5;flex:1;"><a href="https://www.thehindu.com/news/international/sri-lanka-refused-ground-access-to-us-warplanes/article70764656.ece" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;font-weight:700;">斯里兰卡拒绝美国战机降落请求</a></div></div><div style="display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:11px;font-family:sans-serif;"><span style="color:#94a3b8;white-space:nowrap;padding-top:2px;">起因</span><span style="color:var(--text2);line-height:1.5;">智利启动边境防护措施应对非法越境。美国寻求在印度洋地区加强军事部署，利用战略基地扩大影响力。</span><span style="color:#1d4ed8;white-space:nowrap;padding-top:2px;">今日</span><span style="color:var(--text);line-height:1.5;font-weight:600;">斯里兰卡拒绝美国战机降落请求，体现印度洋国家对大国军事扩张的警惕与制衡。</span><span style="color:#d97706;white-space:nowrap;padding-top:2px;">预判</span><span style="color:#d97706;line-height:1.5;">美国可能寻求替代降落点，地区国家间协调加强。智利边境政策与印太局势互动升温。</span></div></div></div>
+      <div class="briefing-card" style="border-left-color:#d97706;padding:0;"><div class="briefing-headline" style="color:#d97706;background:#d9770612;padding:10px 14px 8px;border-bottom:1px solid var(--border);">NUMBERS · 数字与信号</div><div style="padding:8px 14px 4px;"><div style="font-size:10px;color:#d97706;font-family:sans-serif;font-weight:700;margin-bottom:6px;">📊 关键数字</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><div style="display:flex;flex-direction:column;align-items:center;background:var(--bg2);border-radius:6px;padding:6px 10px;min-width:70px;"><span style="font-size:17px;font-weight:800;color:#d97706;font-family:sans-serif;line-height:1;">8枚反舰导弹</span><span style="font-size:10px;color:var(--text2);margin-top:2px;text-align:center;">美国战机武装配置</span></div><div style="display:flex;flex-direction:column;align-items:center;background:var(--bg2);border-radius:6px;padding:6px 10px;min-width:70px;"><span style="font-size:17px;font-weight:800;color:#d97706;font-family:sans-serif;line-height:1;">400平方公里</span><span style="font-size:10px;color:var(--text2);margin-top:2px;text-align:center;">乌克兰2026年收复领土</span></div><div style="display:flex;flex-direction:column;align-items:center;background:var(--bg2);border-radius:6px;padding:6px 10px;min-width:70px;"><span style="font-size:17px;font-weight:800;color:#d97706;font-family:sans-serif;line-height:1;">70名儿童</span><span style="font-size:10px;color:var(--text2);margin-top:2px;text-align:center;">刚果矿难死亡人数</span></div><div style="display:flex;flex-direction:column;align-items:center;background:var(--bg2);border-radius:6px;padding:6px 10px;min-width:70px;"><span style="font-size:17px;font-weight:800;color:#d97706;font-family:sans-serif;line-height:1;">300万辆</span><span style="font-size:10px;color:var(--text2);margin-top:2px;text-align:center;">吉利2025年销量首次突破</span></div><div style="display:flex;flex-direction:column;align-items:center;background:var(--bg2);border-radius:6px;padding:6px 10px;min-width:70px;"><span style="font-size:17px;font-weight:800;color:#d97706;font-family:sans-serif;line-height:1;">1.5万单</span><span style="font-size:10px;color:var(--text2);margin-top:2px;text-align:center;">新款小米SU7上市34分钟锁单数</span></div><div style="display:flex;flex-direction:column;align-items:center;background:var(--bg2);border-radius:6px;padding:6px 10px;min-width:70px;"><span style="font-size:17px;font-weight:800;color:#d97706;font-family:sans-serif;line-height:1;">十亿美元</span><span style="font-size:10px;color:var(--text2);margin-top:2px;text-align:center;">英伟达芯片走私案涉及金额</span></div></div></div><div style="padding:8px 14px 10px;border-top:1px solid var(--divider);"><div style="padding:4px 0 5px;"><div style="font-size:10px;color:#ef4444;font-weight:700;font-family:sans-serif;margin-bottom:2px;">📢 噪音 · 中国国内发展新闻密集发布</div><div style="font-size:11px;color:var(--text2);line-height:1.5;padding-left:4px;">交叉对比国际媒体对同期中国经济数据的独立评价，警惕单向信息流</div></div><div style="padding:4px 0 5px;"><div style="font-size:10px;color:#6366f1;font-weight:700;font-family:sans-serif;margin-bottom:2px;">🔇 沉默 · 中美贸易战升级但缺乏深度经济影响分析</div><div style="font-size:11px;color:var(--text2);line-height:1.5;padding-left:4px;">第3条提及美国301条款关税引发贸易混乱，但仅一条新闻涉及；第2条英伟达芯片走私案暗示制裁升级，却无后续产业链冲击报道</div></div></div></div>
+      <div class="briefing-card" style="border-left-color:#4f46e5;padding:0;"><div class="briefing-headline" style="color:#4f46e5;background:#4f46e512;padding:10px 14px 8px;border-bottom:1px solid var(--border);">DEEP LENS · 焦点深析</div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="font-size:10px;color:#92400e;font-weight:700;font-family:sans-serif;letter-spacing:0.3px;margin-bottom:5px;">🪞 历史镜像 · 1973-1974</div><div style="font-size:12px;color:var(--text);font-weight:700;margin-bottom:6px;line-height:1.4;">第一次石油危机</div><div style="display:grid;grid-template-columns:3em 1fr;gap:3px 8px;font-size:11px;line-height:1.5;"><span style="color:#94a3b8;white-space:nowrap;">相似</span><span style="color:var(--text2);">中东冲突引发大国利益分化，产油国获益，进口国受重创</span><span style="color:#94a3b8;white-space:nowrap;">结局</span><span style="color:var(--text2);">油价暴涨400%，美欧经济陷入滞胀，苏联石油出口收入激增，OPEC崛起</span><span style="color:#d97706;white-space:nowrap;font-weight:600;">启示</span><span style="color:#d97706;font-weight:600;">能源地缘冲突中获益方会强化既有立场，调停意愿与经济利益成反比</span></div></div><div style="padding:10px 14px;"><div style="font-size:10px;color:#4f46e5;font-weight:700;font-family:sans-serif;letter-spacing:0.3px;margin-bottom:5px;">⚡ 第一性原理</div><div style="display:grid;grid-template-columns:3.5em 1fr;gap:3px 8px;font-size:11px;line-height:1.5;"><span style="color:#94a3b8;white-space:nowrap;">表象</span><span style="color:var(--text2);">伊朗冲突致俄中美三国利益分歧加剧</span><span style="color:#94a3b8;white-space:nowrap;">驱动力</span><span style="color:var(--text2);">能源定价权争夺：俄罗斯借油价上涨补血财政，中国锁定廉价伊朗油，美国借制裁重建石油美元霸权</span><span style="color:#4f46e5;white-space:nowrap;font-weight:600;">信号</span><span style="color:#4f46e5;font-weight:600;">伊朗原油经俄船队绕道中转量激增，或沙特单方面宣布增产压价对冲</span></div></div></div>
+      <div class="briefing-card" style="border-left-color:#0f766e;padding:0;"><div class="briefing-headline" style="color:#0f766e;background:#0f766e12;padding:10px 14px 8px;border-bottom:1px solid var(--border);">INSTITUTIONS · 机构观察</div><div style="padding:10px 14px;"><div style="font-size:10px;color:#0f766e;font-weight:700;font-family:sans-serif;letter-spacing:0.3px;margin-bottom:6px;">🏦 央行政策雷达</div><div style="display:grid;grid-template-columns:1fr 52px 1.6fr;gap:4px;font-size:10px;color:#94a3b8;font-family:sans-serif;font-weight:700;padding-bottom:4px;border-bottom:2px solid var(--divider);margin-bottom:2px;"><span>央行</span><span>立场</span><span>市场信号</span></div><div style="display:grid;grid-template-columns:1fr 52px 1.6fr;gap:4px;font-size:11px;padding:4px 0;border-bottom:1px solid var(--divider);"><span style="color:var(--text);font-weight:600;">英国央行（英格兰银行）</span><span style="color:#94a3b8;font-weight:700;font-family:sans-serif;">中性</span><span style="color:var(--text2);line-height:1.4;">英国债券市场存在央行政策不确定性，需关注后续指引</span></div><div style="display:grid;grid-template-columns:1fr 52px 1.6fr;gap:4px;font-size:11px;padding:4px 0;border-bottom:1px solid var(--divider);"><span style="color:var(--text);font-weight:600;">欧洲央行</span><span style="color:#dc2626;font-weight:700;font-family:sans-serif;">鹰派</span><span style="color:var(--text2);line-height:1.4;">欧央行保持加息预期，物价数据将成关键触发因素</span></div></div><div style="padding:10px 14px;border-top:1px solid var(--divider);"><div style="font-size:10px;color:#166534;font-weight:700;font-family:sans-serif;letter-spacing:0.3px;margin-bottom:5px;">🏛️ 智库共识</div><div style="font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:5px;">芯片走私案与舒晓昆转向事件并非孤立，折射出美国出口管制的执行漏洞与科研生态压力并存——管制收紧反而加速人才与技术向中国迁移的反效应，政策设计存在系统性矛盾。</div><div style="font-size:11px;color:#d97706;font-weight:600;padding:4px 8px;background:#d9770610;border-radius:4px;">→ 半导体管制股票溢价存在高估风险，科研政策不确定性压制美国创新资产长期估值。</div></div></div>
+      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年03月20日</div><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bbc.com/news/articles/c3wlwnn05zqo?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">俄中美三国在伊朗冲突中的全球利益分化</a><div class="slim-sowhat">→ 意味着能源与大宗商品价格波动加剧，原油相关资产短期承压。</div></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">综合</div><a href="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">三人因涉嫌走私英伟达芯片至中国被控</a><div class="slim-sowhat">→ 意味着国内AI芯片替代赛道（寒武纪、海光）获政策与市场双重催化。</div></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bloomberg.com/news/articles/2026-03-20/ecb-would-need-april-hike-if-price-outlook-sours-nagel-says" class="slim-title" target="_blank" rel="noopener">欧央行官员纳格尔：若物价前景恶化需4月加息</a><div class="slim-sowhat">→ 意味着欧元升值压力增大，跨境贸易成本上升。</div></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bloomberg.com/news/videos/2026-03-20/gilts-face-further-risk-from-politics-3-minutes-mliv-video" class="slim-title" target="_blank" rel="noopener">英国债券面临政治和英央行双重风险</a><div class="slim-sowhat">→ 意味着英镑及英国国债波动加大，持有英国资产的机构需控制汇率敞口。</div></div></div><div class="slim-item"><div class="slim-num">05</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bloomberg.com/news/articles/2026-03-20/j-d-wetherspoon-slumps-after-second-profit-warning-this-year" class="slim-title" target="_blank" rel="noopener">威瑟斯彭酒吧集团今年第二次下调利润预警后股价暴跌</a><div class="slim-sowhat">→ 意味着欧洲酒吧连锁困境加剧，中国酒类出口或迎机遇。</div></div></div></div>
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-chip active" data-sec="all" onclick="filterSec(this,'all')">全部</button>
+        <button class="filter-chip" data-sec="finance"  onclick="filterSec(this,'finance')">财经</button>
+        <button class="filter-chip" data-sec="tech"     onclick="filterSec(this,'tech')">科技</button>
+        <button class="filter-chip" data-sec="politics" onclick="filterSec(this,'politics')">政治</button>
+        <button class="filter-chip" data-sec="china"    onclick="filterSec(this,'china')">中国</button>
+        <button class="filter-chip" data-sec="forum"    onclick="filterSec(this,'forum')">社区</button>
+      </div>
       
 <section class="news-section" id="politics">
   <div class="sec-header" style="color:#8a1212;">
@@ -470,117 +570,95 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-6798032712" class="rank-title-link">
-        <div class="rank-title">近百艘船舶通过霍尔木兹海峡 谁在通行？<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-4691937321" class="rank-title-link">
+        <div class="rank-title">俄中美三国在伊朗冲突中的全球利益分化<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;">89<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.com/news/articles/c4geg0eeyjeo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#8a1212;">71<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bbc.com/news/articles/c3wlwnn05zqo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-6740322039" class="rank-title-link">
-        <div class="rank-title">乌克兰关键贷款成为匈牙利总理选举筹码<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-4533752092" class="rank-title-link">
+        <div class="rank-title">欧央行官员纳格尔：若物价前景恶化需4月加息<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:13%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;">5<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.nytimes.com/2026/03/19/world/europe/ukraine-hungary-orban-elections.html" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#8a1212;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bloomberg.com/news/articles/2026-03-20/ecb-would-need-april-hike-if-price-outlook-sours-nagel-says" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-3630678777" class="rank-title-link">
-        <div class="rank-title">英央行警示通胀风险 英国债券大幅下跌<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-7892356740" class="rank-title-link">
+        <div class="rank-title">英国债券面临政治和英央行双重风险<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:13%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;">3<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.ft.com/content/c0a967b6-19d0-4e50-9a8e-8ae510d43d08" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bloomberg.com/news/videos/2026-03-20/gilts-face-further-risk-from-politics-3-minutes-mliv-video" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-2269235138" class="rank-title-link">
-        <div class="rank-title">油价回落美股反弹 亚股开盘走高<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-4073837056" class="rank-title-link">
+        <div class="rank-title">威瑟斯彭酒吧集团今年第二次下调利润预警后股价暴跌<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:10%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-03-19/stock-market-today-dow-s-p-live-updates-" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bloomberg.com/news/articles/2026-03-20/j-d-wetherspoon-slumps-after-second-profit-warning-this-year" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-1560117662" class="rank-title-link">
-        <div class="rank-title">伊朗反政府抗议中首次执行少年死刑<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-3853536142" class="rank-title-link">
+        <div class="rank-title">德黑兰的生存仪式<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:10%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.com/news/articles/ce9mzn7k722o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.ft.com/content/a2b3dcbf-9fec-4fd8-9935-ca6ab0b79100" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-6798032712" data-id="6798032712" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">近百艘船舶通过霍尔木兹海峡 谁在通行？</div>
-  <div class="card-desc">自3月初以来，近百艘船舶通过霍尔木兹海峡，根据数据分析机构统计。</div>
-  <div class="so-what">→ 意味着中东航运风险上升，进口石油成本可能增加，关注能源股波动。</div>
-  <details class="full-summary"><summary>展开全文摘要 ›</summary><div class="full-summary-body"># 霍尔木兹海峡通行船只大幅下降
-
-据BBC Verify分析，自3月初以来，近100艘船只通过霍尔木兹海峡，尽管该地区频繁遭伊朗武装力量袭击。数据显示，日均仅5-6艘船只通行，较战争前的138艘日均通行量下降95%。
-
-分析表明，约三分之一的通行船只与伊朗有关联，包括14艘悬挂伊朗国旗的船舶及其他受制裁的疑似伊朗油贸相关船只。另有9艘船只与中国公司有关，6艘船只以印度为目的地。部分非伊朗关联船只也停靠伊朗港口，包括希腊公司所有的船舶。某些船只采取了比平时更长的航线通过海峡。</div></details>
-  <div class="related-row">· <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×6</span> <span style="font-size:9px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×8</span> <span style="font-size:9px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×6</span> <span style="font-size:9px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×5</span> <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">+16</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#0891b222;color:#0891b2;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">亚洲</span><span style="font-size:8px;background:#9333ea22;color:#9333ea;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">俄罗斯</span><span style="font-size:8px;background:#f59e0b22;color:#f59e0b;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">印度</span><span style="font-size:8px;background:#e11d4822;color:#e11d48;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">日本</span><span style="font-size:8px;background:#2563eb22;color:#2563eb;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">欧洲</span><span style="font-size:8px;background:#6366f122;color:#6366f1;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">法国</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span><span style="font-size:8px;background:#7c3aed22;color:#7c3aed;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西班牙</span></span></div>
+    <div class="news-card " id="card-4691937321" data-id="4691937321" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">俄中美三国在伊朗冲突中的全球利益分化</div>
+  <div class="so-what">→ 意味着能源与大宗商品价格波动加剧，原油相关资产短期承压。</div>
   <div class="card-meta">
     <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#8a121228;color:#8a1212;border:1px solid #8a121260;">深读</span>
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
     
-    <span style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多源报道 · 89</span>
+    <span style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多源报道 · 71</span>
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 801"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">28分钟前</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 655"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">8小时前</span>
+    <button class="share-btn" title="复制分享" data-text="俄中美三国在伊朗冲突中的全球利益分化 | 意味着能源与大宗商品价格波动加剧，原油相关资产短期承压。" data-link="https://www.bbc.com/news/articles/c3wlwnn05zqo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.bbc.com/news/articles/c4geg0eeyjeo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-3630678777" data-id="3630678777" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">英央行警示通胀风险 英国债券大幅下跌</div>
-  <div class="card-desc">英央行维持利率3.75%不变，中东战争推高能源成本。</div>
-  <div class="so-what">→ 意味着英镑贬值趋势可能延续，人民币兑英镑升值，对英出口竞争力提升。</div>
-  <details class="full-summary"><summary>展开全文摘要 ›</summary><div class="full-summary-body"># 新闻摘要
+  <details class="card-expand"><summary>展开 · 70来源</summary><div class="card-expand-body"><div class="card-desc">冲突引发经济混乱，部分国家受损严重，另有国家从中获益。</div><div class="related-row">· <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×5</span> <span style="font-size:9px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×4</span> <span style="font-size:9px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×8</span> <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×2</span> <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">+16</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#0891b222;color:#0891b2;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">亚洲</span><span style="font-size:8px;background:#9333ea22;color:#9333ea;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">俄罗斯</span><span style="font-size:8px;background:#f59e0b22;color:#f59e0b;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">印度</span><span style="font-size:8px;background:#e11d4822;color:#e11d48;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">日本</span><span style="font-size:8px;background:#2563eb22;color:#2563eb;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">欧洲</span><span style="font-size:8px;background:#6366f122;color:#6366f1;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">法国</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span><span style="font-size:8px;background:#7c3aed22;color:#7c3aed;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西班牙</span><span style="font-size:8px;background:#0e749022;color:#0e7490;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">韩国</span></span></div><details class="full-summary"><summary>展开全文摘要 ›</summary><div class="full-summary-body"># 伊朗中东冲突引发全球能源格局变化
 
-近日，中东局势升级引发全球能源市场震荡。伊朗向以色列发动导弹攻击，并对卡塔尔全球最大液化天然气设施造成&quot;广泛破坏&quot;。此次事件触发能源市场&quot;末日情景&quot;，股票和债券应声下跌，投资者预期能源供应将面临长期冲击。伊朗随后提出结束战争的条件。与此同时，丹麦曾准备在美国入侵时炸毁格陵兰跑道，特朗普则在以色列对伊朗油田的打击问题上陷入困境。美国与日本围绕软银6亿美元费用的贸易协议产生分歧。全球能源和地缘政治风险持续升温。</div></details>
-  <div class="related-row">· <span style="font-size:9px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×2</span></div>
-  <div class="card-meta">
-    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#8a121228;color:#8a1212;border:1px solid #8a121260;">深读</span>
-    <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
-    
-    <span style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双源报道 · 3</span>
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 105"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">5小时前</span>
-  </div>
-  <a href="https://www.ft.com/content/c0a967b6-19d0-4e50-9a8e-8ae510d43d08" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-2269235138" data-id="2269235138" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">油价回落美股反弹 亚股开盘走高</div>
-  <div class="card-desc">美股从低位反弹，油价下跌，亚洲股市周五开盘上涨。</div>
-  
-  
-  
+BBC报道称，伊朗报复行动引发的中东冲突已产生显著经济影响。霍尔木兹海峡因冲突受阻，中东地区能源基础设施遭攻击，导致全球能源供应链受扰。
+
+从英国约克郡家庭取暖油账单飙升，到巴基斯坦学校因成本压力关闭，冲突的经济后果已广泛显现。沙特阿拉伯和卡塔尔等海湾产油国受冲击最大，因伊朗针对美国盟国进行报复。
+
+与此同时，挪威、加拿大和俄罗斯等替代能源供应国成为赢家。随着各国寻求替代能源来源，这些国家有望扩大市场份额。专家指出，这场冲突的经济影响将持续存在且分布不均。</div></details><a href="https://www.bbc.com/news/articles/c3wlwnn05zqo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-4533752092" data-id="4533752092" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">欧央行官员纳格尔：若物价前景恶化需4月加息</div>
+  <div class="so-what">→ 意味着欧元升值压力增大，跨境贸易成本上升。</div>
   <div class="card-meta">
     
     <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
@@ -588,33 +666,44 @@ document.addEventListener('DOMContentLoaded',function(){
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 90"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
     <span class="pub-time">2小时前</span>
+    <button class="share-btn" title="复制分享" data-text="欧央行官员纳格尔：若物价前景恶化需4月加息 | 意味着欧元升值压力增大，跨境贸易成本上升。" data-link="https://www.bloomberg.com/news/articles/2026-03-20/ecb-would-need-april-hike-if-price-outlook-sours-nagel-says" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.bloomberg.com/news/articles/2026-03-19/stock-market-today-dow-s-p-live-updates-" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-1560117662" data-id="1560117662" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">伊朗反政府抗议中首次执行少年死刑</div>
-  <div class="card-desc">伊朗国家摔跤队成员萨利赫因杀害警察罪名成立被处死。</div>
-  
-  
-  
+  <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">欧洲央行若物价压力进一步上升，需考虑下月加息。</div><div class="related-row">· <span style="font-size:9px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span></div><a href="https://www.bloomberg.com/news/articles/2026-03-20/ecb-would-need-april-hike-if-price-outlook-sours-nagel-says" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-7892356740" data-id="7892356740" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">英国债券面临政治和英央行双重风险</div>
+  <div class="so-what">→ 意味着英镑及英国国债波动加大，持有英国资产的机构需控制汇率敞口。</div>
   <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
+    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#1d4ed820;color:#1d4ed8;border:1px solid #1d4ed840;">速览</span>
+    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
     
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">2小时前</span>
+    <span class="pub-time">14分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="英国债券面临政治和英央行双重风险 | 意味着英镑及英国国债波动加大，持有英国资产的机构需控制汇率敞口。" data-link="https://www.bloomberg.com/news/videos/2026-03-20/gilts-face-further-risk-from-politics-3-minutes-mliv-video" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.bbc.com/news/articles/ce9mzn7k722o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-6152589506" data-id="6152589506" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">迪拜旅游业遭伊朗导弹打击</div>
-  <div class="card-desc">阿联酋酒店因入住率暴跌，员工被迫无薪休假，部分建筑关闭。</div>
-  
-  
-  
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">分析师和投资者需关注英国债券市场的政治风险和英央行政策动向。</div><a href="https://www.bloomberg.com/news/videos/2026-03-20/gilts-face-further-risk-from-politics-3-minutes-mliv-video" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-4073837056" data-id="4073837056" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">威瑟斯彭酒吧集团今年第二次下调利润预警后股价暴跌</div>
+  <div class="so-what">→ 意味着欧洲酒吧连锁困境加剧，中国酒类出口或迎机遇。</div>
+  <div class="card-meta">
+    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#64748b18;color:#64748b;border:1px solid #64748b38;">跳过</span>
+    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
+    
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">19分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="威瑟斯彭酒吧集团今年第二次下调利润预警后股价暴跌 | 意味着欧洲酒吧连锁困境加剧，中国酒类出口或迎机遇。" data-link="https://www.bloomberg.com/news/articles/2026-03-20/j-d-wetherspoon-slumps-after-second-profit-warning-this-year" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">威瑟斯彭酒吧集团发布今年第二份利润预警，理由是消费者支出疲软。</div><a href="https://www.bloomberg.com/news/articles/2026-03-20/j-d-wetherspoon-slumps-after-second-profit-warning-this-year" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-3853536142" data-id="3853536142" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">德黑兰的生存仪式</div>
+  <div class="so-what">→ 德黑兰生存仪式意味着伊朗局势持续紧张，中伊贸易需防范地缘风险。</div>
   <div class="card-meta">
     
     <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
@@ -622,27 +711,26 @@ document.addEventListener('DOMContentLoaded',function(){
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 80"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">10小时前</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 81"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">4小时前</span>
+    <button class="share-btn" title="复制分享" data-text="德黑兰的生存仪式 | 德黑兰生存仪式意味着伊朗局势持续紧张，中伊贸易需防范地缘风险。" data-link="https://www.ft.com/content/a2b3dcbf-9fec-4fd8-9935-ca6ab0b79100" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.ft.com/content/1133792e-97d0-4e6a-bfef-56d5f9ab93f2" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-6740322039" data-id="6740322039" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">乌克兰关键贷款成为匈牙利总理选举筹码</div>
-  <div class="card-desc">欧洲领导人施压匈牙利总理停止阻挠向基辅提供900亿欧元贷款。</div>
-  
-  
-  <div class="related-row">· <span style="font-size:9px;color:#d81b2a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#d81b2a18;border-radius:999px;padding:1px 7px;">🇪🇺&thinsp;Politico EU</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×2</span> <span style="font-size:9px;color:#003189;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#00318918;border-radius:999px;padding:1px 7px;">🇫🇷&thinsp;France 24</span> <span style="font-size:9px;color:#8b0000;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#8b000018;border-radius:999px;padding:1px 7px;">🇷🇺&thinsp;TASS</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#9333ea22;color:#9333ea;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">俄罗斯</span><span style="font-size:8px;background:#2563eb22;color:#2563eb;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">欧洲</span><span style="font-size:8px;background:#6366f122;color:#6366f1;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">法国</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">战争似乎应该被遗留在更残暴的时代。</div><a href="https://www.ft.com/content/a2b3dcbf-9fec-4fd8-9935-ca6ab0b79100" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-2539976893" data-id="2539976893" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">军事简报：霍尔木兹护航计划的风险</div>
+  <div class="so-what">→ 霍尔木兹护航风险意味着中东航运成本可能上升，影响能源进口价格。</div>
   <div class="card-meta">
-    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#8a121228;color:#8a1212;border:1px solid #8a121260;">深读</span>
-    <span style="font-size:10px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;NYT 国际</span>
     
-    <span style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多源报道 · 5</span>
+    <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
+    
+    
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 109"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">8小时前</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 81"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">4小时前</span>
+    <button class="share-btn" title="复制分享" data-text="军事简报：霍尔木兹护航计划的风险 | 霍尔木兹护航风险意味着中东航运成本可能上升，影响能源进口价格。" data-link="https://www.ft.com/content/bb6a57d6-8d54-43a7-95b4-110e51fbc5db" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.nytimes.com/2026/03/19/world/europe/ukraine-hungary-orban-elections.html" class="read-link">→ 查看原文</a>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">水雷、快艇和导弹威胁美国数十年来最危险的海军任务之一。</div><a href="https://www.ft.com/content/bb6a57d6-8d54-43a7-95b4-110e51fbc5db" class="read-link">→ 查看原文</a></div></details>
 </div>
   </div>
 </section>
@@ -651,7 +739,7 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="sec-header" style="color:#1e293b;">
     <span class="sec-title">全球财经市场</span>
     
-    <span class="sec-count">3 条</span>
+    <span class="sec-count">5 条</span>
   </div>
   <!-- mobile-only heat ranking -->
   <div class="mobile-heat">
@@ -661,85 +749,108 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-8807810689" class="rank-title-link">
-        <div class="rank-title">薪资增长创五年多来最低速度<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-8023218523" class="rank-title-link">
+        <div class="rank-title">莫斯科和德黑兰的混合战争<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.com/news/articles/cn0z0x82r00o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.politico.eu/podcast/berlin-playbook-podcast/der-hybride-krieg-aus-moskau-und-teheran/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-7444447179" class="rank-title-link">
-        <div class="rank-title">吉尔松·芬克尔施泰因出任桑坦德巴西银行CEO<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-4245126482" class="rank-title-link">
+        <div class="rank-title">美国301条款关税引发新一轮贸易混乱<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:85%;background:#1e293b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:90%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-03-19/gilson-finkelsztain-to-take-over-as-ceo-of-santander-brasil" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.scmp.com/opinion/world-opinion/article/3347181/us-section-301-tariffs-set-trigger-fresh-wave-trade-disruption?utm_source=rss_feed" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-2066245029" class="rank-title-link">
-        <div class="rank-title">美中数字货币分歧加深稳定币法案陷僵局<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-9578573190" class="rank-title-link">
+        <div class="rank-title">日本滑雪胜地深雪掩盖不住怨言、通胀与分化<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:65%;background:#1e293b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:90%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.scmp.com/news/us/article/3347221/us-china-split-digital-money-deepens-stablecoin-debate-stalls-clarity-act?utm_source=rss_feed" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.scmp.com/news/asia/east-asia/article/3347277/japans-ski-hub-deep-snow-cant-hide-gripes-inflation-and-polarisation?utm_source=rss_feed" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+    </div>
+  </div>
+  <div class="rank-row">
+    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
+    <div class="rank-body">
+      <a href="#card-6493189081" class="rank-title-link">
+        <div class="rank-title">特朗普混乱促欧洲与中国建立联系<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      </a>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:88%;background:#1e293b;"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
+      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.japantimes.co.jp/news/2026/03/20/world/politics/europe-china-derisk-reverse-course/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+    </div>
+  </div>
+  <div class="rank-row">
+    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
+    <div class="rank-body">
+      <a href="#card-3925421363" class="rank-title-link">
+        <div class="rank-title">铜价跟随黄金下跌，背后隐忧令人担忧<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      </a>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:84%;background:#1e293b;"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
+      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.cnbc.com/2026/03/19/copper-joins-gold-in-broad-commodities-sell-off-theres-a-worrying-reason-behind-it.html" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-8807810689" data-id="8807810689" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">薪资增长创五年多来最低速度</div>
-  <div class="card-desc">英国国家统计局称11月至1月期间年薪资增长率为3.8%。</div>
-  
-  
-  <div class="related-row">· <span style="font-size:9px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span></div>
-  <div class="card-meta">
-    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#1d4ed820;color:#1d4ed8;border:1px solid #1d4ed840;">速览</span>
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
-    
-    <span style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双源报道 · 2</span>
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 96"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">10小时前</span>
-  </div>
-  <a href="https://www.bbc.com/news/articles/cn0z0x82r00o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-7444447179" data-id="7444447179" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">吉尔松·芬克尔施泰因出任桑坦德巴西银行CEO</div>
-  <div class="card-desc">巴西证交所B3主席吉尔松将接任桑坦德巴西银行首席执行官。</div>
-  
-  
-  
+    <div class="news-card " id="card-8023218523" data-id="8023218523" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">莫斯科和德黑兰的混合战争</div>
+  <div class="so-what">→ 莫斯科德黑兰混合战争意味着中东局势恶化，能源供应链面临中断风险。</div>
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
+    <span style="font-size:10px;color:#d81b2a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#d81b2a18;border-radius:999px;padding:1px 7px;">🇪🇺&thinsp;Politico EU</span>
     
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">2小时前</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 71"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">4小时前</span>
+    <button class="share-btn" title="复制分享" data-text="莫斯科和德黑兰的混合战争 | 莫斯科德黑兰混合战争意味着中东局势恶化，能源供应链面临中断风险。" data-link="https://www.politico.eu/podcast/berlin-playbook-podcast/der-hybride-krieg-aus-moskau-und-teheran/?utm_source=RSS_Feed&amp;utm_medium=RSS&amp;utm_campaign=RSS_Syndication" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.bloomberg.com/news/articles/2026-03-19/gilson-finkelsztain-to-take-over-as-ceo-of-santander-brasil" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-2066245029" data-id="2066245029" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">美中数字货币分歧加深稳定币法案陷僵局</div>
-  <div class="card-desc">美国加密倡导者以中国新型计息电子人民币为由推动立法。</div>
-  
-  
-  
+  <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">我们处于新冷战中，比上一次冷战更加令人不适。与明确的集团对抗不同。</div><div class="related-row">· <span style="font-size:9px;color:#d81b2a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#d81b2a18;border-radius:999px;padding:1px 7px;">🇪🇺&thinsp;Politico EU</span></div><a href="https://www.politico.eu/podcast/berlin-playbook-podcast/der-hybride-krieg-aus-moskau-und-teheran/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-4245126482" data-id="4245126482" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">美国301条款关税引发新一轮贸易混乱</div>
+  <div class="so-what">→ 意味着出口型制造业（纺织、电子）订单风险上升，规避相关A股标的。</div>
+  <div class="card-meta">
+    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#8a121228;color:#8a1212;border:1px solid #8a121260;">深读</span>
+    <span style="font-size:10px;color:#1e3a8a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e3a8a18;border-radius:999px;padding:1px 7px;">🇭🇰&thinsp;SCMP</span>
+    
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">37分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="美国301条款关税引发新一轮贸易混乱 | 意味着出口型制造业（纺织、电子）订单风险上升，规避相关A股标的。" data-link="https://www.scmp.com/opinion/world-opinion/article/3347181/us-section-301-tariffs-set-trigger-fresh-wave-trade-disruption?utm_source=rss_feed" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">特朗普政府不断推出新的关税措施，将引发贸易秩序进一步混乱。</div><details class="full-summary"><summary>展开全文摘要 ›</summary><div class="full-summary-body"># 新闻摘要
+
+2026年3月20日，美国贸易代表格里尔宣布启动一系列《第301条款》调查，旨在对多国商品征收新关税。此举旨在为联邦政府增加关税收入，原因是美国最高法院裁定特朗普政府的&quot;解放日&quot;关税政策违法，需退款数十亿美元。
+
+这些新的贸易调查将在世界贸易组织部长级会议期间进行，同时美国也在与墨西哥和加拿大就三边贸易协议更新进行谈判。虽然关税战争不如军事冲突引人注目，但将对国际贸易企业造成重大不确定性和经济影响。</div></details><a href="https://www.scmp.com/opinion/world-opinion/article/3347181/us-section-301-tariffs-set-trigger-fresh-wave-trade-disruption?utm_source=rss_feed" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-9578573190" data-id="9578573190" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">日本滑雪胜地深雪掩盖不住怨言、通胀与分化</div>
+  <div class="so-what">→ 意味着日本通胀压力持续，进口日本商品价格可能上升。</div>
   <div class="card-meta">
     
     <span style="font-size:10px;color:#1e3a8a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e3a8a18;border-radius:999px;padding:1px 7px;">🇭🇰&thinsp;SCMP</span>
@@ -747,10 +858,41 @@ document.addEventListener('DOMContentLoaded',function(){
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 63"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">7小时前</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">2小时前</span>
+    <button class="share-btn" title="复制分享" data-text="日本滑雪胜地深雪掩盖不住怨言、通胀与分化 | 意味着日本通胀压力持续，进口日本商品价格可能上升。" data-link="https://www.scmp.com/news/asia/east-asia/article/3347277/japans-ski-hub-deep-snow-cant-hide-gripes-inflation-and-polarisation?utm_source=rss_feed" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.scmp.com/news/us/article/3347221/us-china-split-digital-money-deepens-stablecoin-debate-stalls-clarity-act?utm_source=rss_feed" class="read-link">→ 查看原文</a>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">国际知名日本滑雪度假地二世古，居民对物价上涨和社会分化的焦虑不断加剧。</div><a href="https://www.scmp.com/news/asia/east-asia/article/3347277/japans-ski-hub-deep-snow-cant-hide-gripes-inflation-and-polarisation?utm_source=rss_feed" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-6493189081" data-id="6493189081" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">特朗普混乱促欧洲与中国建立联系</div>
+  <div class="so-what">→ 欧洲靠近中国意味着中欧贸易机会增加，可关注对欧出口政策调整。</div>
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#7d0000;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7d000018;border-radius:999px;padding:1px 7px;">🇯🇵&thinsp;Japan Times</span>
+    
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 63"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">3小时前</span>
+    <button class="share-btn" title="复制分享" data-text="特朗普混乱促欧洲与中国建立联系 | 欧洲靠近中国意味着中欧贸易机会增加，可关注对欧出口政策调整。" data-link="https://www.japantimes.co.jp/news/2026/03/20/world/politics/europe-china-derisk-reverse-course/" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">美国关税冲击欧洲，欧盟官员对华强硬立场日益难以接受。</div><a href="https://www.japantimes.co.jp/news/2026/03/20/world/politics/europe-china-derisk-reverse-course/" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-3925421363" data-id="3925421363" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">铜价跟随黄金下跌，背后隐忧令人担忧</div>
+  <div class="so-what">→ 意味着大宗商品需求疲软，铜价下跌将拉低国内制造业原料成本。</div>
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
+    
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 60"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">15小时前</span>
+    <button class="share-btn" title="复制分享" data-text="铜价跟随黄金下跌，背后隐忧令人担忧 | 意味着大宗商品需求疲软，铜价下跌将拉低国内制造业原料成本。" data-link="https://www.cnbc.com/2026/03/19/copper-joins-gold-in-broad-commodities-sell-off-theres-a-worrying-reason-behind-it.html" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">金属价格在大幅上涨后周四承压，油价上升加剧通胀和增长担忧。</div><a href="https://www.cnbc.com/2026/03/19/copper-joins-gold-in-broad-commodities-sell-off-theres-a-worrying-reason-behind-it.html" class="read-link">→ 查看原文</a></div></details>
 </div>
   </div>
 </section>
@@ -759,7 +901,7 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="sec-header" style="color:#1e293b;">
     <span class="sec-title">科技与人工智能</span>
     <a href="ai-digest.html" style="display:inline-flex;align-items:center;border:1px solid currentColor;border-radius:2px;padding:4px 12px;font-size:10px;color:inherit;text-decoration:none;font-weight:700;letter-spacing:1px;white-space:nowrap;opacity:0.7;transition:opacity 0.15s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">AI 研报 →</a>
-    <span class="sec-count">3 条</span>
+    <span class="sec-count">1 条</span>
   </div>
   <!-- mobile-only heat ranking -->
   <div class="mobile-heat">
@@ -769,102 +911,34 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-3175502716" class="rank-title-link">
-        <div class="rank-title">美国起诉超微计算机员工向中国走私英伟达芯片<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-3012538706" class="rank-title-link">
+        <div class="rank-title">OpenAI筹划桌面端&quot;超级应用&quot;整合ChatGPT和Codex<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;">3<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.cnbc.com/2026/03/19/us-tech-execs-smuggled-nvidia-chips-to-china-prosecutors-say.html" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
-    <div class="rank-body">
-      <a href="#card-7851080676" class="rank-title-link">
-        <div class="rank-title">OpenAI规划桌面端&quot;超级应用&quot;<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:65%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
       <a href="https://www.theverge.com/ai-artificial-intelligence/897778/openai-chatgpt-codex-atlas-browser-superapp" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
-    <div class="rank-body">
-      <a href="#card-6841851935" class="rank-title-link">
-        <div class="rank-title">ChatGPT&quot;成人模式&quot;或引发亲密监控新时代<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:63%;background:#1e293b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.wired.com/story/chatgpt-adult-mode-new-era-of-intimate-surveillance/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-3175502716" data-id="3175502716" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">美国起诉超微计算机员工向中国走私英伟达芯片</div>
-  <div class="card-desc">美国政府加强打击非法运往中国的英伟达顶级AI芯片。</div>
-  <div class="so-what">→ 意味着中国芯片进口管制更严，国产替代芯片企业迎来机遇窗口。</div>
-  <details class="full-summary"><summary>展开全文摘要 ›</summary><div class="full-summary-body"># 新闻摘要
-
-美国纽约南区检察官办公室于2026年3月19日公布起诉书，指控Super Micro Computer公司的三名员工违反《出口管制改革法》，非法向中国转运价值数十亿美元的含Nvidia芯片服务器。
-
-被控人员包括联合创始人兼高管Yih-Shyan &quot;Wally&quot; Liaw、经理Ruei-Tsan &quot;Steven&quot; Chang和承包商Ting-Wei &quot;Willy&quot; Sun。这些服务器产品受美国严格出口管制，未获许可不得向中国出售。
-
-此案反映出美国政府对高端芯片流向中国的持续关注。受此消息影响，Super Micro Computer股价在盘后交易中下跌约12%。</div></details>
-  <div class="related-row">· <span style="font-size:9px;color:#7d0000;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7d000018;border-radius:999px;padding:1px 7px;">🇯🇵&thinsp;Japan Times</span> <span style="font-size:9px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Wired</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#e11d4822;color:#e11d48;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">日本</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div>
+    <div class="news-card " id="card-3012538706" data-id="3012538706" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">OpenAI筹划桌面端&quot;超级应用&quot;整合ChatGPT和Codex</div>
+  <div class="so-what">→ OpenAI整合应用生态，国内AI企业竞争格局面临重塑。</div>
   <div class="card-meta">
-    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#8a121228;color:#8a1212;border:1px solid #8a121260;">深读</span>
-    <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
     
-    <span style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多源报道 · 3</span>
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 90"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">12分钟前</span>
-  </div>
-  <a href="https://www.cnbc.com/2026/03/19/us-tech-execs-smuggled-nvidia-chips-to-china-prosecutors-say.html" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-7851080676" data-id="7851080676" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">OpenAI规划桌面端&quot;超级应用&quot;</div>
-  <div class="card-desc">OpenAI开发整合ChatGPT、Codex和Atlas的桌面&quot;超级应用&quot;。</div>
-  
-  
-  
-  <div class="card-meta">
-    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#1d4ed820;color:#1d4ed8;border:1px solid #1d4ed840;">速览</span>
     <span style="font-size:10px;color:#e1175e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e1175e18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;The Verge</span>
-    
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">24分钟前</span>
-  </div>
-  <a href="https://www.theverge.com/ai-artificial-intelligence/897778/openai-chatgpt-codex-atlas-browser-superapp" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-6841851935" data-id="6841851935" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">ChatGPT&quot;成人模式&quot;或引发亲密监控新时代</div>
-  <div class="card-desc">OpenAI计划允许与ChatGPT进行性爱聊天，专家警示隐私风险。</div>
-  
-  
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Wired</span>
     
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 57"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">8小时前</span>
+    <button class="share-btn" title="复制分享" data-text="OpenAI筹划桌面端&quot;超级应用&quot;整合ChatGPT和Codex | OpenAI整合应用生态，国内AI企业竞争格局面临重塑。" data-link="https://www.theverge.com/ai-artificial-intelligence/897778/openai-chatgpt-codex-atlas-browser-superapp" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.wired.com/story/chatgpt-adult-mode-new-era-of-intimate-surveillance/" class="read-link">→ 查看原文</a>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">OpenAI正开发桌面&quot;超级应用&quot;，整合ChatGPT应用、Codex AI编码应用及AI驱动的Atlas平台。</div><a href="https://www.theverge.com/ai-artificial-intelligence/897778/openai-chatgpt-codex-atlas-browser-superapp" class="read-link">→ 查看原文</a></div></details>
 </div>
   </div>
 </section>
@@ -883,52 +957,48 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-7782302303" class="rank-title-link">
-        <div class="rank-title">为什么别人能用AI批量做短剧，你只能靠运气？<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-5547789530" class="rank-title-link">
+        <div class="rank-title">吉利抱紧英伟达硬刚特斯拉：智驾翻身仗能成吗？<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;">5<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="http://www.huxiu.com/article/4843301.html?f=wangzhan" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="http://www.huxiu.com/article/4843580.html?f=wangzhan" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-6962295752" class="rank-title-link">
-        <div class="rank-title">中国车企站在美国关税废墟上<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-3972861353" class="rank-title-link">
+        <div class="rank-title">新款小米SU7：&quot;融冰&quot;比销量更重要<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:64%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="http://www.huxiu.com/article/4843461.html?f=wangzhan" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="http://www.huxiu.com/article/4843852.html?f=wangzhan" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-7522872723" class="rank-title-link">
-        <div class="rank-title">美媒：美军或夺岛迫伊朗开放霍尔木兹海峡<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-7604501897" class="rank-title-link">
+        <div class="rank-title">吉林推出首部近现代史专著呈现边疆发展多元维度<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:52%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:76%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.chinanews.com.cn/gj/2026/03-20/10589748.shtml" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.chinanews.com.cn/txy/2026/03-20/10590073.shtml" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-7782302303" data-id="7782302303" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">为什么别人能用AI批量做短剧，你只能靠运气？</div>
-  <div class="card-desc">
-生成式媒体的下半场，从“玩模型”转向“拼编排”，短剧、电商、广告、游戏……所有AI落地场景，都绕不开这一层。下载虎嗅APP，第一时间获取深度独到的商业科技资讯，连接更多创新人群与线下活动</div>
-  
-  
-  <div class="related-row">· <span style="font-size:9px;color:#e96900;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e9690018;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;虎嗅</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×4</span></div>
+    <div class="news-card " id="card-5547789530" data-id="5547789530" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">吉利抱紧英伟达硬刚特斯拉：智驾翻身仗能成吗？</div>
+  <div class="so-what">→ 意味着吉利智驾技术突破，新车购买者可关注其自动驾驶功能。</div>
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e96900;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e9690018;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;虎嗅</span>
@@ -936,16 +1006,14 @@ document.addEventListener('DOMContentLoaded',function(){
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 85"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">22小时前</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">2小时前</span>
+    <button class="share-btn" title="复制分享" data-text="吉利抱紧英伟达硬刚特斯拉：智驾翻身仗能成吗？ | 意味着吉利智驾技术突破，新车购买者可关注其自动驾驶功能。" data-link="http://www.huxiu.com/article/4843580.html?f=wangzhan" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="http://www.huxiu.com/article/4843301.html?f=wangzhan" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-6962295752" data-id="6962295752" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">中国车企站在美国关税废墟上</div>
-  <div class="card-desc">关税政策打破旧格局，汽车行业竞争对手正成为彼此生存选项，奔驰与长城汽车商讨南非合作。</div>
-  
-  
-  
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">吉利汽车2025年销量首破300万辆，营收达3452亿元历史新高，核心净利润同比增36%。</div><a href="http://www.huxiu.com/article/4843580.html?f=wangzhan" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-3972861353" data-id="3972861353" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">新款小米SU7：&quot;融冰&quot;比销量更重要</div>
+  <div class="so-what">→ 意味着小米电动车需修复品牌信誉，消费者观望期延长。</div>
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e96900;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e9690018;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;虎嗅</span>
@@ -953,27 +1021,26 @@ document.addEventListener('DOMContentLoaded',function(){
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 55"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">15小时前</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">2小时前</span>
+    <button class="share-btn" title="复制分享" data-text="新款小米SU7：&quot;融冰&quot;比销量更重要 | 意味着小米电动车需修复品牌信誉，消费者观望期延长。" data-link="http://www.huxiu.com/article/4843852.html?f=wangzhan" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="http://www.huxiu.com/article/4843461.html?f=wangzhan" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-7522872723" data-id="7522872723" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">美媒：美军或夺岛迫伊朗开放霍尔木兹海峡</div>
-  <div class="card-desc">美国增派中东部队，可能夺取伊朗石油出口枢纽以开放海峡。</div>
-  <div class="so-what">→ 意味着霍尔木兹海峡地缘风险升级，中国石油进口通道安全受威胁。</div>
-  
-  
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">新款小米SU7上市34分钟锁单1.5万辆。3月19日发布，售价21.99万至30.39万元。</div><a href="http://www.huxiu.com/article/4843852.html?f=wangzhan" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-7604501897" data-id="7604501897" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">吉林推出首部近现代史专著呈现边疆发展多元维度</div>
+  <div class="so-what">→ 意味着吉林文化产业发展，地方出版社有新的选题方向。</div>
   <div class="card-meta">
-    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#1d4ed820;color:#1d4ed8;border:1px solid #1d4ed840;">速览</span>
+    
     <span style="font-size:10px;color:#7f1d1d;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7f1d1d18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;中国新闻网</span>
     
     
     <span style="font-size:9px;color:#92400e;font-family:sans-serif;background:#fef3c7;border:1px solid #fcd34d;border-radius:2px;padding:1px 5px;font-weight:600;" title="仅单一来源报道，信息待核实">单源</span>
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 45"></span>
-    <span class="pub-time">13分钟前</span>
+    <span class="pub-time">11分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="吉林推出首部近现代史专著呈现边疆发展多元维度 | 意味着吉林文化产业发展，地方出版社有新的选题方向。" data-link="https://www.chinanews.com.cn/txy/2026/03-20/10590073.shtml" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.chinanews.com.cn/gj/2026/03-20/10589748.shtml" class="read-link">→ 查看原文</a>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">《吉林300年：从边疆热土到现代摇篮》系统梳理吉林近代发展脉络，填补研究空白。</div><a href="https://www.chinanews.com.cn/txy/2026/03-20/10590073.shtml" class="read-link">→ 查看原文</a></div></details>
 </div>
   </div>
 </section>
@@ -992,23 +1059,36 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-8730615529" class="rank-title-link">
-        <div class="rank-title">Steam/GOG平台OpenTTD更新说明<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-7291314002" class="rank-title-link">
+        <div class="rank-title">向运行中的会话推送事件（含频道）<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.openttd.org/news/2026/03/19/steam-changes-update" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://code.claude.com/docs/en/channels" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-9194824940" class="rank-title-link">
-        <div class="rank-title">谷歌推出24小时流程允许侧载未验证安卓应用<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-5712409532" class="rank-title-link">
+        <div class="rank-title">Waymo安全影响<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#1e293b;"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
+      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://waymo.com/safety/impact/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+    </div>
+  </div>
+  <div class="rank-row">
+    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
+    <div class="rank-body">
+      <a href="#card-6553500605" class="rank-title-link">
+        <div class="rank-title">Google详述新增24小时流程用于侧载未验证Android应用<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      </a>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:95%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
@@ -1016,25 +1096,12 @@ document.addEventListener('DOMContentLoaded',function(){
     </div>
   </div>
   <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
-    <div class="rank-body">
-      <a href="#card-2241578323" class="rank-title-link">
-        <div class="rank-title">macOS 26破坏自定义DNS设置包括.internal域名<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#1e293b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://gist.github.com/adamamyl/81b78eced40feae50eae7c4f3bec1f5a" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-3801773581" class="rank-title-link">
-        <div class="rank-title">展示：三款新型Kitten文本转语音模型发布<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-3947630479" class="rank-title-link">
+        <div class="rank-title">Show HN：三款新Kitten文本转语音模型发布，最小不足25MB<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#1e293b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:95%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
@@ -1044,10 +1111,10 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-5927700249" class="rank-title-link">
-        <div class="rank-title">4Chan嘲讽英国在线安全违规罚款52万英镑<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-5138154112" class="rank-title-link">
+        <div class="rank-title">4Chan嘲笑英国因在线安全违规被罚52万英镑<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#1e293b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:93%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
@@ -1057,108 +1124,96 @@ document.addEventListener('DOMContentLoaded',function(){
 </div>
   </div>
   <div class="news-grid forum-grid">
-    <div class="news-card " id="card-9194824940" data-id="9194824940" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
-  <div class="card-title">谷歌推出24小时流程允许侧载未验证安卓应用</div>
-  <div class="card-desc"></div>
-  
-  
+    <div class="news-card " id="card-6553500605" data-id="6553500605" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+  <div class="card-title">Google详述新增24小时流程用于侧载未验证Android应用</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲443 · 526评</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲782 · 869评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 43"></span>
-    <span class="pub-time">7小时前</span>
+    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 41"></span>
+    <span class="pub-time">15小时前</span>
+    <button class="share-btn" title="复制分享" data-text="Google详述新增24小时流程用于侧载未验证Android应用" data-link="https://arstechnica.com/gadgets/2026/03/google-details-new-24-hour-process-to-sideload-unverified-android-apps/" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://arstechnica.com/gadgets/2026/03/google-details-new-24-hour-process-to-sideload-unverified-android-apps/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47442690" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a>
-</div><div class="news-card " id="card-2407526671" data-id="2407526671" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
-  <div class="card-title">&quot;你的挫折感就是产品&quot;</div>
-  <div class="card-desc"></div>
-  
-  
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://arstechnica.com/gadgets/2026/03/google-details-new-24-hour-process-to-sideload-unverified-android-apps/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47442690" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+</div><div class="news-card " id="card-3947630479" data-id="3947630479" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+  <div class="card-title">Show HN：三款新Kitten文本转语音模型发布，最小不足25MB</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲409 · 243评</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲417 · 158评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 42"></span>
-    <span class="pub-time">12小时前</span>
+    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 41"></span>
+    <span class="pub-time">17小时前</span>
+    <button class="share-btn" title="复制分享" data-text="Show HN：三款新Kitten文本转语音模型发布，最小不足25MB" data-link="https://github.com/KittenML/KittenTTS" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://daringfireball.net/2026/03/your_frustration_is_the_product" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47437655" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a>
-</div><div class="news-card " id="card-2241578323" data-id="2241578323" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
-  <div class="card-title">macOS 26破坏自定义DNS设置包括.internal域名</div>
-  <div class="card-desc"></div>
-  
-  
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://github.com/KittenML/KittenTTS" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47441546" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+</div><div class="news-card " id="card-5138154112" data-id="5138154112" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+  <div class="card-title">4Chan嘲笑英国因在线安全违规被罚52万英镑</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲312 · 158评</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲359 · 607评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 43"></span>
-    <span class="pub-time">9小时前</span>
+    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 40"></span>
+    <span class="pub-time">18小时前</span>
+    <button class="share-btn" title="复制分享" data-text="4Chan嘲笑英国因在线安全违规被罚52万英镑" data-link="https://www.bbc.com/news/articles/c624330lg1ko" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://gist.github.com/adamamyl/81b78eced40feae50eae7c4f3bec1f5a" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47440759" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a>
-</div><div class="news-card " id="card-3801773581" data-id="3801773581" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
-  <div class="card-title">展示：三款新型Kitten文本转语音模型发布</div>
-  <div class="card-desc"></div>
-  
-  
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://www.bbc.com/news/articles/c624330lg1ko" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47440430" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+</div><div class="news-card " id="card-4666943754" data-id="4666943754" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+  <div class="card-title">《Obra Dinn归来》：1bpp第一人称游戏的球面映射抖动技术</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲301 · 102评</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲350 · 44评</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    
+    <span class="pub-time">03-16 22:56</span>
+    <button class="share-btn" title="复制分享" data-text="《Obra Dinn归来》：1bpp第一人称游戏的球面映射抖动技术" data-link="https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47406160" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+</div><div class="news-card " id="card-7291314002" data-id="7291314002" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+  <div class="card-title">向运行中的会话推送事件（含频道）</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲321 · 181评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 43"></span>
     <span class="pub-time">8小时前</span>
+    <button class="share-btn" title="复制分享" data-text="向运行中的会话推送事件（含频道）" data-link="https://code.claude.com/docs/en/channels" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://github.com/KittenML/KittenTTS" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47441546" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a>
-</div><div class="news-card " id="card-8730615529" data-id="8730615529" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
-  <div class="card-title">Steam/GOG平台OpenTTD更新说明</div>
-  <div class="card-desc"></div>
-  
-  
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://code.claude.com/docs/en/channels" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47448524" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+</div><div class="news-card " id="card-5712409532" data-id="5712409532" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+  <div class="card-title">Waymo安全影响</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲258 · 181评</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲303 · 315评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 44"></span>
-    <span class="pub-time">7小时前</span>
+    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 42"></span>
+    <span class="pub-time">12小时前</span>
+    <button class="share-btn" title="复制分享" data-text="Waymo安全影响" data-link="https://waymo.com/safety/impact/" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.openttd.org/news/2026/03/19/steam-changes-update" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47442834" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a>
-</div><div class="news-card " id="card-5927700249" data-id="5927700249" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
-  <div class="card-title">4Chan嘲讽英国在线安全违规罚款52万英镑</div>
-  <div class="card-desc"></div>
-  
-  
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲239 · 387评</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 43"></span>
-    <span class="pub-time">9小时前</span>
-  </div>
-  <a href="https://www.bbc.com/news/articles/c624330lg1ko" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47440430" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://waymo.com/safety/impact/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47445246" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
 </div>
   </div>
 </section>
@@ -1177,51 +1232,67 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-6718459689" class="rank-title-link">
-        <div class="rank-title">哥伦比亚科技产业需要资金支持<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-5522003429" class="rank-title-link">
+        <div class="rank-title">三人因涉嫌走私英伟达芯片至中国被控<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#64748b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#64748b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.com/news/articles/c4g2kyg4e78o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#64748b;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-8787229271" class="rank-title-link">
-        <div class="rank-title">《单身汉女版》新季因虐待指控被叫停<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-5082853178" class="rank-title-link">
+        <div class="rank-title">英国2月份借贷高于预期<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#64748b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:83%;background:#64748b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#64748b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.com/news/articles/cp9vryml4d1o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bbc.com/news/articles/cx23yn735jdo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-3422265163" class="rank-title-link">
-        <div class="rank-title">丹麦曾计划若美国入侵格陵兰将炸毁跑道<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-7309850438" class="rank-title-link">
+        <div class="rank-title">联合利华确认与美极洽谈食品业务出售<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#64748b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:83%;background:#64748b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#64748b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.com/news/articles/c33ln4mp1p2o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bloomberg.com/news/articles/2026-03-20/unilever-confirms-talks-on-mccormick-offer-for-food-business" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-6718459689" data-id="6718459689" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
-  <div class="card-title">哥伦比亚科技产业需要资金支持</div>
-  <div class="card-desc">哥伦比亚已成为拉美科技中心，但吸引投资仍面临挑战。</div>
-  
-  
-  
+    <div class="news-card " id="card-5522003429" data-id="5522003429" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+  <div class="card-title">三人因涉嫌走私英伟达芯片至中国被控</div>
+  <div class="so-what">→ 意味着国内AI芯片替代赛道（寒武纪、海光）获政策与市场双重催化。</div>
+  <div class="card-meta">
+    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#8a121228;color:#8a1212;border:1px solid #8a121260;">深读</span>
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
+    
+    <span style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双源报道 · 2</span>
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 92"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">4小时前</span>
+    <button class="share-btn" title="复制分享" data-text="三人因涉嫌走私英伟达芯片至中国被控 | 意味着国内AI芯片替代赛道（寒武纪、海光）获政策与市场双重催化。" data-link="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">他们涉嫌使用虚假文件和伪装设备，计划向中国出售数十亿美元芯片。</div><div class="related-row">· <span style="font-size:9px;color:#065f46;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#065f4618;border-radius:999px;padding:1px 7px;">🇶🇦&thinsp;Al Jazeera</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><details class="full-summary"><summary>展开全文摘要 ›</summary><div class="full-summary-body"># 新闻摘要
+
+美国司法部周四宣布，三人因涉嫌走私英伟达芯片至中国而被控。被控人员包括美国公民、加州超微电脑公司联合创始人Yih-Shyan &quot;Wally&quot; Liaw和台湾籍人士Ting-Wei &quot;Willy&quot; Sun，另一台湾籍嫌疑人Ruei-Tsang &quot;Steven&quot; Chang仍在逃。
+
+据司法部指控，三人涉嫌伪造文件、使用虚假设备规避审计，试图向中国买家出售价值数十亿美元的技术，其中包括受出口管制的英伟达AI芯片。今年8月，两名中国籍人士也因非法运送价值数百万美元的英伟达芯片至中国而被逮捕。超微电脑公司表示正全力配合调查，已将涉案人员停职或解雇。</div></details><a href="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-5082853178" data-id="5082853178" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+  <div class="card-title">英国2月份借贷高于预期</div>
+  <div class="so-what">→ 意味着英国经济韧性存在，中英贸易谈判空间有限。</div>
   <div class="card-meta">
     <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#64748b18;color:#64748b;border:1px solid #64748b38;">跳过</span>
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
@@ -1230,47 +1301,29 @@ document.addEventListener('DOMContentLoaded',function(){
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 77"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">24分钟前</span>
+    <span class="pub-time">52分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="英国2月份借贷高于预期 | 意味着英国经济韧性存在，中英贸易谈判空间有限。" data-link="https://www.bbc.com/news/articles/cx23yn735jdo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.bbc.com/news/articles/c4g2kyg4e78o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-8787229271" data-id="8787229271" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
-  <div class="card-title">《单身汉女版》新季因虐待指控被叫停</div>
-  <div class="card-desc">该节目主演与前伴侣冲突视频曝光后，制片方决定暂停播出。</div>
-  
-  
-  
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">英国国家统计局表示，政府税收增加被支出上升所抵消。</div><a href="https://www.bbc.com/news/articles/cx23yn735jdo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-7309850438" data-id="7309850438" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+  <div class="card-title">联合利华确认与美极洽谈食品业务出售</div>
+  <div class="so-what">→ 意味着调味品与食品并购主题升温，A股海天味业等龙头或受资金关注。</div>
   <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
+    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#1d4ed820;color:#1d4ed8;border:1px solid #1d4ed840;">速览</span>
+    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
     
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 77"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">2小时前</span>
+    <span class="pub-time">1小时前</span>
+    <button class="share-btn" title="复制分享" data-text="联合利华确认与美极洽谈食品业务出售 | 意味着调味品与食品并购主题升温，A股海天味业等龙头或受资金关注。" data-link="https://www.bloomberg.com/news/articles/2026-03-20/unilever-confirms-talks-on-mccormick-offer-for-food-business" onclick="shareCard(this)">🔗</button>
   </div>
-  <a href="https://www.bbc.com/news/articles/cp9vryml4d1o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a>
-</div><div class="news-card " id="card-3422265163" data-id="3422265163" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
-  <div class="card-title">丹麦曾计划若美国入侵格陵兰将炸毁跑道</div>
-  <div class="card-desc">丹麦公共广播公司报道，美国对委内瑞拉行动引发丹麦对被侵犯的担忧。</div>
-  
-  
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
-    
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 77"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">2小时前</span>
-  </div>
-  <a href="https://www.bbc.com/news/articles/c33ln4mp1p2o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">联合利华与美极公司就出售食品业务进行洽谈，涉及蛋黄酱等品牌的重组。</div><a href="https://www.bloomberg.com/news/articles/2026-03-20/unilever-confirms-talks-on-mccormick-offer-for-food-business" class="read-link">→ 查看原文</a></div></details>
 </div>
   </div>
 </section>
-      <div class="faq-section"><div class="faq-label">READER Q&amp;A · 读者最想问</div><details class="faq-item"><summary class="faq-q">美国若夺取伊朗岛屿强开霍尔木兹海峡，具体可能针对哪些目标？</summary><div class="faq-a">据报道，美军可能瞄准波斯湾内的阿布穆萨岛或大小通布岛，这些岛屿扼守霍尔木兹海峡咽喉。伊朗在此部署导弹和海军力量，一旦开战将直接冲击全球约20%的石油运输。</div></details><details class="faq-item"><summary class="faq-q">超微计算机员工走私英伟达芯片案，芯片是如何绕过出口管制流入中国的？</summary><div class="faq-a">据起诉书，涉案人员通过第三方空壳公司和中间国转口，将受出口管制的高端GPU伪装成普通货物运往中国。此案暴露出美国芯片出口管制执法存在明显漏洞。</div></details><details class="faq-item"><summary class="faq-q">英国央行维持利率3.75%不变，为何债券市场反应如此剧烈？</summary><div class="faq-a">市场原本预期央行将释放降息信号，但MPC强调中东战争推高能源价格、通胀风险上行，令降息预期落空。债券价格大跌反映投资者重新定价更长时间的高利率路径。</div></details></div>
+      <div class="faq-section"><div class="faq-label">READER Q&amp;A · 读者最想问</div><details class="faq-item"><summary class="faq-q">英伟达芯片走私案反映了什么样的供应链风险？</summary><div class="faq-a">美国对华芯片管制促使走私活动增加，犯罪分子采用虚假文件规避监管。这表明技术禁运虽能延缓中国进度，但难以完全阻断获取渠道，反而推高成本并催生灰色市场。</div></details><details class="faq-item"><summary class="faq-q">特朗普关税政策为何引发贸易混乱而非预期的产业调整？</summary><div class="faq-a">301条款关税缺乏针对性，对全球供应链造成广泛冲击而非精准打击。企业难以快速重组生产布局，消费端和中间产业均面临成本上升压力。</div></details><details class="faq-item"><summary class="faq-q">乌克兰在2026年的军事态势转变说明了什么？</summary><div class="faq-a">乌克兰从防守转向南线反攻、争取技术合作，表明在西方持续支持下逐步扭转战场劣势。但能否维持这一势头取决于援助稳定性和本土工业能力提升。</div></details></div>
     </div>
 
     <!-- Sidebar (desktop only) -->
@@ -1283,105 +1336,105 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-6798032712" class="rank-title-link">
-        <div class="rank-title">近百艘船舶通过霍尔木兹海峡 谁在通行？<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-4691937321" class="rank-title-link">
+        <div class="rank-title">俄中美三国在伊朗冲突中的全球利益分化<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;">89<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.com/news/articles/c4geg0eeyjeo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#b8940e;">71<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bbc.com/news/articles/c3wlwnn05zqo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-6740322039" class="rank-title-link">
-        <div class="rank-title">乌克兰关键贷款成为匈牙利总理选举筹码<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-4533752092" class="rank-title-link">
+        <div class="rank-title">欧央行官员纳格尔：若物价前景恶化需4月加息<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:13%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;">5<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.nytimes.com/2026/03/19/world/europe/ukraine-hungary-orban-elections.html" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#b8940e;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bloomberg.com/news/articles/2026-03-20/ecb-would-need-april-hike-if-price-outlook-sours-nagel-says" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-3630678777" class="rank-title-link">
-        <div class="rank-title">英央行警示通胀风险 英国债券大幅下跌<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-7892356740" class="rank-title-link">
+        <div class="rank-title">英国债券面临政治和英央行双重风险<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:13%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;">3<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.ft.com/content/c0a967b6-19d0-4e50-9a8e-8ae510d43d08" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bloomberg.com/news/videos/2026-03-20/gilts-face-further-risk-from-politics-3-minutes-mliv-video" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-8807810689" class="rank-title-link">
-        <div class="rank-title">薪资增长创五年多来最低速度<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-4073837056" class="rank-title-link">
+        <div class="rank-title">威瑟斯彭酒吧集团今年第二次下调利润预警后股价暴跌<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:11%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.com/news/articles/cn0z0x82r00o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bloomberg.com/news/articles/2026-03-20/j-d-wetherspoon-slumps-after-second-profit-warning-this-year" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-3175502716" class="rank-title-link">
-        <div class="rank-title">美国起诉超微计算机员工向中国走私英伟达芯片<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-3853536142" class="rank-title-link">
+        <div class="rank-title">德黑兰的生存仪式<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:11%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;">3<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.cnbc.com/2026/03/19/us-tech-execs-smuggled-nvidia-chips-to-china-prosecutors-say.html" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.ft.com/content/a2b3dcbf-9fec-4fd8-9935-ca6ab0b79100" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">06</span>
     <div class="rank-body">
-      <a href="#card-2269235138" class="rank-title-link">
-        <div class="rank-title">油价回落美股反弹 亚股开盘走高<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-2539976893" class="rank-title-link">
+        <div class="rank-title">军事简报：霍尔木兹护航计划的风险<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:10%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-03-19/stock-market-today-dow-s-p-live-updates-" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.ft.com/content/bb6a57d6-8d54-43a7-95b4-110e51fbc5db" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">07</span>
     <div class="rank-body">
-      <a href="#card-1560117662" class="rank-title-link">
-        <div class="rank-title">伊朗反政府抗议中首次执行少年死刑<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-8023218523" class="rank-title-link">
+        <div class="rank-title">莫斯科和德黑兰的混合战争<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:10%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.com/news/articles/ce9mzn7k722o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#b8940e;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.politico.eu/podcast/berlin-playbook-podcast/der-hybride-krieg-aus-moskau-und-teheran/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">08</span>
     <div class="rank-body">
-      <a href="#card-7444447179" class="rank-title-link">
-        <div class="rank-title">吉尔松·芬克尔施泰因出任桑坦德巴西银行CEO<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-4245126482" class="rank-title-link">
+        <div class="rank-title">美国301条款关税引发新一轮贸易混乱<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:10%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:9%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-03-19/gilson-finkelsztain-to-take-over-as-ceo-of-santander-brasil" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.scmp.com/opinion/world-opinion/article/3347181/us-section-301-tariffs-set-trigger-fresh-wave-trade-disruption?utm_source=rss_feed" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
 </div>
@@ -1389,10 +1442,10 @@ document.addEventListener('DOMContentLoaded',function(){
   <!-- Investment Signals（根据当日新闻动态生成） -->
   <div class="sidebar-block">
     <div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">INVESTMENT SIGNALS · 今日信号</div>
-    <div style="padding:10px 12px 12px;"><div style="padding:12px 14px;background:#f8fafc;border-radius:4px;border-left:3px solid #64748b;margin:4px 0;"><div style="font-size:11px;color:#64748b;font-family:sans-serif;line-height:1.7;">今日新闻未触发明确投资信号，市场观望为主。</div></div></div>
+    <div style="padding:8px 12px 6px;"><div style="margin-bottom:10px;"><div style="font-size:9px;font-weight:800;color:#15803d;font-family:sans-serif;letter-spacing:1.5px;text-transform:uppercase;padding:0 8px 4px;">做多</div><div style="padding:6px 8px;margin:2px 0;border-left:2px solid #15803d;background:#15803d08;border-radius:0 3px 3px 0;"><div style="font-size:11px;font-weight:700;color:#15803d;font-family:sans-serif;">黄金/贵金属</div><div style="font-size:10px;color:#64748b;font-family:sans-serif;line-height:1.6;margin:3px 0 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">伊朗冲突持续发酵叠加俄乌战线延伸，地缘风险溢价推升避险需求；金价单日+2%已验证资金流向，多头动能强劲。</div><a href="https://www.bbc.com/news/articles/c3wlwnn05zqo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;font-family:sans-serif;display:block;">↗ 俄中美三国在伊朗冲突中的全球利益分化</a></div><div style="padding:6px 8px;margin:2px 0;border-left:2px solid #15803d;background:#15803d08;border-radius:0 3px 3px 0;"><div style="font-size:11px;font-weight:700;color:#15803d;font-family:sans-serif;">原油/能源ETF</div><div style="font-size:10px;color:#64748b;font-family:sans-serif;line-height:1.6;margin:3px 0 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">伊朗冲突持续追踪显示霍尔木兹/哈尔克岛风险未消，供给中断预期支撑布伦特突破$104，能源股Beta受益。</div><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">↗ iran / island / kharg / military（持续6天，最近报道：2026-03-16）</span></div><div style="padding:6px 8px;margin:2px 0;border-left:2px solid #15803d;background:#15803d08;border-radius:0 3px 3px 0;"><div style="font-size:11px;font-weight:700;color:#15803d;font-family:sans-serif;">无人机/国防科技（日本/乌克兰概念）</div><div style="font-size:10px;color:#64748b;font-family:sans-serif;line-height:1.6;margin:3px 0 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">乌克兰向日本输出无人机作战经验，日本防务采购预期升温；叠加斯里兰卡拒绝美军过境，印太军备竞赛逻辑强化。</div><a href="https://www.japantimes.co.jp/news/2026/03/20/japan/politics/ukraine-ambassador-japan-defense-cooperation/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;font-family:sans-serif;display:block;">↗ 乌克兰大使：乌准备与日本分享作战经验和无人机技术</a></div></div><div style="margin-bottom:10px;"><div style="font-size:9px;font-weight:800;color:#b91c1c;font-family:sans-serif;letter-spacing:1.5px;text-transform:uppercase;padding:0 8px 4px;">规避</div><div style="padding:6px 8px;margin:2px 0;border-left:2px solid #b91c1c;background:#b91c1c08;border-radius:0 3px 3px 0;"><div style="font-size:11px;font-weight:700;color:#b91c1c;font-family:sans-serif;">中国科技/半导体进口依赖股</div><div style="font-size:10px;color:#64748b;font-family:sans-serif;line-height:1.6;margin:3px 0 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">英伟达芯片走私案被控，301关税新一轮加码，双重封锁强化；供应链断裂风险上升，相关标的估值承压。</div><a href="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;font-family:sans-serif;display:block;">↗ 三人因涉嫌走私英伟达芯片至中国被控</a></div><div style="padding:6px 8px;margin:2px 0;border-left:2px solid #b91c1c;background:#b91c1c08;border-radius:0 3px 3px 0;"><div style="font-size:11px;font-weight:700;color:#b91c1c;font-family:sans-serif;">中国消费/韩流文娱概念股</div><div style="font-size:10px;color:#64748b;font-family:sans-serif;line-height:1.6;margin:3px 0 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">韩流艺人日籍成员被拒入华演出，地缘政治干扰文化消费；叠加上证-1.2%，内需情绪疲弱，板块双重压制。</div><a href="https://www.nytimes.com/2026/03/20/world/asia/k-pop-china-japan-south-korea.html" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;font-family:sans-serif;display:block;">↗ 地缘政治威胁韩流在华雄心</a></div><div style="padding:6px 8px;margin:2px 0;border-left:2px solid #b91c1c;background:#b91c1c08;border-radius:0 3px 3px 0;"><div style="font-size:11px;font-weight:700;color:#b91c1c;font-family:sans-serif;">英国零售/消费股（JDW等）</div><div style="font-size:10px;color:#64748b;font-family:sans-serif;line-height:1.6;margin:3px 0 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">威瑟斯彭年内二度下调利润预警，消费支出疲软已成趋势；英国债券同时面临政治与央行双重风险，零售股流动性折价扩大。</div><a href="https://www.bloomberg.com/news/articles/2026-03-20/j-d-wetherspoon-slumps-after-second-profit-warning-this-year" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;font-family:sans-serif;display:block;">↗ 威瑟斯彭酒吧集团今年第二次下调利润预警后股价暴跌</a></div></div><div style="margin-bottom:10px;"><div style="font-size:9px;font-weight:800;color:#d97706;font-family:sans-serif;letter-spacing:1.5px;text-transform:uppercase;padding:0 8px 4px;">谨慎</div><div style="padding:6px 8px;margin:2px 0;border-left:2px solid #d97706;background:#d9770608;border-radius:0 3px 3px 0;"><div style="font-size:11px;font-weight:700;color:#d97706;font-family:sans-serif;">美国科技/AI算力股（英伟达）</div><div style="font-size:10px;color:#64748b;font-family:sans-serif;line-height:1.6;margin:3px 0 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">黄仁勋推AI代币薪酬创新，但报告指出2018年来多数企业AI项目失败；走私案引发监管关注，短期情绪与基本面存在背离风险。</div><a href="https://www.cnbc.com/2026/03/20/nvidia-ai-agents-tokens-human-workers-engineer-jobs-unemployment-jensen-huang.html" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;font-family:sans-serif;display:block;">↗ 英伟达黄仁勋推AI代币作为薪酬补充，智能体重塑工作方式</a></div><div style="padding:6px 8px;margin:2px 0;border-left:2px solid #d97706;background:#d9770608;border-radius:0 3px 3px 0;"><div style="font-size:11px;font-weight:700;color:#d97706;font-family:sans-serif;">英国国债（Gilts）</div><div style="font-size:10px;color:#64748b;font-family:sans-serif;line-height:1.6;margin:3px 0 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">分析师同时警示政治风险与英央行政策不确定性，利差波动区间扩大；需等待英央行明确表态后再判断方向。</div><a href="https://www.bloomberg.com/news/videos/2026-03-20/gilts-face-further-risk-from-politics-3-minutes-mliv-video" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;font-family:sans-serif;display:block;">↗ 英国债券面临政治和英央行双重风险</a></div><div style="padding:6px 8px;margin:2px 0;border-left:2px solid #d97706;background:#d9770608;border-radius:0 3px 3px 0;"><div style="font-size:11px;font-weight:700;color:#d97706;font-family:sans-serif;">港股/恒生指数</div><div style="font-size:10px;color:#64748b;font-family:sans-serif;line-height:1.6;margin:3px 0 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">恒生单日-0.9%，301关税扰动贸易预期，中美科技脱钩加速；但人民币相对稳定（6.88）提供部分缓冲，方向尚不明朗。</div><a href="https://www.scmp.com/opinion/world-opinion/article/3347181/us-section-301-tariffs-set-trigger-fresh-wave-trade-disruption?utm_source=rss_feed" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;font-family:sans-serif;display:block;">↗ 美国301条款关税引发新一轮贸易混乱</a></div></div></div><div style="padding:0 12px 8px;font-size:9px;color:#6b7280;font-family:sans-serif;border-top:1px solid #2a2d38;padding-top:6px;margin-top:2px;">仅供参考，不构成投资建议</div>
   </div>
   <!-- 视角雷达 -->
-  <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">PERSPECTIVE RADAR · 今日视角分布</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">112</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#2563eb;min-width:48px;white-space:nowrap;">欧洲</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:14%;background:#2563eb;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">16</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#9333ea;min-width:48px;white-space:nowrap;">俄罗斯</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:14%;background:#9333ea;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">16</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">西班牙</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:13%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">15</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#e11d48;min-width:48px;white-space:nowrap;">日本</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#e11d48;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#0891b2;min-width:48px;white-space:nowrap;">亚洲</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#0891b2;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#d97706;min-width:48px;white-space:nowrap;">中东</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#d97706;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#f59e0b;min-width:48px;white-space:nowrap;">印度</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#f59e0b;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#b45309;min-width:48px;white-space:nowrap;">中国独立</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#b45309;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#6366f1;min-width:48px;white-space:nowrap;">法国</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:6%;background:#6366f1;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">7</span></div></div></div>
+  <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">PERSPECTIVE RADAR · 今日视角分布</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">112</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#2563eb;min-width:48px;white-space:nowrap;">欧洲</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:14%;background:#2563eb;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">16</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">西班牙</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:13%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">15</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#6366f1;min-width:48px;white-space:nowrap;">法国</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#6366f1;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#0891b2;min-width:48px;white-space:nowrap;">亚洲</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#0891b2;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#d97706;min-width:48px;white-space:nowrap;">中东</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#d97706;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#e11d48;min-width:48px;white-space:nowrap;">日本</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#e11d48;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#9333ea;min-width:48px;white-space:nowrap;">俄罗斯</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#9333ea;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#b45309;min-width:48px;white-space:nowrap;">中国独立</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#b45309;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#f59e0b;min-width:48px;white-space:nowrap;">印度</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:6%;background:#f59e0b;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">7</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#0e7490;min-width:48px;white-space:nowrap;">韩国</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#0e7490;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">4</span></div></div></div>
   <!-- 持续追踪 -->
   
   <!-- AI 研报简报 -->
@@ -1403,7 +1456,7 @@ document.addEventListener('DOMContentLoaded',function(){
       text-decoration:none;font-weight:600;margin-left:auto;">全部 →</a>
   </div>
   <div style="padding:4px 0;">
-    <a href="https://github.com/KittenML/KittenTTS" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Show HN: Three new Kitten TT…</span></a><a href="https://github.com/Compresr-ai/Context-Gateway" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Show HN: Context Gateway – C…</span></a><a href="https://www.Bracketmadness.ai" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Show HN: March Madness Brack…</span></a><a href="https://ionrouter.io" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Launch HN: IonRouter (YC W26…</span></a><a href="https://arxiv.org/abs/2603.17621v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">LLM</span><span class="ai-paper-title">互补强化学习<span style="font-size:9px;color:#8a6a1a;"> · MIT</span><span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF28</span></span></a><a href="https://arxiv.org/abs/2603.17995v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">LLM</span><span class="ai-paper-title">LoST：三维形状的语义级别标记化<span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF14</span></span></a>
+    <a href="https://github.com/KittenML/KittenTTS" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Show HN: Three new Kitten TT…</span></a><a href="https://arxiv.org/abs/2603.19235v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">LLM</span><span class="ai-paper-title">生成模型的空间认知：挖掘隐式3D先验用于场景理解<span style="font-size:9px;color:#8a6a1a;"> · MIT</span><span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF56</span></span></a><a href="https://arxiv.org/abs/2603.19199v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">VIS</span><span class="ai-paper-title">FASTER：重新思考实时流视觉语言动作模型<span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF35</span></span></a><a href="https://www.Bracketmadness.ai" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Show HN: March Madness Brack…</span></a><a href="https://arxiv.org/abs/2603.19232v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">LLM</span><span class="ai-paper-title">立方离散扩散：高维表示令牌的离散视觉生成<span style="font-size:9px;color:#8a6a1a;"> · MIT</span><span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF24</span></span></a><a href="https://arxiv.org/abs/2603.19228v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">LLM</span><span class="ai-paper-title">SAMA：指令引导视频编辑的因式分解语义锚定与运动对齐<span style="font-size:9px;color:#8a6a1a;"> · MIT</span><span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF24</span></span></a>
   </div>
 </div>
 </aside>
