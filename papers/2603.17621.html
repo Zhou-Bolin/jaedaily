@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>互补强化学习 · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 收藏按钮 ── */
+.fav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  background:transparent;border:1px solid rgba(245,234,208,.3);
+  color:rgba(245,234,208,.7);cursor:pointer;font-family:inherit;
+  letter-spacing:.3px;transition:all .2s;
+}
+.fav-btn:hover{background:rgba(245,234,208,.12);border-color:rgba(245,234,208,.5);color:#f5ead0;}
+.fav-btn.faved{background:#b8940e28;border-color:#b8940e;color:#e8c87a;}
+.fav-btn .fav-star{font-size:14px;transition:transform .2s;}
+.fav-btn.faved .fav-star{transform:scale(1.2);}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* Q&A 深度问答 */
+.qa-card{
+  background:#0f172a;border-radius:6px;border:1px solid #1e3a5f;
+  margin-bottom:14px;overflow:hidden;
+}
+.qa-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#7dd3fc;
+  font-family:sans-serif;padding:12px 18px;
+  background:#0f172a;border-bottom:1px solid #1e3a5f;text-transform:uppercase;
+}
+.qa-item{
+  padding:16px 18px;border-bottom:1px solid #1e3a5f20;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.6;margin-bottom:10px;
+}
+.qa-num{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:#1d4ed8;color:#fff;font-size:10px;font-weight:800;
+  font-family:sans-serif;margin-top:2px;
+}
+.qa-a{
+  font-size:13px;color:#94a3b8;line-height:1.8;padding-left:30px;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <a href="../favorites.html" style="color:rgba(245,234,208,.6);font-size:12px;
+     text-decoration:none;padding:12px 0;display:inline-flex;align-items:center;gap:5px;">
+    ⭐ 收藏夹
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2603.17621</div>
+    <div class="paper-title-zh">互补强化学习</div>
+    <div class="paper-title-en">Complementary Reinforcement Learning</div>
+    <div class="one-liner">💡 Actor与Experience Extractor在RL循环中协同进化，持续提升样本效率</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2026-03-18</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">cs.LG · cs.CL</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">Dilxat Muhtar, Jiashun Liu, Wei Gao, Weixun Wang, Shaopan Xiong, Ju Huang 等11人</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2603.17621" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2603.17621" target="_blank" rel="noopener">⬇ PDF</a>
+      <button class="fav-btn" id="fav-btn" onclick="toggleFav()">
+        <span class="fav-star">☆</span>
+        <span class="fav-label">收藏</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">静态经验库随Actor能力提升会产生渐进性错位，协同进化是解决经验过时的根本途径</li><li class="ta-item">分组内独立优势归一化（Subgroup Advantage）是防止experience-guided与experience-free混合训练崩溃的关键设计</li><li class="ta-item">用经验是否帮助Actor成功作为Extractor的RL奖励信号，实现了无需人工标注的自动经验质量评估</li><li class="ta-item">全异步ExperienceManager设计使经验蒸馏与Actor训练完全解耦，是工程落地的核心保障</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)领域核心挑战：基于结果奖励的RL训练LLM Agent时，稀疏奖励导致样本效率极低，轨迹中丰富的过程信息（有效行为、可恢复失败模式、关键决策点）被大量浪费。(2)现有方法局限：离线经验库（Offline Exp.）在训练初期有提升但随训练推进效益衰减；静态在线经验提取器（Static Online Exp.）仅比无经验基线略好，因为固定提取器无法跟随Actor能力分布漂移，产生「经验过时」问题（Figure 3a定量展示三者差距）。(3)核心问题：如何让经验提取器与Actor在RL优化循环中持续协同进化，避免经验与Actor能力的渐进性错位。(4)时机重要性：随着LLM Agent在复杂多步任务中的广泛应用，样本效率成为规模化训练的关键瓶颈，co-evolution范式恰逢其时。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)整体流程：Complementary RL维护两个模型——Actor $\pi_\theta$与Experience Extractor $\pi_\phi$，前者与环境交互并由结果奖励优化，后者从轨迹中提炼结构化经验并存入Experience Bank $\mathcal{M}$；每轮episode开始时从$\mathcal{M}$检索相关经验指导Actor，episode结束后将轨迹送给Extractor蒸馏，形成闭环。(2)三个关键创新：①Actor-Extractor协同进化：Extractor的奖励信号来自其蒸馏的经验是否实际帮助Actor成功（$r(m)\in\{-1,+1\}$），使Extractor随Actor能力同步进化，本质区别于固定Extractor或离线经验库；②分组优势估计（Subgroup Advantage）：将K条rollout均分为experience-guided与experience-free两组，各组内独立归一化优势$\hat{A}_c=(r(\tau_c)-\bar{r}_c)/\sigma_c$，避免两组奖励尺度差异导致的优势偏差和训练崩溃（Figure 3b-d消融验证）；③全异步训练框架：引入集中式ExperienceManager $\mathcal{H}$，通过读写锁、蒸馏队列$\mathcal{Q}$、micro-batch检索等机制，将Actor训练与经验蒸馏完全解耦，消除同步阻塞。(3)直觉有效性：类比神经科学互补学习系统（CLS），海马体（Extractor）快速编码情节记忆并随皮层（Actor）反馈不断巩固，两者互相塑造，使经验始终与当前能力边界对齐。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">Extractor优化采用CISPO目标：$$J_{CISPO}(\phi)=\mathbb{E}\left[\frac{\sum_{i=1}^{O}\sum_{t=1}^{|m_i|}sg\left([\rho_{i,t}]^{1+\varepsilon^{IS}_{high}}_{1-\varepsilon^{IS}_{low}}\right)\hat{A}_i\log\pi_\phi(m_{i,t}|g_i,\tau_i,m_{i,<t})}{\sum_{i=1}^{B}|m_i|}\right]$$其中$\rho_{i,t}=\pi_\phi(m_{i,t}|g_i,\tau_i,m_{i,<t})/\pi_{\phi_{old}}(m_{i,t}|g_i,\tau_i,m_{i,<t})$为token级重要性采样比，裁剪至$[1-\varepsilon^{IS}_{low},1+\varepsilon^{IS}_{high}]$；$sg(\cdot)$为stop-gradient；$\hat{A}_i=r(m_i)-\bar{r}$为batch级优势，$r(m_i)\in\{-1,+1\}$。Actor采用分组GRPO：$$J^{split}_{GRPO}(\theta)=\mathbb{E}\left[\frac{1}{2}\sum_{c\in\{m,\emptyset\}}\frac{1}{K_c}\sum_{k=1}^{K_c}L_{clip}(\rho_c,\hat{A}_c)\right]$$其中$\hat{A}_c=(r(\tau_c)-\bar{r}_c)/\sigma_c$在各子组内独立归一化，$L_{clip}$为PPO裁剪代理损失，$K_c=K/2$保证两组梯度贡献均衡。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">实验涵盖多个基准：MiniHack Room（Room-Ultimate-5x5-v0，网格导航，用于pilot study与消融）；WebShop（电商购物Agent，约12k产品）；ALFWorld（家庭环境文本游戏，134个训练任务）；SWE-Bench（代码修复，来自真实GitHub issue）。多任务设置下同时训练上述多个环境。论文未详细披露训练/验证/测试具体划分比例及token量，但采用标准benchmark官方划分。经验库中经验条目通过Add/Update/Merge结构化操作维护，无需人工标注。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">系统由两个LLM组成：Actor $\pi_\theta$（负责多步环境交互与推理，基于标准Transformer decoder）和Experience Extractor $\pi_\phi$（负责从轨迹蒸馏结构化经验，同为LLM）。Experience Bank $\mathcal{M}$存储向量化经验条目$(m_i, v_i)$，由Embedding Model $f_\psi$编码用于语义检索。ExperienceManager $\mathcal{H}$包含：蒸馏队列$\mathcal{Q}$（producer-consumer模式）、并行Search Worker（读锁并发）、写锁保护的Bank更新。论文未披露具体参数量（如7B/70B），但框架设计与模型规模无关，支持任意LLM骨干。整体计算复杂度由Actor rollout主导，Extractor蒸馏在后台异步执行不阻塞主训练循环。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">训练分两个并行轨道：主训练循环（Actor与环境交互+GRPO更新）和后台轨道（Extractor蒸馏+CISPO更新）。Actor用GRPO，Extractor用CISPO（含非对称IS裁剪$\varepsilon^{IS}_{low},\varepsilon^{IS}_{high}$防止分布突变）。分组rollout中$K_c=K/2$保证梯度均衡。关键稳定技巧：子组内独立优势归一化、stop-gradient阻断Extractor梯度回传至Actor、写锁防止Bank状态冲突、周期性Merge操作消除冗余经验。具体GPU型号/数量/训练时长论文未明确披露，但强调异步设计使额外延迟最小化。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">单任务场景：Complementary RL相比无经验的outcome-based RL基线提升约10%成功率（Figure 1左图，训练步数约150步收敛）；显著优于Offline Exp.和Static Online Exp.（Figure 3a）。多任务场景：展现出鲁棒的可扩展性，跨WebShop、ALFWorld、SWE-Bench、MiniHack均有提升。消融实验：①无分组拆分时Actor过度依赖经验、能力内化失败（Figure 3b）；②跨组计算优势导致训练崩溃（Figure 3c）；③子组内独立归一化稳定训练并两组均持续提升（Figure 3d）。局限：Extractor奖励信号为二值（$\pm1$），粒度粗糙；经验质量依赖Extractor初始能力。代码与训练demo已开源（论文脚注提供链接）。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">Dilxat Muhtar（阿里巴巴集团，中国，共同一作）；Jiashun Liu（阿里巴巴集团 & 香港科技大学，共同一作）；Wei Gao（阿里巴巴集团 & 香港科技大学）；Weixun Wang（阿里巴巴集团，通讯作者）；Shaopan Xiong（阿里巴巴集团）；Ju Huang（阿里巴巴集团，通讯作者）。团队来自阿里巴巴集团与香港科技大学，专注于LLM-based Agent的强化学习训练，在agentic RL与经验驱动学习领域具有较强工程与研究积累。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">直接影响：确立了「Actor-Extractor协同进化」作为experience-driven agentic RL的新范式，挑战了静态经验库的主流做法。新研究方向：①多层次经验粒度（token级/步骤级/episode级奖励信号）；②Extractor与Actor共享参数的统一模型设计；③经验遗忘与知识蒸馏的结合（防止经验库无限膨胀）；④跨任务经验迁移与泛化（Table 6展示的通用经验已初步验证）。产业落地：复杂工具调用Agent、代码自动修复、电商导购等需要多步决策的场景。现有局限：二值经验奖励信号过于稀疏；异步框架引入经验时效性延迟；未探索Extractor与Actor参数共享。作者未来工作：更细粒度的经验奖励设计与更大规模的多任务验证。</div>
+</div>
+  <div class="qa-card"><div class="qa-title">THREE KEY QUESTIONS · 深度问答</div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q1</span>问题1：Extractor的奖励信号设计为二元{-1,+1}（基于Actor是否成功），这种稀疏且存在因果混淆的奖励是否能真正归因于Experience的贡献？理论上如何保证Extractor不退化为「只在Actor已经能成功的任务上生成经验」的捷径策略？</div><div class="qa-a">这是该方法最核心的理论脆弱点。Extractor的奖励r(m)∈{-1,+1}直接绑定Actor的episode结果，但Actor成功与否受多重因素影响（初始状态难度、Actor自身能力、检索到的经验质量），将全部功劳/过失归于Extractor存在严重的信用分配问题（credit assignment problem）。论文并未提供理论保证来排除以下退化路径：当Actor能力增强后，Extractor可能学会「对简单任务生成任意经验均获+1」，而非真正提炼有价值的结构化知识。分组优势估计（Subgroup Advantage）将K条rollout分为有经验组和无经验组，通过组间对比可部分缓解此问题——若有经验组显著优于无经验组，才能更可靠地归因于经验本身。但论文未报告两组成功率的实际差距分布，也未分析在Actor能力趋近饱和时Extractor奖励信号是否退化。从理论角度，这需要类似「反事实基线」的设计（如COMA中的思路）才能严格隔离经验贡献，这是该方法最值得深入研究的理论缺口。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q2</span>问题2：论文将「Offline Exp.」和「Static Online Exp.」作为主要对比基线，但这两类基线是否使用了与Complementary RL完全等量的计算资源和训练步数？Extractor本身也在消耗推理算力，若将这部分算力用于更多Actor rollout，基线性能是否会追平？</div><div class="qa-a">这是实验公平性的核心疑问。Complementary RL引入了额外的Extractor模型（同样是LLM规模），其推理和RL训练开销不可忽视。论文提到设计了「异步训练框架」以避免阻塞Actor训练，但并未明确报告：①Extractor的参数量与Actor是否相同；②总FLOPs或wall-clock时间的对比；③若将Extractor的计算预算转化为额外的Actor rollout，outcome-based RL基线能否获得相近提升。Figure 3a显示Complementary RL显著优于Static Online Exp.，但Static Online Exp.的Extractor是否经过同等步数的预训练也不明确。消融实验（Figure 3b-3d）聚焦于分组优势设计的必要性，验证较为充分，但缺少「等算力预算下纯扩大rollout数量」的对照组。这一缺失使得10%的性能提升究竟来自「经验机制本身」还是「更多有效数据利用」难以区分，是论文实验设计中最需要补充的控制变量。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q3</span>问题3：Complementary RL的Experience Bank随训练持续积累，在多任务长期训练场景下，经验库的规模增长、检索效率下降、以及跨任务经验干扰（负迁移）将如何影响系统的可扩展性？现有设计是否足以应对真实世界的开放域Agent部署？</div><div class="qa-a">这是该范式走向实用化的关键瓶颈。论文在WebShop、ALFWorld、SWE-Bench、MiniHack四个任务上验证了多任务可扩展性，但这些任务域相对独立且规模有限。在开放域场景中存在三个递进挑战：①规模挑战——Experience Bank随训练步数线性增长，论文未报告经验条目数量上限及检索延迟随规模的变化曲线；②负迁移风险——来自不同任务的经验可能相互干扰，Extractor的「合并与去冲突」操作（structured addition/refining/merging）在跨域场景下的可靠性未经验证；③分布漂移——Actor能力快速提升时，早期积累的经验可能迅速过时，论文虽设计了动态更新机制，但未量化「经验半衰期」及淘汰策略的效果。未来研究机会在于：借鉴持续学习（Continual Learning）中的经验回放选择策略，设计基于经验「效用衰减率」的主动遗忘机制；以及探索层次化经验组织（任务级/技能级/原子操作级）以实现更精准的跨任务正迁移，这将是Complementary RL从实验室走向生产环境的核心工程与算法挑战。</div></div></div>
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-03-20 08:33<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2603.17621" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+
+<script>
+// ── 收藏功能（localStorage）──────────────────────────────────────────
+var PAPER_META = {
+  id:       '2603.17621',
+  title_zh: "互补强化学习",
+  title_en: "Complementary Reinforcement Learning",
+  one_liner:"Actor与Experience Extractor在RL循环中协同进化，持续提升样本效率",
+  category: "cs.LG",
+  published:'2026-03-18',
+  analyzed: '2026-03-20 08:33'
+};
+
+var FAV_KEY = 'jd_favorites';
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function isFaved() {
+  return !!getFavs()[PAPER_META.id];
+}
+
+function updateBtn(faved) {
+  var btn = document.getElementById('fav-btn');
+  if (!btn) return;
+  btn.querySelector('.fav-star').textContent  = faved ? '★' : '☆';
+  btn.querySelector('.fav-label').textContent = faved ? '已收藏' : '收藏';
+  faved ? btn.classList.add('faved') : btn.classList.remove('faved');
+}
+
+function toggleFav() {
+  var favs = getFavs();
+  var id = PAPER_META.id;
+  if (favs[id]) {
+    delete favs[id];
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(false);
+    showToast('已取消收藏');
+  } else {
+    favs[id] = Object.assign({saved_at: new Date().toISOString()}, PAPER_META);
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(true);
+    showToast('已收藏 ⭐', true);
+  }
+}
+
+function showToast(msg, gold) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = (
+    'position:fixed;bottom:24px;right:24px;z-index:9999;'
+    + 'padding:10px 18px;border-radius:6px;font-size:13px;font-weight:600;'
+    + 'box-shadow:0 4px 16px rgba(0,0,0,.2);transition:opacity .3s;'
+    + (gold
+       ? 'background:#b8940e;color:#1e1a16;'
+       : 'background:#374151;color:#f0ece4;')
+  );
+  document.body.appendChild(t);
+  setTimeout(function() { t.style.opacity='0'; setTimeout(function(){t.remove();},300); }, 2000);
+}
+
+// 初始化按钮状态
+updateBtn(isFaved());
+</script>
+</body>
+</html>
