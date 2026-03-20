@@ -297,20 +297,13 @@ label.toggle-btn:hover{background:#6e0e0e;}
   .ep-action{background:#06402008;}
 }
 
-/* ══ 今日故事线 ════════════════════════════════════════════════ */
-.narrative-block{background:var(--summary-bg);border-left:3px solid #64748b;
-  padding:14px 18px;margin-bottom:20px;border-radius:0 4px 4px 0;}
-.narrative-label{font-size:10px;font-weight:800;color:#64748b;
-  letter-spacing:1.5px;text-transform:uppercase;font-family:sans-serif;margin-bottom:8px;}
-.narrative-text{font-size:13px;line-height:1.85;color:var(--text2);margin:0;}
-
-/* ══ 热门故事背景速查卡 ════════════════════════════════════════ */
+/* ══ 分析卡片（视角对比 / 焦点深析 / 时间线）══════════════════ */
 .briefing-card{border:1px solid var(--border);border-radius:6px;
   background:var(--card-bg);margin-bottom:20px;overflow:hidden;}
-.briefing-headline{padding:10px 16px;background:#8a121210;
+.briefing-headline{padding:10px 14px 8px;background:#8a121210;
   font-size:11px;font-weight:800;color:#8a1212;font-family:sans-serif;
   letter-spacing:0.5px;border-bottom:1px solid var(--border);}
-.briefing-body{padding:12px 16px;display:flex;flex-direction:column;gap:8px;}
+.briefing-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px;}
 .briefing-row{display:flex;gap:10px;align-items:flex-start;font-size:12px;}
 .briefing-label{font-size:10px;font-weight:800;font-family:sans-serif;
   white-space:nowrap;min-width:28px;padding-top:2px;letter-spacing:0.5px;}
@@ -336,26 +329,13 @@ body.dark .so-what{color:#34d399;}
 /* 被筛选隐藏的 section */
 .news-section.sec-hidden{display:none;}
 
-/* ══ FAQ ═══════════════════════════════════════════════════════ */
-.faq-section{margin-top:28px;margin-bottom:24px;border-top:1px solid var(--border);padding-top:20px;}
-.faq-label{font-size:10px;font-weight:800;color:#64748b;
-  letter-spacing:1.5px;text-transform:uppercase;font-family:sans-serif;margin-bottom:12px;}
-.faq-item{border:1px solid var(--border);border-radius:5px;margin-bottom:8px;overflow:hidden;}
-.faq-q{list-style:none;padding:10px 14px;font-size:13px;font-weight:600;color:var(--text);
-  cursor:pointer;user-select:none;font-family:sans-serif;}
-.faq-q::-webkit-details-marker{display:none;}
-.faq-item[open] .faq-q{color:#8a1212;border-bottom:1px solid var(--border);}
-.faq-a{padding:10px 14px;font-size:12px;color:var(--text2);
-  line-height:1.75;background:var(--inset-bg);font-family:sans-serif;}
-
 /* ══ 精简模式 ══════════════════════════════════════════════════ */
 .slim-view{display:none;margin-bottom:24px;}
 body.slim .slim-view{display:block;}
 body.slim .ep-section,
-body.slim .narrative-block,
 body.slim .briefing-card,
 body.slim .news-section,
-body.slim .faq-section{display:none;}
+body.slim .filter-bar{display:none;}
 .slim-header{font-size:11px;font-weight:800;color:#8a1212;
   letter-spacing:1.5px;text-transform:uppercase;font-family:sans-serif;
   border-bottom:2px solid #8a1212;padding-bottom:8px;margin-bottom:14px;}
@@ -538,14 +518,8 @@ function shareCard(btn) {
   <div class="summary-content"><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【今日核心叙事】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">伊朗冲突重塑全球利益格局，俄美坐收渔利，多国经济遭受重创。</p><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【三条必读】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">① 卢克石油2025年IFRS净亏损125.8亿美元，营业利润较上年腰斩至62.6亿美元。</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">② 联邦快递第三财季业绩超预期，上调全年指引，逆势释放积极信号。</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">③ 韩国大田汽车零部件厂火灾，至少55人受伤，供应链风险再度暴露。</p><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【编辑判断】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">英国国债同时承压央行政策与政治风险，叠加财政恶化，英镑资产短期需保持警惕。</p><p style="margin:12px 0 4px;font-size:11px;font-weight:800;color:#8a1212;letter-spacing:0.5px;font-family:sans-serif;">【值得盯紧的信号】</p><p style="margin:0 0 6px;line-height:1.75;font-size:13px;">铜价跟随黄金下跌，油价上升同步施压，滞胀信号正在金属市场悄然显现。</p></div>
 </details>
       <div class="ep-section"><div class="ep-header"><span class="ep-header-title">AI TODAY'S PICKS · 今日精选</span><span class="ep-header-sub">主编从153条新闻中精选，附来龙去脉与行动建议</span></div><div class="ep-card" style="border-left-color:#8a1212;"><div class="ep-num" style="color:#8a1212;">01</div><div class="ep-body"><div class="ep-why" style="background:#8a121218;color:#8a1212;">芯片走私案金额巨大，供应链警示</div><div class="ep-title"><a href="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener" class="ep-title-link">三人因涉嫌走私英伟达芯片赴华被控</a></div><div class="ep-context">三名涉案人员被控使用假证件走私英伟达芯片赴华，涉案金额达数十亿美元。此案标志着美国对华芯片管制执法力度升级，将直接影响半导体供应链合规风险与相关企业股价。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>排查供应链合规，规避英伟达相关出口风险敞口</div></div></div><div class="ep-card" style="border-left-color:#0369a1;"><div class="ep-num" style="color:#0369a1;">02</div><div class="ep-body"><div class="ep-why" style="background:#0369a118;color:#0369a1;">卢克石油巨亏125亿，能源股重大信号</div><div class="ep-title"><a href="https://tass.com/economy/2104525" target="_blank" rel="noopener" class="ep-title-link">卢克石油2025年IFRS口径净亏损125.8亿美元</a></div><div class="ep-context">俄罗斯最大私营石油公司卢克石油2025年IFRS净亏损125.8亿美元，营业利润较上年腰斩至62.6亿美元。制裁压力与油价下行叠加，俄能源板块基本面持续恶化，对全球能源投资逻辑构成重要参考。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>减持俄能源资产敞口，重估全球油气股估值</div></div></div><div class="ep-card" style="border-left-color:#065f46;"><div class="ep-num" style="color:#065f46;">03</div><div class="ep-body"><div class="ep-why" style="background:#065f4618;color:#065f46;">301关税再升级，中美贸易直接冲击</div><div class="ep-title"><a href="https://www.scmp.com/opinion/world-opinion/article/3347181/us-section-301-tariffs-set-trigger-fresh-wave-trade-disruption?utm_source=rss_feed" target="_blank" rel="noopener" class="ep-title-link">美国301条款关税引发新一轮贸易混乱</a></div><div class="ep-context">美国301条款关税持续扩展，特朗普政府不断叠加新贸易壁垒，引发新一轮供应链混乱。对依赖对美出口的中国制造业及跨国企业而言，关税成本与合规压力将进一步上升，需立即评估影响。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>重新测算对美出口产品关税成本，加速供应链转移</div></div></div><div class="ep-card" style="border-left-color:#7c3aed;"><div class="ep-num" style="color:#7c3aed;">04</div><div class="ep-body"><div class="ep-why" style="background:#7c3aed18;color:#7c3aed;">AI代币薪酬+智能体颠覆用工模式</div><div class="ep-title"><a href="https://www.cnbc.com/2026/03/20/nvidia-ai-agents-tokens-human-workers-engineer-jobs-unemployment-jensen-huang.html" target="_blank" rel="noopener" class="ep-title-link">英伟达黄仁勋推AI代币薪酬，智能体重塑工作方式</a></div><div class="ep-context">英伟达黄仁勋提出以AI代币作为薪酬形式，同时披露自2018年以来大多数企业AI项目以失败告终。这一表态重塑市场对AI商业化落地的预期，对科技投资者及企业AI战略制定具有直接参考价值。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>重新评估企业AI投入ROI，审慎布局AI概念股</div></div></div><div class="ep-card" style="border-left-color:#b45309;"><div class="ep-num" style="color:#b45309;">05</div><div class="ep-body"><div class="ep-why" style="background:#b4530918;color:#b45309;">LPR连续10个月不变，年内仍有降息预期</div><div class="ep-title"><a href="https://www.chinanews.com.cn/cj/2026/03-20/10590064.shtml" target="_blank" rel="noopener" class="ep-title-link">LPR报价连续10个月按兵不动 年内仍有下调可能</a></div><div class="ep-context">中国1年期LPR维持3.0%、5年期以上LPR维持3.5%，已连续10个月按兵不动。当前经济下行压力下，市场普遍预期年内仍有下调空间，直接影响房贷成本、债券定价及人民币资产配置策略。</div><div class="ep-action"><span class="ep-act-label">行动建议</span>提前锁定长期固定利率融资，增配利率债仓位</div></div></div></div>
-      <div class="narrative-block"><div class="narrative-label">TODAY'S NARRATIVE · 今日故事线</div><p class="narrative-text">全球地缘政治的暗流正在重塑经济版图。伊朗冲突触发的经济动荡中，俄美成为赢家，而欧洲陷入困境——英国国债承压，欧盟被普京特使讽刺需要&quot;更换领导层&quot;。与此同时，拉美正在悄然崛起：特朗普盟友巴拉圭吸引大批创业者涌入，成为投资磁石。背后是西方秩序的重心转移。这一切都发生在科技竞争白热化之际——英伟达芯片走私案频发，OpenAI收购开源工具商，AI产业链的地缘政治色彩日益浓厚。曾经的全球化红利正在分化：有人获利，有人出局，新的势力格局正在成型。</p></div>
-      <div class="briefing-card"><div class="briefing-headline">深度速查 · <a href="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">三人因涉嫌走私英伟达芯片赴华被控</a></div><div class="briefing-body"><div class="briefing-row"><span class="briefing-label" style="color:#64748b;">背景</span><span class="briefing-val">美国对华芯片出口管制日趋严格，英伟达等先进芯片成为战略管制品。走私者利用虚假身份和伪造文件规避出口禁令，向中国输送受限芯片。此案反映中美科技竞争升级和执法部门加强供应链安全监管的努力。</span></div><div class="briefing-row"><span class="briefing-label" style="color:#1e293b;">当前</span><span class="briefing-val">三名被告因涉嫌走私英伟达芯片至中国被起诉，案件涉及虚假证件和伪造设备清单。</span></div><div class="briefing-row"><span class="briefing-label" style="color:#8a1212;">关注</span><span class="briefing-val">美国司法部是否公布具体芯片型号、数量和涉及的中国终端用户身份，这将反映执法深度和后续追诉范围。</span></div><div class="briefing-row"><span class="briefing-label" style="color:#059669;">影响</span><span class="briefing-val">芯片进口成本上升，合规采购难度增加；相关企业面临供应链审查风险；走私渠道受阻推高黑市价格。</span></div></div></div>
-      <div class="briefing-card" style="border-left-color:#7c3aed;"><div class="briefing-headline" style="color:#7c3aed;">PERSPECTIVE GAP · 媒体视角差异 · 英伟达芯片走私案</div><div class="briefing-body"><div class="briefing-row"><span class="briefing-label" style="color:#1d4ed8;">西方媒体</span><span class="briefing-val">强调违法犯罪行为本身、执法机构能力、技术管制制度的有效性</span></div><div class="briefing-row"><span class="briefing-label" style="color:#d97706;">非西方媒体</span><span class="briefing-val">强调西方对华技术封锁的背景、制裁政策的不合理性、市场需求的合理性</span></div></div><div style="margin-top:8px;padding:6px 10px;background:#7c3aed18;border-radius:4px;font-size:11px;color:#7c3aed;font-family:sans-serif;">核心分歧：西方聚焦犯罪主体，非西方聚焦制裁制度的合法性质疑</div><div style="margin-top:6px;font-size:9px;color:#94a3b8;font-family:sans-serif;">基于议题：三人因涉嫌走私英伟达芯片赴华被控</div></div>
-      
       <div class="briefing-card" style="border-left-color:#3b82f6;padding:0;"><div class="briefing-headline" style="color:#3b82f6;padding:10px 14px 8px;">TIMELINE · 追踪事件演进</div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;"><span style="font-size:9px;background:#93c5fd40;color:#3b82f6;border-radius:3px;padding:1px 7px;font-family:sans-serif;font-weight:700;">持续6天</span><div style="font-size:12px;line-height:1.5;flex:1;"><a href="https://techcrunch.com/2026/03/19/jeff-bezos-reportedly-wants-100-billion-to-buy-and-transform-old-manufacturing-firms-with-ai/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;font-weight:700;">贝索斯欲投100亿美元收购制造企业用AI改造</a></div></div><div style="display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:11px;font-family:sans-serif;"><span style="color:#94a3b8;white-space:nowrap;padding-top:2px;">起因</span><span style="color:var(--text2);line-height:1.5;">贝索斯启动新项目，计划通过收购传统制造企业并引入AI技术进行改造，抢占智能制造赛道，应对全球产业升级浪潮。</span><span style="color:#1d4ed8;white-space:nowrap;padding-top:2px;">今日</span><span style="color:var(--text);line-height:1.5;font-weight:600;">贝索斯宣布投入100亿美元收购制造企业，利用AI技术实现生产流程革新和成本优化。</span><span style="color:#d97706;white-space:nowrap;padding-top:2px;">预判</span><span style="color:#d97706;line-height:1.5;">预期华尔街积极回应，竞争对手跟进AI制造投资，全球制造业并购浪潮加速。</span></div></div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;"><span style="font-size:9px;background:#93c5fd40;color:#3b82f6;border-radius:3px;padding:1px 7px;font-family:sans-serif;font-weight:700;">持续4天</span><div style="font-size:12px;line-height:1.5;flex:1;"><a href="https://www.aljazeera.com/sports/2026/3/20/iran-womens-football-team-feted-in-tehran-after-asylum-battle-at-asian-cup?traffic_source=rss" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;font-weight:700;">伊朗女足队员亚洲杯寻求庇护后在德黑兰受欢迎</a></div></div><div style="display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:11px;font-family:sans-serif;"><span style="color:#94a3b8;white-space:nowrap;padding-top:2px;">起因</span><span style="color:var(--text2);line-height:1.5;">伊朗女足队员在亚洲杯期间寻求在澳大利亚获得庇护。事件涉及多名球员离队，引发国际关注，涵盖难民、性别权益等议题。</span><span style="color:#1d4ed8;white-space:nowrap;padding-top:2px;">今日</span><span style="color:var(--text);line-height:1.5;font-weight:600;">伊朗国家女足队返回伊朗，部分寻求庇护的球员在德黑兰受到欢迎。澳大利亚庇护申请处理进行中。</span><span style="color:#d97706;white-space:nowrap;padding-top:2px;">预判</span><span style="color:#d97706;line-height:1.5;">伊朗政府可能加强对返回球员的审查；澳大利亚继续处理庇护案件；国际人权组织持续关注球员安全状况。</span></div></div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;"><span style="font-size:9px;background:#93c5fd40;color:#3b82f6;border-radius:3px;padding:1px 7px;font-family:sans-serif;font-weight:700;">持续3天</span><div style="font-size:12px;line-height:1.5;flex:1;"><a href="https://www.thehindu.com/news/international/sri-lanka-refused-ground-access-to-us-warplanes/article70764656.ece" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;font-weight:700;">斯里兰卡拒绝美国战机着陆请求</a></div></div><div style="display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:11px;font-family:sans-serif;"><span style="color:#94a3b8;white-space:nowrap;padding-top:2px;">起因</span><span style="color:var(--text2);line-height:1.5;">智利启动边境防护措施应对非法越境问题。该国加强与邻国边界管控，部署军事力量强化边境安全，引发地区关注。</span><span style="color:#1d4ed8;white-space:nowrap;padding-top:2px;">今日</span><span style="color:var(--text);line-height:1.5;font-weight:600;">斯里兰卡拒绝美国战机着陆请求，美军试图从吉布提基地调派两架武装战机遭拒，反映印度洋地缘政治紧张。</span><span style="color:#d97706;white-space:nowrap;padding-top:2px;">预判</span><span style="color:#d97706;line-height:1.5;">美国可能寻求替代着陆点，地区国家边境管控政策或进一步调整，印太地区军事部署态势持续演变。</span></div></div></div>
-      <div class="briefing-card" style="border-left-color:#d97706;padding:0;"><div class="briefing-headline" style="color:#d97706;background:#d9770612;padding:10px 14px 8px;border-bottom:1px solid var(--border);">NUMBERS · 数字与信号</div><div style="padding:8px 14px 10px;border-top:1px solid var(--divider);"><div style="padding:4px 0 5px;"><div style="font-size:10px;color:#ef4444;font-weight:700;font-family:sans-serif;margin-bottom:2px;">📢 噪音 · 英伟达芯片走私案与AI薪酬代币</div><div style="font-size:11px;color:var(--text2);line-height:1.5;padding-left:4px;">区分监管新闻与企业营销；关注实际芯片出口管制政策变化，忽视代币概念炒作</div></div><div style="padding:4px 0 5px;"><div style="font-size:10px;color:#6366f1;font-weight:700;font-family:sans-serif;margin-bottom:2px;">🔇 沉默 · 中国经济政策调整信号微弱</div><div style="font-size:11px;color:var(--text2);line-height:1.5;padding-left:4px;">LPR连续10月不动、房地产融资困境等关键经济指标缺乏深度分析，仅见一条简讯，而全球投资者高度关注中国政策走向</div></div></div></div>
-      <div class="briefing-card" style="border-left-color:#4f46e5;padding:0;"><div class="briefing-headline" style="color:#4f46e5;background:#4f46e512;padding:10px 14px 8px;border-bottom:1px solid var(--border);">DEEP LENS · 焦点深析</div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="font-size:10px;color:#92400e;font-weight:700;font-family:sans-serif;letter-spacing:0.3px;margin-bottom:5px;">🪞 历史镜像 · 2019-2021</div><div style="font-size:12px;color:var(--text);font-weight:700;margin-bottom:6px;line-height:1.4;">华为芯片走私禁令规避案</div><div style="display:grid;grid-template-columns:3em 1fr;gap:3px 8px;font-size:11px;line-height:1.5;"><span style="color:#94a3b8;white-space:nowrap;">相似</span><span style="color:var(--text2);">利用虚假文件与中间商规避出口管制，向受制裁方输送受控半导体技术</span><span style="color:#94a3b8;white-space:nowrap;">结局</span><span style="color:var(--text2);">多国企业被列入实体清单，相关人员被判处最高5年监禁，供应链审查全面收紧</span><span style="color:#d97706;white-space:nowrap;font-weight:600;">启示</span><span style="color:#d97706;font-weight:600;">出口管制漏洞一旦被系统性利用，必然触发更严苛的多边管制升级与技术脱钩加速</span></div></div><div style="padding:10px 14px;"><div style="font-size:10px;color:#4f46e5;font-weight:700;font-family:sans-serif;letter-spacing:0.3px;margin-bottom:5px;">⚡ 第一性原理</div><div style="display:grid;grid-template-columns:3.5em 1fr;gap:3px 8px;font-size:11px;line-height:1.5;"><span style="color:#94a3b8;white-space:nowrap;">表象</span><span style="color:var(--text2);">三人走私英伟达芯片赴华被控</span><span style="color:#94a3b8;white-space:nowrap;">驱动力</span><span style="color:var(--text2);">美国出口管制造成巨大套利空间，中国AI军备需求旺盛，中间商、买家、腐败链条共同驱动黑市繁荣</span><span style="color:#4f46e5;white-space:nowrap;font-weight:600;">信号</span><span style="color:#4f46e5;font-weight:600;">商务部收紧盟友转口管制或追加实体清单，英伟达股价短暂波动后反弹</span></div></div></div>
-      <div class="briefing-card" style="border-left-color:#0f766e;padding:0;"><div class="briefing-headline" style="color:#0f766e;background:#0f766e12;padding:10px 14px 8px;border-bottom:1px solid var(--border);">INSTITUTIONS · 机构观察</div><div style="padding:10px 14px;"><div style="font-size:10px;color:#0f766e;font-weight:700;font-family:sans-serif;letter-spacing:0.3px;margin-bottom:6px;">🏦 央行政策雷达</div><div style="display:grid;grid-template-columns:1fr 52px 1.6fr;gap:4px;font-size:10px;color:#94a3b8;font-family:sans-serif;font-weight:700;padding-bottom:4px;border-bottom:2px solid var(--divider);margin-bottom:2px;"><span>央行</span><span>立场</span><span>市场信号</span></div><div style="display:grid;grid-template-columns:1fr 52px 1.6fr;gap:4px;font-size:11px;padding:4px 0;border-bottom:1px solid var(--divider);"><span style="color:var(--text);font-weight:600;">英国央行（英格兰银行）</span><span style="color:#94a3b8;font-weight:700;font-family:sans-serif;">中性</span><span style="color:var(--text2);line-height:1.4;">英国国债收益率波动加大，央行独立性受关注</span></div><div style="display:grid;grid-template-columns:1fr 52px 1.6fr;gap:4px;font-size:11px;padding:4px 0;border-bottom:1px solid var(--divider);"><span style="color:var(--text);font-weight:600;">中国人民银行</span><span style="color:#16a34a;font-weight:700;font-family:sans-serif;">鸽派</span><span style="color:var(--text2);line-height:1.4;">央行维持宽松预期，降息窗口仍开放</span></div></div><div style="padding:10px 14px;border-top:1px solid var(--divider);"><div style="font-size:10px;color:#166534;font-weight:700;font-family:sans-serif;letter-spacing:0.3px;margin-bottom:5px;">🏛️ 智库共识</div><div style="font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:5px;">走私案与出口管制升级表明单边技术封锁存在执行漏洞，智库普遍认为管制有效性取决于盟友协调而非单边执法，中国替代供应链建设窗口期正被压缩但未关闭。</div><div style="font-size:11px;color:#d97706;font-weight:600;padding:4px 8px;background:#d9770610;border-radius:4px;">→ 英伟达替代风险与合规成本上升，半导体供应链去风险布局需提速</div></div></div>
+      <div class="briefing-card" style="border-left-color:#4f46e5;padding:0;"><div class="briefing-headline" style="color:#4f46e5;background:#4f46e512;padding:10px 14px 8px;border-bottom:1px solid var(--border);">DEEP LENS · 焦点深析</div><div style="padding:10px 14px;border-bottom:1px solid var(--divider);"><div style="font-size:10px;color:#d97706;font-weight:700;font-family:sans-serif;letter-spacing:0.3px;margin-bottom:5px;">🪞 历史镜像 · 2019-2021</div><div style="font-size:12px;color:var(--text);font-weight:700;margin-bottom:6px;line-height:1.4;">华为芯片走私禁令规避案</div><div style="display:grid;grid-template-columns:3em 1fr;gap:3px 8px;font-size:11px;line-height:1.5;"><span style="color:#94a3b8;white-space:nowrap;">相似</span><span style="color:var(--text2);">利用虚假文件与中间商规避出口管制，向受制裁方输送受控半导体技术</span><span style="color:#94a3b8;white-space:nowrap;">结局</span><span style="color:var(--text2);">多国企业被列入实体清单，相关人员被判处最高5年监禁，供应链审查全面收紧</span><span style="color:#d97706;white-space:nowrap;font-weight:600;">启示</span><span style="color:#d97706;font-weight:600;">出口管制漏洞一旦被系统性利用，必然触发更严苛的多边管制升级与技术脱钩加速</span></div></div><div style="padding:10px 14px;"><div style="font-size:10px;color:#4f46e5;font-weight:700;font-family:sans-serif;letter-spacing:0.3px;margin-bottom:5px;">⚡ 第一性原理</div><div style="display:grid;grid-template-columns:3.5em 1fr;gap:3px 8px;font-size:11px;line-height:1.5;"><span style="color:#94a3b8;white-space:nowrap;">表象</span><span style="color:var(--text2);">三人走私英伟达芯片赴华被控</span><span style="color:#94a3b8;white-space:nowrap;">驱动力</span><span style="color:var(--text2);">美国出口管制造成巨大套利空间，中国AI军备需求旺盛，中间商、买家、腐败链条共同驱动黑市繁荣</span><span style="color:#4f46e5;white-space:nowrap;font-weight:600;">信号</span><span style="color:#4f46e5;font-weight:600;">商务部收紧盟友转口管制或追加实体清单，英伟达股价短暂波动后反弹</span></div></div></div>
       <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年03月20日</div><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bbc.com/news/articles/c3wlwnn05zqo?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">伊朗冲突中俄美成全球赢家和输家</a><div class="slim-sowhat">→ 意味着伊朗局势推高油价，关注能源股及航运板块机会。</div></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bloomberg.com/news/features/2026-03-20/paraguay-why-a-little-known-trump-ally-is-attracting-investor-money" class="slim-title" target="_blank" rel="noopener">特朗普盟友巴拉圭成拉美投资磁石</a><div class="slim-sowhat">→ 意味着巴拉圭吸引拉美资金，中资出海布局南美可关注当地基建机会。</div></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.scmp.com/news/asia/east-asia/article/3347318/south-korean-factory-fire-injures-least-55?utm_source=rss_feed" class="slim-title" target="_blank" rel="noopener">韩国汽车零部件厂火灾致至少55人受伤</a><div class="slim-sowhat">→ 意味着……韩国汽车零部件供应链风险，中国进口零部件成本或上升。</div></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">综合</div><a href="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">三人因涉嫌走私英伟达芯片赴华被控</a><div class="slim-sowhat">→ 意味着英伟达芯片管控趋严，国产替代芯片（华为昇腾等）短期受益。</div></div></div><div class="slim-item"><div class="slim-num">05</div><div class="slim-body"><div class="slim-cat">综合</div><a href="https://www.nytimes.com/2026/03/20/health/obamacare-new-mexico-subsidies-states.html" class="slim-title" target="_blank" rel="noopener">新墨西哥州如何成为奥巴马医改成功典范</a><div class="slim-sowhat">→ 意味着……美国医改地方试点成功，中国医保改革可借鉴经验。</div></div></div></div>
       <div class="filter-bar" id="filter-bar">
         <button class="filter-chip active" data-sec="all" onclick="filterSec(this,'all')">全部</button>
@@ -570,7 +544,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-5375321607" class="rank-title-link">
+      <a href="#card-6263249178" class="rank-title-link">
         <div class="rank-title">伊朗冲突中俄美成全球赢家和输家<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#8a1212;"></div></div>
@@ -583,7 +557,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-1124644084" class="rank-title-link">
+      <a href="#card-6167474818" class="rank-title-link">
         <div class="rank-title">特朗普盟友巴拉圭成拉美投资磁石<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:14%;background:#8a1212;"></div></div>
@@ -596,7 +570,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-2606026960" class="rank-title-link">
+      <a href="#card-4399226499" class="rank-title-link">
         <div class="rank-title">英国借贷增加加重能源补助难度<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#8a1212;"></div></div>
@@ -609,7 +583,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-7403107111" class="rank-title-link">
+      <a href="#card-1262546419" class="rank-title-link">
         <div class="rank-title">巴拉圭奇迹：从被忽视国家到投资磁石<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#8a1212;"></div></div>
@@ -622,7 +596,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-8250593811" class="rank-title-link">
+      <a href="#card-9027361841" class="rank-title-link">
         <div class="rank-title">英国国债面临英央行政治风险双重压力<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#8a1212;"></div></div>
@@ -635,7 +609,7 @@ function shareCard(btn) {
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-5375321607" data-id="5375321607" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+    <div class="news-card " id="card-6263249178" data-id="6263249178" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">伊朗冲突中俄美成全球赢家和输家</div>
   <div class="so-what">→ 意味着伊朗局势推高油价，关注能源股及航运板块机会。</div>
   <div class="card-meta">
@@ -651,10 +625,8 @@ function shareCard(btn) {
   </div>
   <details class="card-expand"><summary>展开 · 71来源</summary><div class="card-expand-body"><div class="card-desc">冲突引发经济中断，部分国家面临重创，而另有国家从中受益。</div><div class="related-row">· <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×5</span> <span style="font-size:9px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×3</span> <span style="font-size:9px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×8</span> <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×2</span> <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">+17</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#0891b222;color:#0891b2;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">亚洲</span><span style="font-size:8px;background:#9333ea22;color:#9333ea;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">俄罗斯</span><span style="font-size:8px;background:#f59e0b22;color:#f59e0b;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">印度</span><span style="font-size:8px;background:#e11d4822;color:#e11d48;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">日本</span><span style="font-size:8px;background:#2563eb22;color:#2563eb;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">欧洲</span><span style="font-size:8px;background:#6366f122;color:#6366f1;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">法国</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span><span style="font-size:8px;background:#7c3aed22;color:#7c3aed;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西班牙</span><span style="font-size:8px;background:#0e749022;color:#0e7490;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">韩国</span></span></div><details class="full-summary"><summary>展开全文摘要 ›</summary><div class="full-summary-body"># 新闻摘要
 
-伊朗中东战争引发全球能源格局变化。由于霍尔木兹海峡受冲突影响实际被封锁，中东地区能源基础设施遭攻击，卡塔尔和沙特阿拉伯等海湾产油国受到严重冲击。战争造成的经济影响已波及全球，从英国约克郡家庭供暖油价飙升到巴基斯坦学校因账单压力关闭。
-
-与此同时，全球能源供应格局出现重新调整。挪威、加拿大和俄罗斯成为主要受益者，这些国家丰富的石油和天然气储备使其能够填补中东供应缺口。自2022年俄乌战争后，多国寻求替代能源来源，挪威已大幅增加供应。这场冲突带来的经济影响分布不均，既有受害者也有获益者。</div></details><a href="https://www.bbc.com/news/articles/c3wlwnn05zqo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-1124644084" data-id="1124644084" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+BBC国际报道，伊朗报复行动引发的中东战争正在全球范围内造成不均衡的经济影响。从英国约克郡居民取暖油账单飙升，到巴基斯坦学校因成本压力关闭，经济冲击已显现。霍尔木兹海峡因冲突受阻，中东能源基础设施遭袭击，沙特阿拉伯和卡塔尔等海湾产油国受创严重。与此同时，挪威、加拿大和俄罗斯等替代能源供应国成为赢家，有望从油价上升和市场转向中获益。这场能源危机凸显全球对石油和天然气的持续依赖，以及地缘政治冲突对能源市场的深远影响。</div></details><a href="https://www.bbc.com/news/articles/c3wlwnn05zqo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-6167474818" data-id="6167474818" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">特朗普盟友巴拉圭成拉美投资磁石</div>
   <div class="so-what">→ 意味着巴拉圭吸引拉美资金，中资出海布局南美可关注当地基建机会。</div>
   <div class="card-meta">
@@ -665,11 +637,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 98"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">14分钟前</span>
+    <span class="pub-time">52分钟前</span>
     <button class="share-btn" title="复制分享" data-text="特朗普盟友巴拉圭成拉美投资磁石 | 意味着巴拉圭吸引拉美资金，中资出海布局南美可关注当地基建机会。" data-link="https://www.bloomberg.com/news/features/2026-03-20/paraguay-why-a-little-known-trump-ally-is-attracting-investor-money" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">企业家纷纷涌入巴拉圭，摩天大楼在这个曾经沉寂的首都拔地而起。</div><div class="related-row">· <span style="font-size:9px;color:#1e3a8a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e3a8a18;border-radius:999px;padding:1px 7px;">🇭🇰&thinsp;SCMP</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#0891b222;color:#0891b2;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">亚洲</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><a href="https://www.bloomberg.com/news/features/2026-03-20/paraguay-why-a-little-known-trump-ally-is-attracting-investor-money" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-2606026960" data-id="2606026960" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-4399226499" data-id="4399226499" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">英国借贷增加加重能源补助难度</div>
   <div class="so-what">→ 意味着……英国财政紧张，对华贸易投资可能受限。</div>
   <div class="card-meta">
@@ -680,11 +652,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">8分钟前</span>
+    <span class="pub-time">46分钟前</span>
     <button class="share-btn" title="复制分享" data-text="英国借贷增加加重能源补助难度 | 意味着……英国财政紧张，对华贸易投资可能受限。" data-link="https://www.bbc.com/news/articles/cx23yn735jdo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">经济学家称英国政府财政状况比上次能源支持方案前更加恶化。</div><a href="https://www.bbc.com/news/articles/cx23yn735jdo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-7403107111" data-id="7403107111" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-1262546419" data-id="1262546419" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">巴拉圭奇迹：从被忽视国家到投资磁石</div>
   <div class="so-what">→ 意味着巴拉圭低税吸引外资，中企可将其作为规避关税的南美转口基地。</div>
   <div class="card-meta">
@@ -695,11 +667,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">14分钟前</span>
+    <span class="pub-time">52分钟前</span>
     <button class="share-btn" title="复制分享" data-text="巴拉圭奇迹：从被忽视国家到投资磁石 | 意味着巴拉圭低税吸引外资，中企可将其作为规避关税的南美转口基地。" data-link="https://www.bloomberg.com/news/features/2026-03-20/paraguay-aliado-de-trump-que-se-convierte-en-iman-de-inversion-mmyo5235" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">拉美企业家大量涌入，摩天大楼在沉睡的首都拔地而起，总统推动改革。</div><a href="https://www.bloomberg.com/news/features/2026-03-20/paraguay-aliado-de-trump-que-se-convierte-en-iman-de-inversion-mmyo5235" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-8250593811" data-id="8250593811" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-9027361841" data-id="9027361841" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">英国国债面临英央行政治风险双重压力</div>
   <div class="so-what">→ 意味着英国国债风险上升，持有英镑资产的机构需警惕汇率波动。</div>
   <div class="card-meta">
@@ -710,11 +682,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">22分钟前</span>
+    <span class="pub-time">1小时前</span>
     <button class="share-btn" title="复制分享" data-text="英国国债面临英央行政治风险双重压力 | 意味着英国国债风险上升，持有英镑资产的机构需警惕汇率波动。" data-link="https://www.bloomberg.com/news/videos/2026-03-20/gilts-face-further-risk-from-politics-3-minutes-mliv-video" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">英国国债除面临央行政策风险外，还面临政治因素冲击，分析师和投资者需关注相关主题。</div><a href="https://www.bloomberg.com/news/videos/2026-03-20/gilts-face-further-risk-from-politics-3-minutes-mliv-video" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-3087573185" data-id="3087573185" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-7471125919" data-id="7471125919" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">德黑兰的生存微观仪式</div>
   <div class="so-what">→ 无直接影响。</div>
   <div class="card-meta">
@@ -747,7 +719,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-3124817668" class="rank-title-link">
+      <a href="#card-6432700442" class="rank-title-link">
         <div class="rank-title">欧央行要求银行识别SRT交易中的杠杆提供方<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
@@ -760,7 +732,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-7113147003" class="rank-title-link">
+      <a href="#card-5490734278" class="rank-title-link">
         <div class="rank-title">莫斯科和德黑兰的混合战争<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:91%;background:#1e293b;"></div></div>
@@ -773,7 +745,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-6275440804" class="rank-title-link">
+      <a href="#card-3592386371" class="rank-title-link">
         <div class="rank-title">美国301条款关税引发新一轮贸易混乱<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:82%;background:#1e293b;"></div></div>
@@ -786,7 +758,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-7159089049" class="rank-title-link">
+      <a href="#card-1904595698" class="rank-title-link">
         <div class="rank-title">联邦快递超预期，上调全年指引<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:79%;background:#1e293b;"></div></div>
@@ -799,7 +771,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-6228217384" class="rank-title-link">
+      <a href="#card-5908266530" class="rank-title-link">
         <div class="rank-title">铜价跟随黄金下跌，背后隐藏令人担忧的原因<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:76%;background:#1e293b;"></div></div>
@@ -812,7 +784,7 @@ function shareCard(btn) {
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-3124817668" data-id="3124817668" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+    <div class="news-card " id="card-6432700442" data-id="6432700442" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
   <div class="card-title">欧央行要求银行识别SRT交易中的杠杆提供方</div>
   <div class="so-what">→ 欧央行加强杠杆监管，国内金融机构跨境交易成本可能上升。</div>
   <div class="card-meta">
@@ -823,11 +795,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 78"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">16小时前</span>
+    <span class="pub-time">17小时前</span>
     <button class="share-btn" title="复制分享" data-text="欧央行要求银行识别SRT交易中的杠杆提供方 | 欧央行加强杠杆监管，国内金融机构跨境交易成本可能上升。" data-link="https://www.bloomberg.com/news/articles/2026-03-19/ecb-tells-banks-to-identify-the-leverage-providers-on-srt-deals" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">欧洲央行正在调查支撑银行快速增长的重大风险转移市场的杠杆使用情况。</div><a href="https://www.bloomberg.com/news/articles/2026-03-19/ecb-tells-banks-to-identify-the-leverage-providers-on-srt-deals" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-7113147003" data-id="7113147003" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-5490734278" data-id="5490734278" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
   <div class="card-title">莫斯科和德黑兰的混合战争</div>
   <div class="so-what">→ 意味着俄伊合作加强，中国需警惕中东地缘政治变化对能源的影响。</div>
   <div class="card-meta">
@@ -842,7 +814,7 @@ function shareCard(btn) {
     <button class="share-btn" title="复制分享" data-text="莫斯科和德黑兰的混合战争 | 意味着俄伊合作加强，中国需警惕中东地缘政治变化对能源的影响。" data-link="https://www.politico.eu/podcast/berlin-playbook-podcast/der-hybride-krieg-aus-moskau-und-teheran/?utm_source=RSS_Feed&amp;utm_medium=RSS&amp;utm_campaign=RSS_Syndication" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">我们处于新冷战中，比上一次冷战更加令人不适。不是明确的集团对抗，而是...</div><div class="related-row">· <span style="font-size:9px;color:#d81b2a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#d81b2a18;border-radius:999px;padding:1px 7px;">🇪🇺&thinsp;Politico EU</span></div><a href="https://www.politico.eu/podcast/berlin-playbook-podcast/der-hybride-krieg-aus-moskau-und-teheran/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-6275440804" data-id="6275440804" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-3592386371" data-id="3592386371" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
   <div class="card-title">美国301条款关税引发新一轮贸易混乱</div>
   <div class="so-what">→ 美国关税政策升级，中国出口企业成本上升，需调整定价。</div>
   <div class="card-meta">
@@ -853,11 +825,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">44分钟前</span>
+    <span class="pub-time">1小时前</span>
     <button class="share-btn" title="复制分享" data-text="美国301条款关税引发新一轮贸易混乱 | 美国关税政策升级，中国出口企业成本上升，需调整定价。" data-link="https://www.scmp.com/opinion/world-opinion/article/3347181/us-section-301-tariffs-set-trigger-fresh-wave-trade-disruption?utm_source=rss_feed" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">特朗普政策的一致性体现在不断创造新的贸易壁垒上。</div><a href="https://www.scmp.com/opinion/world-opinion/article/3347181/us-section-301-tariffs-set-trigger-fresh-wave-trade-disruption?utm_source=rss_feed" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-7159089049" data-id="7159089049" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-1904595698" data-id="1904595698" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
   <div class="card-title">联邦快递超预期，上调全年指引</div>
   <div class="so-what">→ 意味着跨境物流需求旺盛，国内出口企业物流成本可能上升。</div>
   <div class="card-meta">
@@ -868,11 +840,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 62"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">10小时前</span>
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="联邦快递超预期，上调全年指引 | 意味着跨境物流需求旺盛，国内出口企业物流成本可能上升。" data-link="https://www.cnbc.com/2026/03/19/fedex-fdx-q3-2026-earnings.html" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">联邦快递第三财季业绩超预期，基于强劲表现上调全年业绩指引。</div><a href="https://www.cnbc.com/2026/03/19/fedex-fdx-q3-2026-earnings.html" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-6228217384" data-id="6228217384" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-5908266530" data-id="5908266530" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
   <div class="card-title">铜价跟随黄金下跌，背后隐藏令人担忧的原因</div>
   <div class="so-what">→ 铜价下跌反映经济衰退信号，国内铜相关产业链面临压力。</div>
   <div class="card-meta">
@@ -883,7 +855,7 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 60"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">15小时前</span>
+    <span class="pub-time">16小时前</span>
     <button class="share-btn" title="复制分享" data-text="铜价跟随黄金下跌，背后隐藏令人担忧的原因 | 铜价下跌反映经济衰退信号，国内铜相关产业链面临压力。" data-link="https://www.cnbc.com/2026/03/19/copper-joins-gold-in-broad-commodities-sell-off-theres-a-worrying-reason-behind-it.html" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">大幅上涨后，金属价格周四承压，油价上升加剧了通胀和增长担忧。</div><a href="https://www.cnbc.com/2026/03/19/copper-joins-gold-in-broad-commodities-sell-off-theres-a-worrying-reason-behind-it.html" class="read-link">→ 查看原文</a></div></details>
@@ -905,7 +877,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-6576701517" class="rank-title-link">
+      <a href="#card-6959809380" class="rank-title-link">
         <div class="rank-title">OpenAI规划桌面端&quot;超级应用&quot;<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
@@ -918,7 +890,7 @@ function shareCard(btn) {
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-6576701517" data-id="6576701517" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+    <div class="news-card " id="card-6959809380" data-id="6959809380" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
   <div class="card-title">OpenAI规划桌面端&quot;超级应用&quot;</div>
   <div class="so-what">→ 意味着ChatGPT桌面应用即将上线，国内用户需准备梯子或寻找国内替代品。</div>
   <div class="card-meta">
@@ -951,7 +923,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-7101814186" class="rank-title-link">
+      <a href="#card-9019070156" class="rank-title-link">
         <div class="rank-title">吉利抱紧英伟达硬刚特斯拉，智驾翻身仗能成吗<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#8a1212;"></div></div>
@@ -964,7 +936,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-2003353832" class="rank-title-link">
+      <a href="#card-8158988706" class="rank-title-link">
         <div class="rank-title">新款小米SU7&quot;融冰&quot;比销量更重要<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#8a1212;"></div></div>
@@ -977,7 +949,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-2475323643" class="rank-title-link">
+      <a href="#card-3688839448" class="rank-title-link">
         <div class="rank-title">新乡市人民检察院依法对释永信（原名刘应成）案提起公诉<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:76%;background:#8a1212;"></div></div>
@@ -990,7 +962,7 @@ function shareCard(btn) {
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-7101814186" data-id="7101814186" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+    <div class="news-card " id="card-9019070156" data-id="9019070156" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">吉利抱紧英伟达硬刚特斯拉，智驾翻身仗能成吗</div>
   <div class="so-what">→ 意味着国产智驾有新选择，但英伟达芯片供应仍存风险。</div>
   <div class="card-meta">
@@ -1001,11 +973,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">2小时前</span>
+    <span class="pub-time">3小时前</span>
     <button class="share-btn" title="复制分享" data-text="吉利抱紧英伟达硬刚特斯拉，智驾翻身仗能成吗 | 意味着国产智驾有新选择，但英伟达芯片供应仍存风险。" data-link="http://www.huxiu.com/article/4843580.html?f=wangzhan" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">吉利汽车2025年销量首破300万辆，营收达3452亿元历史新高，核心净利润同比增长36%，超额完成营收增长目标。</div><a href="http://www.huxiu.com/article/4843580.html?f=wangzhan" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-2003353832" data-id="2003353832" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-8158988706" data-id="8158988706" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">新款小米SU7&quot;融冰&quot;比销量更重要</div>
   <div class="so-what">→ 意味着小米电动车需扭转销售困局，降价或促销在即。</div>
   <div class="card-meta">
@@ -1016,11 +988,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">2小时前</span>
+    <span class="pub-time">3小时前</span>
     <button class="share-btn" title="复制分享" data-text="新款小米SU7&quot;融冰&quot;比销量更重要 | 意味着小米电动车需扭转销售困局，降价或促销在即。" data-link="http://www.huxiu.com/article/4843852.html?f=wangzhan" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">新款小米SU7上市34分钟锁单1.5万辆。3月19日发布，售价21.99万至30.39万元，王传福、李想等业界大佬出席。</div><a href="http://www.huxiu.com/article/4843852.html?f=wangzhan" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-2475323643" data-id="2475323643" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-3688839448" data-id="3688839448" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">新乡市人民检察院依法对释永信（原名刘应成）案提起公诉</div>
   <div class="so-what">→ 意味着……少林寺商业化整顿深化，宗教资产监管趋严。</div>
   <div class="card-meta">
@@ -1031,7 +1003,7 @@ function shareCard(btn) {
     <span style="font-size:9px;color:#92400e;font-family:sans-serif;background:#fef3c7;border:1px solid #fcd34d;border-radius:2px;padding:1px 5px;font-weight:600;" title="仅单一来源报道，信息待核实">单源</span>
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 45"></span>
-    <span class="pub-time">11分钟前</span>
+    <span class="pub-time">48分钟前</span>
     <button class="share-btn" title="复制分享" data-text="新乡市人民检察院依法对释永信（原名刘应成）案提起公诉 | 意味着……少林寺商业化整顿深化，宗教资产监管趋严。" data-link="https://www.chinanews.com.cn/gn/2026/03-20/10590080.shtml" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">3月20日，新乡市人民检察院就嵩山少林寺原住持释永信(原名刘应成)涉嫌职务侵占、挪用资金、非国家工作人员受贿、行贿案，依法向新乡市中级人民法院提起公诉。检察机关在审查起诉阶段，依法告知了被告人释永信(原名刘应成)享有的诉讼权利，并讯问了被告人，听取了辩护人意见。</div><a href="https://www.chinanews.com.cn/gn/2026/03-20/10590080.shtml" class="read-link">→ 查看原文</a></div></details>
@@ -1053,7 +1025,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-2265390028" class="rank-title-link">
+      <a href="#card-5248666620" class="rank-title-link">
         <div class="rank-title">将事件推送到运行中的会话（通过频道）<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
@@ -1066,7 +1038,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-7203387071" class="rank-title-link">
+      <a href="#card-8374546464" class="rank-title-link">
         <div class="rank-title">Waymo安全影响<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#1e293b;"></div></div>
@@ -1079,7 +1051,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-6612738716" class="rank-title-link">
+      <a href="#card-5362837796" class="rank-title-link">
         <div class="rank-title">谷歌公布24小时侧载未验证安卓应用新流程<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:95%;background:#1e293b;"></div></div>
@@ -1092,7 +1064,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-2653793541" class="rank-title-link">
+      <a href="#card-7634840701" class="rank-title-link">
         <div class="rank-title">Show HN：三款新Kitten TTS模型——最小不足25MB<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:95%;background:#1e293b;"></div></div>
@@ -1105,7 +1077,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-1933184779" class="rank-title-link">
+      <a href="#card-7353135754" class="rank-title-link">
         <div class="rank-title">4Chan嘲笑英国因在线安全违规被罚52万英镑<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:93%;background:#1e293b;"></div></div>
@@ -1118,7 +1090,7 @@ function shareCard(btn) {
 </div>
   </div>
   <div class="news-grid forum-grid">
-    <div class="news-card " id="card-6612738716" data-id="6612738716" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+    <div class="news-card " id="card-5362837796" data-id="5362837796" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
   <div class="card-title">谷歌公布24小时侧载未验证安卓应用新流程</div>
   
   <div class="card-meta">
@@ -1129,11 +1101,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 41"></span>
-    <span class="pub-time">15小时前</span>
+    <span class="pub-time">16小时前</span>
     <button class="share-btn" title="复制分享" data-text="谷歌公布24小时侧载未验证安卓应用新流程" data-link="https://arstechnica.com/gadgets/2026/03/google-details-new-24-hour-process-to-sideload-unverified-android-apps/" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://arstechnica.com/gadgets/2026/03/google-details-new-24-hour-process-to-sideload-unverified-android-apps/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47442690" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
-</div><div class="news-card " id="card-2653793541" data-id="2653793541" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-7634840701" data-id="7634840701" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
   <div class="card-title">Show HN：三款新Kitten TTS模型——最小不足25MB</div>
   
   <div class="card-meta">
@@ -1148,7 +1120,7 @@ function shareCard(btn) {
     <button class="share-btn" title="复制分享" data-text="Show HN：三款新Kitten TTS模型——最小不足25MB" data-link="https://github.com/KittenML/KittenTTS" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://github.com/KittenML/KittenTTS" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47441546" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
-</div><div class="news-card " id="card-1933184779" data-id="1933184779" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-7353135754" data-id="7353135754" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
   <div class="card-title">4Chan嘲笑英国因在线安全违规被罚52万英镑</div>
   
   <div class="card-meta">
@@ -1159,11 +1131,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 40"></span>
-    <span class="pub-time">18小时前</span>
+    <span class="pub-time">19小时前</span>
     <button class="share-btn" title="复制分享" data-text="4Chan嘲笑英国因在线安全违规被罚52万英镑" data-link="https://www.bbc.com/news/articles/c624330lg1ko" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://www.bbc.com/news/articles/c624330lg1ko" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47440430" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
-</div><div class="news-card " id="card-1882643663" data-id="1882643663" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-5460837335" data-id="5460837335" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
   <div class="card-title">《归来的欧布拉·丁》：单色1bpp第一人称游戏的球面映射抖动技术</div>
   
   <div class="card-meta">
@@ -1178,7 +1150,7 @@ function shareCard(btn) {
     <button class="share-btn" title="复制分享" data-text="《归来的欧布拉·丁》：单色1bpp第一人称游戏的球面映射抖动技术" data-link="https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://forums.tigsource.com/index.php?topic=40832.msg1363742#msg1363742" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47406160" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
-</div><div class="news-card " id="card-2265390028" data-id="2265390028" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-5248666620" data-id="5248666620" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
   <div class="card-title">将事件推送到运行中的会话（通过频道）</div>
   
   <div class="card-meta">
@@ -1189,11 +1161,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 43"></span>
-    <span class="pub-time">8小时前</span>
+    <span class="pub-time">9小时前</span>
     <button class="share-btn" title="复制分享" data-text="将事件推送到运行中的会话（通过频道）" data-link="https://code.claude.com/docs/en/channels" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://code.claude.com/docs/en/channels" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=47448524" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
-</div><div class="news-card " id="card-7203387071" data-id="7203387071" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-8374546464" data-id="8374546464" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
   <div class="card-title">Waymo安全影响</div>
   
   <div class="card-meta">
@@ -1226,7 +1198,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-5152828183" class="rank-title-link">
+      <a href="#card-2330051570" class="rank-title-link">
         <div class="rank-title">三人因涉嫌走私英伟达芯片赴华被控<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#64748b;"></div></div>
@@ -1239,7 +1211,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-2900867233" class="rank-title-link">
+      <a href="#card-1817025843" class="rank-title-link">
         <div class="rank-title">孟加拉国寻求20亿美元贷款至6月用于燃料进口<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:83%;background:#64748b;"></div></div>
@@ -1252,7 +1224,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-5981469132" class="rank-title-link">
+      <a href="#card-6398809431" class="rank-title-link">
         <div class="rank-title">美国真能释放更多战略石油储备吗<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:82%;background:#64748b;"></div></div>
@@ -1265,7 +1237,7 @@ function shareCard(btn) {
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-5152828183" data-id="5152828183" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+    <div class="news-card " id="card-2330051570" data-id="2330051570" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
   <div class="card-title">三人因涉嫌走私英伟达芯片赴华被控</div>
   <div class="so-what">→ 意味着英伟达芯片管控趋严，国产替代芯片（华为昇腾等）短期受益。</div>
   <div class="card-meta">
@@ -1276,15 +1248,15 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 92"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">4小时前</span>
+    <span class="pub-time">5小时前</span>
     <button class="share-btn" title="复制分享" data-text="三人因涉嫌走私英伟达芯片赴华被控 | 意味着英伟达芯片管控趋严，国产替代芯片（华为昇腾等）短期受益。" data-link="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">他们涉嫌使用假证件和虚假设备，计划向中国出售数十亿美元科技产品。</div><div class="related-row">· <span style="font-size:9px;color:#065f46;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#065f4618;border-radius:999px;padding:1px 7px;">🇶🇦&thinsp;Al Jazeera</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><details class="full-summary"><summary>展开全文摘要 ›</summary><div class="full-summary-body"># 新闻摘要
 
-美国司法部周四宣布，三人因涉嫌走私英伟达芯片至中国被控。被控人员包括美国公民、加州超微电脑公司联合创始人Yih-Shyan &quot;Wally&quot; Liaw和台湾籍人士Ting-Wei &quot;Willy&quot; Sun，另一台湾籍嫌疑人Ruei-Tsang &quot;Steven&quot; Chang仍在逃。
+美国司法部周四宣布，三人因涉嫌走私英伟达芯片至中国而被控。被控人员包括美国公民、加州超微计算机公司联合创始人Yih-Shyan &quot;Wally&quot; Liaw和台湾籍人士Ting-Wei &quot;Willy&quot; Sun，另一台湾籍嫌疑人Ruei-Tsang &quot;Steven&quot; Chang仍在逃。
 
-三人涉嫌通过伪造文件和使用虚假设备规避审计，向中国买家销售数十亿美元的技术。被走私物品包括受出口管制的英伟达人工智能芯片。今年8月，两名中国籍人士因非法运送价值数百万美元的英伟达芯片至中国已被逮捕。超微电脑公司表示未被列为被告，但已将涉案人员停职或解雇。</div></details><a href="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-2900867233" data-id="2900867233" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+据司法部指控，三人涉嫌通过伪造文件和使用虚假设备绕过审计，向中国买家出售价值数十亿美元的技术，其中包括受出口管制的英伟达AI芯片。今年8月，两名中国籍人士因非法运送价值数百万美元的英伟达芯片至中国而被逮捕。超微计算机公司表示正全力配合调查，已将涉案人员停职或解雇。</div></details><a href="https://www.bbc.com/news/articles/cy41ly2d9wko?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-1817025843" data-id="1817025843" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
   <div class="card-title">孟加拉国寻求20亿美元贷款至6月用于燃料进口</div>
   <div class="so-what">→ 意味着……孟加拉国外汇压力大，中国对孟出口需谨慎应收账款风险。</div>
   <div class="card-meta">
@@ -1295,11 +1267,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 77"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">23分钟前</span>
+    <span class="pub-time">1小时前</span>
     <button class="share-btn" title="复制分享" data-text="孟加拉国寻求20亿美元贷款至6月用于燃料进口 | 意味着……孟加拉国外汇压力大，中国对孟出口需谨慎应收账款风险。" data-link="https://www.bloomberg.com/news/articles/2026-03-20/bangladesh-seeks-2-billion-loans-by-june-to-fund-fuel-imports" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">孟加拉国新政府向多边贷款机构寻求约20亿美元贷款，以融资燃料进口。</div><a href="https://www.bloomberg.com/news/articles/2026-03-20/bangladesh-seeks-2-billion-loans-by-june-to-fund-fuel-imports" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-5981469132" data-id="5981469132" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-6398809431" data-id="6398809431" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
   <div class="card-title">美国真能释放更多战略石油储备吗</div>
   <div class="so-what">→ 意味着国际油价存下行压力，关注能源成本变化。</div>
   <div class="card-meta">
@@ -1317,7 +1289,7 @@ function shareCard(btn) {
 </div>
   </div>
 </section>
-      <div class="faq-section"><div class="faq-label">READER Q&amp;A · 读者最想问</div><details class="faq-item"><summary class="faq-q">英伟达芯片走私案反映了什么样的产业链风险？</summary><div class="faq-a">美国对华芯片出口管制推高了黑市需求，促使走私者采用虚假文件等手段规避监管。这表明技术管制与地缘政治对抗正在催生灰色产业链，难以完全堵截。</div></details><details class="faq-item"><summary class="faq-q">为什么企业AI项目失败率高达80%以上？</summary><div class="faq-a">多数企业缺乏明确的AI应用场景和数据基础设施，仓促上马导致投资浪费。黄仁勋推AI代币薪酬等创新尝试，反映行业在寻找AI真正的商业化路径。</div></details><details class="faq-item"><summary class="faq-q">巴拉圭如何在短期内成为拉美投资热点？</summary><div class="faq-a">特朗普政策不确定性促使企业寻求替代地点，巴拉圭凭借政治稳定、低税率和地理优势吸引资本流入，体现地缘政治变化对全球投资格局的快速重塑。</div></details></div>
+      <div class="briefing-card" style="border-left-color:#7c3aed;"><div class="briefing-headline" style="color:#7c3aed;">PERSPECTIVE GAP · 媒体视角差异 · 英伟达芯片走私案</div><div class="briefing-body"><div class="briefing-row"><span class="briefing-label" style="color:#1d4ed8;">西方媒体</span><span class="briefing-val">强调违法犯罪行为本身、执法机构能力、技术管制制度的有效性</span></div><div class="briefing-row"><span class="briefing-label" style="color:#d97706;">非西方媒体</span><span class="briefing-val">强调西方对华技术封锁的背景、制裁政策的不合理性、市场需求的合理性</span></div></div><div style="margin-top:8px;padding:6px 10px;background:#7c3aed18;border-radius:4px;font-size:11px;color:#7c3aed;font-family:sans-serif;">核心分歧：西方聚焦犯罪主体，非西方聚焦制裁制度的合法性质疑</div><div style="margin-top:6px;font-size:9px;color:#94a3b8;font-family:sans-serif;">基于议题：三人因涉嫌走私英伟达芯片赴华被控</div></div>
     </div>
 
     <!-- Sidebar (desktop only) -->
@@ -1330,7 +1302,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-5375321607" class="rank-title-link">
+      <a href="#card-6263249178" class="rank-title-link">
         <div class="rank-title">伊朗冲突中俄美成全球赢家和输家<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#b8940e;"></div></div>
@@ -1343,7 +1315,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-1124644084" class="rank-title-link">
+      <a href="#card-6167474818" class="rank-title-link">
         <div class="rank-title">特朗普盟友巴拉圭成拉美投资磁石<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:14%;background:#b8940e;"></div></div>
@@ -1356,7 +1328,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-2606026960" class="rank-title-link">
+      <a href="#card-4399226499" class="rank-title-link">
         <div class="rank-title">英国借贷增加加重能源补助难度<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#b8940e;"></div></div>
@@ -1369,7 +1341,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-7403107111" class="rank-title-link">
+      <a href="#card-1262546419" class="rank-title-link">
         <div class="rank-title">巴拉圭奇迹：从被忽视国家到投资磁石<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#b8940e;"></div></div>
@@ -1382,7 +1354,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-8250593811" class="rank-title-link">
+      <a href="#card-9027361841" class="rank-title-link">
         <div class="rank-title">英国国债面临英央行政治风险双重压力<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#b8940e;"></div></div>
@@ -1395,7 +1367,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">06</span>
     <div class="rank-body">
-      <a href="#card-3087573185" class="rank-title-link">
+      <a href="#card-7471125919" class="rank-title-link">
         <div class="rank-title">德黑兰的生存微观仪式<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:12%;background:#b8940e;"></div></div>
@@ -1408,7 +1380,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">07</span>
     <div class="rank-body">
-      <a href="#card-3124817668" class="rank-title-link">
+      <a href="#card-6432700442" class="rank-title-link">
         <div class="rank-title">欧央行要求银行识别SRT交易中的杠杆提供方<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:11%;background:#b8940e;"></div></div>
@@ -1421,7 +1393,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">08</span>
     <div class="rank-body">
-      <a href="#card-7113147003" class="rank-title-link">
+      <a href="#card-5490734278" class="rank-title-link">
         <div class="rank-title">莫斯科和德黑兰的混合战争<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:10%;background:#b8940e;"></div></div>
@@ -1450,7 +1422,7 @@ function shareCard(btn) {
       text-decoration:none;font-weight:600;margin-left:auto;">全部 →</a>
   </div>
   <div style="padding:4px 0;">
-    <a href="https://github.com/KittenML/KittenTTS" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Show HN: Three new Kitten TT…</span></a><a href="https://www.Bracketmadness.ai" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Show HN: March Madness Brack…</span></a><a href="https://arxiv.org/abs/2603.19223v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">LLM</span><span class="ai-paper-title">F2LLM-v2：面向多语言世界的包容性高效嵌入模型<span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF21</span></span></a><a href="https://arxiv.org/abs/2603.18743v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">LLM</span><span class="ai-paper-title">Memento-Skills：智能体自主设计智能体系统<span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF21</span></span></a><a href="https://arxiv.org/abs/2603.19220v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">LLM</span><span class="ai-paper-title">Nemotron-Cascade 2：级联强化学习与多域…<span style="font-size:9px;color:#8a6a1a;"> · DeepSeek</span><span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF15</span></span></a><a href="https://arxiv.org/abs/2603.13518v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">AUD</span><span class="ai-paper-title">VoXtream2：具有动态语速控制的全流TTS系统<span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF1</span></span></a>
+    <a href="https://github.com/KittenML/KittenTTS" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Show HN: Three new Kitten TT…</span></a><a href="https://arxiv.org/abs/2603.19235v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">LLM</span><span class="ai-paper-title">生成模型的空间认知：挖掘隐式3D先验用于场景理解<span style="font-size:9px;color:#8a6a1a;"> · MIT</span><span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF57</span></span></a><a href="https://arxiv.org/abs/2603.19199v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">VIS</span><span class="ai-paper-title">FASTER：重新思考实时流视觉语言动作模型<span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF35</span></span></a><a href="https://arxiv.org/abs/2603.19228v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">LLM</span><span class="ai-paper-title">SAMA：指令引导视频编辑的因式分解语义锚定与运动对齐<span style="font-size:9px;color:#8a6a1a;"> · MIT</span><span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF32</span></span></a><a href="https://www.Bracketmadness.ai" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Show HN: March Madness Brack…</span></a><a href="https://arxiv.org/abs/2603.19231v1" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">VIS</span><span class="ai-paper-title">MonoArt：单目铰接3D重建的渐进结构推理<span style="font-size:9px;color:#8a6a1a;"> · MIT</span><span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF26</span></span></a>
   </div>
 </div>
 </aside>
