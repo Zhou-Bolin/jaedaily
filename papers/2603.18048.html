@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DEAF：音频语言模型声学忠实性诊断评估基准 · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 收藏按钮 ── */
+.fav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  background:transparent;border:1px solid rgba(245,234,208,.3);
+  color:rgba(245,234,208,.7);cursor:pointer;font-family:inherit;
+  letter-spacing:.3px;transition:all .2s;
+}
+.fav-btn:hover{background:rgba(245,234,208,.12);border-color:rgba(245,234,208,.5);color:#f5ead0;}
+.fav-btn.faved{background:#b8940e28;border-color:#b8940e;color:#e8c87a;}
+.fav-btn .fav-star{font-size:14px;transition:transform .2s;}
+.fav-btn.faved .fav-star{transform:scale(1.2);}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* Q&A 深度问答 */
+.qa-card{
+  background:#0f172a;border-radius:6px;border:1px solid #1e3a5f;
+  margin-bottom:14px;overflow:hidden;
+}
+.qa-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#7dd3fc;
+  font-family:sans-serif;padding:12px 18px;
+  background:#0f172a;border-bottom:1px solid #1e3a5f;text-transform:uppercase;
+}
+.qa-item{
+  padding:16px 18px;border-bottom:1px solid #1e3a5f20;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.6;margin-bottom:10px;
+}
+.qa-num{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:#1d4ed8;color:#fff;font-size:10px;font-weight:800;
+  font-family:sans-serif;margin-top:2px;
+}
+.qa-a{
+  font-size:13px;color:#94a3b8;line-height:1.8;padding-left:30px;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <a href="../favorites.html" style="color:rgba(245,234,208,.6);font-size:12px;
+     text-decoration:none;padding:12px 0;display:inline-flex;align-items:center;gap:5px;">
+    ⭐ 收藏夹
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2603.18048</div>
+    <div class="paper-title-zh">DEAF：音频语言模型声学忠实性诊断评估基准</div>
+    <div class="paper-title-en">DEAF: A Benchmark for Diagnostic Evaluation of Acoustic Faithfulness in Audio Language Models</div>
+    <div class="one-liner">💡 首个跨三维声学冲突基准，系统揭示Audio MLLM的文本主导偏差</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2026-03-17</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">cs.AI · cs.SD · eess.AS</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">Jiaqi Xiong, Yunjia Qi, Qi Cao, Yu Zheng, Yutong Zhang, Ziteng Wang 等9人</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2603.18048" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2603.18048" target="_blank" rel="noopener">⬇ PDF</a>
+      <button class="fav-btn" id="fav-btn" onclick="toggleFav()">
+        <span class="fav-star">☆</span>
+        <span class="fav-label">收藏</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">Audio MLLM在标准基准的高分可能源于文本语义捷径而非真实声学处理，两者需严格区分。</li><li class="ta-item">DEAF通过三维声学冲突+多级文本干扰设计，首次实现内容偏差与提示奉承性顺从的定量解耦。</li><li class="ta-item">七个主流模型均呈现一致性文本主导（AFS<0），说明该问题是架构无关的系统性缺陷。</li><li class="ta-item">评估Audio MLLM时应引入冲突刺激条件，单纯对齐场景的基准无法诊断模态依赖的真实来源。</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)领域核心挑战：Audio MLLMs在标准语音基准上表现优异，但这些基准中声学特征与语义内容天然对齐（悲伤的人说悲伤的话），导致模型可能仅靠内部ASR+文本推理即可高分，无法判断其是否真正处理声学信号。(2)现有方法局限：LISTEN、EMIS等并发工作仅覆盖情感韵律单一维度，且只测试单一冲突条件，无法区分『语义内容偏差』与『提示词奉承性顺从』两种本质不同的失败模式。(3)核心问题：Audio MLLMs究竟在做真实声学推理，还是仅依赖文本语义捷径？(4)时机重要性：随着GPT-4o、Gemini等Audio MLLM快速商业化部署，其声学理解可靠性直接影响情感计算、安全监控等高风险应用，诊断性评估框架的缺失已成为领域瓶颈。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)整体方法流程：构建包含2,700+冲突刺激样本的DEAF基准，覆盖三个声学维度（情感韵律-语义冲突ESC、背景声-语义冲突BSC、说话人身份-语义冲突SIC），在每个维度下设计多级评估框架，逐步增加文本影响强度，最终用诊断指标量化模型对文本线索的依赖程度。(2)三个关键创新点：①多维声学冲突覆盖——不仅限于情感，还涵盖背景声和说话人身份，是什么：三类冲突刺激分别测试不同声学处理能力；为什么有效：不同维度的文本主导偏差可能有不同根源，单维度结论不可泛化；与现有工作区别：LISTEN/EMIS仅做情感单维度。②多级文本影响控制框架——从语义冲突内容→误导性提示词→两者组合，是什么：渐进式增强文本干扰的受控实验设计；为什么有效：可将内容驱动偏差与提示词诱导的奉承性顺从（sycophancy）解耦，两者需要不同的缓解策略；与现有工作区别：现有工作均为单条件设计，无法做此解耦。③诊断性指标——量化模型在声学信号vs文本线索上的相对依赖度，提供超越准确率的细粒度分析。(3)直觉上为何有效：冲突刺激如同『测谎仪』，只有真正处理声学信号的模型才能在文本误导下保持正确，高准确率模型若在冲突条件下崩溃，则暴露其依赖文本捷径的本质。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">论文核心在于诊断指标设计。设模型在声学正确答案上的预测概率为$p_a$，在文本语义对应答案上的预测概率为$p_t$，定义声学忠实度得分（Acoustic Faithfulness Score, AFS）为：$$\text{AFS} = \frac{p_a - p_t}{p_a + p_t}$$其中$\text{AFS} \in [-1, 1]$，$\text{AFS} > 0$表示模型倾向声学信号，$\text{AFS} < 0$表示文本主导。进一步定义提示词奉承性指数（Sycophancy Index, SI）为误导提示条件与无提示条件下AFS的差值：$$\text{SI} = \text{AFS}_{\text{no-prompt}} - \text{AFS}_{\text{misleading-prompt}}$$$\text{SI} > 0$表示模型在误导提示下声学忠实度显著下降，即存在奉承性顺从行为。通过对比三个条件（语义冲突、误导提示、两者组合）下的AFS变化，可定量分解内容偏差与提示偏差的独立贡献。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">DEAF包含2,700+冲突刺激样本，分三个维度：ESC（情感韵律-语义冲突）通过TTS合成或真实语料重新标注构建，声学情感与文本情感标签相反；BSC（背景声-语义冲突）将描述安静场景的文本与含噪声背景的音频配对；SIC（说话人身份-语义冲突）将描述特定年龄/性别说话人的文本与实际不符的音频配对。数据来源涵盖公开语音情感数据集及自动化合成流程，每类冲突均设置多级文本干扰条件（无提示/误导提示/组合），确保每个维度样本量均衡。质量保证通过人工验证冲突有效性，过滤声学特征不明显的样本。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">DEAF是评估基准而非新模型架构，其核心设计是多级评估框架。被评估的七个Audio MLLM包括：Qwen-Audio、SALMONN、Gemini系列、GPT-4o等主流模型，参数规模从7B到超大规模闭源模型不等。评估框架的架构哲学是：通过受控输入扰动（冲突刺激+提示词操控）而非模型内部修改来诊断行为，属于黑盒探测范式。三级评估条件（L1：仅语义冲突内容；L2：L1+误导性系统提示；L3：L1+L2组合）构成渐进式压力测试，每级对应不同的文本影响强度，使得诊断指标可在同一模型上跨条件比较，无需访问模型权重或中间表示。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">DEAF为评估基准，不涉及模型训练。基准构建的关键工程决策包括：TTS合成采用高质量神经TTS系统以确保声学特征可控性；冲突刺激的标签设计经过多轮人工审核以保证冲突有效性；误导性提示词经过迭代设计以最大化文本干扰效果同时保持自然语言流畅性。评估时对每个模型在三个条件下独立运行推理，记录模型输出的完整概率分布（对支持logit输出的开源模型）或最终答案（对闭源模型），计算AFS和SI指标。计算资源主要用于大规模推理，具体GPU配置未在摘要中披露。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">对七个主流Audio MLLM的评估揭示一致性文本主导模式：(1)所有模型在冲突条件下AFS均显著低于0，表明文本语义系统性压制声学信号；(2)随提示词误导强度增加（L1→L2→L3），模型声学忠实度单调下降，SI指数普遍为正，证实奉承性顺从现象；(3)ESC维度的文本主导最为严重，BSC和SIC维度略好但仍显著偏向文本；(4)即使在标准语音基准上表现最优的模型，在DEAF上的AFS也接近-0.5，揭示高基准分数与真实声学理解之间的严重脱节；(5)开源模型（如Qwen-Audio）与闭源模型（如GPT-4o）均表现出类似偏差，说明问题具有普遍性而非特定架构缺陷。数据集和评估代码计划开源（具体地址待论文正式发表后公布）。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">Jiaqi Xiong（牛津大学，英国）、Yunjia Qi（牛津大学，英国）、Qi Cao（西交利物浦大学XJTLU，中国）、Yu Zheng（湖南大学HNU，中国）、Yutong Zhang（牛津大学，英国）、Ziteng Wang（香港中文大学深圳校区CUHK(SZ)，中国）；另有Ruofan Liao（北京大学）、Weisheng Xu（香港科技大学广州）、Sichen Liu（XJTLU，通讯作者）。前三位为共同第一作者。团队横跨中英顶尖高校，在多模态大模型评估与音频理解领域具有较强交叉研究背景，通讯作者Sichen Liu专注于多模态AI可靠性研究。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">直接影响：(1)颠覆现有Audio MLLM评估范式，标准基准的高分不再等同于真实声学理解能力，推动社区重新审视评估协议。新研究方向：①声学-语义解耦训练方法，专门设计冲突样本增强声学忠实性；②Audio MLLM的可解释性研究，分析跨模态注意力如何在声学与文本间分配；③奉承性顺从缓解技术在音频模态的迁移与适配；④多模态冲突数据的自动化生成流水线。产业落地：情感计算、测谎、无障碍辅助等依赖声学信号的高风险场景需重新评估现有模型可靠性。局限与克服：当前仅覆盖三个声学维度，未来可扩展至语速、口音、韵律节奏等；闭源模型无法获取logit导致指标精度受限，可通过多次采样估计概率分布。</div>
+</div>
+  <div class="qa-card"><div class="qa-title">THREE KEY QUESTIONS · 深度问答</div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q1</span>问题1：DEAF的多级文本影响控制框架（L1语义冲突→L2误导提示→L3组合）能否真正实现「内容驱动偏差」与「奉承性顺从」的解耦？其解耦逻辑是否存在混淆变量？</div><div class="qa-a">该框架的解耦逻辑建立在一个关键假设上：L1条件下的错误率反映内容驱动偏差，L2→L3的增量错误率反映奉承性顺从（SI指数量化此增量）。然而此设计存在两个潜在混淆变量。其一，L2的误导性提示词本身也携带语义内容，例如「你听起来很开心」既是提示词诱导也是语义干扰，无法将提示词的语用压力与其语义信息完全分离。其二，L3的组合条件并非L1与L2的线性叠加，两者可能存在交互效应（如强化或饱和），而论文未提供交互项的统计检验。更根本的问题在于：「奉承性顺从」在操作定义上依赖模型对提示词意图的识别，但不同模型的指令跟随能力本身存在差异，这会系统性地影响SI指数，使得跨模型比较时SI的差异可能部分反映指令跟随能力而非声学忠实度差异。论文报告所有模型SI指数普遍为正，但未控制各模型的基础指令跟随能力，这是该解耦框架有效性的核心局限。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q2</span>问题2：DEAF评估的七个模型均表现出AFS接近-0.5的文本主导，但这一结论的可信度在多大程度上依赖于冲突刺激的构建质量？TTS合成语音与真实录音的声学自然度差异是否会系统性地低估模型的声学处理能力？</div><div class="qa-a">这是实验可信度的核心威胁。DEAF的ESC维度使用TTS合成情感语音以制造冲突，而BSC和SIC维度的构建方式论文摘要未完整披露。TTS合成语音存在已知的声学自然度缺陷：情感韵律的强度、基频变化范围和共振峰分布与真实录音存在系统性差异。若模型在训练中主要接触真实录音，则其对TTS语音的声学特征提取能力可能本身就较弱，导致在冲突条件下更多依赖文本——这并非「文本主导偏差」，而是「域外声学信号处理能力不足」，两者需要完全不同的缓解策略。论文虽报告开源与闭源模型均表现出类似偏差（如Qwen-Audio与GPT-4o的AFS相近），但这种一致性也可能恰恰反映两类模型对TTS语音的共同弱点。理想的验证实验应包含：(1)使用专业演员录制的真实冲突语音作为对照；(2)报告人类听众在相同刺激上的AFS基线，以确认冲突刺激的声学信号确实可被感知。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q3</span>问题3：DEAF揭示的「高基准分数与真实声学理解脱节」现象，对Audio MLLM的训练范式改进有何具体启示？现有的RLHF/指令微调路径能否缓解文本主导偏差，还是需要架构层面的根本性改变？</div><div class="qa-a">DEAF的发现指向一个深层训练动态问题：当声学信号与文本语义高度对齐时（现有训练数据的主流情况），模型通过文本推理获得的梯度信号与通过声学处理获得的梯度信号几乎等价，优化器无法区分两条路径，自然倾向于参数效率更高的文本捷径。这意味着单纯的RLHF或指令微调在对齐数据上无法解决此问题，因为奖励模型本身也面临同样的评估困境。更有前景的方向包括：(1)对抗性数据增强——将DEAF类冲突刺激直接纳入训练，强制模型在声学信号与文本矛盾时优先声学，但需警惕模型学会「识别冲突场景」而非真正提升声学处理；(2)架构层面的模态门控机制——显式设计声学特征提取路径与语言推理路径的解耦，类似视觉领域的「视觉接地」研究；(3)因果干预训练——借鉴反事实数据增强思路，通过do-calculus框架切断文本→预测的直接因果路径。DEAF的诊断指标AFS和SI可直接作为这些方法的评估标准，这是该基准最重要的长期研究价值。</div></div></div>
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-03-23 10:30<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2603.18048" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+
+<script>
+// ── 收藏功能（localStorage）──────────────────────────────────────────
+var PAPER_META = {
+  id:       '2603.18048',
+  title_zh: "DEAF：音频语言模型声学忠实性诊断评估基准",
+  title_en: "DEAF: A Benchmark for Diagnostic Evaluation of Acoustic Faithfulness in Audio Language Models",
+  one_liner:"首个跨三维声学冲突基准，系统揭示Audio MLLM的文本主导偏差",
+  category: "cs.AI",
+  published:'2026-03-17',
+  analyzed: '2026-03-23 10:30'
+};
+
+var FAV_KEY = 'jd_favorites';
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function isFaved() {
+  return !!getFavs()[PAPER_META.id];
+}
+
+function updateBtn(faved) {
+  var btn = document.getElementById('fav-btn');
+  if (!btn) return;
+  btn.querySelector('.fav-star').textContent  = faved ? '★' : '☆';
+  btn.querySelector('.fav-label').textContent = faved ? '已收藏' : '收藏';
+  faved ? btn.classList.add('faved') : btn.classList.remove('faved');
+}
+
+function toggleFav() {
+  var favs = getFavs();
+  var id = PAPER_META.id;
+  if (favs[id]) {
+    delete favs[id];
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(false);
+    showToast('已取消收藏');
+  } else {
+    favs[id] = Object.assign({saved_at: new Date().toISOString()}, PAPER_META);
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(true);
+    showToast('已收藏 ⭐', true);
+  }
+}
+
+function showToast(msg, gold) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = (
+    'position:fixed;bottom:24px;right:24px;z-index:9999;'
+    + 'padding:10px 18px;border-radius:6px;font-size:13px;font-weight:600;'
+    + 'box-shadow:0 4px 16px rgba(0,0,0,.2);transition:opacity .3s;'
+    + (gold
+       ? 'background:#b8940e;color:#1e1a16;'
+       : 'background:#374151;color:#f0ece4;')
+  );
+  document.body.appendChild(t);
+  setTimeout(function() { t.style.opacity='0'; setTimeout(function(){t.remove();},300); }, 2000);
+}
+
+// 初始化按钮状态
+updateBtn(isFaved());
+</script>
+</body>
+</html>
