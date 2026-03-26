@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>TiCo：面向口语对话模型的时间可控训练方法 · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 收藏按钮 ── */
+.fav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  background:transparent;border:1px solid rgba(245,234,208,.3);
+  color:rgba(245,234,208,.7);cursor:pointer;font-family:inherit;
+  letter-spacing:.3px;transition:all .2s;
+}
+.fav-btn:hover{background:rgba(245,234,208,.12);border-color:rgba(245,234,208,.5);color:#f5ead0;}
+.fav-btn.faved{background:#b8940e28;border-color:#b8940e;color:#e8c87a;}
+.fav-btn .fav-star{font-size:14px;transition:transform .2s;}
+.fav-btn.faved .fav-star{transform:scale(1.2);}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* Q&A 深度问答 */
+.qa-card{
+  background:#0f172a;border-radius:6px;border:1px solid #1e3a5f;
+  margin-bottom:14px;overflow:hidden;
+}
+.qa-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#7dd3fc;
+  font-family:sans-serif;padding:12px 18px;
+  background:#0f172a;border-bottom:1px solid #1e3a5f;text-transform:uppercase;
+}
+.qa-item{
+  padding:16px 18px;border-bottom:1px solid #1e3a5f20;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.6;margin-bottom:10px;
+}
+.qa-num{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:#1d4ed8;color:#fff;font-size:10px;font-weight:800;
+  font-family:sans-serif;margin-top:2px;
+}
+.qa-a{
+  font-size:13px;color:#94a3b8;line-height:1.8;padding-left:30px;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <a href="../favorites.html" style="color:rgba(245,234,208,.6);font-size:12px;
+     text-decoration:none;padding:12px 0;display:inline-flex;align-items:center;gap:5px;">
+    ⭐ 收藏夹
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2603.22267</div>
+    <div class="paper-title-zh">TiCo：面向口语对话模型的时间可控训练方法</div>
+    <div class="paper-title-en">TiCo: Time-Controllable Training for Spoken Dialogue Models</div>
+    <div class="one-liner">💡 两阶段后训练框架赋予口语对话模型实时语音时长精确控制能力</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2026-03-23</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">cs.CL · cs.AI · eess.AS</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">Kai-Wei Chang, Wei-Chih Chen, En-Pei Hu, Hung-yi Lee, James Glass</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2603.22267" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2603.22267" target="_blank" rel="noopener">⬇ PDF</a>
+      <button class="fav-btn" id="fav-btn" onclick="toggleFav()">
+        <span class="fav-star">☆</span>
+        <span class="fav-label">收藏</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">Spoken Time Marker将连续时间信号离散化为文本token，使自回归LLM在语义规划层实现实时时长感知与动态内容调整。</li><li class="ta-item">自生成+ASR时间戳对齐可无监督构建时间感知训练数据，消除了对人工标注问答对的依赖，是低成本后训练的关键。</li><li class="ta-item">单独使用GRPO易导致reward hacking，CHORD将SFT专家轨迹作为离策略正则项是稳定时长控制RL训练的必要条件。</li><li class="ta-item">词数控制无法替代语音时长控制，音节数、语速、韵律的系统性差异要求在语义规划层而非解码层进行时长干预。</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)领域核心挑战：口语对话模型（SDM）在实际部署中需严格控制响应时长，如车载助手、可穿戴设备、医疗紧急场景，但现有SDM完全缺乏时间感知能力。(2)现有方法局限：实验评估显示，开源与商业SDM在收到如「请生成约15秒的回复」等指令时频繁失败；文本LLM的词数控制方法无法迁移，因为单词音节数、语速、韵律结构均影响实际时长，词数与时长之间存在系统性偏差。(3)核心问题：如何在不收集额外标注数据的前提下，使SDM在生成过程中实时感知并调控语音时长。(4)时机重要性：SDM正快速进入消费级产品，时长可控性是工程落地的刚需，但学术界尚无专门方法，TiCo填补了这一空白。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)整体流程：TiCo是两阶段后训练框架。Stage 1通过自生成+ASR时间戳对齐，在中间文本表示中插入「Spoken Time Markers（STM）」（如`<6.8 seconds>`），用SFT训练模型学习时间感知；Stage 2在时长约束指令下，用RLVR（具体为GRPO+CHORD）进一步优化模型遵循时长约束的能力。(2)关键创新点：①STM机制——在中间表示序列中离散化插入累计时长标记，是什么：将连续时间信号离散化为文本token；为什么有效：使自回归模型能在token级别感知当前已用时长并动态调整后续内容；与现有工作区别：不同于TTS的duration modeling（仅对齐文本与音素），STM作用于语义规划层，实现内容与时长的联合控制。②自生成数据构建——无需人工标注，模型自产响应后经ASR时间戳对齐生成训练数据；为什么有效：生成样本与模型自身输出分布一致，训练稳定性更高。③GRPO+CHORD联合优化——CHORD将Stage 1的SFT轨迹作为离策略专家轨迹动态加权注入RL过程；为什么有效：单独GRPO易导致reward hacking，CHORD提供正则化锚点，防止模型崩溃。(3)直觉：STM让模型在生成中途「看表」，知道已说了多久，从而决定是扩展还是收缩后续内容，类似人类演讲者的实时时间管理。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">Stage 1 SFT目标：$$\mathcal{L}_{\text{SFT}} = -\mathbb{E}_{(x^{sp},p,\tilde{z})\sim\mathcal{D}_{\text{SFT}}}\left[\sum_{n=1}^{|\tilde{z}|}\log p_\theta(\tilde{z}_n|\tilde{z}_{<n},x^{sp},p)\right]$$其中$\tilde{z}$为插入STM后的增强中间序列，$x^{sp}$为用户语音输入，$p$为文本指令。Stage 2主奖励：$$R^{(g)}_{\text{main}} = \exp\!\left(-\frac{(t_{\text{inst}}-t^{(g)}_{\text{last}})^2}{2\sigma^2}\right)$$其中$t_{\text{inst}}$为指令目标时长，$t^{(g)}_{\text{last}}$为第$g$个样本最后一个STM的时长值，$\sigma$控制容忍度。GRPO策略梯度中的token级目标：$$\ell_{g,n}(\theta)=\min\!\left[\rho_{g,n}(\theta)\hat{A}^{(g)},\,\text{clip}(\rho_{g,n},1\!-\!\varepsilon,1\!+\!\varepsilon)\hat{A}^{(g)}\right]-\beta D_{\text{KL}}[p_\theta\|p_{\text{ref}}]_n$$其中$\rho_{g,n}=p_\theta/p_{\theta_{\text{old}}}$为重要性权重，$\hat{A}^{(g)}$为组相对归一化优势，$\beta$为KL惩罚系数。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">训练数据完全通过自生成构建，无需额外人工标注问答对。输入池$\mathcal{D}=\{(x^{sp},p)\}$来自现有语音对话数据集（论文未披露具体规模，但强调「only a small amount of data」）。Stage 1：模型自由生成响应后，用带时间戳的ASR（如WhisperX）对齐，提取词级时间戳，按固定间隔（如每N个词）插入STM，构建$\mathcal{D}_{\text{SFT}}$。Stage 2：在$\mathcal{D}_{\text{SFT}}$基础上，为指令添加随机采样的目标时长约束，构成时长条件训练集。评估基准TiCo-Bench为本文新提出，覆盖多种目标时长区间与话题。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">TiCo是后训练框架，不绑定特定SDM架构，实验基于具有「中间表示+语音生成器」两阶段结构的SDM（如LLaMA-Omni等Sequential/Parallel模式模型）。核心组件：(1)中间序列生成器$p_\theta$（文本LLM骨干，冻结或微调）负责生成含STM的增强文本序列；(2)语音生成器$q_\phi$（冻结）将中间表示转为语音token再合成波形。STM作为特殊文本token扩充词表，格式为`<X.X seconds>`，插入位置由ASR时间戳决定。Stage 1仅训练$p_\theta$，Stage 2同样仅优化$p_\theta$，$q_\phi$全程冻结，大幅降低计算成本。参数规模与具体骨干模型论文中未完整披露，但设计上兼容主流7B级LLM骨干。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">两阶段训练：Stage 1为标准SFT，优化器AdamW，学习率遵循cosine decay with warmup；Stage 2为GRPO+CHORD联合优化，采样组大小$G$（典型值4-8），KL系数$\beta$控制偏离参考策略程度，Gaussian奖励$\sigma$为关键超参数（控制时长容忍度）。CHORD动态权重将Stage 1 SFT数据作为离策略正则项混入RL批次，防止reward hacking。辅助奖励包括presence reward、monotonicity reward、repetition penalty、copy penalty四项，消融实验验证各项均有贡献。论文未披露具体GPU型号与训练时长，但强调数据量小、训练高效。训练稳定性关键：CHORD正则化是防止GRPO崩溃的必要条件。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">TiCo-Bench评估显示：(1)现有开源与商业SDM在时长控制任务上普遍失败，平均误差远超目标时长的20%；(2)TiCo训练后模型时长误差显著降低，在10s/30s/60s等多个目标时长上均接近目标值（案例展示：30s目标实际27.9s，60s目标实际57.4s，误差约5-7%）；(3)响应质量（helpfulness、coherence）通过人工评估与自动评估均得到保留，未因时长控制而退化；(4)泛化性：模型在训练时长范围之外的目标时长上仍表现良好，体现出时间感知的泛化能力；(5)消融：去除CHORD导致reward hacking，去除辅助奖励导致训练不稳定，STM密度影响控制精度；(6)代码与模型开源状态论文中未明确说明，TiCo-Bench作为新基准已提出供社区使用。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">Kai-Wei Chang（MIT，美国，共同第一作者）；Wei-Chih Chen（NTU国立台湾大学，台湾，共同第一作者）；En-Pei Hu（NTU，台湾）；Hung-yi Lee（NTU，台湾，通讯作者，语音与语言领域顶尖学者，主导多项SDM基础研究）；James Glass（MIT，美国，语音处理领域资深教授）。团队横跨MIT与NTU两大顶尖机构，在端到端语音对话、语音语言模型等方向具有持续深厚积累，Hung-yi Lee团队是SDM领域的重要推动力量。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">直接影响：为SDM领域引入时长可控生成这一新维度，填补了从文本长度控制到语音时长控制的方法论空白。新研究方向：①将STM扩展为多维度韵律控制（语速、停顿、情感强度）；②时长感知与全双工对话（打断、轮换）的联合建模；③将RLVR+可验证奖励范式推广至其他语音属性控制（音量、语气）。产业落地：车载语音助手、智能耳机、医疗语音提示系统等对时长有硬约束的场景。现有局限：依赖ASR时间戳精度，对快速语速或非标准发音可能产生对齐误差；目标时长范围的泛化边界尚未系统探索。未来工作：作者提出将TiCo扩展至更多SDM架构，并探索与实时流式生成的结合。</div>
+</div>
+  <div class="qa-card"><div class="qa-title">THREE KEY QUESTIONS · 深度问答</div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q1</span>STM机制的有效性根本上依赖于「模型在语义规划层能感知累计时长并动态调整内容」这一假设，但自回归模型本质上是逐token预测，STM插入位置的离散化粒度如何影响控制精度？是否存在理论上的时间感知下界？</div><div class="qa-a">这是TiCo最核心的设计张力。STM将连续时间信号离散化为文本token（如`<6.8 seconds>`），其控制精度理论上受两个因素制约：①STM插入密度——消融实验证实密度影响控制精度，密度过低则模型在两个STM之间缺乏时间反馈，无法及时调整；②ASR时间戳对齐误差——自生成数据依赖ASR时间戳，工业级ASR的词级时间戳误差通常在50-200ms量级，这会系统性地污染训练信号。从实验结果看，30s目标实际27.9s（误差7%）、60s目标实际57.4s（误差4.3%），误差随目标时长增大而相对缩小，符合「长序列中局部误差被平均」的直觉。然而论文未提供理论分析：在给定STM密度d和ASR误差σ的条件下，最终时长误差的期望上界是多少？这一缺失使得方法的可靠性边界不清晰。未来可借鉴控制论中的离散时间反馈控制框架，将STM建模为带噪声观测的状态反馈信号，推导误差收敛条件。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q2</span>TiCo-Bench作为论文自建基准，其评估公平性存在潜在循环论证风险：训练数据构建逻辑（自生成+STM）与评估指标（时长误差）高度耦合，如何排除模型仅在「自身输出分布」上过拟合而非真正习得时间感知能力？</div><div class="qa-a">这是实验设计的核心可信度问题。论文声称泛化性实验（训练时长范围之外的目标时长仍表现良好）部分回答了此问题，但存在以下潜在漏洞：①基准构建偏差——TiCo-Bench的测试问题若与Stage 1自生成数据的问题领域重叠，则评估实际上是in-distribution测试；论文未明确说明测试集与训练集的话题隔离程度。②对比基线不对等——现有商业SDM（如GPT-4o Audio）未经任何时长控制训练，与经过专门两阶段后训练的TiCo对比，本质上是「专项训练 vs. 零样本」，而非同等训练资源下的公平对比。③质量保留的评估粒度不足——人工评估helpfulness和coherence是粗粒度指标，未测量时长压缩是否导致信息密度下降（即模型是否通过语速加快而非内容精简来满足时长约束）。更严格的消融应包括：固定训练数据量、仅改变是否使用STM的对照组，以及跨领域泛化测试（如训练在问答领域，测试在叙事领域）。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q3</span>TiCo框架假设「中间文本表示→语音」的映射是相对稳定的，但当SDM底层语音合成模块（如codec或vocoder）更新、或切换至不同说话人/语言时，Stage 1构建的STM监督信号将系统性失效——这一脆弱性如何影响TiCo的实际部署价值，以及未来多模态时间控制的研究方向？</div><div class="qa-a">这揭示了TiCo一个深层的架构耦合问题。STM的时间戳由特定语音合成后端（特定说话人、特定codec）的ASR结果决定，若底层合成模块变化（如换用更快语速的TTS引擎），则同一文本序列对应的实际时长会系统性偏移，导致已训练的STM预测能力失准。具体风险包括：①多语言扩展——不同语言的平均语速差异显著（如普通话约4-5音节/秒，英语约3-4词/秒），跨语言迁移需要重新构建Stage 1数据；②个性化语音——用户自定义说话人音色会改变语速分布，STM需动态校准。未来研究方向可分两层：短期内，可引入「说话人自适应STM校准」机制，在推理时用少量样本估计当前说话人的语速系数并修正STM预测；长期看，更根本的方向是将时间感知从文本语义层下沉至音频token层（如直接在EnCodec/DAC token序列上建模时长），使时间控制与语义规划解耦，这与近期speech LM（如VALL-E、VoxtLM）的发展方向高度契合，是值得深入探索的研究机会。</div></div></div>
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-03-26 11:09<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2603.22267" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+
+<script>
+// ── 收藏功能（localStorage）──────────────────────────────────────────
+var PAPER_META = {
+  id:       '2603.22267',
+  title_zh: "TiCo：面向口语对话模型的时间可控训练方法",
+  title_en: "TiCo: Time-Controllable Training for Spoken Dialogue Models",
+  one_liner:"两阶段后训练框架赋予口语对话模型实时语音时长精确控制能力",
+  category: "cs.CL",
+  published:'2026-03-23',
+  analyzed: '2026-03-26 11:09'
+};
+
+var FAV_KEY = 'jd_favorites';
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function isFaved() {
+  return !!getFavs()[PAPER_META.id];
+}
+
+function updateBtn(faved) {
+  var btn = document.getElementById('fav-btn');
+  if (!btn) return;
+  btn.querySelector('.fav-star').textContent  = faved ? '★' : '☆';
+  btn.querySelector('.fav-label').textContent = faved ? '已收藏' : '收藏';
+  faved ? btn.classList.add('faved') : btn.classList.remove('faved');
+}
+
+function toggleFav() {
+  var favs = getFavs();
+  var id = PAPER_META.id;
+  if (favs[id]) {
+    delete favs[id];
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(false);
+    showToast('已取消收藏');
+  } else {
+    favs[id] = Object.assign({saved_at: new Date().toISOString()}, PAPER_META);
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(true);
+    showToast('已收藏 ⭐', true);
+  }
+}
+
+function showToast(msg, gold) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = (
+    'position:fixed;bottom:24px;right:24px;z-index:9999;'
+    + 'padding:10px 18px;border-radius:6px;font-size:13px;font-weight:600;'
+    + 'box-shadow:0 4px 16px rgba(0,0,0,.2);transition:opacity .3s;'
+    + (gold
+       ? 'background:#b8940e;color:#1e1a16;'
+       : 'background:#374151;color:#f0ece4;')
+  );
+  document.body.appendChild(t);
+  setTimeout(function() { t.style.opacity='0'; setTimeout(function(){t.remove();},300); }, 2000);
+}
+
+// 初始化按钮状态
+updateBtn(isFaved());
+</script>
+</body>
+</html>
