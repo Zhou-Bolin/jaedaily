@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>OmniVoice：基于扩散语言模型的全语言零样本文本转语音 · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 收藏按钮 ── */
+.fav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  background:transparent;border:1px solid rgba(245,234,208,.3);
+  color:rgba(245,234,208,.7);cursor:pointer;font-family:inherit;
+  letter-spacing:.3px;transition:all .2s;
+}
+.fav-btn:hover{background:rgba(245,234,208,.12);border-color:rgba(245,234,208,.5);color:#f5ead0;}
+.fav-btn.faved{background:#b8940e28;border-color:#b8940e;color:#e8c87a;}
+.fav-btn .fav-star{font-size:14px;transition:transform .2s;}
+.fav-btn.faved .fav-star{transform:scale(1.2);}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* Q&A 深度问答 */
+.qa-card{
+  background:#0f172a;border-radius:6px;border:1px solid #1e3a5f;
+  margin-bottom:14px;overflow:hidden;
+}
+.qa-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#7dd3fc;
+  font-family:sans-serif;padding:12px 18px;
+  background:#0f172a;border-bottom:1px solid #1e3a5f;text-transform:uppercase;
+}
+.qa-item{
+  padding:16px 18px;border-bottom:1px solid #1e3a5f20;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.6;margin-bottom:10px;
+}
+.qa-num{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:#1d4ed8;color:#fff;font-size:10px;font-weight:800;
+  font-family:sans-serif;margin-top:2px;
+}
+.qa-a{
+  font-size:13px;color:#94a3b8;line-height:1.8;padding-left:30px;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <a href="../favorites.html" style="color:rgba(245,234,208,.6);font-size:12px;
+     text-decoration:none;padding:12px 0;display:inline-flex;align-items:center;gap:5px;">
+    ⭐ 收藏夹
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2604.00688</div>
+    <div class="paper-title-zh">OmniVoice：基于扩散语言模型的全语言零样本文本转语音</div>
+    <div class="paper-title-en">OmniVoice: Towards Omnilingual Zero-Shot Text-to-Speech with Diffusion Language Models</div>
+    <div class="one-liner">💡 单阶段离散NAR架构+LLM初始化，实现600+语言零样本TTS</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2026-04-01</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">cs.CL · eess.AS</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">Han Zhu, Lingxuan Ye, Wei Kang, Zengwei Yao, Liyong Guo, Fangjun Kuang 等10人</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2604.00688" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2604.00688" target="_blank" rel="noopener">⬇ PDF</a>
+      <button class="fav-btn" id="fav-btn" onclick="toggleFav()">
+        <span class="fav-star">☆</span>
+        <span class="fav-label">收藏</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">LLM权重初始化双向NAR Transformer可首次解决单阶段离散TTS的可懂度瓶颈，无需两阶段级联</li><li class="ta-item">全码本随机掩码使每步有效训练token数提升C=8倍，是逐层掩码的根本性效率改进</li><li class="ta-item">581k小时开源多语言数据+语言重采样（β=0.8）实现600+语言零样本TTS，覆盖范围创历史最广</li><li class="ta-item">离散NAR TTS的推理加速（类比连续空间flow distillation）是当前最紧迫的开放问题，值得重点攻关</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)领域核心挑战：零样本TTS已在高资源语言取得突破，但绝大多数系统仅支持数十种语言，全球数百种低资源语言被忽视。(2)现有方法局限：AR模型推理慢且鲁棒性差；离散NAR两阶段级联系统（text→semantic→acoustic）存在误差传播与信息瓶颈，低比特率语义表示丢失细粒度声学细节；单阶段离散NAR方案（如VoiceCraft等）历史上在可懂度上显著落后于两阶段系统；现有多语言零样本TTS最多覆盖数十种语言（如MMS虽覆盖1000+语言但不支持零样本克隆）。(3)核心问题：如何构建单阶段、高可懂度、可扩展至600+语言的离散NAR零样本TTS系统。(4)时机重要性：扩散语言模型（如MDLM、Plaid）在NLP领域的成功为语音离散扩散建模提供了新范式，LLM权重的公开可用（如Qwen3）为NAR模型注入语言先验提供了可行路径。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)整体流程：OmniVoice以双向Transformer为骨干，接收文本token序列$Y$（instruct+transcript拼接）和多码本声学矩阵$X \in \mathbb{R}^{T \times C}$，对目标段随机掩码后预测被掩码位置的离散声学token，推理时执行32步迭代去掩码，直接从文本映射到8码本声学token，再由Higgs-audio tokenizer解码为音频。(2)关键创新一——全码本随机掩码（Full-Codebook Random Masking）：传统「逐层掩码」每次仅对单一码本层计算损失，有效训练信号极稀疏（仅$1/C$的token参与）；OmniVoice对$T \times C$矩阵每个位置独立采样$m_{i,j} \sim \text{Bernoulli}(p_t)$，$p_t \sim U(0,1)$，平均50%的token参与损失计算，是逐层掩码的$C$倍（$C=8$），显著加速收敛并提升生成质量；本质区别在于将稀疏监督变为密集监督。(3)关键创新二——LLM初始化（LLM Initialization）：用Qwen3-0.6B预训练权重初始化双向Transformer骨干，将AR LLM的语言知识迁移至NAR架构；尽管原始LLM使用因果掩码，实验证明其预训练知识可有效迁移至双向注意力，显著提升可懂度；这是首个成功将LLM初始化应用于NAR TTS的工作，与AR-TTS（如CosyVoice2）的本质区别在于NAR架构天然不依赖自回归解码。(4)直觉有效性：密集掩码提供更丰富的梯度信号，LLM先验弥补了NAR模型缺乏序列建模能力的短板，两者协同解决了单阶段离散NAR的历史痛点。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">训练损失为标准掩码语言模型交叉熵，作用于目标段所有被掩码位置：$$L = -\sum_{(t,c) \in \mathcal{M}} \log P(x_{t,c} \mid X, Y; \theta)$$其中$\mathcal{M}$为掩码位置集合，$t \in \{T_p+1,\ldots,T\}$为目标段时间步，$c \in \{1,\ldots,C\}$为码本索引，$x_{t,c}$为真实token，$\theta$为模型参数。掩码采样：$m_{i,j} \sim \text{Bernoulli}(p_t)$，$p_t \sim U(0,1)$。推理时采用时移去掩码调度：$$r_n = \frac{\tau \cdot (n/N)}{1 + (\tau-1) \cdot (n/N)}$$其中$N=32$为总步数，$\tau=0.1$为偏移参数，$r_n$为第$n$步累计去掩码比例，每步新增去掩码比例$k_n = r_n - r_{n-1}$。低资源语言重采样因子：$$r_i = \max\left(1, \text{round}\left(\left(\frac{D_{\max}}{D_i}\right)^{1-\beta}\right)\right)$$其中$D_i$为语言$i$的音频时长，$\beta=0.8$平衡高低资源语言曝光度。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">双语变体：使用Emilia数据集的中英文子集，与现有SOTA对齐以公平比较，不含prompt denoising。多语言变体：聚合50个开源数据集，总计581k小时音频，覆盖600+语言（图3显示：2种语言超10万小时，10种超1万小时，33种超1千小时，76种超100小时，381种超10小时，635种超1小时）。预处理：使用语音修复模型增强降质音频，基于规则过滤无效转录；文本处理采用Qwen3子词tokenizer，无需G2P转换或语言特定文本归一化；训练/验证/测试划分未在正文明确说明，评估使用LibriSpeech-PC、Seed-TTS、MiniMax-Multilingual-24等独立基准。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">骨干为双向Transformer，由Qwen3-0.6B（约6亿参数）预训练权重初始化，去除因果掩码改为全注意力。输入侧：文本token经文本嵌入层编码；声学矩阵$X \in \mathbb{R}^{T \times C}$（$C=8$码本）经$C$个独立码本嵌入层分别嵌入后在时间维度求和融合，与文本嵌入拼接送入Transformer。输出侧：$C$个独立预测头分别将隐状态映射至各码本词表上的概率分布。声学codec采用Higgs-audio tokenizer（8码本）。推理时使用classifier-free guidance（引导尺度=2），置信度采样温度$T=5$引入随机性，层惩罚鼓励低层码本优先去掩码。序列打包至8192 tokens/GPU。与标准Transformer的核心差异：双向注意力替代因果注意力，多头输出替代单一语言模型头。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">两阶段配置：(1)双语Emilia变体：300k步，8×H800 GPU，约1.33天；(2)多语言变体：2M步，8×H800 GPU，约9.66天。优化器：AdamW，峰值学习率$1\times10^{-4}$，余弦调度，前3%步数线性warmup。精度：BF16混合精度。序列打包：8192 tokens/GPU提升利用率。语言重采样：$\beta=0.8$平衡高低资源语言。推理：32步迭代去掩码，时移调度$\tau=0.1$，CFG引导尺度2，置信度温度5，层惩罚策略。训练稳定性依赖LLM初始化提供强先验，避免从随机初始化收敛困难。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">在LibriSpeech-PC（英文）、Seed-TTS（中英双语）、MiniMax-Multilingual-24（多语言，覆盖24语言）及内部102语言基准上评估。双语变体（仅Emilia数据）在中英基准上达到SOTA，可懂度（WER/CER）、说话人相似度（SIM）、自然度（MOS/UTMOS）均优于或持平现有最优系统（具体数值论文正文截断，未完整呈现）。多语言变体实现迄今最广语言覆盖（600+语言），在102语言内部基准上验证有效性。关键消融：全码本随机掩码相比逐层掩码提供$C=8$倍更多训练信号，显著加速收敛；LLM初始化对可懂度提升至关重要，是单阶段NAR首次成功案例；prompt denoising在双语变体中被刻意去除以隔离架构本身贡献。局限：开源数据质量参差，数值/数学文本处理弱，离散NAR推理加速方法尚缺。代码与模型已开源：https://github.com/k2-fsa/OmniVoice。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">Han Zhu（小米公司，中国）、Lingxuan Ye（小米公司，中国）、Wei Kang（小米公司，中国）、Zengwei Yao（小米公司，中国）、Liyong Guo（小米公司，中国）、Fangjun Kuang（小米公司，中国），另有Zhifeng Han、Weiji Zhuang、Long Lin、Daniel Povey共10位作者均来自小米公司。通讯作者为Han Zhu（zhuhan3@xiaomi.com）和Daniel Povey（dpovey@xiaomi.com）。Daniel Povey是语音识别领域著名学者（Kaldi框架创始人），团队整体在大规模语音处理与多语言建模方向具有较强工程与研究积累。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">直接影响：证明单阶段离散NAR TTS可通过LLM初始化突破可懂度瓶颈，终结「单阶段必然劣于两阶段」的认知定势。新研究方向：(1)离散NAR TTS的推理加速（类比连续空间的flow distillation，目前尚无对应方法）；(2)更大规模LLM（如7B/70B）初始化对TTS质量的scaling law研究；(3)全码本随机掩码策略迁移至其他多码本生成任务（如音乐、音效生成）；(4)低资源语言TTS的数据高效学习与跨语言迁移。产业落地：全球化语音助手、低资源语言数字化保护、多语言有声书生成。克服局限：引入文本归一化前端处理数字/数学，构建高质量指令微调数据集提升可控性。作者明确提出：推理步数压缩与高质量数据构建为首要未来工作。</div>
+</div>
+  
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-04-03 14:24<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2604.00688" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+
+<script>
+// ── 收藏功能（localStorage）──────────────────────────────────────────
+var PAPER_META = {
+  id:       '2604.00688',
+  title_zh: "OmniVoice：基于扩散语言模型的全语言零样本文本转语音",
+  title_en: "OmniVoice: Towards Omnilingual Zero-Shot Text-to-Speech with Diffusion Language Models",
+  one_liner:"单阶段离散NAR架构+LLM初始化，实现600+语言零样本TTS",
+  category: "cs.CL",
+  published:'2026-04-01',
+  analyzed: '2026-04-03 14:24'
+};
+
+var FAV_KEY = 'jd_favorites';
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function isFaved() {
+  return !!getFavs()[PAPER_META.id];
+}
+
+function updateBtn(faved) {
+  var btn = document.getElementById('fav-btn');
+  if (!btn) return;
+  btn.querySelector('.fav-star').textContent  = faved ? '★' : '☆';
+  btn.querySelector('.fav-label').textContent = faved ? '已收藏' : '收藏';
+  faved ? btn.classList.add('faved') : btn.classList.remove('faved');
+}
+
+function toggleFav() {
+  var favs = getFavs();
+  var id = PAPER_META.id;
+  if (favs[id]) {
+    delete favs[id];
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(false);
+    showToast('已取消收藏');
+  } else {
+    favs[id] = Object.assign({saved_at: new Date().toISOString()}, PAPER_META);
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(true);
+    showToast('已收藏 ⭐', true);
+  }
+}
+
+function showToast(msg, gold) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = (
+    'position:fixed;bottom:24px;right:24px;z-index:9999;'
+    + 'padding:10px 18px;border-radius:6px;font-size:13px;font-weight:600;'
+    + 'box-shadow:0 4px 16px rgba(0,0,0,.2);transition:opacity .3s;'
+    + (gold
+       ? 'background:#b8940e;color:#1e1a16;'
+       : 'background:#374151;color:#f0ece4;')
+  );
+  document.body.appendChild(t);
+  setTimeout(function() { t.style.opacity='0'; setTimeout(function(){t.remove();},300); }, 2000);
+}
+
+// 初始化按钮状态
+updateBtn(isFaved());
+</script>
+</body>
+</html>
