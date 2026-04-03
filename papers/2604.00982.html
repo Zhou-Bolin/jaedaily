@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>VisG AV-HuBERT：视位引导的音视频HuBERT · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 收藏按钮 ── */
+.fav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  background:transparent;border:1px solid rgba(245,234,208,.3);
+  color:rgba(245,234,208,.7);cursor:pointer;font-family:inherit;
+  letter-spacing:.3px;transition:all .2s;
+}
+.fav-btn:hover{background:rgba(245,234,208,.12);border-color:rgba(245,234,208,.5);color:#f5ead0;}
+.fav-btn.faved{background:#b8940e28;border-color:#b8940e;color:#e8c87a;}
+.fav-btn .fav-star{font-size:14px;transition:transform .2s;}
+.fav-btn.faved .fav-star{transform:scale(1.2);}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* Q&A 深度问答 */
+.qa-card{
+  background:#0f172a;border-radius:6px;border:1px solid #1e3a5f;
+  margin-bottom:14px;overflow:hidden;
+}
+.qa-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#7dd3fc;
+  font-family:sans-serif;padding:12px 18px;
+  background:#0f172a;border-bottom:1px solid #1e3a5f;text-transform:uppercase;
+}
+.qa-item{
+  padding:16px 18px;border-bottom:1px solid #1e3a5f20;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.6;margin-bottom:10px;
+}
+.qa-num{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:#1d4ed8;color:#fff;font-size:10px;font-weight:800;
+  font-family:sans-serif;margin-top:2px;
+}
+.qa-a{
+  font-size:13px;color:#94a3b8;line-height:1.8;padding-left:30px;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <a href="../favorites.html" style="color:rgba(245,234,208,.6);font-size:12px;
+     text-decoration:none;padding:12px 0;display:inline-flex;align-items:center;gap:5px;">
+    ⭐ 收藏夹
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2604.00982</div>
+    <div class="paper-title-zh">VisG AV-HuBERT：视位引导的音视频HuBERT</div>
+    <div class="paper-title-en">VisG AV-HuBERT: Viseme-Guided AV-HuBERT</div>
+    <div class="one-liner">💡 用辅助视位分类任务多任务微调AV-HuBERT，显著提升噪声下语音识别鲁棒性</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2026-04-01</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">eess.AS</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">Aristeidis Papadopoulos, Rishabh Jain, Naomi Harte</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2604.00982" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2604.00982" target="_blank" rel="noopener">⬇ PDF</a>
+      <button class="fav-btn" id="fav-btn" onclick="toggleFav()">
+        <span class="fav-star">☆</span>
+        <span class="fav-label">收藏</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">显式视位辅助任务使AV-HuBERT Large在-10dB Speech噪声下WER相对降低51.4%，替换错误减少111个</li><li class="ta-item">视位引导的核心机制是减少替换错误而非插入/删除，说明其改善了音素级辨别力而非序列对齐</li><li class="ta-item">模型容量决定视位引导的受益模式：Base模型改善高频元音，Large模型改善复杂关节类别如ER和CH</li><li class="ta-item">Babble极端噪声（-10dB）下视位分类器产生虚假预测导致性能退化，提示需引入置信度门控机制</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)领域核心挑战：AVSR系统在噪声环境下需充分利用视觉信息，但现有方法对视觉关节运动特征的显式建模不足。(2)现有方法局限：当前SOTA系统（如LLM+AV-HuBERT）将编码器冻结并依赖LLM解码器提升性能，导致编码器改进与语言模型改进的贡献难以解耦；u-HuBERT等多任务方法仅在token级别优化，缺乏细粒度视觉关节约束；Hu等人的视位-音素映射采用一对一设定，与语言学事实不符。(3)核心问题：如何在编码器层面显式引入视位信息，增强模型对视觉关节特征的依赖，从而在不依赖LLM的前提下提升噪声鲁棒性。(4)时机重要性：作者前期工作已证明AV-HuBERT内部表征隐式编码了视位信息，为显式引导提供了理论基础。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)整体流程：在AV-HuBERT微调阶段，于编码器输出端附加一个轻量视位预测子网络，与主AVSR任务联合优化，形成多任务框架。视位标签由MFA强制对齐后按Lee映射生成，帧级对应。(2)三个关键创新点：①视位辅助任务设计——采用CTC损失进行帧级视位分类，CTC的blank机制天然处理多帧对应单一视位的情况，与自回归CE主任务形成互补；与现有工作仅做token级监督不同，本文在关节运动粒度施加约束。②Lee视位映射的选择——采用14类Lee映射（辅音/元音均衡分组），而非Hu等人的40类伪视位，符合视位一对多的语言学本质，避免过细分类引入噪声监督。③渐进式解冻与损失权重调度——Base模型在20K步后解冻编码器并引入视位任务，配合4K步线性warmup；Large模型从训练初始即施加视位损失，反映不同容量模型对辅助任务的不同需求。(3)直觉有效性：视位监督迫使编码器保留视觉关节特征，在音频信噪比极低时，这些特征成为消歧的关键线索，从而减少替换错误。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">主任务采用注意力序列到序列交叉熵损失：$$L_{CE} = \sum_i \log p_{CE}(y | x_i)$$其中$p_{CE}(y|x) \approx \prod_{t=1}^{T} p(y_t | y_{<t}, x)$，$i$为批次样本索引，$y_{<t}$为历史输出，体现自回归建模。辅助视位分类采用CTC损失：$$L_{CTC} = \sum_i \log p_{CTC}(y | x_i)$$其中$p_{CTC}(y|x) \approx \prod_{t=1}^{T} p(y_t | x)$，假设帧间条件独立，blank token处理帧级对齐歧义。混合损失为：$$L = L_{CE} + \alpha L_{CTC}$$其中$\alpha$为辅助任务权重，Base模型$\alpha=0.2$，Large模型$\alpha=0.15$。Large模型$\alpha$更小，反映其更大容量已能充分学习主任务，无需强辅助正则化。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">主训练集：LRS3（最大公开AVSR数据集），224×224像素，25FPS；低资源划分30小时（Base模型），完整433小时（Large模型）。噪声增强：从MUSAN数据集采样babble、music、random noise，以及LRS3内部speech noise（单说话人叠加，无说话人重叠）。泛化测试：LRS2测试集（BBC电视片段，域外数据）。视位标签生成：Montreal Forced Aligner（MFA）+通用美式英语词典强制对齐，音素经Lee映射转为14类视位，按帧时间戳分配帧级标签，附加blank类共15类。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">整体架构继承AV-HuBERT：视觉前端（改进ResNet）提取帧级视觉特征，音频前端（FFN）提取声学特征，融合模块拼接双模态特征，Transformer编码器生成上下文化音视频嵌入，Transformer解码器输出文本。Base配置：12层Transformer，嵌入维度768，FFN维度3072，12头注意力，共160M参数；Large配置：24层，嵌入维度1024，FFN维度4096，16头，共477M参数。新增视位子网络（仅增加约2-7M参数）：线性投影→LayerNorm→GELU→Dropout(p=0.3)→输出层（15类）；Large模型额外增加一个中间block。子网络附于编码器输出，推理时可移除，不增加AVSR推理开销。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">训练分两阶段：Base模型前20K步冻结编码器仅训练解码器，20K步后解冻编码器并引入视位任务（4K步线性warmup逐渐增大$\alpha$）；Large模型前40K步冻结编码器，40K步后解冻，视位损失从训练初始即施加，共60K步。噪声超参数相比基线AV-HuBERT更激进：噪声概率$p=0.3$（基线0.25），SNR均值$-2.5$dB（基线0dB）。$\alpha$通过网格搜索确定。计算资源论文未明确报告GPU型号与时长。代码已开源：https://github.com/aristosp/visg_avhubert。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">清净条件：Base模型LRS3 WER从4.1%降至3.78%（$p<0.05$），Large模型LRS3从1.4%降至1.38%，LRS2从10.3%降至9.925%，改善幅度有限（音频主导）。噪声条件（LRS3）：最显著提升在Speech noise，Large模型-10dB WER从13.59%降至6.60%（相对提升51.4%，$p<0.01$），-5dB从4.70%降至3.83%（$p<0.01$），0dB从3.17%降至2.50%（$p<0.01$）。Random noise Large模型-10dB从9.82%降至8.59%。错误类型分析：Speech noise下-10dB替换错误减少111个，插入错误减少36个，说明视位引导主要通过改善音素辨别力减少混淆。失败案例：Babble noise -10dB出现替换+86、插入+94的反向退化，推测极低SNR下多说话人竞争导致视位分类器产生虚假预测。泛化：LRS2测试集Large模型WER改善0.375%，复杂句子（高CE分数）改善更显著。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">Aristeidis Papadopoulos（第一作者，爱尔兰都柏林圣三一学院Sigmedia实验室）、Rishabh Jain（同机构）、Naomi Harte（通讯作者，同机构，音视频语音处理领域资深学者）。三位作者均来自爱尔兰都柏林圣三一学院工程学院Sigmedia研究组。该团队长期深耕音视频语音处理与多模态学习，在AV-HuBERT表征分析、视位建模等方向有持续积累，本文是其前期视位编码分析工作的直接延伸。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">直接影响：证明编码器层面的显式视位监督可独立于LLM解码器提升AVSR鲁棒性，为「编码器改进 vs 语言模型改进」的贡献解耦提供实验证据。新研究方向：①将视位引导扩展至预训练阶段（而非仅微调）；②探索视位-音素联合多任务框架，同时约束视觉与声学表征；③针对Babble噪声的视位分类器鲁棒化（如对抗训练或置信度门控）；④将该框架迁移至其他语言的AVSR（需对应视位映射）。产业场景：视频会议降噪、助听设备、嘈杂环境语音交互。局限：Babble极端噪声下性能退化；视位标签依赖MFA对齐质量；未与LLM-based AVSR直接对比。</div>
+</div>
+  <div class="qa-card"><div class="qa-title">THREE KEY QUESTIONS · 深度问答</div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q1</span>为什么CTC损失在视位辅助任务中比帧级交叉熵更合适？其理论依据是否充分，以及blank机制是否真正解决了视位边界模糊问题？</div><div class="qa-a">论文选择CTC的核心理由是其blank机制能天然处理「多帧对应单一视位」的时序对齐问题，避免强制帧级对齐带来的标签噪声。从理论角度看，CTC通过对所有合法路径求和边缘化对齐，确实比硬对齐的帧级CE更鲁棒。然而存在两个深层疑问：①MFA强制对齐本身已提供帧级标签，CTC的软对齐优势与MFA的硬对齐标签之间存在逻辑矛盾——若MFA对齐已足够精确，CTC的路径积分反而引入冗余计算；若MFA对齐不精确，则视位标签本身含噪，CTC也无法根本解决。②视位的视觉边界（如双唇闭合到张开的过渡帧）在物理上本就是连续渐变的，blank机制处理的是「重复符号」而非「连续运动」，两者语义并不完全对应。论文未提供CTC vs 帧级CE的消融对比，缺乏直接实验证据支撑该设计选择的必要性，这是方法论证上的一个缺口。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q2</span>Speech noise下-10dB的51.4%相对WER提升（13.59%→6.60%）是否具有统计可信度，且该结果是否存在基线选择偏差或测试集泄露风险？</div><div class="qa-a">论文报告了p<0.01的显著性检验，表面上统计可信，但存在几个值得深究的问题：①Speech noise是所有噪声类型中提升最大的，而Random noise下-10dB仅从9.82%降至8.59%（相对12.5%），两者差距悬殊。Speech noise与语音内容高度相关，视位监督可能恰好帮助模型区分目标语音与干扰语音的口型特征，这是一种「任务-噪声类型」的特殊耦合，不能泛化为通用噪声鲁棒性结论。②基线AV-HuBERT在-10dB Speech noise下WER高达13.59%，而同条件Random noise仅9.82%，说明基线对Speech noise本就异常脆弱，存在「低基线效应」放大相对提升的可能。③论文未报告噪声数据的具体构成（噪声来源、混合方式），若测试噪声与训练增强噪声分布重叠，则泛化性存疑。消融研究中缺少对不同噪声类型提升机制的独立分析，使得51.4%这一数字的可解释性受限。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q3</span>VisG AV-HuBERT的视位监督范式能否迁移至当前主流的「预训练视觉编码器+LLM解码器」架构，以及14类Lee映射是否会成为多语言扩展的瓶颈？</div><div class="qa-a">当前SOTA系统（如Cappellazzo等人的工作）冻结AV-HuBERT编码器仅训练投影层和LoRA，而VisG的核心贡献在于微调阶段对编码器的显式引导。若编码器被冻结，视位辅助任务将无法反向传播至编码器权重，方法失效。这意味着VisG与「冻结编码器+LLM」范式存在根本性架构冲突，其在当前主流系统中的集成路径尚不明确。一个可能的方向是将视位监督前置于预训练阶段而非微调阶段，但这需要大规模带视位标注的预训练数据。关于多语言扩展：Lee映射基于英语音素体系设计，14类分组对普通话（声调语言）、阿拉伯语（咽音丰富）等语言的适用性存疑。不同语言的视位集合和映射关系差异显著，且许多语言缺乏成熟的MFA对齐模型，标签生成管线难以直接复用。未来研究机会在于：①探索语言无关的视觉关节特征（如唇形几何参数）替代离散视位标签；②设计自监督视位发现方法，绕过语言学先验约束，这将是将VisG思路推广至低资源多语言场景的关键突破口。</div></div></div>
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-04-03 11:03<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2604.00982" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+
+<script>
+// ── 收藏功能（localStorage）──────────────────────────────────────────
+var PAPER_META = {
+  id:       '2604.00982',
+  title_zh: "VisG AV-HuBERT：视位引导的音视频HuBERT",
+  title_en: "VisG AV-HuBERT: Viseme-Guided AV-HuBERT",
+  one_liner:"用辅助视位分类任务多任务微调AV-HuBERT，显著提升噪声下语音识别鲁棒性",
+  category: "eess.AS",
+  published:'2026-04-01',
+  analyzed: '2026-04-03 11:03'
+};
+
+var FAV_KEY = 'jd_favorites';
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function isFaved() {
+  return !!getFavs()[PAPER_META.id];
+}
+
+function updateBtn(faved) {
+  var btn = document.getElementById('fav-btn');
+  if (!btn) return;
+  btn.querySelector('.fav-star').textContent  = faved ? '★' : '☆';
+  btn.querySelector('.fav-label').textContent = faved ? '已收藏' : '收藏';
+  faved ? btn.classList.add('faved') : btn.classList.remove('faved');
+}
+
+function toggleFav() {
+  var favs = getFavs();
+  var id = PAPER_META.id;
+  if (favs[id]) {
+    delete favs[id];
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(false);
+    showToast('已取消收藏');
+  } else {
+    favs[id] = Object.assign({saved_at: new Date().toISOString()}, PAPER_META);
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(true);
+    showToast('已收藏 ⭐', true);
+  }
+}
+
+function showToast(msg, gold) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = (
+    'position:fixed;bottom:24px;right:24px;z-index:9999;'
+    + 'padding:10px 18px;border-radius:6px;font-size:13px;font-weight:600;'
+    + 'box-shadow:0 4px 16px rgba(0,0,0,.2);transition:opacity .3s;'
+    + (gold
+       ? 'background:#b8940e;color:#1e1a16;'
+       : 'background:#374151;color:#f0ece4;')
+  );
+  document.body.appendChild(t);
+  setTimeout(function() { t.style.opacity='0'; setTimeout(function(){t.remove();},300); }, 2000);
+}
+
+// 初始化按钮状态
+updateBtn(isFaved());
+</script>
+</body>
+</html>
