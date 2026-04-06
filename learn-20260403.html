@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>知识讲堂 · Jae Daily</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+/* ── 纸质阅读主题 ─────────────────────────────── */
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  background:#f5f0e8;
+  color:#1a1a1a;
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height:1.85;
+  padding:32px 16px 64px;
+}
+.page-wrap { max-width:780px; margin:0 auto; }
+
+/* ── 页眉 ───────────────────────────────────── */
+.kl-header {
+  border-bottom: 1px solid #c4b89a;
+  padding-bottom:20px;
+  margin-bottom:36px;
+  display:flex; align-items:flex-start; justify-content:space-between;
+}
+.kl-header-left h1 {
+  font-size:24px; font-weight:700; color:#1a1a1a;
+  letter-spacing:0.5px;
+  font-variant:small-caps;
+}
+.kl-header-left .kl-dateline {
+  font-size:11px; color:#7a6a50; font-family:sans-serif;
+  margin-top:5px; letter-spacing:0.3px;
+}
+.kl-back {
+  font-size:11px; color:#7a6a50; text-decoration:none;
+  font-family:sans-serif; border:1px solid #c4b89a;
+  padding:4px 12px; border-radius:2px;
+  transition: color .15s;
+}
+.kl-back:hover { color:#1a1a1a; border-color:#8b7355; }
+
+/* ── 卡片 ───────────────────────────────────── */
+.kl-card {
+  background:#fffdf7;
+  border-radius:2px;
+  margin-bottom:48px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08), 0 0 0 1px #e8dfc8;
+}
+.kl-card-top {
+  padding:22px 28px 18px;
+  border-radius:2px 2px 0 0;
+}
+.kl-card-meta {
+  display:flex; align-items:center; gap:10px; margin-bottom:10px;
+}
+.kl-type-badge {
+  font-size:9px; font-weight:700; font-family:sans-serif;
+  letter-spacing:1px; text-transform:uppercase;
+  padding:3px 9px; border-radius:2px;
+}
+.kl-num {
+  font-size:11px; color:#7a6a50; font-family:sans-serif;
+}
+.kl-title {
+  font-size:22px; font-weight:700; color:#1a1a1a;
+  line-height:1.35; margin-bottom:12px;
+  font-variant:small-caps; letter-spacing:0.5px;
+}
+.kl-card-links {
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;
+}
+.kl-vidlink {
+  font-size:10px; font-family:sans-serif; text-decoration:none;
+  padding:3px 10px; border-radius:2px; font-weight:600;
+}
+.kl-yt { background:#fee2e2; color:#991b1b; }
+.kl-yt:hover { background:#fecaca; }
+.kl-bili { background:#dbeafe; color:#1d4ed8; }
+.kl-bili:hover { background:#bfdbfe; }
+.kl-paper-link {
+  font-size:10px; font-family:sans-serif; text-decoration:none;
+  color:#6b7280; border-bottom:1px dotted #9ca3af; padding-bottom:1px;
+}
+.kl-paper-link:hover { color:#1a1a1a; }
+
+/* ── 类比引言 ────────────────────────────────── */
+.kl-analogy {
+  font-size:13.5px; color:#5a4a2e; font-style:italic;
+  padding:14px 28px;
+  border-left:3px solid #c4b89a;
+  background:#fdf8ee;
+  line-height:1.75;
+}
+.kl-analogy::before { content:'"'; font-size:20px; color:#c4b89a; margin-right:2px; }
+.kl-analogy::after  { content:'"'; font-size:20px; color:#c4b89a; margin-left:2px; }
+
+/* ── 内容段落 ────────────────────────────────── */
+.kl-sections { padding:0 28px 24px; display:flex; flex-direction:column; gap:0; }
+.kl-section { padding:18px 0; border-bottom:1px solid #e8dfc8; }
+.kl-section:last-child { border-bottom:none; }
+.kl-sec-label {
+  font-size:9px; font-weight:700; font-family:sans-serif;
+  text-transform:uppercase; letter-spacing:1.5px;
+  color:#9a8060; margin-bottom:8px;
+}
+.kl-sec-body {
+  font-size:14px; line-height:1.9; color:#2c2416;
+}
+.kl-history { font-size:13.5px; color:#2c2416; }
+.kl-core {
+  font-size:15px; font-weight:600; color:#1a1a1a;
+  background:#fef9ee; border-left:3px solid #d4a843;
+  padding:10px 14px; border-radius:0 2px 2px 0;
+  font-style:italic;
+}
+.kl-math-body {
+  background:#f8f4ec; padding:14px 16px;
+  border-radius:2px; font-size:13.5px;
+}
+.kl-frontier { color:#4a5568; font-style:italic; }
+
+/* ── 知识网络 ────────────────────────────────── */
+.kl-related {
+  padding:20px 28px 24px;
+  border-top:1px solid #e8dfc8;
+  background:#f8f4ec;
+  border-radius:0 0 2px 2px;
+}
+.kl-related-title {
+  font-size:9px; font-weight:700; font-family:sans-serif;
+  text-transform:uppercase; letter-spacing:1.5px;
+  color:#9a8060; margin-bottom:12px;
+}
+.kl-related-grid {
+  display:flex; flex-direction:column; gap:8px;
+}
+.kl-related-item {
+  display:flex; gap:10px; align-items:baseline;
+}
+.kl-related-name {
+  font-size:12px; font-weight:700; font-family:sans-serif;
+  color:#4a3520; white-space:nowrap; min-width:7em;
+  flex-shrink:0;
+}
+.kl-related-desc {
+  font-size:12px; color:#6b5a3e; line-height:1.6;
+}
+
+/* ── 历史档案 ────────────────────────────────── */
+.kl-archive {
+  margin-top:48px; padding-top:28px;
+  border-top:2px solid #c4b89a;
+}
+.kl-archive-heading {
+  font-size:14px; font-weight:700; color:#4a3520;
+  font-variant:small-caps; letter-spacing:0.5px;
+  margin-bottom:16px;
+}
+.kl-arc-count {
+  font-size:11px; font-weight:400; color:#9a8060;
+  font-variant:normal; font-family:sans-serif; margin-left:8px;
+}
+.kl-archive-row {
+  display:grid; grid-template-columns:6.5em 1fr auto;
+  gap:8px; padding:10px 0; border-bottom:1px solid #e8dfc8;
+  align-items:start;
+}
+.kl-arc-date {
+  font-size:10px; color:#9a8060; font-family:sans-serif;
+  white-space:nowrap; padding-top:2px;
+}
+.kl-arc-title { font-size:13px; color:#2c2416; }
+.kl-arc-link { color:#6b1a1a; text-decoration:none; border-bottom:1px solid #c4b89a; }
+.kl-arc-link:hover { color:#a02020; border-bottom-color:#a02020; }
+.kl-arc-chips { display:flex; gap:4px; flex-wrap:wrap; justify-content:flex-end; }
+.kl-arc-chip {
+  font-size:9px; background:#e8dfc8; color:#6b5a3e;
+  padding:2px 7px; border-radius:10px; font-family:sans-serif;
+  white-space:nowrap;
+}
+
+/* ── 顶层结论句（Pyramid 顶点）──────────────── */
+.kl-lead {
+  font-size:14px; font-weight:600; color:#2c2416;
+  border-left:3px solid #c4b89a;
+  padding:8px 12px; margin-bottom:14px;
+  background:#faf6ee; line-height:1.75;
+}
+
+/* ── 步骤卡片 ────────────────────────────────── */
+.kl-step {
+  border:1px solid #e0d5c0;
+  border-radius:2px;
+  margin:10px 0;
+  overflow:hidden;
+}
+.kl-step-hd {
+  display:flex; align-items:center; gap:10px;
+  padding:7px 14px;
+  background:#f0ebe0;
+  border-bottom:1px solid #e0d5c0;
+}
+.kl-step-num {
+  font-size:9px; font-weight:800; font-family:sans-serif;
+  text-transform:uppercase; letter-spacing:1.2px;
+  color:#7a6a50; background:#e0d5c0;
+  padding:2px 8px; border-radius:10px; white-space:nowrap;
+}
+.kl-step-title {
+  font-size:13px; font-weight:700; color:#2c2416;
+}
+.kl-step-body {
+  padding:11px 16px;
+  font-size:13.5px; color:#2c2416; line-height:1.85;
+}
+.kl-step-body p { margin:6px 0; }
+.kl-step-body p:first-child { margin-top:0; }
+.kl-step-body p:last-child { margin-bottom:0; }
+
+/* ── 时间线 ──────────────────────────────────── */
+.kl-timeline { display:flex; flex-direction:column; gap:0; }
+.kl-tl-entry {
+  display:grid; grid-template-columns:6.5em 1fr;
+  gap:12px; padding:14px 0;
+  border-bottom:1px dashed #ddd5c0;
+}
+.kl-tl-entry:last-child { border-bottom:none; }
+.kl-tl-year {
+  font-size:10px; font-weight:800; font-family:sans-serif;
+  color:#9a8060; padding-top:3px;
+  text-align:right; white-space:nowrap;
+  border-right:2px solid #ddd5c0;
+  padding-right:12px; line-height:1.4;
+}
+.kl-tl-content { padding-top:2px; }
+.kl-tl-heading {
+  font-size:13px; font-weight:700; color:#2c2416;
+  margin-bottom:5px;
+}
+.kl-tl-body {
+  font-size:13.5px; color:#4a3520; line-height:1.85;
+}
+.kl-tl-body p { margin:4px 0; }
+
+/* ── 代码块 ──────────────────────────────────── */
+.kl-code {
+  background:#f0ebe0; border:1px solid #ddd5c0;
+  border-radius:2px; padding:10px 14px;
+  font-family:'Courier New',Courier,monospace;
+  font-size:12px; color:#2c2416; line-height:1.65;
+  margin:10px 0; overflow-x:auto; white-space:pre;
+  display:block;
+}
+
+/* ── 段落间距 ─────────────────────────────────── */
+.kl-sec-body p { margin:0 0 8px; }
+.kl-sec-body p:last-child { margin-bottom:0; }
+
+/* ── KaTeX 公式在亮色背景下的调整 ───────────── */
+.katex { font-size:1em; }
+
+@media(max-width:600px) {
+  .kl-card-top, .kl-sections, .kl-related { padding-left:18px; padding-right:18px; }
+  .kl-analogy { padding-left:18px; padding-right:18px; }
+  .kl-archive-row { grid-template-columns:5.5em 1fr; }
+  .kl-arc-chips { display:none; }
+  .kl-title { font-size:19px; }
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="kl-header">
+    <div class="kl-header-left">
+      <h1>知识讲堂</h1>
+      <div class="kl-dateline">
+        2026年04月03日 &ensp;·&ensp; 今日 2 讲 &ensp;·&ensp; 每月不重复 &ensp;·&ensp; Jae Daily
+      </div>
+    </div>
+    <a href="latest.html" class="kl-back">← 返回日报</a>
+  </header>
+
+  
+<article class="kl-card" style="border-top:3px solid #6b1a1a;">
+  <div class="kl-card-top" style="background:#fef2f2;">
+    <div class="kl-card-meta">
+      <span class="kl-type-badge" style="background:#6b1a1a;color:#fff;">算法理论</span>
+      <span class="kl-num">第一讲</span>
+    </div>
+    <h2 class="kl-title">在线知识蒸馏原理</h2>
+    <div class="kl-card-links"><a href="https://www.youtube.com/results?search_query=online%20knowledge%20distillation%20LLM%20training%20explained" target="_blank" rel="noopener" class="kl-vidlink kl-yt">▶ YouTube</a> <a href="https://search.bilibili.com/all?keyword=%E5%9C%A8%E7%BA%BF%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%20%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B" target="_blank" rel="noopener" class="kl-vidlink kl-bili">▶ B站</a><a href="https://arxiv.org/abs/2604.00626v1" target="_blank" rel="noopener" class="kl-paper-link">↗ 原始论文</a></div>
+  </div>
+  <div class="kl-analogy">离线蒸馏像让学生只看老师的满分答卷，而在线蒸馏像让学生先自己做题、再让老师在学生的错误卷子上逐题批注——后者的纠错信息远比前者精准。</div>
+  <div class="kl-sections">
+    <div class="kl-section">
+      <div class="kl-sec-label">历史演进</div>
+      <div class="kl-sec-body kl-history">
+        <div class="kl-timeline"><p class="kl-lead">知识蒸馏的根本动因是：大模型的&quot;暗知识&quot;（dark knowledge）无法被硬标签直接传递，需要通过软概率分布让小模型学到类间相似性结构——而离线蒸馏将这一过程冻结在静态数据集上，天然无法让学生从自身错误中学习。</p><div class="kl-tl-entry"><div class="kl-tl-year">2006</div><div class="kl-tl-content"><div class=kl-tl-heading>压缩神经网络的早期探索</div><div class="kl-tl-body"><p>Bucilua 等人在 NeurIPS 2006 发表&quot;Model Compression&quot;，首次系统性地提出用大模型的输出软化标签来训练小模型，证明小模型可以在不损失太多精度的情况下大幅压缩。这是蒸馏思想的原始形态，但彼时深度学习尚未兴起，影响有限。</p></div></div></div><div class="kl-tl-entry"><div class="kl-tl-year">2015</div><div class="kl-tl-content"><div class=kl-tl-heading>Hinton 奠定理论框架</div><div class="kl-tl-body"><p>Geoffrey Hinton、Oriol Vinyals 和 Jeff Dean 在 NIPS 2015 Workshop 发表&quot;Distilling the Knowledge in a Neural Network&quot;，正式引入&quot;温度参数&quot;$T$ 对 softmax 输出进行软化，使得类别间的相对概率关系（即暗知识）得以显现。核心洞见是：一张猫的图片被误分为豹的概率，远比被误分为汽车的概率高——这种结构信息在硬标签中完全丢失。这篇论文奠定了此后十年蒸馏研究的基础范式。</p></div></div></div><div class="kl-tl-entry"><div class="kl-tl-year">2017–2019</div><div class="kl-tl-content"><div class=kl-tl-heading>中间层蒸馏与特征对齐</div><div class="kl-tl-body"><p>FitNets（Romero et al., ICLR 2015）将蒸馏从输出层延伸到中间隐层，要求学生模仿教师的特征图。此后 AT（Attention Transfer, Zagoruyko &amp; Komodakis, ICLR 2017）、RKD（Relational Knowledge Distillation, Park et al., CVPR 2019）等工作进一步探索关系结构的传递，蒸馏目标从&quot;点对点模仿&quot;扩展为&quot;结构对结构对齐&quot;。</p></div></div></div><div class="kl-tl-entry"><div class="kl-tl-year">2020</div><div class="kl-tl-content"><div class=kl-tl-heading>在线蒸馏的系统化</div><div class="kl-tl-body"><p>离线蒸馏的核心缺陷在于：学生在训练时永远只见到教师的&quot;正确答案&quot;，从不接触自身的错误分布，导致训练-推理分布偏移（exposure bias）。Zhang et al. 的 Deep Mutual Learning（CVPR 2018）是在线蒸馏的重要先驱，让多个学生网络互相蒸馏，无需预训练教师。此后 Born-Again Networks（Furlanello et al., ICML 2018）发现自蒸馏（用同架构模型蒸馏自身）可以持续提升性能，打破了&quot;教师必须比学生强&quot;的直觉。</p></div></div></div><div class="kl-tl-entry"><div class="kl-tl-year">2022–2025</div><div class="kl-tl-content"><div class=kl-tl-heading>LLM 时代的在线蒸馏复兴</div><div class="kl-tl-body"><p>随着 LLM 规模膨胀，离线蒸馏的静态数据集瓶颈愈发突出：教师模型每隔数月就会更新，而静态蒸馏数据集迅速过时。DistiLLM（Kim et al., ICML 2024）、MiniLLM（Gu et al., ICLR 2024）等工作将在线采样引入 LLM 蒸馏：学生在训练过程中动态生成自身输出，教师对这些输出打分并提供软标签，形成闭环。这一范式与 RL 的 on-policy 训练高度同构，成为当前研究热点。</p></div></div></div></div>
+      </div>
+    </div>
+    <div class="kl-section">
+      <div class="kl-sec-label">核心思想</div>
+      <div class="kl-sec-body kl-core">在线蒸馏的本质是让学生模型在训练时不断&quot;犯错—获得教师反馈—修正&quot;，而非在静态教师数据上被动拟合；它将知识传递从离线监督转变为动态闭环，从根本上消除训练-推理分布偏移。</div>
+    </div>
+    <div class="kl-section"><div class="kl-sec-label">数学结构</div><div class="kl-sec-body kl-math-body"><p>标准离线蒸馏的损失函数为：  $$\mathcal{L}_{\text{KD}} = (1-\alpha)\mathcal{L}_{\text{CE}}(y, p_S) + \alpha T^2 \cdot \text{KL}\left(p_T^{(T)} \| p_S^{(T)}\right)$$  其中 $p_S^{(T)} = \text{softmax}(z_S / T)$，$p_T^{(T)} = \text{softmax}(z_T / T)$，$z$ 为 logits，$T$ 为温度，$\alpha$ 为蒸馏权重，$T^2$ 是梯度尺度补偿项（因为软化后梯度幅度缩小了 $T^2$ 倍）。  在线蒸馏的关键改变在于<strong>数据分布</strong>：离线蒸馏中输入 $x$ 来自固定数据集 $\mathcal{D}$，而在线蒸馏中 $x$ 部分来自学生自身的生成分布 $q_S$：  $$\mathcal{L}_{\text{online}} = \mathbb{E}_{x \sim (1-\beta)\mathcal{D} + \beta q_S}\left[T^2 \cdot \text{KL}\left(p_T^{(T)}(\cdot|x) \| p_S^{(T)}(\cdot|x)\right)\right]$$  $\beta \in [0,1]$ 控制在线采样比例。当 $\beta=0$ 退化为离线蒸馏；当 $\beta=1$ 为纯在线蒸馏。  MiniLLM 进一步将 KL 方向反转为 $\text{KL}(p_S \| p_T)$，即最小化学生对教师的反向 KL，避免学生在教师低概率区域&quot;质量扩散&quot;（mode-covering 问题），使学生输出更加集中锐利：  $$\mathcal{L}_{\text{reverse}} = \mathbb{E}_{x \sim q_S}\left[\text{KL}(p_S(\cdot|x) \| p_T(\cdot|x))\right]$$  反向 KL 的梯度需要通过 REINFORCE 或重要性采样估计，计算代价更高但生成质量更优。</p></div></div>
+    <div class="kl-section">
+      <div class="kl-sec-label">工作机制</div>
+      <div class="kl-sec-body"><p class="kl-lead">在线蒸馏的整体逻辑是：学生边生成边学习，教师的软标签作为动态奖励信号，形成&quot;生成→评分→更新&quot;的闭环，而非静态监督。</p><div class="kl-step"><div class="kl-step-hd"><span class="kl-step-num">Step 1</span><span class="kl-step-title">学生采样生成</span></div><div class="kl-step-body"><p>在每个训练步，学生模型以当前参数 $\theta_S$ 对输入 $x$（可来自数据集或纯噪声提示）进行采样，生成候选序列 $\hat{y} \sim p_S(\cdot|x;\theta_S)$。这一步是在线蒸馏与离线蒸馏的根本分叉点：学生必须&quot;犯自己的错误&quot;，而非只见教师的正确输出。采样温度通常设为 $T_{\text{sample}} > 1$ 以保证多样性，避免模式坍塌。</p></div></div><div class="kl-step"><div class="kl-step-hd"><span class="kl-step-num">Step 2</span><span class="kl-step-title">教师软标签计算</span></div><div class="kl-step-body"><p>将学生生成的序列 $\hat{y}$ 送入冻结的教师模型，获取每个位置的 token 概率分布 $p_T(\cdot|\hat{y}_{<t}, x)$。这里的关键设计是：教师对<strong>学生生成的序列</strong>打分，而非对真实标签序列打分。这意味着教师在评估&quot;如果学生走了这条路，下一步应该怎么走&quot;，提供的是条件于学生错误路径的修正信号，比离线蒸馏的无条件软标签信息量更大。</p></div></div><div class="kl-step"><div class="kl-step-hd"><span class="kl-step-num">Step 3</span><span class="kl-step-title">损失计算与梯度估计</span></div><div class="kl-step-body"><p>计算学生输出分布与教师软标签之间的 KL 散度。若使用正向 KL（$\text{KL}(p_T \| p_S)$），梯度可直接反传；若使用反向 KL（$\text{KL}(p_S \| p_T)$），需要通过 REINFORCE 估计梯度：</p><pre class="kl-code"><code>python # 反向KL的REINFORCE梯度估计 log_ps = student.log_prob(y_hat, x)       # 学生对自身生成的log概率 log_pt = teacher.log_prob(y_hat, x)       # 教师对学生生成的log概率 reward = log_ps - log_pt                  # 近似反向KL的每步奖励 loss = -(reward.detach() * log_ps).mean() # stop-gradient trick</code></pre><p>方差控制是此步的核心工程挑战，通常需要 baseline 减法或 PPO-style clip。</p></div></div><div class="kl-step"><div class="kl-step-hd"><span class="kl-step-num">Step 4</span><span class="kl-step-title">混合数据课程调度</span></div><div class="kl-step-body"><p>纯在线采样在训练初期不稳定（学生输出质量极差，教师反馈信噪比低）。实践中采用混合策略：训练初期 $\beta$ 较小，以离线数据为主；随训练进行逐步提高 $\beta$，增加在线数据比例。这与课程学习（Curriculum Learning）的思想一致：先学简单的（教师示范），再学难的（自己犯错并纠正）。</p></div></div><div class="kl-step"><div class="kl-step-hd"><span class="kl-step-num">Step 5</span><span class="kl-step-title">教师更新策略（互学习变体）</span></div><div class="kl-step-body"><p>在 Deep Mutual Learning 等变体中，教师本身也是可训练的，多个学生网络互相作为对方的教师。此时需要 EMA（指数移动平均）更新教师参数以保持稳定性，避免两个网络同时崩溃：$\theta_T \leftarrow \gamma \theta_T + (1-\gamma)\theta_S$，$\gamma$ 通常取 0.999。</p></div></div></div>
+    </div>
+    <div class="kl-section">
+      <div class="kl-sec-label">长远价值</div>
+      <div class="kl-sec-body"><p>在线蒸馏已成为 LLM 后训练的核心基础设施之一。Meta 的 LLaMA 系列、Google 的 Gemma 均在小模型训练中采用了在线蒸馏思想；MiniLLM 和 DistiLLM 被广泛引用并集成进 TRL 等后训练库。在音视频领域，Whisper 的轻量化版本（如 distil-whisper）也采用了类似的在线数据增强蒸馏策略。其核心价值在于：它是目前已知的、能系统性缩小&quot;训练-推理分布偏移&quot;的蒸馏方法，这一问题在自回归生成模型中尤为致命。</p></div>
+    </div>
+    <div class="kl-section">
+      <div class="kl-sec-label">前沿动向</div>
+      <div class="kl-sec-body kl-frontier"><p>当前核心开放问题：①在线蒸馏的计算代价是离线的 3-5 倍，如何高效实现仍是工程难题；②反向 KL 的高方差梯度估计尚无通用解法；③多模态在线蒸馏（如视频生成模型的在线蒸馏）几乎是空白；④教师模型本身在更新时如何保持蒸馏一致性（moving target problem）尚未解决。</p></div>
+    </div>
+  </div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">Temperature Scaling</span><span class="kl-related-desc">蒸馏中软化概率分布的核心操作，直接影响暗知识的可见程度</span></div><div class="kl-related-item"><span class="kl-related-name">Exposure Bias</span><span class="kl-related-desc">在线蒸馏要解决的根本问题，自回归模型训练-推理分布不一致</span></div><div class="kl-related-item"><span class="kl-related-name">REINFORCE Estimator</span><span class="kl-related-desc">反向KL梯度估计的核心工具，连接蒸馏与强化学习</span></div><div class="kl-related-item"><span class="kl-related-name">Curriculum Learning</span><span class="kl-related-desc">在线蒸馏的数据调度策略，从易到难逐步引入在线样本</span></div><div class="kl-related-item"><span class="kl-related-name">PPO</span><span class="kl-related-desc">在线蒸馏与RLHF的同构性，两者都是on-policy的分布优化</span></div></div></div>
+</article>
+<article class="kl-card" style="border-top:3px solid #1a3a6b;">
+  <div class="kl-card-top" style="background:#eff6ff;">
+    <div class="kl-card-meta">
+      <span class="kl-type-badge" style="background:#1a3a6b;color:#fff;">工程·思维</span>
+      <span class="kl-num">第二讲</span>
+    </div>
+    <h2 class="kl-title">MoE专家并行调度工程</h2>
+    <div class="kl-card-links"><a href="https://www.youtube.com/results?search_query=mixture%20of%20experts%20expert%20parallelism%20training%20system" target="_blank" rel="noopener" class="kl-vidlink kl-yt">▶ YouTube</a> <a href="https://search.bilibili.com/all?keyword=MoE%E4%B8%93%E5%AE%B6%E5%B9%B6%E8%A1%8C%20%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E5%B7%A5%E7%A8%8B" target="_blank" rel="noopener" class="kl-vidlink kl-bili">▶ B站</a><a href="https://pytorch.org/blog/enabling-up-to-41-faster-pre-training-mxfp8-and-deepep-for-deepseek-v3-on-b200-with-torchtitan/" target="_blank" rel="noopener" class="kl-paper-link">↗ 原始论文</a></div>
+  </div>
+  <div class="kl-analogy">MoE 专家并行就像一个大型医院的分诊系统：每个病人（token）被分诊台（路由器）派到对应科室（专家 GPU），但如果心内科（热门专家）总是爆满而皮肤科（冷门专家）总是空闲，整个医院的效率就会崩溃——负载均衡就是让分诊台学会合理分流，而 DeepEP 就是让病人在走廊等待时医生就开始准备器械，而不是病人到了才开始准备。</div>
+  <div class="kl-sections">
+    <div class="kl-section">
+      <div class="kl-sec-label">历史演进</div>
+      <div class="kl-sec-body kl-history">
+        <div class="kl-timeline"><p class="kl-lead">MoE（混合专家）并行调度的工程难题根源在于：专家路由是动态的、数据依赖的，这与传统并行训练中&quot;计算图静态可预测&quot;的假设根本冲突，导致所有经典并行策略（数据并行、张量并行、流水线并行）都无法直接套用。</p><div class="kl-tl-entry"><div class="kl-tl-year">1991</div><div class="kl-tl-content"><div class=kl-tl-heading>MoE 的诞生与早期忽视</div><div class="kl-tl-body"><p>Jacobs、Jordan、Nowlan 和 Hinton 在 Neural Computation 1991 提出混合专家模型，核心思想是&quot;分而治之&quot;：不同专家处理不同类型的输入。但彼时计算资源有限，MoE 的扩展性优势无从体现，工程复杂性反而成为障碍，该方向沉寂近二十年。</p></div></div></div><div class="kl-tl-entry"><div class="kl-tl-year">2017</div><div class="kl-tl-content"><div class=kl-tl-heading>Shazeer 的稀疏门控 MoE</div><div class="kl-tl-body"><p>Noam Shazeer 等人在 ICLR 2017 发表&quot;Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer&quot;，将 MoE 嵌入 LSTM，实现了 1370 亿参数的语言模型。关键创新是 Top-K 稀疏门控：每个 token 只激活 K 个专家（通常 K=2），使计算量与参数量解耦。这篇论文第一次让工程界意识到 MoE 的扩展潜力，但同时也暴露了核心工程难题：专家负载严重不均衡（少数热门专家过载，多数专家闲置），以及跨设备的 All-to-All 通信开销。</p></div></div></div><div class="kl-tl-entry"><div class="kl-tl-year">2021–2022</div><div class="kl-tl-content"><div class=kl-tl-heading>Switch Transformer 与工程系统化</div><div class="kl-tl-body"><p>Google 的 Switch Transformer（Fedus et al., JMLR 2022）将 Top-K 简化为 Top-1（每 token 只选一个专家），大幅降低路由复杂度，并系统性地研究了专家容量因子（capacity factor）、辅助负载均衡损失等工程手段。同期 GLaM、ST-MoE 等工作进一步验证了 MoE 在大规模训练中的可行性。这一阶段的核心贡献是将 MoE 的工程问题从&quot;能不能跑&quot;推进到&quot;怎么跑得稳&quot;。</p></div></div></div><div class="kl-tl-entry"><div class="kl-tl-year">2024</div><div class="kl-tl-content"><div class=kl-tl-heading>DeepSeek-MoE 与 DeepEP 的工程突破</div><div class="kl-tl-body"><p>DeepSeek-V2/V3 将 MoE 推向新高度：细粒度专家分割（每层 256 个专家，每 token 激活 8 个）、共享专家机制、以及专门为 MoE 设计的通信库 DeepEP。DeepEP 的核心贡献是将 All-to-All 通信与计算重叠（overlap），使通信延迟从关键路径上移除。2025 年 PyTorch 与 Nebius 在 256 GPU B200 集群上的实验（即今日 [15] 号内容）进一步验证：结合 MXFP8 量化与 DeepEP 优化，训练吞吐提升 41%，证明专家并行调度已成为大规模 MoE 训练的核心工程瓶颈与优化焦点。</p></div></div></div></div>
+      </div>
+    </div>
+    <div class="kl-section">
+      <div class="kl-sec-label">核心思想</div>
+      <div class="kl-sec-body kl-core">MoE 专家并行的工程本质是：在动态路由导致的不规则稀疏计算图上，同时解决三个相互制约的问题——跨节点 All-to-All 通信延迟、专家负载不均衡、以及显存碎片化——任何一个处理不好都会让理论上的参数效率优势荡然无存。</div>
+    </div>
+    <div class="kl-section"><div class="kl-sec-label">数学结构</div><div class="kl-sec-body kl-math-body"><p>MoE 层的路由机制定义为：  $$y = \sum_{i=1}^{N} G(x)_i \cdot E_i(x)$$  其中 $N$ 为专家总数，$E_i$ 为第 $i$ 个专家网络，$G(x)$ 为门控函数输出的稀疏权重向量。Top-K 门控的实现为：  $$G(x) = \text{Softmax}(\text{TopK}(W_g \cdot x + \epsilon, K))$$  $W_g$ 为门控权重矩阵，$\epsilon \sim \mathcal{N}(0, \sigma^2)$ 为训练时加入的噪声（防止路由坍塌），TopK 将非 Top-K 的 logits 置为 $-\infty$。  负载均衡损失是工程稳定性的关键：  $$\mathcal{L}_{\text{aux}} = \alpha \cdot N \cdot \sum_{i=1}^{N} f_i \cdot P_i$$  其中 $f_i = \frac{1}{T}\sum_{t=1}^{T}\mathbf{1}[\text{token } t \text{ 路由到专家 } i]$ 为实际路由比例，$P_i = \frac{1}{T}\sum_{t=1}^{T} G(x_t)_i$ 为门控概率均值，$\alpha$ 为辅助损失权重（通常 $10^{-2}$ 量级）。两者乘积的求和鼓励均匀分布，但不能设置过大否则会破坏路由的语义专业化。  专家容量约束：每个专家最多处理 $C = \lceil \frac{T}{N} \cdot \text{cf} \rceil$ 个 token，$\text{cf}$ 为容量因子（通常 1.0–1.5），超出容量的 token 被丢弃（token dropping），这是工程上的关键妥协。</p></div></div>
+    <div class="kl-section">
+      <div class="kl-sec-label">工作机制</div>
+      <div class="kl-sec-body"><p class="kl-lead">MoE 专家并行的整体逻辑是：将专家分布在不同 GPU 上，通过两次 All-to-All 通信（dispatch 和 combine）实现 token 的跨设备路由计算，同时用计算-通信重叠和负载均衡策略掩盖延迟、消除热点。</p><div class="kl-step"><div class="kl-step-hd"><span class="kl-step-num">Step 1</span><span class="kl-step-title">专家分片与设备映射</span></div><div class="kl-step-body"><p>将 $N$ 个专家均匀分配到 $D$ 个 GPU 上，每个 GPU 持有 $N/D$ 个专家的完整参数。注意这与张量并行不同：张量并行切分单个算子的权重矩阵，而专家并行切分的是独立的专家网络。两者可以组合：每个专家内部再做张量并行，形成&quot;专家并行×张量并行&quot;的二维并行策略。DeepSeek-V3 的实际配置是：专家并行度 EP=64，张量并行度 TP=1，数据并行度 DP=4，在 512 GPU 上运行。</p></div></div><div class="kl-step"><div class="kl-step-hd"><span class="kl-step-num">Step 2</span><span class="kl-step-title">门控路由与 Token Dispatch（第一次 All-to-All）</span></div><div class="kl-step-body"><p>每个 GPU 上的门控网络对本地 batch 的所有 token 计算路由决策，确定每个 token 应发往哪些专家（及其所在 GPU）。随后执行第一次 All-to-All 通信，将 token 的隐状态发送到对应的专家 GPU。这是整个系统的通信热点：通信量为 $O(\text{batch\_size} \times K \times d_{\text{model}})$，在大 batch 和高维度下极为可观。DeepEP 的核心优化是将此通信拆分为细粒度的 chunk，与专家计算流水线重叠，使 GPU 在等待通信时不空转。</p><pre class="kl-code"><code>python # 伪代码：Token Dispatch router_logits = gate_network(hidden_states)  # [B, T, N] top_k_indices, top_k_weights = topk(router_logits, K)  # [B, T, K] # 构建发送缓冲区（按目标GPU分组） send_buf = group_tokens_by_expert_gpu(hidden_states, top_k_indices) # All-to-All：每个GPU发送自己的token，接收别人发来的token recv_buf = all_to_all(send_buf, group=expert_parallel_group)</code></pre></div></div><div class="kl-step"><div class="kl-step-hd"><span class="kl-step-num">Step 3</span><span class="kl-step-title">专家计算与容量控制</span></div><div class="kl-step-body"><p>每个 GPU 接收到发来的 token 后，用本地专家网络（通常是 FFN）进行计算。容量因子 $\text{cf}$ 在此处生效：若某专家接收的 token 数超过容量上限 $C$，超出部分被丢弃（token dropping）或通过 overflow 路由到备用专家。实践中 token dropping 率需监控，超过 1% 通常意味着负载均衡损失权重需要调大。MXFP8 量化（今日 [15] 号内容的优化之一）在此步将专家 FFN 的计算从 BF16 降至 FP8，在 B200 的 FP8 Tensor Core 上获得约 2× 的算力提升，同时显存占用减半。</p></div></div><div class="kl-step"><div class="kl-step-hd"><span class="kl-step-num">Step 4</span><span class="kl-step-title">Token Combine（第二次 All-to-All）</span></div><div class="kl-step-body"><p>专家计算完成后，执行第二次 All-to-All，将计算结果发回原始 GPU。每个 GPU 收到来自不同专家的输出后，按 Top-K 权重加权求和：$y_t = \sum_{k=1}^{K} G(x_t)_{i_k} \cdot E_{i_k}(x_t)$。这次通信的数据量与第一次相同，是第二个通信瓶颈。DeepEP 同样对此做了 chunk-level 的计算-通信重叠。</p></div></div><div class="kl-step"><div class="kl-step-hd"><span class="kl-step-num">Step 5</span><span class="kl-step-title">梯度同步与负载监控</span></div><div class="kl-step-body"><p>反向传播时，门控网络的梯度需要跨所有 EP 组同步（All-Reduce），而专家参数的梯度只需在持有相同专家的 DP 组内同步。实践中需要持续监控每个专家的实际负载分布（可用 TensorBoard 的专家利用率热力图），若出现持续的专家热点，需要动态调整辅助损失权重或引入专家复制（expert replication）策略。</p></div></div></div>
+    </div>
+    <div class="kl-section">
+      <div class="kl-sec-label">长远价值</div>
+      <div class="kl-sec-body"><p>MoE 专家并行已成为万亿参数模型训练的标准基础设施。GPT-4（据传）、Gemini 1.5、Mixtral、DeepSeek-V3 均采用 MoE 架构，其中专家并行调度是决定训练效率的核心工程变量。在音视频领域，多模态大模型（如 Gemini 的音频理解模块）也开始引入 MoE 以在不增加推理计算量的前提下扩大模型容量。掌握专家并行调度工程，是部署和训练下一代多模态模型的必备技能。</p></div>
+    </div>
+    <div class="kl-section">
+      <div class="kl-sec-label">前沿动向</div>
+      <div class="kl-sec-body kl-frontier"><p>当前核心开放问题：①动态专家复制（根据实时负载热点自动复制热门专家）尚无成熟的开源实现；②推理阶段的专家并行（EP inference）在小 batch 场景下通信开销比例极高，prefill 和 decode 阶段需要不同的 EP 策略；③异构专家（不同专家有不同参数量）的调度算法几乎是空白；④跨节点 RDMA 通信与 NVLink 域内通信的混合拓扑优化仍是工程难题。</p></div>
+    </div>
+  </div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">All-to-All Communication</span><span class="kl-related-desc">MoE专家并行的核心通信原语，决定系统吞吐上限</span></div><div class="kl-related-item"><span class="kl-related-name">Load Balancing Loss</span><span class="kl-related-desc">防止路由坍塌的辅助训练目标，工程稳定性的关键</span></div><div class="kl-related-item"><span class="kl-related-name">Tensor Parallelism</span><span class="kl-related-desc">与专家并行正交组合的并行策略，共同构成大模型训练的并行体系</span></div><div class="kl-related-item"><span class="kl-related-name">Token Dropping</span><span class="kl-related-desc">容量约束下的工程妥协，影响训练精度与吞吐的权衡</span></div><div class="kl-related-item"><span class="kl-related-name">RDMA over InfiniBand</span><span class="kl-related-desc">All-to-All通信的底层网络基础，决定跨节点通信延迟</span></div></div></div>
+</article>
+
+  <section class="kl-archive">
+  <h3 class="kl-archive-heading">往期讲解档案 <span class="kl-arc-count">33 个知识点</span></h3>
+  <div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">波形潜空间扩散TTS</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">waveform latent diffusion</span><span class="kl-arc-chip">non-autoregressive TTS</span><span class="kl-arc-chip">latent space acoustic modeling</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">说话人分割工程选型</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">speaker diarization</span><span class="kl-arc-chip">benchmark methodology</span><span class="kl-arc-chip">real-world evaluation</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">波形隐空间扩散原理</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">waveform latent space</span><span class="kl-arc-chip">diffusion TTS</span><span class="kl-arc-chip">VAE audio codec</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">LLM量化权重工程</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">weight quantization</span><span class="kl-arc-chip">LLM compression</span><span class="kl-arc-chip">4-bit quantization</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">扩散语言模型离散生成</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">Discrete Diffusion</span><span class="kl-arc-chip">Masked Diffusion Language Model</span><span class="kl-arc-chip">Non-autoregressive TTS</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">LLM后训练库工程演进</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">RLHF engineering</span><span class="kl-arc-chip">PPO training stability</span><span class="kl-arc-chip">reward hacking</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">声学证据瓶颈原理</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">Audio Evidence Bottleneck</span><span class="kl-arc-chip">Acoustic Grounding</span><span class="kl-arc-chip">Audio Language Model</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">说话人分割工程选型</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">Speaker Diarization</span><span class="kl-arc-chip">Benchmark Engineering</span><span class="kl-arc-chip">Low-resource Language</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">状态空间模型音频建模</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">State Space Model</span><span class="kl-arc-chip">Mamba</span><span class="kl-arc-chip">Selective Scan</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">实时语音增强工程选型</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">Real-time Speech Enhancement</span><span class="kl-arc-chip">Noise Suppression</span><span class="kl-arc-chip">Streaming Inference</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">对话上下文压缩原理</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">Context Compression</span><span class="kl-arc-chip">Abstractive Summarization</span><span class="kl-arc-chip">Cross-Attention Fusion</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">说话人匿名化工程</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">Speaker Anonymization</span><span class="kl-arc-chip">Voice Conversion</span><span class="kl-arc-chip">Streaming Inference</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">视听语音识别融合</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">Audio-Visual Speech Recognition</span><span class="kl-arc-chip">Lip Reading</span><span class="kl-arc-chip">Viseme</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月02日</span><span class="kl-arc-title"><a href="learn-20260402.html" class="kl-arc-link">GPU训练吞吐加速工程</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">MXFP8</span><span class="kl-arc-chip">MoE Training</span><span class="kl-arc-chip">Expert Parallelism</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月01日</span><span class="kl-arc-title"><a href="learn-20260401.html" class="kl-arc-link">熵驱动多样性生成</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">diversity sampling</span><span class="kl-arc-chip">typicality bias</span><span class="kl-arc-chip">repulsion in latent space</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年04月01日</span><span class="kl-arc-title"><a href="learn-20260401.html" class="kl-arc-link">说话人分割工程选型</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">speaker diarization</span><span class="kl-arc-chip">benchmark methodology</span><span class="kl-arc-chip">streaming ASR pipeline</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月31日</span><span class="kl-arc-title"><a href="learn-20260331.html" class="kl-arc-link">转向检测联合建模</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">turn-taking detection</span><span class="kl-arc-chip">voice activity detection</span><span class="kl-arc-chip">joint acoustic-linguistic modeling</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月31日</span><span class="kl-arc-title"><a href="learn-20260331.html" class="kl-arc-link">基准测试的系统性失效</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">benchmark contamination</span><span class="kl-arc-chip">evaluation validity</span><span class="kl-arc-chip">LLM judge reliability</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月31日</span><span class="kl-arc-title"><a href="learn-20260331.html" class="kl-arc-link">扩散模型声学生成</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">diffusion model</span><span class="kl-arc-chip">score matching</span><span class="kl-arc-chip">stochastic differential equation</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月31日</span><span class="kl-arc-title"><a href="learn-20260331.html" class="kl-arc-link">TTS开源生态竞争</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">open-weight TTS</span><span class="kl-arc-chip">time-to-first-audio</span><span class="kl-arc-chip">multilingual speech synthesis</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月30日</span><span class="kl-arc-title"><a href="learn-20260330.html" class="kl-arc-link">注意力机制变体演进</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">Multi-Head Attention</span><span class="kl-arc-chip">Grouped Query Attention</span><span class="kl-arc-chip">Multi-head Latent Attention</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月30日</span><span class="kl-arc-title"><a href="learn-20260330.html" class="kl-arc-link">设备端语音推理架构</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">on-device inference</span><span class="kl-arc-chip">ExecuTorch</span><span class="kl-arc-chip">voice agent pipeline</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月29日</span><span class="kl-arc-title"><a href="learn-20260329.html" class="kl-arc-link">混合自回归流匹配TTS</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">autoregressive semantic tokens</span><span class="kl-arc-chip">flow matching acoustic decoder</span><span class="kl-arc-chip">hybrid TTS architecture</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月29日</span><span class="kl-arc-title"><a href="learn-20260329.html" class="kl-arc-link">NCCL超时诊断方法论</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">NCCL watchdog timeout</span><span class="kl-arc-chip">distributed training debugging</span><span class="kl-arc-chip">collective communication</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月29日</span><span class="kl-arc-title"><a href="learn-20260329.html" class="kl-arc-link">混合架构音频表示</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">Mamba</span><span class="kl-arc-chip">state space model</span><span class="kl-arc-chip">audio representation learning</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月29日</span><span class="kl-arc-title"><a href="learn-20260329.html" class="kl-arc-link">DeepSeek预训练加速工程</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">MXFP8 training</span><span class="kl-arc-chip">expert parallelism</span><span class="kl-arc-chip">MoE pretraining</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月27日</span><span class="kl-arc-title"><a href="learn-20260327.html" class="kl-arc-link">说话人验证度量学习</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">speaker verification</span><span class="kl-arc-chip">metric learning</span><span class="kl-arc-chip">curriculum learning</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月27日</span><span class="kl-arc-title"><a href="learn-20260327.html" class="kl-arc-link">MX浮点格式加速训练</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">MXFP8</span><span class="kl-arc-chip">microscaling</span><span class="kl-arc-chip">mixed precision training</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月26日</span><span class="kl-arc-title"><a href="learn-20260326.html" class="kl-arc-link">TTS模型极限压缩</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">model compression</span><span class="kl-arc-chip">knowledge distillation</span><span class="kl-arc-chip">TTS on-device</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月26日</span><span class="kl-arc-title"><a href="learn-20260326.html" class="kl-arc-link">小模型极限压缩哲学</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">model compression</span><span class="kl-arc-chip">knowledge distillation</span><span class="kl-arc-chip">quantization</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月25日</span><span class="kl-arc-title"><a href="learn-20260325.html" class="kl-arc-link">流匹配生成原理</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">flow matching</span><span class="kl-arc-chip">rectified flow</span><span class="kl-arc-chip">ODE</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月25日</span><span class="kl-arc-title"><a href="learn-20260325.html" class="kl-arc-link">神经音频编解码器</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">neural audio codec</span><span class="kl-arc-chip">residual vector quantization</span><span class="kl-arc-chip">EnCodec</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月25日</span><span class="kl-arc-title"><a href="learn-20260325.html" class="kl-arc-link">推测解码加速推理</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">speculative decoding</span><span class="kl-arc-chip">draft model</span><span class="kl-arc-chip">token verification</span></span></div>
+</section>
+
+</div>
+</body>
+</html>

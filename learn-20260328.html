@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>知识讲堂 · Jae Daily</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+/* ── 纸质阅读主题 ─────────────────────────────── */
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  background:#f5f0e8;
+  color:#1a1a1a;
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height:1.85;
+  padding:32px 16px 64px;
+}
+.page-wrap { max-width:780px; margin:0 auto; }
+
+/* ── 页眉 ───────────────────────────────────── */
+.kl-header {
+  border-bottom: 1px solid #c4b89a;
+  padding-bottom:20px;
+  margin-bottom:36px;
+  display:flex; align-items:flex-start; justify-content:space-between;
+}
+.kl-header-left h1 {
+  font-size:24px; font-weight:700; color:#1a1a1a;
+  letter-spacing:0.5px;
+  font-variant:small-caps;
+}
+.kl-header-left .kl-dateline {
+  font-size:11px; color:#7a6a50; font-family:sans-serif;
+  margin-top:5px; letter-spacing:0.3px;
+}
+.kl-back {
+  font-size:11px; color:#7a6a50; text-decoration:none;
+  font-family:sans-serif; border:1px solid #c4b89a;
+  padding:4px 12px; border-radius:2px;
+  transition: color .15s;
+}
+.kl-back:hover { color:#1a1a1a; border-color:#8b7355; }
+
+/* ── 卡片 ───────────────────────────────────── */
+.kl-card {
+  background:#fffdf7;
+  border-radius:2px;
+  margin-bottom:48px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08), 0 0 0 1px #e8dfc8;
+}
+.kl-card-top {
+  padding:22px 28px 18px;
+  border-radius:2px 2px 0 0;
+}
+.kl-card-meta {
+  display:flex; align-items:center; gap:10px; margin-bottom:10px;
+}
+.kl-type-badge {
+  font-size:9px; font-weight:700; font-family:sans-serif;
+  letter-spacing:1px; text-transform:uppercase;
+  padding:3px 9px; border-radius:2px;
+}
+.kl-num {
+  font-size:11px; color:#7a6a50; font-family:sans-serif;
+}
+.kl-title {
+  font-size:22px; font-weight:700; color:#1a1a1a;
+  line-height:1.35; margin-bottom:12px;
+  font-variant:small-caps; letter-spacing:0.5px;
+}
+.kl-card-links {
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;
+}
+.kl-vidlink {
+  font-size:10px; font-family:sans-serif; text-decoration:none;
+  padding:3px 10px; border-radius:2px; font-weight:600;
+}
+.kl-yt { background:#fee2e2; color:#991b1b; }
+.kl-yt:hover { background:#fecaca; }
+.kl-bili { background:#dbeafe; color:#1d4ed8; }
+.kl-bili:hover { background:#bfdbfe; }
+.kl-paper-link {
+  font-size:10px; font-family:sans-serif; text-decoration:none;
+  color:#6b7280; border-bottom:1px dotted #9ca3af; padding-bottom:1px;
+}
+.kl-paper-link:hover { color:#1a1a1a; }
+
+/* ── 类比引言 ────────────────────────────────── */
+.kl-analogy {
+  font-size:13.5px; color:#5a4a2e; font-style:italic;
+  padding:14px 28px;
+  border-left:3px solid #c4b89a;
+  background:#fdf8ee;
+  line-height:1.75;
+}
+.kl-analogy::before { content:'"'; font-size:20px; color:#c4b89a; margin-right:2px; }
+.kl-analogy::after  { content:'"'; font-size:20px; color:#c4b89a; margin-left:2px; }
+
+/* ── 内容段落 ────────────────────────────────── */
+.kl-sections { padding:0 28px 24px; display:flex; flex-direction:column; gap:0; }
+.kl-section { padding:18px 0; border-bottom:1px solid #e8dfc8; }
+.kl-section:last-child { border-bottom:none; }
+.kl-sec-label {
+  font-size:9px; font-weight:700; font-family:sans-serif;
+  text-transform:uppercase; letter-spacing:1.5px;
+  color:#9a8060; margin-bottom:8px;
+}
+.kl-sec-body {
+  font-size:14px; line-height:1.9; color:#2c2416;
+}
+.kl-history { font-size:13.5px; color:#2c2416; }
+.kl-core {
+  font-size:15px; font-weight:600; color:#1a1a1a;
+  background:#fef9ee; border-left:3px solid #d4a843;
+  padding:10px 14px; border-radius:0 2px 2px 0;
+  font-style:italic;
+}
+.kl-math-body {
+  background:#f8f4ec; padding:14px 16px;
+  border-radius:2px; font-size:13.5px;
+}
+.kl-frontier { color:#4a5568; font-style:italic; }
+
+/* ── 知识网络 ────────────────────────────────── */
+.kl-related {
+  padding:20px 28px 24px;
+  border-top:1px solid #e8dfc8;
+  background:#f8f4ec;
+  border-radius:0 0 2px 2px;
+}
+.kl-related-title {
+  font-size:9px; font-weight:700; font-family:sans-serif;
+  text-transform:uppercase; letter-spacing:1.5px;
+  color:#9a8060; margin-bottom:12px;
+}
+.kl-related-grid {
+  display:flex; flex-direction:column; gap:8px;
+}
+.kl-related-item {
+  display:flex; gap:10px; align-items:baseline;
+}
+.kl-related-name {
+  font-size:12px; font-weight:700; font-family:sans-serif;
+  color:#4a3520; white-space:nowrap; min-width:7em;
+  flex-shrink:0;
+}
+.kl-related-desc {
+  font-size:12px; color:#6b5a3e; line-height:1.6;
+}
+
+/* ── 历史档案 ────────────────────────────────── */
+.kl-archive {
+  margin-top:48px; padding-top:28px;
+  border-top:2px solid #c4b89a;
+}
+.kl-archive-heading {
+  font-size:14px; font-weight:700; color:#4a3520;
+  font-variant:small-caps; letter-spacing:0.5px;
+  margin-bottom:16px;
+}
+.kl-arc-count {
+  font-size:11px; font-weight:400; color:#9a8060;
+  font-variant:normal; font-family:sans-serif; margin-left:8px;
+}
+.kl-archive-row {
+  display:grid; grid-template-columns:6.5em 1fr auto;
+  gap:8px; padding:10px 0; border-bottom:1px solid #e8dfc8;
+  align-items:start;
+}
+.kl-arc-date {
+  font-size:10px; color:#9a8060; font-family:sans-serif;
+  white-space:nowrap; padding-top:2px;
+}
+.kl-arc-title { font-size:13px; color:#2c2416; }
+.kl-arc-link { color:#6b1a1a; text-decoration:none; border-bottom:1px solid #c4b89a; }
+.kl-arc-link:hover { color:#a02020; border-bottom-color:#a02020; }
+.kl-arc-chips { display:flex; gap:4px; flex-wrap:wrap; justify-content:flex-end; }
+.kl-arc-chip {
+  font-size:9px; background:#e8dfc8; color:#6b5a3e;
+  padding:2px 7px; border-radius:10px; font-family:sans-serif;
+  white-space:nowrap;
+}
+
+/* ── 顶层结论句（Pyramid 顶点）──────────────── */
+.kl-lead {
+  font-size:14px; font-weight:600; color:#2c2416;
+  border-left:3px solid #c4b89a;
+  padding:8px 12px; margin-bottom:14px;
+  background:#faf6ee; line-height:1.75;
+}
+
+/* ── 步骤卡片 ────────────────────────────────── */
+.kl-step {
+  border:1px solid #e0d5c0;
+  border-radius:2px;
+  margin:10px 0;
+  overflow:hidden;
+}
+.kl-step-hd {
+  display:flex; align-items:center; gap:10px;
+  padding:7px 14px;
+  background:#f0ebe0;
+  border-bottom:1px solid #e0d5c0;
+}
+.kl-step-num {
+  font-size:9px; font-weight:800; font-family:sans-serif;
+  text-transform:uppercase; letter-spacing:1.2px;
+  color:#7a6a50; background:#e0d5c0;
+  padding:2px 8px; border-radius:10px; white-space:nowrap;
+}
+.kl-step-title {
+  font-size:13px; font-weight:700; color:#2c2416;
+}
+.kl-step-body {
+  padding:11px 16px;
+  font-size:13.5px; color:#2c2416; line-height:1.85;
+}
+.kl-step-body p { margin:6px 0; }
+.kl-step-body p:first-child { margin-top:0; }
+.kl-step-body p:last-child { margin-bottom:0; }
+
+/* ── 时间线 ──────────────────────────────────── */
+.kl-timeline { display:flex; flex-direction:column; gap:0; }
+.kl-tl-entry {
+  display:grid; grid-template-columns:6.5em 1fr;
+  gap:12px; padding:14px 0;
+  border-bottom:1px dashed #ddd5c0;
+}
+.kl-tl-entry:last-child { border-bottom:none; }
+.kl-tl-year {
+  font-size:10px; font-weight:800; font-family:sans-serif;
+  color:#9a8060; padding-top:3px;
+  text-align:right; white-space:nowrap;
+  border-right:2px solid #ddd5c0;
+  padding-right:12px; line-height:1.4;
+}
+.kl-tl-content { padding-top:2px; }
+.kl-tl-heading {
+  font-size:13px; font-weight:700; color:#2c2416;
+  margin-bottom:5px;
+}
+.kl-tl-body {
+  font-size:13.5px; color:#4a3520; line-height:1.85;
+}
+.kl-tl-body p { margin:4px 0; }
+
+/* ── 代码块 ──────────────────────────────────── */
+.kl-code {
+  background:#f0ebe0; border:1px solid #ddd5c0;
+  border-radius:2px; padding:10px 14px;
+  font-family:'Courier New',Courier,monospace;
+  font-size:12px; color:#2c2416; line-height:1.65;
+  margin:10px 0; overflow-x:auto; white-space:pre;
+  display:block;
+}
+
+/* ── 段落间距 ─────────────────────────────────── */
+.kl-sec-body p { margin:0 0 8px; }
+.kl-sec-body p:last-child { margin-bottom:0; }
+
+/* ── KaTeX 公式在亮色背景下的调整 ───────────── */
+.katex { font-size:1em; }
+
+@media(max-width:600px) {
+  .kl-card-top, .kl-sections, .kl-related { padding-left:18px; padding-right:18px; }
+  .kl-analogy { padding-left:18px; padding-right:18px; }
+  .kl-archive-row { grid-template-columns:5.5em 1fr; }
+  .kl-arc-chips { display:none; }
+  .kl-title { font-size:19px; }
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="kl-header">
+    <div class="kl-header-left">
+      <h1>知识讲堂</h1>
+      <div class="kl-dateline">
+        2026年03月28日 &ensp;·&ensp; 今日 0 讲 &ensp;·&ensp; 每月不重复 &ensp;·&ensp; Jae Daily
+      </div>
+    </div>
+    <a href="latest.html" class="kl-back">← 返回日报</a>
+  </header>
+
+  <p style="color:#9a8060;font-family:sans-serif;padding:20px 0;">今日知识讲堂生成失败，明日再试。</p>
+
+  <section class="kl-archive">
+  <h3 class="kl-archive-heading">往期讲解档案 <span class="kl-arc-count">7 个知识点</span></h3>
+  <div class="kl-archive-row"><span class="kl-arc-date">2026年03月27日</span><span class="kl-arc-title"><a href="learn-20260327.html" class="kl-arc-link">说话人验证度量学习</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">speaker verification</span><span class="kl-arc-chip">metric learning</span><span class="kl-arc-chip">curriculum learning</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月27日</span><span class="kl-arc-title"><a href="learn-20260327.html" class="kl-arc-link">MX浮点格式加速训练</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">MXFP8</span><span class="kl-arc-chip">microscaling</span><span class="kl-arc-chip">mixed precision training</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月26日</span><span class="kl-arc-title"><a href="learn-20260326.html" class="kl-arc-link">TTS模型极限压缩</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">model compression</span><span class="kl-arc-chip">knowledge distillation</span><span class="kl-arc-chip">TTS on-device</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月26日</span><span class="kl-arc-title"><a href="learn-20260326.html" class="kl-arc-link">小模型极限压缩哲学</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">model compression</span><span class="kl-arc-chip">knowledge distillation</span><span class="kl-arc-chip">quantization</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月25日</span><span class="kl-arc-title"><a href="learn-20260325.html" class="kl-arc-link">流匹配生成原理</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">flow matching</span><span class="kl-arc-chip">rectified flow</span><span class="kl-arc-chip">ODE</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月25日</span><span class="kl-arc-title"><a href="learn-20260325.html" class="kl-arc-link">神经音频编解码器</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">neural audio codec</span><span class="kl-arc-chip">residual vector quantization</span><span class="kl-arc-chip">EnCodec</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年03月25日</span><span class="kl-arc-title"><a href="learn-20260325.html" class="kl-arc-link">推测解码加速推理</a></span><span class="kl-arc-chips"><span class="kl-arc-chip">speculative decoding</span><span class="kl-arc-chip">draft model</span><span class="kl-arc-chip">token verification</span></span></div>
+</section>
+
+</div>
+</body>
+</html>
