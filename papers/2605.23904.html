@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SkillOpt：自进化智能体技能的执行策略 · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 收藏按钮 ── */
+.fav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  background:transparent;border:1px solid rgba(245,234,208,.3);
+  color:rgba(245,234,208,.7);cursor:pointer;font-family:inherit;
+  letter-spacing:.3px;transition:all .2s;
+}
+.fav-btn:hover{background:rgba(245,234,208,.12);border-color:rgba(245,234,208,.5);color:#f5ead0;}
+.fav-btn.faved{background:#b8940e28;border-color:#b8940e;color:#e8c87a;}
+.fav-btn .fav-star{font-size:14px;transition:transform .2s;}
+.fav-btn.faved .fav-star{transform:scale(1.2);}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* Q&A 深度问答 */
+.qa-card{
+  background:#0f172a;border-radius:6px;border:1px solid #1e3a5f;
+  margin-bottom:14px;overflow:hidden;
+}
+.qa-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#7dd3fc;
+  font-family:sans-serif;padding:12px 18px;
+  background:#0f172a;border-bottom:1px solid #1e3a5f;text-transform:uppercase;
+}
+.qa-item{
+  padding:16px 18px;border-bottom:1px solid #1e3a5f20;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.6;margin-bottom:10px;
+}
+.qa-num{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:#1d4ed8;color:#fff;font-size:10px;font-weight:800;
+  font-family:sans-serif;margin-top:2px;
+}
+.qa-a{
+  font-size:13px;color:#94a3b8;line-height:1.8;padding-left:30px;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <a href="../favorites.html" style="color:rgba(245,234,208,.6);font-size:12px;
+     text-decoration:none;padding:12px 0;display:inline-flex;align-items:center;gap:5px;">
+    ⭐ 收藏夹
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2605.23904</div>
+    <div class="paper-title-zh">SkillOpt：自进化智能体技能的执行策略</div>
+    <div class="paper-title-en">SkillOpt: Executive Strategy for Self-Evolving Agent Skills</div>
+    <div class="one-liner">💡 将智能体技能文档视为可训练外部状态，用深度学习优化范式实现可控文本空间技能优化</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2026-05-22</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">cs.AI · cs.CL</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">Yifan Yang, Ziyang Gong, Weiquan Huang, Qihao Yang, Ziwei Zhou, Zisu Huang 等15人</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2605.23904" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2605.23904" target="_blank" rel="noopener">⬇ PDF</a>
+      <button class="fav-btn" id="fav-btn" onclick="toggleFav()">
+        <span class="fav-star">☆</span>
+        <span class="fav-label">收藏</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">将技能文档视为冻结模型的可训练外部状态，用edit budget、validation gate等深度学习控制机制实现稳定文本空间优化</li><li class="ta-item">52/52评估单元全部最优，平均超越最强baseline 5.4点，证明可控文本优化优于进化式和无约束重写方法</li><li class="ta-item">优化后的技能文档可跨模型规模、跨执行环境、跨相近基准正迁移，实现一次优化多处复用</li><li class="ta-item">rejected-edit buffer将失败编辑转化为负反馈，validation gate将反思从无条件自编辑升级为提议-验证优化</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)前沿语言模型日益作为智能体部署，领域适配不仅涉及权重或提示词，更需改进智能体的工具调用、格式约束、领域启发式等程序性知识。(2)现有技能获取方式存在根本缺陷：手工编写脆弱且不可扩展；one-shot LLM生成缺乏迭代改进；EvoSkill等进化方法缺少收敛保证，语义跳跃大且不稳定；TextGrad/GEPA等提示优化方法未针对可复用技能文档设计。(3)核心问题：如果技能文档是智能体的适配层，应如何像训练神经网络权重一样系统地优化它？(4)闭源前沿模型无法微调权重，技能文档作为「外部可训练状态」的时机已成熟。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)整体流程：冻结目标模型，用当前技能执行rollout batch获取轨迹证据→optimizer模型对轨迹做minibatch反思，生成结构化add/delete/replace编辑→层级合并去重后按edit budget裁剪→生成候选技能→在held-out validation split上评估，仅严格提升时接受→跨epoch做slow/meta update。最终输出约300-2000 token的best_skill.md。(2)关键创新点：①「文本学习率」——edit budget $L_t$限制每步最大编辑数，支持cosine/linear衰减schedule，防止无界重写破坏已学规则，本质区别于EvoSkill的全文自由进化和TextGrad的梯度式文本修改；②「验证门控+拒绝编辑缓冲区」——每个候选技能必须在held-out split上通过严格改进检验才被接受，被拒编辑存入buffer作为负反馈供后续optimizer调用避免重蹈覆辙，这将反思从「无条件自编辑」转变为「提议-验证」优化；③「epoch-wise slow/meta update」——epoch边界对同一训练样本在前后技能下做纵向对比，将持久性教训写入受保护的slow-update字段，meta skill仅存在于optimizer侧不随部署技能发送，实现关注点分离。(3)直觉上有效的原因：有界更新保证相邻技能版本足够接近，使优化历史（成功/失败编辑）对后续步骤保持信息量，类似于小学习率保证梯度方向在局部有效。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">核心形式化：给定冻结目标模型$M$、harness $h$、任务$x$和技能$s$，执行产生轨迹和标量分数：$(\tau(s), r(s)) = h(M, x, s),\; r(s) \in [0,1]$。技能选择目标为在验证集上最大化平均分数：$$s^\star_{sel} = \arg\max_{s \in C(D_{tr})} \frac{1}{|D_{sel}|} \sum_{x \in D_{sel}} r(s)$$最终在测试集上报告：$$\text{Test}(s^\star_{sel}) = \frac{1}{|D_{test}|} \sum_{x \in D_{test}} r(s^\star_{sel})$$其中$C(D_{tr})$为训练集生成的候选技能集合。edit budget $L_t$随步数$t$按cosine schedule衰减，控制每步允许的最大原子编辑数，类比权重空间中的学习率。验证门控实现严格单调改进约束：仅当$\text{score}(s_{t+1}) > \text{score}(s_t)$时接受更新。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">六个基准：SearchQA（开放域问答）、SpreadsheetBench（电子表格操作）、OfficeQA（办公文档问答）、DocVQA（文档视觉问答）、LiveMathematicianBench（数学推理）、ALFWorld（具身决策）。每个基准划分为train/selection/test三个split，train用于rollout证据生成，selection用于验证门控，test仅用于最终报告。rollout batch大小和minibatch划分可配置，支持accumulation模式解耦执行吞吐与更新频率。具体样本数未在截断部分详述，但覆盖QA、电子表格、文档、数学、具身等多领域。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">SkillOpt不是单一神经网络架构，而是一个「文本空间优化器系统」。核心组件：①冻结的target model（被适配对象，测试了GPT-5.5、GPT-5.4及更小GPT变体、Qwen等7个模型）；②独立的optimizer model（前沿模型，负责反思、编辑生成、合并、排序、slow update、meta skill生成）；③结构化编辑表示（append/insert_after/replace/delete四种原子操作，每个编辑携带support_count和source_type）；④层级合并管线（failure merge→success merge→final merge→ranking）；⑤受保护的slow-update字段（SLOW_UPDATE_START/END标记）。推理时零额外模型调用——仅注入best_skill.md文本，无推理开销。与标准Transformer的区别在于这是一个元优化框架而非模型架构。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">优化过程分为step级和epoch级。Step级：rollout batch→minibatch reflection→层级merge→edit budget裁剪→validation gate。Epoch级：slow/meta update通过纵向对比同一样本在前后epoch技能下的表现。edit budget默认采用cosine schedule，从较大编辑量衰减至小幅精修。关键超参：rollout batch size控制证据噪声、minibatch size控制反思粒度、edit budget $L_t$控制步长。计算资源主要消耗在optimizer model的API调用上（反思、合并、排序等多轮调用），以及target model在train/selection split上的rollout执行。论文未报告具体GPU时长，因主要依赖API调用。稳定性技巧：validation gate防止有害更新累积、rejected-edit buffer提供负反馈、bounded edit防止语义漂移。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">在52个(model, benchmark, harness)评估单元中，SkillOpt在全部52个上达到最优或并列最优。GPT-5.5 direct chat模式下：SearchQA 77.7→87.3、SpreadsheetBench 41.8→80.7（+38.9）、OfficeQA 33.1→72.1（+39.0）、DocVQA 78.8→91.2、LiveMathematicianBench 37.6→66.9（+29.3）、ALFWorld 83.6→95.5，平均提升+23.5点。在Codex harness下平均提升+24.8点，Claude Code下+19.1点。相比最强per-cell baseline（含human/one-shot LLM/Trace2Skill/TextGrad/GEPA/EvoSkill），SkillOpt平均领先+5.4点；相比EvoSkill在Codex/Claude Code下分别领先+14.0/+3.2点。迁移实验：GPT-5.4训练的SpreadsheetBench技能在所有更小GPT变体上均有效；Codex训练的技能迁移至Claude Code获+59.7点增益；OlympiadBench技能在Omni-MATH上正迁移。消融实验证实：bounded edit优于无约束重写、validation gate防止有害提议累积、rejected-edit buffer提供有效负反馈、slow/meta update改善长期精修。最终技能仅300-2000 token，1-4次accepted edit即可。代码开源：https://aka.ms/SkillOpt</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">前6位作者：Yifan Yang（Microsoft，美国，通讯作者）、Ziyang Gong（上海交通大学，中国）、Weiquan Huang（同济大学，中国）、Qihao Yang（上海交通大学，中国）、Ziwei Zhou（复旦大学，中国）、Zisu Huang（复旦大学，中国）。另一通讯作者为Xue Yang（上海交通大学）。团队横跨Microsoft Research与中国三所顶尖高校，Microsoft方面有Dongdong Chen、Chong Luo等在多模态与智能体领域有深厚积累的研究者，前5位作者均为equal contribution，体现了大规模系统性实验的协作需求。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">(1)直接影响：确立了「技能文档作为可训练外部状态」的范式，为闭源模型的领域适配提供了权重微调之外的系统化替代方案。(2)新研究方向：①多技能联合优化与技能组合搜索；②技能优化的理论收敛性分析与文本空间优化的形式化理论；③将SkillOpt范式扩展至多智能体协作中的角色技能优化；④技能蒸馏——将大模型优化的技能迁移至小模型的系统化研究。(3)产业落地：企业可为特定业务流程（如财务报表分析、客服对话）离线优化技能文档，一次优化多处部署，无需模型微调。(4)局限：依赖强大的optimizer model（API成本）、技能优化的搜索空间仍受限于文本编辑操作、对极端分布外任务的泛化能力待验证。</div>
+</div>
+  <div class="qa-card"><div class="qa-title">THREE KEY QUESTIONS · 深度问答</div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q1</span>问题1：「文本学习率」edit budget $L_t$ 的收敛性是否有理论保证？它与权重空间学习率的类比在多大程度上是严格的，而非仅仅是修辞性的？</div><div class="qa-a">论文将edit budget类比为深度学习的学习率，但二者存在本质差异。权重空间的学习率在凸或满足PL条件的损失面上有明确的收敛速率保证，而文本空间是离散、高维、非光滑的——add/delete/replace操作的组合空间不具备梯度流结构，因此无法直接套用SGD收敛定理。SkillOpt之所以有效，其根本原因更接近于「随机局部搜索+验证门控」的组合：edit budget限制了搜索步长（防止灾难性遗忘），held-out gate提供了单调非降的接受准则，rejected-edit buffer则充当了类似禁忌搜索的记忆机制。这三者共同构成了一个在文本空间中的保守策略迭代。然而，论文未证明该过程能避免陷入局部最优，也未分析edit budget衰减schedule（cosine vs. linear）对收敛速度的理论影响。未来工作可借鉴离散优化中的模拟退火或进化策略的收敛分析框架，为文本空间优化建立更严格的理论基础。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q2</span>问题2：52/52全部最优或并列最优的结果是否部分源于验证门控机制的保守性？与基线方法的计算预算对比是否公平？</div><div class="qa-a">验证门控机制确保候选技能仅在held-out split上严格优于当前技能时才被接受，这意味着SkillOpt的输出在最坏情况下不会劣于初始技能（通常为no-skill基线）。因此「52/52最优或并列」中的「并列」可能包含未能有效优化但也未退化的情形，这使得该指标的信息量被稀释。更关键的是计算公平性问题：SkillOpt使用一个额外的frontier optimizer模型（如GPT-5.5级别）进行多epoch、多minibatch的反思与编辑生成，其总推理token消耗可能远超EvoSkill或TextGrad等基线。论文报告了平均优于最强per-cell基线+5.4点（direct chat），但若将优化阶段的API成本纳入考量，性价比对比可能不同。此外，SpreadsheetBench上+38.9点的巨大提升暗示该任务对格式规范极度敏感，技能文档可能主要编码了输出格式而非深层推理策略，需要更细粒度的消融来区分「格式适配」与「策略优化」的贡献。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q3</span>问题3：当目标模型能力超越optimizer模型时，SkillOpt的优化天花板如何突破？技能文档的300-2000 token容量是否会成为复杂任务的瓶颈？</div><div class="qa-a">SkillOpt的架构假设optimizer模型具备足够的反思与编辑能力来改进目标模型的行为，但这隐含了一个能力上界：当目标模型（如未来的GPT-6）在推理能力上全面超越optimizer模型时，后者可能无法识别目标模型轨迹中的深层错误模式或提出更优策略。论文的跨模型迁移实验（GPT-5.4训练的技能迁移到更小模型）恰好回避了这一方向。此外，best_skill.md的300-2000 token容量对当前六个benchmark足够，但面对需要复杂多阶段推理的任务（如长horizon的软件工程或科研自动化），单一扁平文档可能无法编码足够丰富的条件分支策略。未来研究方向包括：(1)自举式优化——用目标模型自身作为optimizer的self-play范式；(2)层级化技能文档——将技能组织为可组合的模块树而非单一文件；(3)引入主动学习机制，让optimizer有针对性地请求特定类型的rollout证据，而非被动消费随机batch。</div></div></div>
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-05-26 20:13<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2605.23904" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+
+<script>
+// ── 收藏功能（localStorage）──────────────────────────────────────────
+var PAPER_META = {
+  id:       '2605.23904',
+  title_zh: "SkillOpt：自进化智能体技能的执行策略",
+  title_en: "SkillOpt: Executive Strategy for Self-Evolving Agent Skills",
+  one_liner:"将智能体技能文档视为可训练外部状态，用深度学习优化范式实现可控文本空间技能优化",
+  category: "cs.AI",
+  published:'2026-05-22',
+  analyzed: '2026-05-26 20:13'
+};
+
+var FAV_KEY = 'jd_favorites';
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function isFaved() {
+  return !!getFavs()[PAPER_META.id];
+}
+
+function updateBtn(faved) {
+  var btn = document.getElementById('fav-btn');
+  if (!btn) return;
+  btn.querySelector('.fav-star').textContent  = faved ? '★' : '☆';
+  btn.querySelector('.fav-label').textContent = faved ? '已收藏' : '收藏';
+  faved ? btn.classList.add('faved') : btn.classList.remove('faved');
+}
+
+function toggleFav() {
+  var favs = getFavs();
+  var id = PAPER_META.id;
+  if (favs[id]) {
+    delete favs[id];
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(false);
+    showToast('已取消收藏');
+  } else {
+    favs[id] = Object.assign({saved_at: new Date().toISOString()}, PAPER_META);
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(true);
+    showToast('已收藏 ⭐', true);
+  }
+}
+
+function showToast(msg, gold) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = (
+    'position:fixed;bottom:24px;right:24px;z-index:9999;'
+    + 'padding:10px 18px;border-radius:6px;font-size:13px;font-weight:600;'
+    + 'box-shadow:0 4px 16px rgba(0,0,0,.2);transition:opacity .3s;'
+    + (gold
+       ? 'background:#b8940e;color:#1e1a16;'
+       : 'background:#374151;color:#f0ece4;')
+  );
+  document.body.appendChild(t);
+  setTimeout(function() { t.style.opacity='0'; setTimeout(function(){t.remove();},300); }, 2000);
+}
+
+// 初始化按钮状态
+updateBtn(isFaved());
+</script>
+</body>
+</html>
