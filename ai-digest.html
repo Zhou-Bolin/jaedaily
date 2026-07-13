@@ -99,9 +99,22 @@ body{
 .speech-priority-sub{
   max-width:420px;font-size:11px;color:#53715f;line-height:1.6;text-align:right;
 }
+.speech-radar{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:9px 16px;background:#f2faf4;border-bottom:1px solid #dce8df;
+}
+.speech-radar-label{
+  font-size:10px;font-weight:900;color:#0d4a28;letter-spacing:1px;
+  text-transform:uppercase;margin-right:2px;
+}
+.speech-radar-chip{
+  font-size:10px;font-weight:700;color:#355943;background:#ffffff;
+  border:1px solid #d0dfd4;border-radius:999px;padding:2px 8px;
+}
+.speech-radar-chip b{color:#0d4a28;font-family:monospace;margin-left:2px;}
 .speech-queue{display:flex;flex-direction:column;}
 .speech-queue-row{
-  display:grid;grid-template-columns:64px minmax(0,1fr) minmax(160px,280px);
+  display:grid;grid-template-columns:64px minmax(0,1fr) minmax(170px,300px);
   gap:12px;align-items:center;padding:11px 16px;border-top:1px solid #dce8df;
   text-decoration:none;color:inherit;background:#fbfdfb;transition:background .12s;
 }
@@ -118,6 +131,7 @@ body{
 .queue-body{min-width:0;display:flex;flex-direction:column;gap:2px;}
 .queue-title{font-size:14px;font-weight:800;color:#1f2b22;line-height:1.45;}
 .queue-title-en{font-size:10px;color:#728477;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.queue-value{font-size:11px;color:#42624c;line-height:1.45;margin-top:2px;}
 .queue-tags{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap;}
 .queue-mini{
   font-size:9px;font-weight:700;color:#496152;background:#edf5ef;
@@ -204,6 +218,10 @@ body{
   background:#f5f0e8;border-left:2px solid #ddd5c8;
   padding:8px 12px;border-radius:2px;
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.paper-downgrade{
+  margin-top:7px;font-size:10px;color:#7c2d12;background:#fff7ed;
+  border-left:2px solid #ea580c;padding:5px 8px;border-radius:0 3px 3px 0;
 }
 
 /* ── 悬浮返回按钮 ── */
@@ -424,11 +442,16 @@ footer{
     </div>
     <div class="speech-priority-sub">按语音大模型相关性重排：核心架构、S2S、TTS/ASR 训练与评估优先</div>
   </div>
+  <div class="speech-radar">
+    <span class="speech-radar-label">今日语音雷达</span>
+    <span class="speech-radar-chip">评测基准 <b>4</b></span><span class="speech-radar-chip">训练/数据 <b>2</b></span><span class="speech-radar-chip">对话/S2S <b>1</b></span><span class="speech-radar-chip">架构/统一模型 <b>1</b></span>
+  </div>
   <div class="speech-queue"><a class="speech-queue-row" href="https://arxiv.org/abs/2607.05365v1" target="_blank" rel="noopener">
   <span class="queue-tier tier-must">必读</span>
   <span class="queue-body">
     <span class="queue-title">SPEARBench：流式语音到语音语言模型的自然度评估基准</span>
     <span class="queue-title-en">SPEARBench: A Benchmark for Naturalness Evaluation in Streaming Speech-to-Speech Language Models</span>
+    <span class="queue-value">价值：直接触及实时口语交互、全双工或 speech-to-speech 的核心评测/建模问题。</span>
   </span>
   <span class="queue-tags"><span class="queue-mini">语音大模型核心</span><span class="queue-mini">arXiv · eess.AS</span></span>
 </a><a class="speech-queue-row" href="https://arxiv.org/abs/2607.07148v1" target="_blank" rel="noopener">
@@ -436,13 +459,7 @@ footer{
   <span class="queue-body">
     <span class="queue-title">通过强化学习解耦全双工口语模型中的对话动态</span>
     <span class="queue-title-en">Decoupling Conversational Dynamics in Full-Duplex Spoken Models through Reinforcement Learning</span>
-  </span>
-  <span class="queue-tags"><span class="queue-mini">语音大模型核心</span><span class="queue-mini">arXiv · eess.AS</span></span>
-</a><a class="speech-queue-row" href="https://arxiv.org/abs/2607.04941v1" target="_blank" rel="noopener">
-  <span class="queue-tier tier-must">必读</span>
-  <span class="queue-body">
-    <span class="queue-title">DuplexChat：为口语对话语言建模大规模构建说话者分离的全双工对话语音</span>
-    <span class="queue-title-en">DuplexChat: Constructing Speaker-Separated Full-Duplex Dialogue Speech at Scale for Spoken Dialogue Language Modeling</span>
+    <span class="queue-value">价值：直接触及实时口语交互、全双工或 speech-to-speech 的核心评测/建模问题。</span>
   </span>
   <span class="queue-tags"><span class="queue-mini">语音大模型核心</span><span class="queue-mini">arXiv · eess.AS</span></span>
 </a><a class="speech-queue-row" href="https://arxiv.org/abs/2607.05196v2" target="_blank" rel="noopener">
@@ -450,6 +467,7 @@ footer{
   <span class="queue-body">
     <span class="queue-title">统一音频智能而不退化文本智能</span>
     <span class="queue-title-en">Unified Audio Intelligence Without Regressing on Text Intelligence</span>
+    <span class="queue-value">价值：涉及统一 audio-text / speech LLM 架构，可能影响语音大模型训练范式。</span>
   </span>
   <span class="queue-tags"><span class="queue-mini">语音大模型核心</span><span class="queue-mini">HF 18♥</span><span class="queue-mini">arXiv · eess.AS</span></span>
 </a><a class="speech-queue-row" href="https://arxiv.org/abs/2607.08409v1" target="_blank" rel="noopener">
@@ -457,6 +475,7 @@ footer{
   <span class="queue-body">
     <span class="queue-title">当您只有合成语音时：最好致电 GRPO</span>
     <span class="queue-title-en">When Synthetic Speech Is All You Have: Better Call GRPO</span>
+    <span class="queue-value">价值：提供合成语音、强化学习或数据构建线索，可用于改进语音模型训练闭环。</span>
   </span>
   <span class="queue-tags"><span class="queue-mini">评测 · 训练/数据</span><span class="queue-mini">arXiv · cs.CL</span></span>
 </a><a class="speech-queue-row" href="https://arxiv.org/abs/2607.08256v1" target="_blank" rel="noopener">
@@ -464,6 +483,7 @@ footer{
   <span class="queue-body">
     <span class="queue-title">Best-of-N TTS 评估受到 ASR 系列一致性的影响</span>
     <span class="queue-title-en">Best-of-$N$ TTS Evaluation is Confounded by ASR Family Alignment</span>
+    <span class="queue-value">价值：暴露 ASR/TTS/S2S 评测偏差或新基准，适合作为实验设计参考。</span>
   </span>
   <span class="queue-tags"><span class="queue-mini">评测 · 生成/TTS</span><span class="queue-mini">arXiv · cs.SD</span></span>
 </a><a class="speech-queue-row" href="https://arxiv.org/abs/2607.06461v1" target="_blank" rel="noopener">
@@ -471,6 +491,7 @@ footer{
   <span class="queue-body">
     <span class="queue-title">WordVoice：基于 LLM 的 TTS 的显式且解耦的多维字级控制</span>
     <span class="queue-title-en">WordVoice: Explicit and Decoupled Multi-Dimensional Word-Level Control for LLM-Based TTS</span>
+    <span class="queue-value">价值：暴露 ASR/TTS/S2S 评测偏差或新基准，适合作为实验设计参考。</span>
   </span>
   <span class="queue-tags"><span class="queue-mini">评测 · 生成/TTS</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · eess.AS</span></span>
 </a><a class="speech-queue-row" href="https://arxiv.org/abs/2607.09001v1" target="_blank" rel="noopener">
@@ -478,8 +499,17 @@ footer{
   <span class="queue-body">
     <span class="queue-title">基于 LLM 的视听语音识别的基于最佳传输的语义对齐</span>
     <span class="queue-title-en">Optimal Transport-based Semantic Alignment for LLM-based Audio-Visual Speech Recognition</span>
+    <span class="queue-value">价值：暴露 ASR/TTS/S2S 评测偏差或新基准，适合作为实验设计参考。</span>
   </span>
   <span class="queue-tags"><span class="queue-mini">评测 · LLM相关</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · eess.AS</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2607.06027v1" target="_blank" rel="noopener">
+  <span class="queue-tier tier-scan">可扫</span>
+  <span class="queue-body">
+    <span class="queue-title">文本到语音合成的语音表示上的 Fréchet 距离损失</span>
+    <span class="queue-title-en">Fréchet Distance Loss on Speech Representations for Text-to-Speech Synthesis</span>
+    <span class="queue-value">价值：提供合成语音、强化学习或数据构建线索，可用于改进语音模型训练闭环。</span>
+  </span>
+  <span class="queue-tags"><span class="queue-mini">训练/数据 · 生成/TTS</span><span class="queue-mini">arXiv · cs.SD</span></span>
 </a></div>
   <div class="speech-queue-note">另有 2 篇传统音频/数据集/工程项已降为低优先级，仍保留在“语音与音频”中供扫读。</div>
 </section>
@@ -496,13 +526,14 @@ footer{
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     
-    <span class="reason-badge">必读</span><span class="reason-badge">核心模型</span><span class="reason-badge">对话/S2S</span>
+    <span class="reason-badge">必读</span><span class="reason-badge">评测基准</span><span class="reason-badge">核心模型</span>
     <span class="paper-src">arXiv · eess.AS</span>
     <span class="paper-date">07-06</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.05365v1" target="_blank" rel="noopener">SPEARBench：流式语音到语音语言模型的自然度评估基准</a>
   <div class="paper-title-en">SPEARBench: A Benchmark for Naturalness Evaluation in Streaming Speech-to-Speech Language Models</div>
   <p class="paper-abstract">流式语音到语音语言模型旨在通过合成语音直接回答口头查询。然而，标准语音和文本基准并没有捕捉到这些系统在对话中是否表现自然，其中时间、轮流、韵律、人际立场、语言和方言一致性以及关系感知适当性共同塑造感知质量。我们引入了 SPEARBench，这是一个用于评估问答交互中语音到语音语言模型自然度的基准。 SPEARBench 从无缝交互中构建受控对话提示</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.05365')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.05365v1" target="_blank" rel="noopener">→ 原文</a>
@@ -511,13 +542,14 @@ footer{
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     
-    <span class="reason-badge">必读</span><span class="reason-badge">核心模型</span><span class="reason-badge">对话/S2S</span>
+    <span class="reason-badge">必读</span><span class="reason-badge">对话/S2S</span><span class="reason-badge">核心模型</span>
     <span class="paper-src">arXiv · eess.AS</span>
     <span class="paper-date">07-08</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.07148v1" target="_blank" rel="noopener">通过强化学习解耦全双工口语模型中的对话动态</a>
   <div class="paper-title-en">Decoupling Conversational Dynamics in Full-Duplex Spoken Models through Reinforcement Learning</div>
   <p class="paper-abstract">最近的全双工语音对话模型在类人交互方面取得了令人瞩目的进展，使代理能够以低延迟响应、产生反向通道并处理用户闯入。然而，对话动态的这些改进往往伴随着较弱的推理和指令跟踪能力，揭示了交互动态和智力能力之间潜在的紧张关系。在本文中，我们认为这种智能与动态的权衡并不是根本性的：对话动态可以作为独立于人类的实时决策策略来学习</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.07148')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.07148v1" target="_blank" rel="noopener">→ 原文</a>
@@ -525,29 +557,15 @@ footer{
 </div><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
-    
-    <span class="reason-badge">必读</span><span class="reason-badge">核心模型</span><span class="reason-badge">对话/S2S</span>
-    <span class="paper-src">arXiv · eess.AS</span>
-    <span class="paper-date">07-06</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2607.04941v1" target="_blank" rel="noopener">DuplexChat：为口语对话语言建模大规模构建说话者分离的全双工对话语音</a>
-  <div class="paper-title-en">DuplexChat: Constructing Speaker-Separated Full-Duplex Dialogue Speech at Scale for Spoken Dialogue Language Modeling</div>
-  <p class="paper-abstract">全双工口语对话模型是在会话语音上进行训练的，其中每个说话者都表示为单独的流，但现有的大规模公共语音语料库大多是单声道的，这使得它们不适合 SDLM 训练。我们推出了 DuplexChat，一个用于全双工口语对话模型的开源语料库，以及 DuplexChat-Pipe，一个用于从公共播客源构建说话者分离的全双工对话语音的管道。 DuplexChat-Pipe 过滤特定于语言的播客提要、检索和清理剧集音频、提取二值化引导的双讲话者对话剪辑以及</p>
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2607.04941')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2607.04941v1" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;18♥</span>
-    <span class="reason-badge">必读</span><span class="reason-badge">核心模型</span><span class="reason-badge">HF精选18赞</span>
+    <span class="reason-badge">必读</span><span class="reason-badge">架构/统一模型</span><span class="reason-badge">核心模型</span>
     <span class="paper-src">arXiv · eess.AS</span>
     <span class="paper-date">07-06</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.05196v2" target="_blank" rel="noopener">统一音频智能而不退化文本智能</a>
   <div class="paper-title-en">Unified Audio Intelligence Without Regressing on Text Intelligence</div>
   <p class="paper-abstract">音频智能涉及理解、推理和生成音频和语音。在这项工作中，我们介绍了 Nemotron-Labs-Audex-30B-A3B (Audex)，这是一个基于 Nemotron-Cascade-2-30B-A3B（强大的纯文本 MoE LLM）构建的统一音频文本 LLM。 Audex 采用简单的统一设计，只有一个 Transformer 解码器：音频输入被编码并投影到文本嵌入空间中，而文本标记和量化音频输出标记在生成过程中被统一处理。该架构可实现强大的音频文本融合、无缝多模式生成以及与标准的兼容性</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.05196')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.05196v2" target="_blank" rel="noopener">→ 原文</a>
@@ -556,13 +574,14 @@ footer{
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     
-    <span class="reason-badge">可扫</span><span class="reason-badge">评测</span><span class="reason-badge">训练/数据</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">训练/数据</span><span class="reason-badge">评测</span>
     <span class="paper-src">arXiv · cs.CL</span>
     <span class="paper-date">07-09</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.08409v1" target="_blank" rel="noopener">当您只有合成语音时：最好致电 GRPO</a>
   <div class="paper-title-en">When Synthetic Speech Is All You Have: Better Call GRPO</div>
   <p class="paper-abstract">基于LLM的 ASR 适用于银行业等受监管领域，但受到隐私的瓶颈：真实语音的收集成本高昂且受到法律限制，这使得合成文本到语音（TTS） (TTS) 成为有吸引力的替代品。然而，合成语音在声学上与真实录音仍然不匹配，而解决这一差距的工作一直停留在监督微调（SFT）的范围内。相反，我们转向强化学习，并表明组相对策略优化 (GRPO) 从相同的合成语音中提取的内容远多于 SFT。使用 GRPO 对模型进行纯综合调整，GRPO 是一种奖励低 WER hy 的无批评方法</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.08409')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.08409v1" target="_blank" rel="noopener">→ 原文</a>
@@ -571,13 +590,14 @@ footer{
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     
-    <span class="reason-badge">可扫</span><span class="reason-badge">评测</span><span class="reason-badge">生成/TTS</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
     <span class="paper-src">arXiv · cs.SD</span>
     <span class="paper-date">07-09</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.08256v1" target="_blank" rel="noopener">Best-of-N TTS 评估受到 ASR 系列一致性的影响</a>
   <div class="paper-title-en">Best-of-$N$ TTS Evaluation is Confounded by ASR Family Alignment</div>
   <p class="paper-abstract">Best-of-N (BoN) 推理通过使用自动语音识别（ASR） 验证器从 $N$ 候选中进行选择，提高了零样本文本到语音的内容一致性。我们发现了一个未经充分探索的评估混淆：验证者的表面质量在很大程度上取决于哪个 ASR 系列对其进行评判。在 LibriSpeech-PC test-clean~\citep{librispeechpc} 和 F5-TTS~\citep{f5tts} 上，验证者在 Whisper、wav2vec~2.0 和 HuBERT 评估器之间的排名相反，并且同系列验证器-评估器对比跨系列对恢复了 2-3$\times$ 的预言机空间，尽管表示几乎相同</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.08256')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.08256v1" target="_blank" rel="noopener">→ 原文</a>
@@ -586,13 +606,14 @@ footer{
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     <span class="inst-badge">MIT</span>
-    <span class="reason-badge">可扫</span><span class="reason-badge">评测</span><span class="reason-badge">生成/TTS</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
     <span class="paper-src">arXiv · eess.AS</span>
     <span class="paper-date">07-07</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.06461v1" target="_blank" rel="noopener">WordVoice：基于 LLM 的 TTS 的显式且解耦的多维字级控制</a>
   <div class="paper-title-en">WordVoice: Explicit and Decoupled Multi-Dimensional Word-Level Control for LLM-Based TTS</div>
   <p class="paper-abstract">虽然最近基于大语言模型（LLM） 的文本到语音（TTS） (TTS) 系统已经实现了显着的自然性，但它们主要依赖于隐式的端到端生成范例，导致粗粒度控制。在需要精确的文体干预和严格的时间对齐的场景中，例如有声读物旁白和视频配音，无法显式操作单词级声学属性仍然是一个关键瓶颈。这种限制主要是由于细粒度注释数据集的严重稀缺以及集成多数据集的架构挑战而放大的。</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.06461')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.06461v1" target="_blank" rel="noopener">→ 原文</a>
@@ -601,13 +622,14 @@ footer{
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     <span class="inst-badge">MIT</span>
-    <span class="reason-badge">可扫</span><span class="reason-badge">评测</span><span class="reason-badge">LLM相关</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
     <span class="paper-src">arXiv · eess.AS</span>
     <span class="paper-date">07-10</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.09001v1" target="_blank" rel="noopener">基于 LLM 的视听语音识别的基于最佳传输的语义对齐</a>
   <div class="paper-title-en">Optimal Transport-based Semantic Alignment for LLM-based Audio-Visual Speech Recognition</div>
   <p class="paper-abstract">基于大语言模型（LLM） 的视听语音识别 (LLM-AVSR) 最近通过利用互补的音频和视觉信息，在不利的声学环境中表现出了强大的鲁棒性。现有方法通常采用独立预训练的声学和视觉编码器，其输出被投影并融合为软提示，以调节 LLM 的语音识别能力。然而，大多数方法执行多模态融合，而没有明确解决音频、视觉和文本模态之间的表征差异，这可能限制了 cro 的有效性。</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09001')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09001v1" target="_blank" rel="noopener">→ 原文</a>
@@ -623,6 +645,7 @@ footer{
   <a class="paper-title" href="https://arxiv.org/abs/2607.06027v1" target="_blank" rel="noopener">文本到语音合成的语音表示上的 Fréchet 距离损失</a>
   <div class="paper-title-en">Fréchet Distance Loss on Speech Representations for Text-to-Speech Synthesis</div>
   <p class="paper-abstract">少步扩散和流匹配文本到语音（TTS） 模型通常使用局部目标进行训练，例如条件流匹配、重建和停止预测。这些损失提供了稳定的优化，但它们从不询问采样的语音是否遵循高质量语音的分布。我们提出了语音表示 Fr&#x27;echet 距离损失 (SR-FD)，这是一种用于无标记器流匹配自回归 TTS 的训练时间分布正则化器。在微调过程中，模型使用部署时使用的相同的几步采样器来合成语音，并且 SR-FD 与均值相匹配</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.06027')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.06027v1" target="_blank" rel="noopener">→ 原文</a>
@@ -638,9 +661,26 @@ footer{
   <a class="paper-title" href="https://arxiv.org/abs/2607.09530v1" target="_blank" rel="noopener">FreyaTTS 技术报告</a>
   <div class="paper-title-en">FreyaTTS Technical Report</div>
   <p class="paper-abstract">我们推出 Freya-TTS，这是一种紧凑、无分词器、土耳其语首创的文本到语音（TTS）模型，专为高度可靠和高效的对话合成而设计。 Freya-TTS 是一个 183.2M 参数的非自回归条件流匹配扩散变压器 (DiT)，在 AudioVAE2 的冻结连续潜在空间中运行（16 kHz 编码，48 kHz 解码），允许模型将其能力集中在文本到潜在映射，同时继承高质量 48 kHz 重建。我们沿着三个关键维度推进框架：（1）从 92 个符号的土耳其字符 v 进行无规则端到端建模</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09530')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09530v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    
+    <span class="reason-badge">可扫</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">07-07</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2607.06088v1" target="_blank" rel="noopener">基于流匹配的语音源分离与 Best-of-N 生物特征采样</a>
+  <div class="paper-title-en">Flow Matching-Based Speech Source Separation with Best-of-N Biometric Sampling</div>
+  <p class="paper-abstract">由于源排列模糊性、生成模型的采样可变性以及通过分块推理处理长录音的困难，单通道语音分离对于现实世界的部署仍然具有挑战性。我们使用基于条件流匹配的方法来解决这些问题，该方法产生以混合物为条件的有序双源输出。冻结说话人编码器在训练期间定义源顺序，并在推理时重用，以进行生物识别最佳 N$ 候选选择和块级通道对齐。我们在 Libri2Mix benchm 上评估分离质量</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2607.06088')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2607.06088v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div></div>
 </section><section class="cat-section" id="llm">
@@ -655,14 +695,15 @@ footer{
   <div class="papers-grid"><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
-    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;20♥</span>
-    <span class="reason-badge">训练/数据</span><span class="reason-badge">HF精选20赞</span><span class="reason-badge">高分</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;30♥</span>
+    <span class="reason-badge">训练/数据</span><span class="reason-badge">HF精选30赞</span><span class="reason-badge">高分</span>
     <span class="paper-src">arXiv · cs.AI</span>
     <span class="paper-date">07-10</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.09657v1" target="_blank" rel="noopener">可扩展的语言智能视觉预训练</a>
   <div class="paper-title-en">Scalable Visual Pretraining for Language Intelligence</div>
   <p class="paper-abstract">大型基础模型的快速进展主要是由大规模文本语料库的预训练推动的。然而，许多形式的知识是通过视觉表示来传达的，其中图形、排版方程和页面布局携带着丰富的信息，这些信息无法仅通过文本忠实或完整地捕获。然而，当前的预训练方法通过将文档和网页等视觉丰富的资源转换为纯文本来学习语言智能，从而抛弃了这些视觉线索。本文挑战了语言模型必须经过训练的默认假设</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09657')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09657v1" target="_blank" rel="noopener">→ 原文</a>
@@ -678,6 +719,7 @@ footer{
   <a class="paper-title" href="https://arxiv.org/abs/2607.08716v1" target="_blank" rel="noopener">记住重要的事情：用于长视野代理的主动记忆代理</a>
   <div class="paper-title-en">Remember When It Matters: Proactive Memory Agent for Long-Horizon Agents</div>
   <p class="paper-abstract">在长视野任务中，与决策相关的状态通常分散在不断扩展的轨迹上，而行动代理必须将其浮出水面并采取行动。随着轨迹的增长，任务要求、环境事实、先前的尝试、诊断和开放的子目标可能会被隐藏在上下文窗口中或被推到上下文窗口之外，从而无法在需要时影响决策。我们将这种故障模式称为“行为状态衰退”。我们将记忆作为一种主动干预机制而不是被动检索来研究。一个单独的内存代理与未修改的操作代理一起运行，从记录中更新结构化内存库</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.08716')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.08716v1" target="_blank" rel="noopener">→ 原文</a>
@@ -686,31 +728,17 @@ footer{
   <div class="paper-meta">
     <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
     <span class="audio-badge">🎧 音频相关</span><span class="inst-badge">MIT</span>
-    <span class="reason-badge">低优先级</span><span class="reason-badge">评测</span><span class="reason-badge">MIT</span>
+    <span class="reason-badge">低优先级</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
     <span class="paper-src">arXiv · cs.MM</span>
     <span class="paper-date">07-07</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.06405v1" target="_blank" rel="noopener">潜在空间中跨模态对齐的精确视频到音频生成</a>
   <div class="paper-title-en">Precise Video-to-Audio Generation with Cross-Modal Alignment in Latent Space</div>
   <p class="paper-abstract">视频转音频 (V2A) 生成旨在合成真实的音频，该音频在语义上与无声视频一致且在时间上同步。尽管最近取得了进展，但许多方法仍然依赖于多阶段训练，导致计算成本高和运行时间长，或者将视觉输入转换为文本以利用预训练的文本到音频模型，从而牺牲细粒度的时间线索。为了克服这些限制，我们提出了 Flowley，这是一种端到端的单阶段训练架构，它通过将视觉特征与文本提示相结合来生成音轨。至关重要的是，我们</p>
+  <div class="paper-downgrade">降权：缺少 speech/audio LLM 主线，只保留作背景参考。</div>
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.06405')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.06405v1" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
-    <span class="inst-badge">Meta</span>
-    <span class="reason-badge">Meta</span>
-    <span class="paper-src">arXiv · cs.CV</span>
-    <span class="paper-date">07-10</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2607.09480v1" target="_blank" rel="noopener">聚焦点引导动态令牌选择，实现稳健高效的视觉 Transformer</a>
-  <div class="paper-title-en">Foveation-Guided Dynamic Token Selection for Robust and Efficient Vision Transformers</div>
-  <p class="paper-abstract">人类视觉系统 (HVS) 采用中心点采样和眼球运动来实现高效感知，从而节省代谢能量和计算资源。从这种鲁棒性和适应性中汲取灵感，我们引入了 Foveated Dynamic Transformer (FDT)，这是一种注视点引导的动态令牌选择架构，它将这些机制集成到视觉转换器框架中。尽管没有针对此类挑战进行过明确的培训，但 FDT 对各种类型的噪声和对抗性攻击表现出强大的恢复能力。这种固有的鲁棒性是通过以下方式实现的</p>
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2607.09480')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2607.09480v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
@@ -723,6 +751,7 @@ footer{
   <a class="paper-title" href="https://arxiv.org/abs/2607.09443v1" target="_blank" rel="noopener">参数高效的视觉语言适应与连续元数据调节用于动物重新识别</a>
   <div class="paper-title-en">Parameter-Efficient Vision-Language Adaptation with Continuous Metadata Conditioning for Animal Re-Identification</div>
   <p class="paper-abstract">长期动物重新识别（ReID）必须对逐渐的形态进化和季节性外观变化保持稳健。尽管最近的视觉语言模型提供了强大的预训练视觉表示，但使它们适应纵向生态环境仍然具有挑战性，特别是在身份和时间分布变化的情况下。我们提出了一种用于动物 ReID 的参数高效的 CLIP 适应框架，并引入了一种连续的元数据调节机制，该机制在训练期间将数字属性直接合并到提示表示中。虽然低等级视觉</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09443')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09443v1" target="_blank" rel="noopener">→ 原文</a>
@@ -730,14 +759,31 @@ footer{
 </div><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="inst-badge">Meta</span>
+    <span class="reason-badge">Meta</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">07-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2607.09480v1" target="_blank" rel="noopener">聚焦点引导动态令牌选择，实现稳健高效的视觉 Transformer</a>
+  <div class="paper-title-en">Foveation-Guided Dynamic Token Selection for Robust and Efficient Vision Transformers</div>
+  <p class="paper-abstract">人类视觉系统 (HVS) 采用中心点采样和眼球运动来实现高效感知，从而节省代谢能量和计算资源。从这种鲁棒性和适应性中汲取灵感，我们引入了 Foveated Dynamic Transformer (FDT)，这是一种注视点引导的动态令牌选择架构，它将这些机制集成到视觉转换器框架中。尽管没有针对此类挑战进行过明确的培训，但 FDT 对各种类型的噪声和对抗性攻击表现出强大的恢复能力。这种固有的鲁棒性是通过以下方式实现的</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2607.09480')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2607.09480v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
     <span class="inst-badge">MIT</span>
-    <span class="reason-badge">评测</span><span class="reason-badge">MIT</span>
+    <span class="reason-badge">评测基准</span><span class="reason-badge">评测</span><span class="reason-badge">MIT</span>
     <span class="paper-src">arXiv · cs.CV</span>
     <span class="paper-date">07-10</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.09450v1" target="_blank" rel="noopener">通过测试时提示适应来增强视觉语言模型</a>
   <div class="paper-title-en">Robustifying Vision-Language Models via Test-Time Prompt Adaptation</div>
   <p class="paper-abstract">CLIP 等预训练视觉语言模型 (VLM) 实现了强大的零样本泛化，但它们的性能在对抗性扰动下急剧下降。现有的测试时间适应方法通常依赖于样本级置信启发法，忽略了数据的内在分布结构。这种以样本为中心的方法限制了鲁棒性，因为它无法区分可信的对抗性错误预测和真正的语义一致性。在这项工作中，我们观察到对抗性扭曲在结构上是脆弱的：虽然整体表征被破坏，但语义</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09450')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09450v1" target="_blank" rel="noopener">→ 原文</a>
@@ -753,6 +799,7 @@ footer{
   <a class="paper-title" href="https://arxiv.org/abs/2607.09428v1" target="_blank" rel="noopener">自动驾驶多模态场景相似度搜索</a>
   <div class="paper-title-en">Multimodal Scenario Similarity Search for Autonomous Driving</div>
   <p class="paper-abstract">大规模自动驾驶数据集包含大量记录的场景，因此需要高效的检索方法来识别与给定查询类似的情况。现有方法通常依赖于视觉表示或基于运动的描述，因此很难理解它们在场景检索方面的相对优势和局限性。在这项工作中，我们提出了一个用于自动驾驶场景检索的多模式框架，该框架将视觉和基于轨迹的表示结合在统一的检索管道中。我们研究两条轨迹-b</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09428')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09428v1" target="_blank" rel="noopener">→ 原文</a>
@@ -762,15 +809,16 @@ footer{
     <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
     <span class="inst-badge">MIT</span>
     <span class="reason-badge">MIT</span>
-    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-src">arXiv · cs.CL</span>
     <span class="paper-date">07-10</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2607.09263v1" target="_blank" rel="noopener">语义困难不是视觉困难：用于手语检索的手语感知硬否定挖掘</a>
-  <div class="paper-title-en">Semantic Hardness Is Not Visual Hardness: Sign-Aware Hard Negative Mining for Sign Language Retrieval</div>
-  <p class="paper-abstract">手语检索 (SLRet) 可以有效地访问手语内容，但在必须区分视觉上相似的符号的细粒度场景中仍然很脆弱。我们证明这种限制并非源于模型能力，而是源于无效的硬负监督。具体来说，我们将细粒度检索失败表述为负分布不匹配：语义上不同但视觉上容易混淆的符号很少被视为硬负例，而现有的基于文本的挖掘策略无法捕获这种视觉歧义。为了解决这个问题，我们建议Sign-</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2607.09224v1" target="_blank" rel="noopener">Git-Assistant：基于规划的 Git 存储库更新支持</a>
+  <div class="paper-title-en">Git-Assistant: Planning-Based Support for Updating Git Repositories</div>
+  <p class="paper-abstract">版本控制系统对于协作软件开发至关重要，但像 git 这样的工具对许多从业者来说仍然具有挑战性。大语言模型（LLM） 的最新进展为解释开发人员意图提供了有前途的功能，但它们在存储库管理任务中的有效性受到形式推理需求的限制。这项工作引入了 Git-Assistant，这是一种基于人工智能的助手，它将LLM与自动化规划相结合，以支持开发人员执行重要的 git 操作。助手分析存储库上下文，将自然语言请求翻译成</p>
+  
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2607.09263')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2607.09263v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2607.09224')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2607.09224v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div></div>
 </section><section class="cat-section" id="vision">
@@ -793,6 +841,7 @@ footer{
   <a class="paper-title" href="https://arxiv.org/abs/2607.09020v1" target="_blank" rel="noopener">通过语音激活映射进行音素分割和识别</a>
   <div class="paper-title-en">Phone Segmentation and Recognition through Phonological Activation Mapping</div>
   <p class="paper-abstract">音素分割和识别本质上是相关的任务，但现代方法通常对它们进行单独建模。我们认为，语音结构已经隐藏在自监督语音模型（S3M）的表示中，人们只需要引导它们来解决这两项任务。我们利用基于 S3M 的语音激活映射 (SPAM)，它将每个 S3M 表示帧映射到语音特征激活向量，例如发声和鼻音。在SPAM之上，我们引入了两个简单但有效的轻量级、无梯度下降的预测头：识别头和</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09020')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09020v1" target="_blank" rel="noopener">→ 原文</a>
@@ -801,13 +850,14 @@ footer{
   <div class="paper-meta">
     <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
     <span class="audio-badge">🎧 音频相关</span><span class="inst-badge">MIT</span>
-    <span class="reason-badge">低优先级</span><span class="reason-badge">MIT</span><span class="reason-badge">语音/音频</span>
+    <span class="reason-badge">低优先级</span><span class="reason-badge">语音相关</span><span class="reason-badge">MIT</span>
     <span class="paper-src">arXiv · cs.SD</span>
     <span class="paper-date">07-08</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.07015v1" target="_blank" rel="noopener">EscFOA：通过 360 度教育环境中的生成空间音频增强视障学习者的空间学习</a>
   <div class="paper-title-en">EscFOA: Enhancing Spatial Learning for Visually Impaired Learners via Generative Spatial Audio in 360-Degree Educational Environments</div>
   <p class="paper-abstract">沉浸式 360 度教育环境通常缺乏可访问的空间结构，限制了视障学习者定向、探索和构建心理表征的能力。本文提出了 EscFOA，一种几何感知的空间音频生成框架，设计为支持空间认知的 \emph{声学支架}。通过将 3D 高斯泼溅 (3DGS) 与条件扩散模型集成，EscFOA 从 360 度视频中重建场景几何形状，以合成与环境结构一致的高保真空间音频。明确目标学习</p>
+  <div class="paper-downgrade">降权：传统音频、数据集或工程优化，非当前语音大模型主线。</div>
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.07015')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.07015v1" target="_blank" rel="noopener">→ 原文</a>
@@ -823,6 +873,7 @@ footer{
   <a class="paper-title" href="https://arxiv.org/abs/2607.09629v1" target="_blank" rel="noopener">4DR360：4D雷达-相机全场景感知中联合3D检测和占用预测的状态推理</a>
   <div class="paper-title-en">4DR360: State Reasoning for Joint 3D Detection and Occupancy Prediction in 4D Radar-Camera Full-Scene Perception</div>
   <p class="paper-abstract">可靠的自动驾驶需要全场景感知，将前景物体与密集的语义布局结合起来。最近，4D 毫米波雷达已成为一种强大且价格实惠的传感器，但其稀疏的回报使得雷达相机融合对于全面的场景理解至关重要。现有的雷达摄像头方法主要优化检测，而双任务系统通常以有限的交互来解码盒子和占用情况。为了解决这一差距并推进基于雷达的多任务学习，我们提出了 \method，一种用于 360$^\circ$ 全场景感知的 4D 雷达摄像头框架，该框架</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09629')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09629v1" target="_blank" rel="noopener">→ 原文</a>
@@ -838,6 +889,7 @@ footer{
   <a class="paper-title" href="https://arxiv.org/abs/2607.09581v1" target="_blank" rel="noopener">Wan-Dancer：分钟级连贯音乐舞蹈生成的分层框架</a>
   <div class="paper-title-en">Wan-Dancer: A Hierarchical Framework for Minute-scale Coherent Music-to-Dance Generation</div>
   <p class="paper-abstract">直接从音乐生成长时间、高清且节奏同步的舞蹈视频仍然是一项重大挑战，主要是由于当前扩散模型的时间限制，该模型通常会在超过 20 秒后失败。现有的方法，无论是依赖中间 3D 骨架还是端到端视频合成，当扩展到更长的视野时，都会遇到时间漂移、身份不一致和重复运动模式的问题。为了解决这些限制，我们提出了一种新颖的分层框架，用于分钟级连贯的音乐到舞蹈的生成。我们的我</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09581')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09581v1" target="_blank" rel="noopener">→ 原文</a>
@@ -846,13 +898,14 @@ footer{
   <div class="paper-meta">
     <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
     <span class="inst-badge">MIT</span>
-    <span class="reason-badge">评测</span><span class="reason-badge">MIT</span>
+    <span class="reason-badge">评测基准</span><span class="reason-badge">评测</span><span class="reason-badge">MIT</span>
     <span class="paper-src">arXiv · cs.CV</span>
     <span class="paper-date">07-10</span>
   </div>
   <a class="paper-title" href="https://arxiv.org/abs/2607.09299v1" target="_blank" rel="noopener">TextileNet：走向零样本文本式手稿分割</a>
   <div class="paper-title-en">TextileNet: Towards Zero-shot Text-style Segmentation of Manuscripts</div>
   <p class="paper-abstract">自动作者识别系统近年来取得了显着进步，但其在档案古文字学中的部署仍然受到标记训练数据的稀缺、开放抄写集和图像质量下降的限制。我们提出了 TextileNet，这是一个完全卷积的多任务网络，专门在合成数据上进行训练，以产生密集的像素级纹理嵌入，我们将其零样本转移到历史手稿分析中。作为对评估方法的原创贡献，我们设计了一个包含 80 个对和三联体问题的古文字视觉测验，并将其实施给一个研究小组。</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09299')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09299v1" target="_blank" rel="noopener">→ 原文</a>
@@ -868,6 +921,7 @@ footer{
   <a class="paper-title" href="https://arxiv.org/abs/2607.09331v1" target="_blank" rel="noopener">用于环境物联网争用解决的基于张量的随机访问</a>
   <div class="paper-title-en">Tensor-based Random Access for Ambient IoT Contention Resolution</div>
   <p class="paper-abstract">环境物联网 (A-IoT) 部署施加了严格的硬件限制，包括低阶调制和简单的收发器架构。我们针对这些限制提出了一种基于张量的无授权随机访问方案，用于初始访问消息（Msg1）。每个设备在多个访问场合传输其结构为 1 级张量的短有效负载的副本。 A-IoT 接收器通过张量分解和连续干扰消除执行联合活动检测、信道估计和解码。结果显示，与 co 相比，吞吐量显着提高</p>
+  
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2607.09331')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2607.09331v1" target="_blank" rel="noopener">→ 原文</a>
@@ -893,6 +947,7 @@ footer{
   <a class="paper-title" href="https://pytorch.org/blog/towards-free-normalization-fusing-normalization-into-gemm-and-attention-kernels/" target="_blank" rel="noopener">迈向自由标准化：将标准化融合到 GEMM 和注意力内核中</a>
   <div class="paper-title-en">Towards Free Normalization: Fusing Normalization into GEMM and Attention Kernels</div>
   <p class="paper-abstract">代码位于：https://github.com/facebookresearch/ads_model_kernel_library/tree/main/multi_cta_norm_fusion 和 https://github.com/facebookresearch/ads_model_kernel_library/tree/main/gdpa_megakernel TL;DR 在这篇博文中，我们为 LayerNorm 和 RMSNorm 等常见标准化操作提供了各种新颖的内核融合技术，这些技术提供了显着的加速...</p>
+  
   <div class="paper-actions">
     
     <a class="arxiv-link" href="https://pytorch.org/blog/towards-free-normalization-fusing-normalization-into-gemm-and-attention-kernels/" target="_blank" rel="noopener">→ 原文</a>
@@ -907,6 +962,7 @@ footer{
   </div>
   <a class="paper-title" href="https://huggingface.co/blog/torch-attention-profile" target="_blank" rel="noopener">PyTorch 中的分析（第 3 部分）：注意力就是您的分析</a>
   <div class="paper-title-en">Profiling in PyTorch (Part 3): Attention is all you profile</div>
+  
   
   <div class="paper-actions">
     
@@ -923,6 +979,7 @@ footer{
   <a class="paper-title" href="https://research.google/blog/sensorfm-towards-a-general-intelligence-and-interface-for-wearable-health-data/" target="_blank" rel="noopener">SensorFM：迈向可穿戴健康数据的通用智能和接口</a>
   <div class="paper-title-en">SensorFM: Towards a general intelligence and interface for wearable health data</div>
   <p class="paper-abstract">生成式人工智能</p>
+  
   <div class="paper-actions">
     
     <a class="arxiv-link" href="https://research.google/blog/sensorfm-towards-a-general-intelligence-and-interface-for-wearable-health-data/" target="_blank" rel="noopener">→ 原文</a>
@@ -938,6 +995,7 @@ footer{
   <a class="paper-title" href="https://pytorch.org/blog/pytorch-2-13-release-blog/" target="_blank" rel="noopener">PyTorch 2.13 发布博客</a>
   <div class="paper-title-en">PyTorch 2.13 Release Blog</div>
   <p class="paper-abstract">我们很高兴地宣布 PyTorch® 2.13 发布（发行说明）！ PyTorch 2.13 版本具有以下变化： FlexAttention 登陆 Apple Silicon (MPS)，最多...</p>
+  
   <div class="paper-actions">
     
     <a class="arxiv-link" href="https://pytorch.org/blog/pytorch-2-13-release-blog/" target="_blank" rel="noopener">→ 原文</a>
@@ -952,6 +1010,7 @@ footer{
   </div>
   <a class="paper-title" href="https://huggingface.co/blog/nvidia/open-data-for-agents" target="_blank" rel="noopener">代理商数据</a>
   <div class="paper-title-en">Data for Agents</div>
+  
   
   <div class="paper-actions">
     
@@ -968,6 +1027,7 @@ footer{
   <a class="paper-title" href="https://openai.com/index/government-national-security-partnerships" target="_blank" rel="noopener">我们与政府和国家安全伙伴关系的方法</a>
   <div class="paper-title-en">Our approach to government and national security partnerships</div>
   <p class="paper-abstract">了解 OpenAI 如何处理政府和国家安全伙伴关系，以及负责任的人工智能使用、民主问责和公共安全的原则。</p>
+  
   <div class="paper-actions">
     
     <a class="arxiv-link" href="https://openai.com/index/government-national-security-partnerships" target="_blank" rel="noopener">→ 原文</a>
@@ -983,6 +1043,7 @@ footer{
   <a class="paper-title" href="https://openai.com/index/k-12-educators-practical-skills" target="_blank" rel="noopener">帮助 K-12 教育工作者培养实用的人工智能技能</a>
   <div class="paper-title-en">Helping K–12 educators build practical AI skills</div>
   <p class="paper-abstract">OpenAI Academy 和 Walton Family Foundation 正在推出 AI 技能实践实践活动，帮助 K-12 教育工作者在课堂上培养实用的 AI 技能。</p>
+  
   <div class="paper-actions">
     
     <a class="arxiv-link" href="https://openai.com/index/k-12-educators-practical-skills" target="_blank" rel="noopener">→ 原文</a>
@@ -997,6 +1058,7 @@ footer{
   </div>
   <a class="paper-title" href="https://huggingface.co/blog/native-speed-vllm-transformers-backend" target="_blank" rel="noopener">本机速度 vLLM 变压器建模后端</a>
   <div class="paper-title-en">Native-speed vLLM transformers modeling backend</div>
+  
   
   <div class="paper-actions">
     
