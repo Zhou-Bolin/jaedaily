@@ -63,6 +63,33 @@ body.dark{
 }
 /* ══ Reset & base ══════════════════════════════════════════════════ */
 *{box-sizing:border-box;margin:0;padding:0;}
+body.theme-mon:not(.dark){
+  --bg:#f7f7f4; --bg2:#fffefd; --summary-bg:#fff7f5;
+  --edition-accent:#8a1212; --edition-soft:#8a121214; --edition-gold:#e8c87a;
+}
+body.theme-tue:not(.dark){
+  --bg:#f7f5f1; --bg2:#fffdf9; --summary-bg:#fff8ef;
+  --edition-accent:#7a2f12; --edition-soft:#7a2f1214; --edition-gold:#e6bd75;
+}
+body.theme-wed:not(.dark){
+  --bg:#f3f7f6; --bg2:#fdfffe; --summary-bg:#effaf8;
+  --edition-accent:#155e63; --edition-soft:#155e6314; --edition-gold:#d6c17a;
+}
+body.theme-thu:not(.dark){
+  --bg:#f4f6fb; --bg2:#feffff; --summary-bg:#f2f5ff;
+  --edition-accent:#3f4f7f; --edition-soft:#3f4f7f14; --edition-gold:#d8c58a;
+}
+body.theme-fri:not(.dark){
+  --bg:#f8f6ef; --bg2:#fffefa; --summary-bg:#fff8e8;
+  --edition-accent:#6d4b16; --edition-soft:#6d4b1614; --edition-gold:#e3c16c;
+}
+body.theme-weekend:not(.dark){
+  --bg:#f5f5f4; --bg2:#ffffff; --summary-bg:#f8fafc;
+  --edition-accent:#4b5563; --edition-soft:#4b556314; --edition-gold:#d4c08a;
+}
+body.dark{
+  --edition-accent:#b8940e; --edition-soft:#b8940e14; --edition-gold:#c4a44a;
+}
 body{background:var(--bg);font-family:'Noto Serif SC','Source Han Serif SC','STSong','SimSun','PingFang SC',Georgia,serif;
   font-size:var(--fs,14px);color:var(--text);transition:background .2s,color .2s;}
 a{color:var(--link);text-decoration:none;}
@@ -84,15 +111,23 @@ a:hover{text-decoration:underline;}
   box-shadow:0 0 24px rgba(0,0,0,.10);}
 
 /* ══ Masthead（默认手机尺寸）══════════════════════════════════════ */
-.masthead{background:#8a1212;padding:0;}
+.masthead{background:linear-gradient(135deg,#8a1212 0%,var(--edition-accent) 100%);padding:0;}
 .mast-body{display:flex;align-items:center;justify-content:center;
-  padding:16px 16px 12px;}
+  padding:16px 16px 12px;position:relative;}
 .mast-title{display:flex;flex-direction:column;align-items:center;text-align:center;}
 .mast-cn{font-size:46px;color:#f5ead0;line-height:1;letter-spacing:12px;
   font-family:'Noto Serif SC','STSong','SimSun',Georgia,serif;
   text-shadow:1px 2px 8px rgba(0,0,0,.3);}
-.mast-en{font-family:Georgia,serif;font-size:10px;font-weight:700;color:#e8c87a;
+.mast-en{font-family:Georgia,serif;font-size:10px;font-weight:700;color:var(--edition-gold,#e8c87a);
   letter-spacing:7px;text-transform:uppercase;margin-top:7px;opacity:.9;}
+.date-widget{position:absolute;right:16px;top:14px;text-align:right;
+  color:#f5ead0;font-family:sans-serif;min-width:116px;}
+.date-weekday{font-size:20px;font-weight:800;letter-spacing:1px;line-height:1.1;}
+.date-edition{display:inline-flex;align-items:center;gap:4px;margin-top:5px;
+  padding:2px 7px;border:1px solid rgba(245,234,208,.28);border-radius:999px;
+  background:rgba(0,0,0,.10);font-size:9px;font-weight:700;color:var(--edition-gold,#e8c87a);}
+.date-lunar{font-size:9px;line-height:1.4;color:rgba(245,234,208,.62);margin-top:5px;
+  max-width:126px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 /* 信息条 */
 .mast-strip{display:flex;flex-wrap:wrap;gap:4px 0;padding:5px 16px 7px;
   font-size:10px;color:rgba(245,234,208,.65);
@@ -213,6 +248,9 @@ label.toggle-btn:hover{background:#6e0e0e;}
   .mast-en{font-size:11px;letter-spacing:6px;margin-top:10px;}
   .mast-strip{flex-wrap:nowrap;padding:6px 36px 8px;font-size:11px;
     justify-content:center;}
+  .date-widget{right:38px;top:24px;min-width:138px;}
+  .date-weekday{font-size:24px;}
+  .date-lunar{max-width:150px;}
   /* 摘要：在 main-col 内，不需要额外 padding */
   .summary-box{padding:16px 20px;border-radius:3px;}
   .footer{padding:18px 32px;}
@@ -245,6 +283,7 @@ label.toggle-btn:hover{background:#6e0e0e;}
   #tlg:checked ~ .page-wrap .mast-cn{font-size:46px;letter-spacing:16px;}
   #tlg:checked ~ .page-wrap .mast-en{font-size:10px;letter-spacing:7px;}
   #tlg:checked ~ .page-wrap .mast-strip{flex-wrap:wrap;padding:5px 16px 7px;font-size:10px;}
+  #tlg:checked ~ .page-wrap .date-widget{position:static;text-align:center;margin-top:10px;}
   #tlg:checked ~ .page-wrap .body-grid{display:block;}
   #tlg:checked ~ .page-wrap .main-col{padding:14px 16px;border-right:none;}
   #tlg:checked ~ .page-wrap .sidebar{display:none;}
@@ -255,6 +294,12 @@ label.toggle-btn:hover{background:#6e0e0e;}
   #tlg:checked ~ .page-wrap .footer{padding:14px 16px;}
   #tlg:checked ~ .page-wrap .sec-title{font-size:10px;letter-spacing:0.5px;}
   #tlg:checked ~ label.toggle-btn::after{content:'电脑版';}
+}
+@media(max-width:640px){
+  .mast-body{flex-direction:column;}
+  .date-widget{position:static;text-align:center;margin-top:10px;min-width:0;}
+  .date-weekday{font-size:16px;}
+  .date-lunar{max-width:none;}
 }
 /* ══ 超宽屏（≥1200px）三列新闻网格 ════════════════════════════════ */
 @media(min-width:1200px){
@@ -365,7 +410,7 @@ body.dark .slim-sowhat{color:#34d399;}
 })();
 </script>
 </head>
-<body>
+<body class="theme-mon">
 <script>
 // 应用暗色（避免闪白）
 if(localStorage.getItem('jd_dark')==='1') document.body.classList.add('dark');
@@ -496,9 +541,16 @@ function shareCard(btn) {
         <div class="mast-cn">简&nbsp;报</div>
         <div class="mast-en">JAE DAILY</div>
       </div>
+      <div class="date-widget" aria-label="今日日期">
+        <div class="date-weekday">星期一</div>
+        <div class="date-edition">No. 1 · 周一版 · 开卷</div>
+        <div class="date-lunar">农历丙午年五月廿九</div>
+      </div>
     </div>
     <div class="mast-strip">
       <span class="mast-strip-item">2026年07月13日</span>
+      <span class="mast-strip-sep">·</span>
+      <span class="mast-strip-item">星期一</span>
       <span class="mast-strip-sep">·</span>
       <span class="mast-strip-item">47 家权威媒体</span>
       <span class="mast-strip-sep">·</span>
@@ -515,7 +567,7 @@ function shareCard(btn) {
       
       
       
-      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年07月13日</div><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bbc.co.uk/news/articles/clyrdn216k2o?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">安东尼·祖彻：从特朗普批评者到盟友，林赛·格雷厄姆是马加时代的政治幸存者</a></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bloomberg.com/news/articles/2026-07-12/us-iran-trade-wave-of-attacks-as-tehran-says-hormuz-closed" class="slim-title" target="_blank" rel="noopener">由于双方对霍尔木兹海峡地位存在争议，美国再次对伊朗发动袭击</a></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">综合</div><a href="https://www.bbc.co.uk/news/articles/c24yev53q06o?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">曼谷酒吧火灾 至少27人死亡</a></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">财经</div><a href="https://www.bloomberg.com/news/articles/2026-07-12/gold-declines-as-renewed-us-iran-strikes-raise-rate-hike-bets" class="slim-title" target="_blank" rel="noopener">随着美国和伊朗再次罢工增加加息押注，金价下跌</a></div></div><div class="slim-item"><div class="slim-num">05</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bbc.co.uk/news/articles/cj9gkpp0dkeo?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">美国坚称霍尔木兹海峡开放，与伊朗交锋</a></div></div></div>
+      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年07月13日</div><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bbc.co.uk/news/articles/cj9gkpp0dkeo?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">美国坚称霍尔木兹海峡开放，与伊朗交锋</a></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.ft.com/content/2855aa69-7bce-4921-9c80-66e0f78d2575" class="slim-title" target="_blank" rel="noopener">林赛·格雷厄姆，共和党参议员，1955-2026 年</a></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">综合</div><a href="https://www.bbc.co.uk/news/articles/c24yev53q06o?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">曼谷酒吧火灾 至少27人死亡、8人重伤</a></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">财经</div><a href="https://www.bloomberg.com/news/articles/2026-07-13/sk-hynix-shares-drop-in-seoul-after-much-hyped-us-trading-debut" class="slim-title" target="_blank" rel="noopener">SK 海力士在美国上市 265 亿美元后股价暴跌</a></div></div><div class="slim-item"><div class="slim-num">05</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bbc.co.uk/news/articles/cvge2nd611zo?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">美国参议员米奇·麦康奈尔因跌倒和肺炎缺席</a></div></div></div>
       <div class="filter-bar" id="filter-bar">
         <button class="filter-chip active" data-sec="all" onclick="filterSec(this,'all')">全部</button>
         <button class="filter-chip" data-sec="finance"  onclick="filterSec(this,'finance')">财经</button>
@@ -539,118 +591,118 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-3328938240" class="rank-title-link">
-        <div class="rank-title">安东尼·祖彻：从特朗普批评者到盟友，林赛·格雷厄姆是马加时代的政治幸存者<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-3767526093" class="rank-title-link">
+        <div class="rank-title">美国坚称霍尔木兹海峡开放，与伊朗交锋<span style="font-size:9px;color:#93c5fd;font-family:sans-serif;">持续119天</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;">5<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.co.uk/news/articles/clyrdn216k2o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#8a1212;">13<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bbc.co.uk/news/articles/cj9gkpp0dkeo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-2477565616" class="rank-title-link">
-        <div class="rank-title">由于双方对霍尔木兹海峡地位存在争议，美国再次对伊朗发动袭击<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-3849605694" class="rank-title-link">
+        <div class="rank-title">林赛·格雷厄姆，共和党参议员，1955-2026 年<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:78%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;">5<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-07-12/us-iran-trade-wave-of-attacks-as-tehran-says-hormuz-closed" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#8a1212;">8<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.ft.com/content/2855aa69-7bce-4921-9c80-66e0f78d2575" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-6118712264" class="rank-title-link">
-        <div class="rank-title">美国坚称霍尔木兹海峡开放，与伊朗交锋<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-6840077285" class="rank-title-link">
+        <div class="rank-title">美国参议员米奇·麦康奈尔因跌倒和肺炎缺席<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:64%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:50%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.co.uk/news/articles/cj9gkpp0dkeo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#8a1212;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bbc.co.uk/news/articles/cvge2nd611zo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-7691792815" class="rank-title-link">
-        <div class="rank-title">伊朗袭击导致油价上涨，美国股指期货下跌：市场总结<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-1353518191" class="rank-title-link">
+        <div class="rank-title">援助人员感染埃博拉病毒后，美国大使馆要求美国人避开刚果<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:64%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:42%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-07-12/oil-climbs-us-futures-dip-on-fresh-iran-strikes-markets-wrap" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bloomberg.com/news/articles/2026-07-13/us-warns-americans-to-avoid-congo-over-ebola-after-aid-worker-infected" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-3001925383" class="rank-title-link">
-        <div class="rank-title">新西兰计划在 11 月大选前签署液化天然气进口工厂协议<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-7662905019" class="rank-title-link">
+        <div class="rank-title">《Pokémon Go》问世 10 周年，数百万人仍在尝试捕捉它们<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:63%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:42%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-07-12/nz-aims-to-sign-lng-import-plant-deal-before-november-election" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bbc.co.uk/news/articles/cevlwk4nrm7o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-3328938240" data-id="3328938240" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">安东尼·祖彻：从特朗普批评者到盟友，林赛·格雷厄姆是马加时代的政治幸存者</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
-    
-    <span style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多源报道 · 5</span>
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 128"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">7小时前</span>
-    <button class="share-btn" title="复制分享" data-text="安东尼·祖彻：从特朗普批评者到盟友，林赛·格雷厄姆是马加时代的政治幸存者" data-link="https://www.bbc.co.uk/news/articles/clyrdn216k2o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-  </div>
-  <details class="card-expand"><summary>展开 · 4来源</summary><div class="card-expand-body"><div class="card-desc">英国广播公司驻北美记者写道，这位参议员职业生涯的特点是愿意适应美国急剧变化的政治气候。</div><div class="related-row">· <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span> <span style="font-size:9px;color:#7d0000;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7d000018;border-radius:999px;padding:1px 7px;">🇯🇵&thinsp;Japan Times</span> <span style="font-size:9px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span> <span style="font-size:9px;color:#0057a8;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0057a818;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;Sky News</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#e11d4822;color:#e11d48;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">日本</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><a href="https://www.bbc.co.uk/news/articles/clyrdn216k2o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-2477565616" data-id="2477565616" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">由于双方对霍尔木兹海峡地位存在争议，美国再次对伊朗发动袭击</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
-    
-    <span style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多源报道 · 5</span>
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 125"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">19小时前</span>
-    <button class="share-btn" title="复制分享" data-text="由于双方对霍尔木兹海峡地位存在争议，美国再次对伊朗发动袭击" data-link="https://www.bloomberg.com/news/articles/2026-07-12/us-iran-trade-wave-of-attacks-as-tehran-says-hormuz-closed" onclick="shareCard(this)">🔗</button>
-  </div>
-  <details class="card-expand"><summary>展开 · 4来源</summary><div class="card-expand-body"><div class="card-desc">美国周日对伊朗发动了新的导弹袭击，这已成为华盛顿和德黑兰的打击和反击模式，因为双方就伊朗问题发表了相互矛盾的声明。</div><div class="related-row">· <span style="font-size:9px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×2</span> <span style="font-size:9px;color:#7d0000;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7d000018;border-radius:999px;padding:1px 7px;">🇯🇵&thinsp;Japan Times</span> <span style="font-size:9px;color:#6b0000;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#6b000018;border-radius:999px;padding:1px 7px;">🇷🇺&thinsp;RT</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#9333ea22;color:#9333ea;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">俄罗斯</span><span style="font-size:8px;background:#e11d4822;color:#e11d48;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">日本</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><a href="https://www.bloomberg.com/news/articles/2026-07-12/us-iran-trade-wave-of-attacks-as-tehran-says-hormuz-closed" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-6118712264" data-id="6118712264" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+    <div class="news-card " id="card-3767526093" data-id="3767526093" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">美国坚称霍尔木兹海峡开放，与伊朗交锋</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
     
+    <span style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多源报道 · 13</span>
     
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">4小时前</span>
+    <span style="font-size:9px;color:#93c5fd;font-family:sans-serif;">持续119天</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 192"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">5小时前</span>
     <button class="share-btn" title="复制分享" data-text="美国坚称霍尔木兹海峡开放，与伊朗交锋" data-link="https://www.bbc.co.uk/news/articles/cj9gkpp0dkeo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">伊朗军队早些时候表示，该海峡已关闭，并对美国在该地区的盟友和基地发动了大范围的袭击。</div><a href="https://www.bbc.co.uk/news/articles/cj9gkpp0dkeo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-7691792815" data-id="7691792815" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">伊朗袭击导致油价上涨，美国股指期货下跌：市场总结</div>
+  <details class="card-expand"><summary>展开 · 12来源</summary><div class="card-expand-body"><div class="card-desc">伊朗军队早些时候表示，该海峡已关闭，并对美国在该地区的盟友和基地发动了大范围的袭击。</div><div class="related-row">· <span style="font-size:9px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×2</span> <span style="font-size:9px;color:#065f46;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#065f4618;border-radius:999px;padding:1px 7px;">🇶🇦&thinsp;Al Jazeera</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×2</span> <span style="font-size:9px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;NYT 财经</span> <span style="font-size:9px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;NYT 国际</span> <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">+4</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#dc262622;color:#dc2626;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中国官方</span><span style="font-size:8px;background:#9333ea22;color:#9333ea;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">俄罗斯</span><span style="font-size:8px;background:#f59e0b22;color:#f59e0b;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">印度</span><span style="font-size:8px;background:#6366f122;color:#6366f1;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">法国</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><a href="https://www.bbc.co.uk/news/articles/cj9gkpp0dkeo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-3849605694" data-id="3849605694" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">林赛·格雷厄姆，共和党参议员，1955-2026 年</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
+    
+    <span style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多源报道 · 8</span>
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 150"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">11小时前</span>
+    <button class="share-btn" title="复制分享" data-text="林赛·格雷厄姆，共和党参议员，1955-2026 年" data-link="https://www.ft.com/content/2855aa69-7bce-4921-9c80-66e0f78d2575" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开 · 7来源</summary><div class="card-expand-body"><div class="card-desc">美国实力的资深支持者是特朗普的批评者，后来成为总统最有影响力的支持者之一</div><div class="related-row">· <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×2</span> <span style="font-size:9px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span> <span style="font-size:9px;color:#d81b2a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#d81b2a18;border-radius:999px;padding:1px 7px;">🇪🇺&thinsp;Politico EU</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×2</span> <span style="font-size:9px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span> <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">+1</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#2563eb22;color:#2563eb;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">欧洲</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><a href="https://www.ft.com/content/2855aa69-7bce-4921-9c80-66e0f78d2575" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-6840077285" data-id="6840077285" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">美国参议员米奇·麦康奈尔因跌倒和肺炎缺席</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
+    
+    <span style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双源报道 · 2</span>
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 97"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">3小时前</span>
+    <button class="share-btn" title="复制分享" data-text="美国参议员米奇·麦康奈尔因跌倒和肺炎缺席" data-link="https://www.bbc.co.uk/news/articles/cvge2nd611zo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">这位资深共和党人在数周对其健康状况进行猜测后的首次声明中表示，他“暂时”不会重返工作岗位。</div><div class="related-row">· <span style="font-size:9px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span></div><a href="https://www.bbc.co.uk/news/articles/cvge2nd611zo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-1353518191" data-id="1353518191" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">援助人员感染埃博拉病毒后，美国大使馆要求美国人避开刚果</div>
   
   <div class="card-meta">
     
@@ -660,12 +712,27 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">5小时前</span>
-    <button class="share-btn" title="复制分享" data-text="伊朗袭击导致油价上涨，美国股指期货下跌：市场总结" data-link="https://www.bloomberg.com/news/articles/2026-07-12/oil-climbs-us-futures-dip-on-fresh-iran-strikes-markets-wrap" onclick="shareCard(this)">🔗</button>
+    <span class="pub-time">30分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="援助人员感染埃博拉病毒后，美国大使馆要求美国人避开刚果" data-link="https://www.bloomberg.com/news/articles/2026-07-13/us-warns-americans-to-avoid-congo-over-ebola-after-aid-worker-infected" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">美国对伊朗发动新一轮打击后，油价上涨，美国股指期货下跌，而对霍尔木兹海峡地位的相互矛盾的说法加剧了不确定性。</div><a href="https://www.bloomberg.com/news/articles/2026-07-12/oil-climbs-us-futures-dip-on-fresh-iran-strikes-markets-wrap" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-3001925383" data-id="3001925383" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">新西兰计划在 11 月大选前签署液化天然气进口工厂协议</div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">在第二名美国援助人员在应对刚果民主共和国不断升级的疫情时被感染后，美国建议其公民避免前往刚果民主共和国，因为埃博拉病毒。</div><a href="https://www.bloomberg.com/news/articles/2026-07-13/us-warns-americans-to-avoid-congo-over-ebola-after-aid-worker-infected" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-7662905019" data-id="7662905019" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">《Pokémon Go》问世 10 周年，数百万人仍在尝试捕捉它们</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
+    
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">3小时前</span>
+    <button class="share-btn" title="复制分享" data-text="《Pokémon Go》问世 10 周年，数百万人仍在尝试捕捉它们" data-link="https://www.bbc.co.uk/news/articles/cevlwk4nrm7o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">手机游戏所有者 Scopely 的副总裁迈克尔·斯特兰卡 (Michael Steranka) 表示，这款游戏一直致力于将人们聚集在一起。</div><a href="https://www.bbc.co.uk/news/articles/cevlwk4nrm7o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-5542189530" data-id="5542189530" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">霍尔木兹冲突升级，新一轮袭击导致油价上涨</div>
   
   <div class="card-meta">
     
@@ -675,25 +742,10 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 81"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">8小时前</span>
-    <button class="share-btn" title="复制分享" data-text="新西兰计划在 11 月大选前签署液化天然气进口工厂协议" data-link="https://www.bloomberg.com/news/articles/2026-07-12/nz-aims-to-sign-lng-import-plant-deal-before-november-election" onclick="shareCard(this)">🔗</button>
+    <span class="pub-time">5小时前</span>
+    <button class="share-btn" title="复制分享" data-text="霍尔木兹冲突升级，新一轮袭击导致油价上涨" data-link="https://www.bloomberg.com/news/articles/2026-07-12/latest-oil-market-news-and-analysis-for-july-13" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">新西兰计划在 11 月大选前签署首个液化天然气进口设施合同，政府押注未来几年全球液化天然气价格下降将使</div><a href="https://www.bloomberg.com/news/articles/2026-07-12/nz-aims-to-sign-lng-import-plant-deal-before-november-election" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-5320245985" data-id="5320245985" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">报道称，西班牙山火期间，严重烧伤的英国夫妇从峡谷中获救</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
-    
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 80"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">13小时前</span>
-    <button class="share-btn" title="复制分享" data-text="报道称，西班牙山火期间，严重烧伤的英国夫妇从峡谷中获救" data-link="https://www.bbc.co.uk/news/articles/cx2x7441762o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-  </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">据当地媒体报道，这对未透露姓名的夫妇被发现被阿尔梅里亚省肆虐的大火困住，处于半昏迷状态，40% 烧伤。</div><a href="https://www.bbc.co.uk/news/articles/cx2x7441762o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">随着美国完成对伊朗的另一波打击，双方对霍尔木兹海峡是否开放存在争议，油价上涨。</div><a href="https://www.bloomberg.com/news/articles/2026-07-12/latest-oil-market-news-and-analysis-for-july-13" class="read-link">→ 查看原文</a></div></details>
 </div>
   </div>
 </section>
@@ -712,73 +764,88 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-1533030077" class="rank-title-link">
-        <div class="rank-title">随着美国和伊朗再次罢工增加加息押注，金价下跌<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-4433978682" class="rank-title-link">
+        <div class="rank-title">SK 海力士在美国上市 265 亿美元后股价暴跌<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-07-12/gold-declines-as-renewed-us-iran-strikes-raise-rate-hike-bets" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#1e293b;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bloomberg.com/news/articles/2026-07-13/sk-hynix-shares-drop-in-seoul-after-much-hyped-us-trading-debut" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-4226602523" class="rank-title-link">
-        <div class="rank-title">【今朝の5本】仕事を始める前に読んでおきたい厳選ニュース</div>
+      <a href="#card-8659377464" class="rank-title-link">
+        <div class="rank-title">摩根大通进一步下调目标价后 MiniMax 股价暴跌<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:83%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/jp/news/newsletters/2026-07-12/TI2YJ2RKV2TH00" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bloomberg.com/news/articles/2026-07-13/minimax-shares-slump-after-jpmorgan-cuts-target-price-further" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-8798788288" class="rank-title-link">
-        <div class="rank-title">交易员努力应对对美元有利、对债券不利的世界<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-7449698061" class="rank-title-link">
+        <div class="rank-title">中国通过新投资公司扩大战略矿产工具包<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:98%;background:#1e293b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:83%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-07-12/traders-grapple-with-world-that-s-good-for-dollar-bad-for-bonds" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bloomberg.com/news/articles/2026-07-13/china-expands-strategic-mineral-toolkit-with-new-investment-firm" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-1066666125" class="rank-title-link">
-        <div class="rank-title">Aldi 如何用 4 美元的杏仁黄油挑战美国超市<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-5978126801" class="rank-title-link">
+        <div class="rank-title">取消与西班牙长达 118 年的边境管制，直布罗陀进入新时代<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:93%;background:#1e293b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:82%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.co.uk/news/articles/cly0l5d5xn7o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bbc.co.uk/news/articles/cwydz60j3eno?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-3690081349" class="rank-title-link">
-        <div class="rank-title">里夫斯告诉 BBC：伯纳姆需要从一开始就制定完善的治理计划<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-8878064257" class="rank-title-link">
+        <div class="rank-title">为什么转向省钱比您想象的更容易<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:89%;background:#1e293b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:82%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.co.uk/news/articles/cwykdvgv4d4o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bbc.co.uk/news/articles/cd7w98n2y3eo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-1533030077" data-id="1533030077" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">随着美国和伊朗再次罢工增加加息押注，金价下跌</div>
+    <div class="news-card " id="card-4433978682" data-id="4433978682" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">SK 海力士在美国上市 265 亿美元后股价暴跌</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
+    
+    <span style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双源报道 · 2</span>
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 98"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">2小时前</span>
+    <button class="share-btn" title="复制分享" data-text="SK 海力士在美国上市 265 亿美元后股价暴跌" data-link="https://www.bloomberg.com/news/articles/2026-07-13/sk-hynix-shares-drop-in-seoul-after-much-hyped-us-trading-debut" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">存储芯片制造商 SK 海力士 (SK Hynix Inc.) 在备受期待的美国上市交易后，周一在首尔股价下跌，交易员称获利了结以及转向美国存托凭证。</div><div class="related-row">· <span style="font-size:9px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span></div><a href="https://www.bloomberg.com/news/articles/2026-07-13/sk-hynix-shares-drop-in-seoul-after-much-hyped-us-trading-debut" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-8659377464" data-id="8659377464" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">摩根大通进一步下调目标价后 MiniMax 股价暴跌</div>
   
   <div class="card-meta">
     
@@ -788,12 +855,12 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">3小时前</span>
-    <button class="share-btn" title="复制分享" data-text="随着美国和伊朗再次罢工增加加息押注，金价下跌" data-link="https://www.bloomberg.com/news/articles/2026-07-12/gold-declines-as-renewed-us-iran-strikes-raise-rate-hike-bets" onclick="shareCard(this)">🔗</button>
+    <span class="pub-time">10分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="摩根大通进一步下调目标价后 MiniMax 股价暴跌" data-link="https://www.bloomberg.com/news/articles/2026-07-13/minimax-shares-slump-after-jpmorgan-cuts-target-price-further" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">在美国和伊朗周末相互罢工后，金价下跌，导致能源价格走高，并再次提高了加息以对抗通胀的前景。</div><a href="https://www.bloomberg.com/news/articles/2026-07-12/gold-declines-as-renewed-us-iran-strikes-raise-rate-hike-bets" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-4226602523" data-id="4226602523" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">【今朝の5本】仕事を始める前に読んでおきたい厳選ニュース</div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">摩根大通 (JPMorgan Chase &amp; Co.) 因担心新一轮融资导致价值稀释，在不到一周内第二次下调这家中国人工智能模型制造商的目标价，导致 MiniMax Group Inc. 股价暴跌。</div><a href="https://www.bloomberg.com/news/articles/2026-07-13/minimax-shares-slump-after-jpmorgan-cuts-target-price-further" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-7449698061" data-id="7449698061" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">中国通过新投资公司扩大战略矿产工具包</div>
   
   <div class="card-meta">
     
@@ -801,29 +868,29 @@ function shareCard(btn) {
     
     
     
-    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 82"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">6小时前</span>
-    <button class="share-btn" title="复制分享" data-text="【今朝の5本】仕事を始める前に読んでおきたい厳選ニュース" data-link="https://www.bloomberg.com/jp/news/newsletters/2026-07-12/TI2YJ2RKV2TH00" onclick="shareCard(this)">🔗</button>
+    <span class="pub-time">32分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="中国通过新投资公司扩大战略矿产工具包" data-link="https://www.bloomberg.com/news/articles/2026-07-13/china-expands-strategic-mineral-toolkit-with-new-investment-firm" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">​米イラン応酬激化、AI開発競争、グラム上院議員死去、アップルが提訴、半導体株に慎重</div><a href="https://www.bloomberg.com/jp/news/newsletters/2026-07-12/TI2YJ2RKV2TH00" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-8798788288" data-id="8798788288" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">交易员努力应对对美元有利、对债券不利的世界</div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">北京支持的新矿业投资工具旨在加强中国对海外资源的控制，以应对美国和欧洲遏制其矿业主导地位的努力</div><a href="https://www.bloomberg.com/news/articles/2026-07-13/china-expands-strategic-mineral-toolkit-with-new-investment-firm" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-5978126801" data-id="5978126801" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">取消与西班牙长达 118 年的边境管制，直布罗陀进入新时代</div>
   
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
     
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 81"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">8小时前</span>
-    <button class="share-btn" title="复制分享" data-text="交易员努力应对对美元有利、对债券不利的世界" data-link="https://www.bloomberg.com/news/articles/2026-07-12/traders-grapple-with-world-that-s-good-for-dollar-bad-for-bonds" onclick="shareCard(this)">🔗</button>
+    <span class="pub-time">4小时前</span>
+    <button class="share-btn" title="复制分享" data-text="取消与西班牙长达 118 年的边境管制，直布罗陀进入新时代" data-link="https://www.bbc.co.uk/news/articles/cwydz60j3eno?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">对美元有利的事情并不总是对美国债券有利，但投资者正在寻找解决办法。</div><a href="https://www.bloomberg.com/news/articles/2026-07-12/traders-grapple-with-world-that-s-good-for-dollar-bad-for-bonds" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-1066666125" data-id="1066666125" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">Aldi 如何用 4 美元的杏仁黄油挑战美国超市</div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">希望英国领土和西班牙之间的自由流动能够促进经济发展。</div><a href="https://www.bbc.co.uk/news/articles/cwydz60j3eno?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-8878064257" data-id="8878064257" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">为什么转向省钱比您想象的更容易</div>
   
   <div class="card-meta">
     
@@ -832,41 +899,26 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 77"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">22小时前</span>
-    <button class="share-btn" title="复制分享" data-text="Aldi 如何用 4 美元的杏仁黄油挑战美国超市" data-link="https://www.bbc.co.uk/news/articles/cly0l5d5xn7o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 81"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">4小时前</span>
+    <button class="share-btn" title="复制分享" data-text="为什么转向省钱比您想象的更容易" data-link="https://www.bbc.co.uk/news/articles/cd7w98n2y3eo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">这家德国超市在美国投入 90 亿美元，目标是曼哈顿等城市中心。其折扣模式能与沃尔玛媲美吗？</div><a href="https://www.bbc.co.uk/news/articles/cly0l5d5xn7o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-3690081349" data-id="3690081349" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">里夫斯告诉 BBC：伯纳姆需要从一开始就制定完善的治理计划</div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">改变你的宽带或能源供应商，甚至你的银行，以获得更好的交易比以前更简单。</div><a href="https://www.bbc.co.uk/news/articles/cd7w98n2y3eo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-2711545780" data-id="2711545780" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">里夫斯在最后一刻争取伯纳姆领导下的高级职位</div>
   
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
+    <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
     
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 73"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">昨天 12:00</span>
-    <button class="share-btn" title="复制分享" data-text="里夫斯告诉 BBC：伯纳姆需要从一开始就制定完善的治理计划" data-link="https://www.bbc.co.uk/news/articles/cwykdvgv4d4o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 79"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">13小时前</span>
+    <button class="share-btn" title="复制分享" data-text="里夫斯在最后一刻争取伯纳姆领导下的高级职位" data-link="https://www.ft.com/content/de4b95e7-d500-4012-940d-d7d4f364be3c" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">德国总理告诉劳拉·昆斯伯格，她将把稳定的经济交给即将上任的总理。</div><a href="https://www.bbc.co.uk/news/articles/cwykdvgv4d4o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-6036985162" data-id="6036985162" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">特朗普账户能为美国儿童带来好处吗？</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
-    
-    
-    
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续2天</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 71"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">昨天 07:41</span>
-    <button class="share-btn" title="复制分享" data-text="特朗普账户能为美国儿童带来好处吗？" data-link="https://www.bbc.co.uk/news/articles/ckg55v9e2y9o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-  </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">白宫称赞该项目让新一代在美国梦中占有一席之地，但该计划也遭到批评。</div><a href="https://www.bbc.co.uk/news/articles/ckg55v9e2y9o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">英国财政大臣将在周二的官邸演讲中表示，她已让即将上任的总理的经济保持良好状态</div><a href="https://www.ft.com/content/de4b95e7-d500-4012-940d-d7d4f364be3c" class="read-link">→ 查看原文</a></div></details>
 </div>
   </div>
 </section>
@@ -875,7 +927,7 @@ function shareCard(btn) {
   <div class="sec-header" style="color:#1e293b;">
     <span class="sec-title">科技与人工智能</span>
     <a href="ai-digest.html" style="display:inline-flex;align-items:center;border:1px solid currentColor;border-radius:2px;padding:4px 12px;font-size:10px;color:inherit;text-decoration:none;font-weight:700;letter-spacing:1px;white-space:nowrap;opacity:0.7;transition:opacity 0.15s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">AI 研报 →</a>
-    <span class="sec-count">5 条</span>
+    <span class="sec-count">6 条</span>
   </div>
   <!-- mobile-only heat ranking -->
   <div class="mobile-heat">
@@ -885,7 +937,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-4467638845" class="rank-title-link">
+      <a href="#card-7599090617" class="rank-title-link">
         <div class="rank-title">下载：Claude 的内部运作和 OpenAI 的“超级应用程序”<span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续2天</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
@@ -898,10 +950,23 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-8585474423" class="rank-title-link">
+      <a href="#card-3561261313" class="rank-title-link">
+        <div class="rank-title">OpenAI、Meta、SpaceXAI 争夺更具成本效益的人工智能模型<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      </a>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:87%;background:#1e293b;"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
+      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.japantimes.co.jp/business/2026/07/13/openai-meta-spacexai-cost-ai/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+    </div>
+  </div>
+  <div class="rank-row">
+    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
+    <div class="rank-body">
+      <a href="#card-2341976483" class="rank-title-link">
         <div class="rank-title">人类发现了一个隐藏的空间，克劳德在这里对概念感到困惑<span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续2天</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:85%;background:#1e293b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:86%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
@@ -909,48 +974,35 @@ function shareCard(btn) {
     </div>
   </div>
   <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
+    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-6035358251" class="rank-title-link">
+      <a href="#card-5857494473" class="rank-title-link">
+        <div class="rank-title">Uber 的自动驾驶汽车战略：放慢其采用速度<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      </a>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:84%;background:#1e293b;"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
+      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.wired.com/story/ubers-autonomous-vehicle-strategy-slow-their-adoption/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+    </div>
+  </div>
+  <div class="rank-row">
+    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
+    <div class="rank-body">
+      <a href="#card-1263821595" class="rank-title-link">
         <div class="rank-title">苹果失败的自动驾驶汽车计划留下了强大的人工智能芯片的遗产<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:85%;background:#1e293b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:83%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
       <a href="https://www.theverge.com/tech/964519/apple-silicon-self-driving-car-ai-m7-ultra" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
-    <div class="rank-body">
-      <a href="#card-5127097417" class="rank-title-link">
-        <div class="rank-title">科学家的副业？利用人工智能和量子计算生成新肽<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:82%;background:#1e293b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.wired.com/story/scientists-using-ai-and-quantum-computing-to-generate-new-peptides/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
-    <div class="rank-body">
-      <a href="#card-5084583328" class="rank-title-link">
-        <div class="rank-title">随着 ChatGPT 深入家庭，OpenAI 押注家庭<span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:74%;background:#1e293b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://techcrunch.com/2026/07/11/openai-bets-on-families-as-chatgpt-goes-deeper-into-households/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-4467638845" data-id="4467638845" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+    <div class="news-card " id="card-7599090617" data-id="7599090617" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
   <div class="card-title">下载：Claude 的内部运作和 OpenAI 的“超级应用程序”</div>
   
   <div class="card-meta">
@@ -960,12 +1012,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续2天</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 74"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 73"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">07-10 12:10</span>
     <button class="share-btn" title="复制分享" data-text="下载：Claude 的内部运作和 OpenAI 的“超级应用程序”" data-link="https://www.technologyreview.com/2026/07/10/1140316/the-download-anthropic-claude-hidden-space-openai-super-app/" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">这是今天的《下载》版本，这是我们的工作日时事通讯，每天提供技术世界中正在发生的事情。人类发现了克劳德谜题的隐藏空间</div><div class="related-row">· <span style="font-size:9px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span></div><a href="https://www.technologyreview.com/2026/07/10/1140316/the-download-anthropic-claude-hidden-space-openai-super-app/" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-8585474423" data-id="8585474423" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-2341976483" data-id="2341976483" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
   <div class="card-title">人类发现了一个隐藏的空间，克劳德在这里对概念感到困惑</div>
   
   <div class="card-meta">
@@ -980,7 +1032,37 @@ function shareCard(btn) {
     <button class="share-btn" title="复制分享" data-text="人类发现了一个隐藏的空间，克劳德在这里对概念感到困惑" data-link="https://www.technologyreview.com/2026/07/09/1140293/anthropic-found-a-hidden-space-where-claude-puzzles-over-concepts/" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">人工智能公司 Anthropic 开发了一种技术，可以让人们最清晰地了解大型语言模型在回答问题或执行任务时内部到底发生了什么。他们什么</div><a href="https://www.technologyreview.com/2026/07/09/1140293/anthropic-found-a-hidden-space-where-claude-puzzles-over-concepts/" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-6035358251" data-id="6035358251" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-3561261313" data-id="3561261313" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">OpenAI、Meta、SpaceXAI 争夺更具成本效益的人工智能模型</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#7d0000;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7d000018;border-radius:999px;padding:1px 7px;">🇯🇵&thinsp;Japan Times</span>
+    
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">56分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="OpenAI、Meta、SpaceXAI 争夺更具成本效益的人工智能模型" data-link="https://www.japantimes.co.jp/business/2026/07/13/openai-meta-spacexai-cost-ai/" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">虽然所有人都承诺会更加先进，但他们最大的直接卖点可能不是他们能做什么，而是他们的收费有多低。</div><a href="https://www.japantimes.co.jp/business/2026/07/13/openai-meta-spacexai-cost-ai/" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-5857494473" data-id="5857494473" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+  <div class="card-title">Uber 的自动驾驶汽车战略：放慢其采用速度</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Wired</span>
+    
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 62"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">7小时前</span>
+    <button class="share-btn" title="复制分享" data-text="Uber 的自动驾驶汽车战略：放慢其采用速度" data-link="https://www.wired.com/story/ubers-autonomous-vehicle-strategy-slow-their-adoption/" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">优步至少在两个地方推行了一项政策，使其比自动驾驶汽车开发商更具优势。该公司表示正在打击垄断。</div><a href="https://www.wired.com/story/ubers-autonomous-vehicle-strategy-slow-their-adoption/" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-1263821595" data-id="1263821595" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
   <div class="card-title">苹果失败的自动驾驶汽车计划留下了强大的人工智能芯片的遗产</div>
   
   <div class="card-meta">
@@ -990,12 +1072,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 63"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">10小时前</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 61"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="苹果失败的自动驾驶汽车计划留下了强大的人工智能芯片的遗产" data-link="https://www.theverge.com/tech/964519/apple-silicon-self-driving-car-ai-m7-ultra" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">苹果的自动驾驶汽车计划从未真正启动，但这可能是该公司芯片成为强大人工智能执行者的原因。在开发初期</div><a href="https://www.theverge.com/tech/964519/apple-silicon-self-driving-car-ai-m7-ultra" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-5127097417" data-id="5127097417" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-7037321191" data-id="7037321191" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
   <div class="card-title">科学家的副业？利用人工智能和量子计算生成新肽</div>
   
   <div class="card-meta">
@@ -1005,26 +1087,11 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 61"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 60"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">17小时前</span>
     <button class="share-btn" title="复制分享" data-text="科学家的副业？利用人工智能和量子计算生成新肽" data-link="https://www.wired.com/story/scientists-using-ai-and-quantum-computing-to-generate-new-peptides/" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">研究人员拼凑了资金和时间来展示量子计算如何帮助开发药物，以帮助服务不足的人群并对抗罕见疾病。</div><a href="https://www.wired.com/story/scientists-using-ai-and-quantum-computing-to-generate-new-peptides/" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-5084583328" data-id="5084583328" style="border-left:3px solid #1e293b;;scroll-margin-top:80px;">
-  <div class="card-title">随着 ChatGPT 深入家庭，OpenAI 押注家庭</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#0a8a00;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0a8a0018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;TechCrunch</span>
-    
-    
-    
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 55"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">昨天 14:13</span>
-    <button class="share-btn" title="复制分享" data-text="随着 ChatGPT 深入家庭，OpenAI 押注家庭" data-link="https://techcrunch.com/2026/07/11/openai-bets-on-families-as-chatgpt-goes-deeper-into-households/" onclick="shareCard(this)">🔗</button>
-  </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">根据招聘信息，ChatGPT 正在招聘一名专门的产品经理，为家庭、护理人员和老年人打造体验。</div><a href="https://techcrunch.com/2026/07/11/openai-bets-on-families-as-chatgpt-goes-deeper-into-households/" class="read-link">→ 查看原文</a></div></details>
 </div>
   </div>
 </section>
@@ -1043,7 +1110,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-3472157976" class="rank-title-link">
+      <a href="#card-5994339001" class="rank-title-link">
         <div class="rank-title">打出提前量 打好主动仗 全力防范应对台风“巴威”<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#8a1212;"></div></div>
@@ -1056,10 +1123,10 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-7853777452" class="rank-title-link">
+      <a href="#card-7974974076" class="rank-title-link">
         <div class="rank-title">全国夏粮产量首次突破3000亿斤<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:96%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
@@ -1069,10 +1136,10 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-2643260478" class="rank-title-link">
+      <a href="#card-2609927152" class="rank-title-link">
         <div class="rank-title">李强主持召开国务院常务会议<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:96%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
@@ -1082,23 +1149,23 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-4098164524" class="rank-title-link">
-        <div class="rank-title">习近平同纳米比亚总统恩代特瓦会谈<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-5620975916" class="rank-title-link">
+        <div class="rank-title">丁薛祥出席两院院士大会第二次全体会议并讲话<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:96%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.gov.cn/yaowen/liebiao/202607/content_7074978.htm" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.gov.cn/yaowen/liebiao/202607/content_7074844.htm" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-5970972213" class="rank-title-link">
+      <a href="#card-5654270338" class="rank-title-link">
         <div class="rank-title">坚持自立自强 促进开放合作——习近平总书记重要讲话为推动世界科技创新发展注入强劲动力<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:80%;background:#8a1212;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:79%;background:#8a1212;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#8a1212;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
@@ -1108,7 +1175,7 @@ function shareCard(btn) {
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-3472157976" data-id="3472157976" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+    <div class="news-card " id="card-5994339001" data-id="5994339001" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">打出提前量 打好主动仗 全力防范应对台风“巴威”</div>
   
   <div class="card-meta">
@@ -1118,12 +1185,12 @@ function shareCard(btn) {
     <span style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双源报道 · 2</span>
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 80"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 79"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">07-11 00:00</span>
     <button class="share-btn" title="复制分享" data-text="打出提前量 打好主动仗 全力防范应对台风“巴威”" data-link="http://politics.people.com.cn/n1/2026/0711/c1001-40758307.html" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">新华社南宁7月10日电国家防总第9号台风“巴威”防范应对专题调度会10日在广西南宁召开，中共中央政治局委员、国务院副总理张国清出席并讲话。他强调，要深入贯彻习近平总书记重要指示批示精神和中央政治局</div><div class="related-row">· <span style="font-size:9px;color:#7f1d1d;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7f1d1d18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;中国政府网</span></div><a href="http://politics.people.com.cn/n1/2026/0711/c1001-40758307.html" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-7853777452" data-id="7853777452" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-7974974076" data-id="7974974076" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">全国夏粮产量首次突破3000亿斤</div>
   
   <div class="card-meta">
@@ -1134,11 +1201,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 77"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">3小时前</span>
+    <span class="pub-time">1分钟前</span>
     <button class="share-btn" title="复制分享" data-text="全国夏粮产量首次突破3000亿斤" data-link="https://www.gov.cn/zhengce/jiedu/tujie/202607/content_7074949.htm" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">国家统计局7月10日发布数据显示，2026年全国夏粮产量3014.9亿斤，首次突破3000亿斤，比上年增加20.0亿斤，增长0.7%。</div><a href="https://www.gov.cn/zhengce/jiedu/tujie/202607/content_7074949.htm" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-2643260478" data-id="2643260478" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-2609927152" data-id="2609927152" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">李强主持召开国务院常务会议</div>
   
   <div class="card-meta">
@@ -1149,12 +1216,12 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 77"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">3小时前</span>
+    <span class="pub-time">1分钟前</span>
     <button class="share-btn" title="复制分享" data-text="李强主持召开国务院常务会议" data-link="https://www.gov.cn/yaowen/liebiao/202607/content_7074983.htm" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">国务院总理李强7月10日主持召开国务院常务会议，进一步部署防汛抗洪救灾工作。</div><a href="https://www.gov.cn/yaowen/liebiao/202607/content_7074983.htm" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-4098164524" data-id="4098164524" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
-  <div class="card-title">习近平同纳米比亚总统恩代特瓦会谈</div>
+</div><div class="news-card " id="card-5620975916" data-id="5620975916" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <div class="card-title">丁薛祥出席两院院士大会第二次全体会议并讲话</div>
   
   <div class="card-meta">
     
@@ -1164,11 +1231,11 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 77"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">3小时前</span>
-    <button class="share-btn" title="复制分享" data-text="习近平同纳米比亚总统恩代特瓦会谈" data-link="https://www.gov.cn/yaowen/liebiao/202607/content_7074978.htm" onclick="shareCard(this)">🔗</button>
+    <span class="pub-time">1分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="丁薛祥出席两院院士大会第二次全体会议并讲话" data-link="https://www.gov.cn/yaowen/liebiao/202607/content_7074844.htm" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">7月10日下午，国家主席习近平在北京人民大会堂同来华进行国事访问的纳米比亚总统恩代特瓦举行会谈。</div><a href="https://www.gov.cn/yaowen/liebiao/202607/content_7074978.htm" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-5970972213" data-id="5970972213" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">两院院士大会第二次全体会议9日下午在京举行。中共中央政治局常委、国务院副总理丁薛祥出席会议并讲话。</div><a href="https://www.gov.cn/yaowen/liebiao/202607/content_7074844.htm" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-5654270338" data-id="5654270338" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">坚持自立自强 促进开放合作——习近平总书记重要讲话为推动世界科技创新发展注入强劲动力</div>
   
   <div class="card-meta">
@@ -1178,12 +1245,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 63"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">07-11 00:00</span>
     <button class="share-btn" title="复制分享" data-text="坚持自立自强 促进开放合作——习近平总书记重要讲话为推动世界科技创新发展注入强劲动力" data-link="http://politics.people.com.cn/n1/2026/0711/c1001-40758571.html" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">新华社北京7月11日电 题：坚持自立自强 促进开放合作——习近平总书记重要讲话为推动世界科技创新发展注入强劲动力 新华社记者 7月8日，中共中央总书记、国家主席、中央军委主席习近平出席国家科学</div><a href="http://politics.people.com.cn/n1/2026/0711/c1001-40758571.html" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-7599747130" data-id="7599747130" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-4312672614" data-id="4312672614" style="border-left:3px solid #8a1212;;scroll-margin-top:80px;">
   <div class="card-title">不断提升旅游业发展法治化水平</div>
   
   <div class="card-meta">
@@ -1193,7 +1260,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 63"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">07-11 00:00</span>
     <button class="share-btn" title="复制分享" data-text="不断提升旅游业发展法治化水平" data-link="http://politics.people.com.cn/n1/2026/0711/c1001-40758319.html" onclick="shareCard(this)">🔗</button>
   </div>
@@ -1216,7 +1283,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-1497436949" class="rank-title-link">
+      <a href="#card-6039539551" class="rank-title-link">
         <div class="rank-title">Claude Code 在阅读提示之前发送了 33k 令牌； OpenCode 发送 7k<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
@@ -1229,7 +1296,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-2356970428" class="rank-title-link">
+      <a href="#card-3360403784" class="rank-title-link">
         <div class="rank-title">我喜欢法学硕士，我讨厌炒作<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
@@ -1242,7 +1309,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-6857798594" class="rank-title-link">
+      <a href="#card-1526848626" class="rank-title-link">
         <div class="rank-title">从 Chromium 148 开始，Math.tanh 现在可以通过指纹来链接底层操作系统<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:91%;background:#1e293b;"></div></div>
@@ -1255,20 +1322,7 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-5562472691" class="rank-title-link">
-        <div class="rank-title">爱尔兰数据中心目前消耗了该国 23% 的电力<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:91%;background:#1e293b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.theregister.com/on-prem/2026/07/11/irish-datacenters-now-guzzle-23-of-the-countrys-electricity/5270013" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
-    <div class="rank-body">
-      <a href="#card-8526375520" class="rank-title-link">
+      <a href="#card-8344736602" class="rank-title-link">
         <div class="rank-title">如何读更多的书<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:87%;background:#1e293b;"></div></div>
@@ -1278,99 +1332,112 @@ function shareCard(btn) {
       <a href="https://scotto.me/blog/2026-07-12-how-to-read-more-books/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
+  <div class="rank-row">
+    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
+    <div class="rank-body">
+      <a href="#card-4052210533" class="rank-title-link">
+        <div class="rank-title">新旧应用程序，通过现代编码代理<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      </a>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:85%;background:#1e293b;"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
+      <div class="rank-score" style="color:#1e293b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://terrytao.wordpress.com/2026/07/11/old-and-new-apps-via-modern-coding-agents/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+    </div>
+  </div>
 </div>
   </div>
   <div class="news-grid forum-grid">
-    <div class="news-card " id="card-1497436949" data-id="1497436949" style="border-left:3px solid #1e293b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+    <div class="news-card " id="card-6039539551" data-id="6039539551" style="border-left:3px solid #1e293b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
   <div class="card-title">Claude Code 在阅读提示之前发送了 33k 令牌； OpenCode 发送 7k</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲405 · 226评</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲488 · 274评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 49"></span>
-    <span class="pub-time">8小时前</span>
+    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 48"></span>
+    <span class="pub-time">9小时前</span>
     <button class="share-btn" title="复制分享" data-text="Claude Code 在阅读提示之前发送了 33k 令牌； OpenCode 发送 7k" data-link="https://systima.ai/blog/claude-code-vs-opencode-token-overhead" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://systima.ai/blog/claude-code-vs-opencode-token-overhead" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=48883275" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
-</div><div class="news-card " id="card-3699979903" data-id="3699979903" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-4052210533" data-id="4052210533" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
   <div class="card-title">新旧应用程序，通过现代编码代理</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲393 · 111评</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲422 · 124评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 42"></span>
+    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 41"></span>
     <span class="pub-time">16小时前</span>
     <button class="share-btn" title="复制分享" data-text="新旧应用程序，通过现代编码代理" data-link="https://terrytao.wordpress.com/2026/07/11/old-and-new-apps-via-modern-coding-agents/" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://terrytao.wordpress.com/2026/07/11/old-and-new-apps-via-modern-coding-agents/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=48880170" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
-</div><div class="news-card " id="card-2356970428" data-id="2356970428" style="border-left:3px solid #1e293b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
-  <div class="card-title">我喜欢法学硕士，我讨厌炒作</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲278 · 156评</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 49"></span>
-    <span class="pub-time">8小时前</span>
-    <button class="share-btn" title="复制分享" data-text="我喜欢法学硕士，我讨厌炒作" data-link="https://geohot.github.io//blog/jekyll/update/2026/07/12/i-love-llms.html" onclick="shareCard(this)">🔗</button>
-  </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://geohot.github.io//blog/jekyll/update/2026/07/12/i-love-llms.html" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=48883343" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
-</div><div class="news-card " id="card-8526375520" data-id="8526375520" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
-  <div class="card-title">如何读更多的书</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲236 · 133评</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 43"></span>
-    <span class="pub-time">11小时前</span>
-    <button class="share-btn" title="复制分享" data-text="如何读更多的书" data-link="https://scotto.me/blog/2026-07-12-how-to-read-more-books/" onclick="shareCard(this)">🔗</button>
-  </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://scotto.me/blog/2026-07-12-how-to-read-more-books/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=48882056" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
-</div><div class="news-card " id="card-6857798594" data-id="6857798594" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-1526848626" data-id="1526848626" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
   <div class="card-title">从 Chromium 148 开始，Math.tanh 现在可以通过指纹来链接底层操作系统</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲202 · 87评</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲354 · 167评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 45"></span>
-    <span class="pub-time">5小时前</span>
+    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 44"></span>
+    <span class="pub-time">6小时前</span>
     <button class="share-btn" title="复制分享" data-text="从 Chromium 148 开始，Math.tanh 现在可以通过指纹来链接底层操作系统" data-link="https://scrapfly.dev/posts/browser-math-os-fingerprint/" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://scrapfly.dev/posts/browser-math-os-fingerprint/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=48884853" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
-</div><div class="news-card " id="card-5562472691" data-id="5562472691" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
-  <div class="card-title">爱尔兰数据中心目前消耗了该国 23% 的电力</div>
+</div><div class="news-card " id="card-3360403784" data-id="3360403784" style="border-left:3px solid #1e293b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+  <div class="card-title">我喜欢法学硕士，我讨厌炒作</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲176 · 129评</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲350 · 210评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 45"></span>
-    <span class="pub-time">6小时前</span>
-    <button class="share-btn" title="复制分享" data-text="爱尔兰数据中心目前消耗了该国 23% 的电力" data-link="https://www.theregister.com/on-prem/2026/07/11/irish-datacenters-now-guzzle-23-of-the-countrys-electricity/5270013" onclick="shareCard(this)">🔗</button>
+    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 48"></span>
+    <span class="pub-time">9小时前</span>
+    <button class="share-btn" title="复制分享" data-text="我喜欢法学硕士，我讨厌炒作" data-link="https://geohot.github.io//blog/jekyll/update/2026/07/12/i-love-llms.html" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://www.theregister.com/on-prem/2026/07/11/irish-datacenters-now-guzzle-23-of-the-countrys-electricity/5270013" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=48884322" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://geohot.github.io//blog/jekyll/update/2026/07/12/i-love-llms.html" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=48883343" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+</div><div class="news-card " id="card-5196439067" data-id="5196439067" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+  <div class="card-title">“互联网之父”温特·瑟夫即将退休</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲285 · 163评</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    
+    <span class="pub-time">07-10 00:06</span>
+    <button class="share-btn" title="复制分享" data-text="“互联网之父”温特·瑟夫即将退休" data-link="https://techcrunch.com/2026/06/30/the-father-of-the-internet-is-finally-retiring/" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://techcrunch.com/2026/06/30/the-father-of-the-internet-is-finally-retiring/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=48854168" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+</div><div class="news-card " id="card-8344736602" data-id="8344736602" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;;scroll-margin-top:80px;">
+  <div class="card-title">如何读更多的书</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
+    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲273 · 149评</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 42"></span>
+    <span class="pub-time">11小时前</span>
+    <button class="share-btn" title="复制分享" data-text="如何读更多的书" data-link="https://scotto.me/blog/2026-07-12-how-to-read-more-books/" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><a href="https://scotto.me/blog/2026-07-12-how-to-read-more-books/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=48882056" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
 </div>
   </div>
 </section>
@@ -1389,36 +1456,36 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-2165086974" class="rank-title-link">
-        <div class="rank-title">曼谷酒吧火灾 至少27人死亡<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-1077945462" class="rank-title-link">
+        <div class="rank-title">曼谷酒吧火灾 至少27人死亡、8人重伤<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#64748b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#64748b;">3<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <div class="rank-score" style="color:#64748b;">4<span style="color:#94a3b8;font-size:9px;">源</span></div>
       <a href="https://www.bbc.co.uk/news/articles/c24yev53q06o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-3034796641" class="rank-title-link">
-        <div class="rank-title">强台风登陆中国疏散近200万人<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-7963115822" class="rank-title-link">
+        <div class="rank-title">第 124 集：安卡拉之后：对 2026 年北约峰会的初步思考<span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续2天</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:67%;background:#64748b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:56%;background:#64748b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#64748b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.co.uk/news/articles/cdxd3wkp2rzo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#64748b;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.rusi.org/podcasts/global-security-briefing/episode-124-after-ankara-first-reflections-2026-nato-summit" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-4855067976" class="rank-title-link">
+      <a href="#card-4740801439" class="rank-title-link">
         <div class="rank-title">让-保罗·萨特<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:61%;background:#64748b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:55%;background:#64748b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#64748b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
@@ -1428,78 +1495,48 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-5527033627" class="rank-title-link">
-        <div class="rank-title">第 124 集：安卡拉之后：对 2026 年北约峰会的初步思考<span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续2天</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:61%;background:#64748b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#64748b;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.rusi.org/podcasts/global-security-briefing/episode-124-after-ankara-first-reflections-2026-nato-summit" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
-    <div class="rank-body">
-      <a href="#card-8999922722" class="rank-title-link">
+      <a href="#card-4940030056" class="rank-title-link">
         <div class="rank-title">技术哲学<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:60%;background:#64748b;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:55%;background:#64748b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#64748b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
       <a href="https://plato.stanford.edu/entries/technology/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
+  <div class="rank-row">
+    <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
+    <div class="rank-body">
+      <a href="#card-4087503643" class="rank-title-link">
+        <div class="rank-title">死亡的定义<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      </a>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:55%;background:#64748b;"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
+      <div class="rank-score" style="color:#64748b;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://plato.stanford.edu/entries/death-definition/" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+    </div>
+  </div>
 </div>
   </div>
   <div class="news-grid">
-    <div class="news-card " id="card-2165086974" data-id="2165086974" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
-  <div class="card-title">曼谷酒吧火灾 至少27人死亡</div>
+    <div class="news-card " id="card-1077945462" data-id="1077945462" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+  <div class="card-title">曼谷酒吧火灾 至少27人死亡、8人重伤</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
     
-    <span style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多源报道 · 3</span>
+    <span style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多源报道 · 4</span>
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 108"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
-    <span class="pub-time">4小时前</span>
-    <button class="share-btn" title="复制分享" data-text="曼谷酒吧火灾 至少27人死亡" data-link="https://www.bbc.co.uk/news/articles/c24yev53q06o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 116"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
+    <span class="pub-time">1小时前</span>
+    <button class="share-btn" title="复制分享" data-text="曼谷酒吧火灾 至少27人死亡、8人重伤" data-link="https://www.bbc.co.uk/news/articles/c24yev53q06o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开 · 2来源</summary><div class="card-expand-body"><div class="card-desc">消防队员到达乍都乍地区的现场，发现顾客在火焰中逃生。</div><div class="related-row">· <span style="font-size:9px;color:#003189;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#00318918;border-radius:999px;padding:1px 7px;">🇫🇷&thinsp;France 24</span> <span style="font-size:9px;color:#8b0000;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#8b000018;border-radius:999px;padding:1px 7px;">🇷🇺&thinsp;TASS</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#9333ea22;color:#9333ea;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">俄罗斯</span><span style="font-size:8px;background:#6366f122;color:#6366f1;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">法国</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><a href="https://www.bbc.co.uk/news/articles/c24yev53q06o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-3034796641" data-id="3034796641" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
-  <div class="card-title">强台风登陆中国疏散近200万人</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
-    
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 73"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">19小时前</span>
-    <button class="share-btn" title="复制分享" data-text="强台风登陆中国疏散近200万人" data-link="https://www.bbc.co.uk/news/articles/cdxd3wkp2rzo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-  </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">浙江省的学校、工作和户外活动已暂停，许多交通服务也被取消。</div><a href="https://www.bbc.co.uk/news/articles/cdxd3wkp2rzo?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-4855067976" data-id="4855067976" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
-  <div class="card-title">让-保罗·萨特</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#7c3aed;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7c3aed18;border-radius:999px;padding:1px 7px;">🎓&thinsp;Stanford SEP</span>
-    
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 66"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">昨天 04:42</span>
-    <button class="share-btn" title="复制分享" data-text="让-保罗·萨特" data-link="https://plato.stanford.edu/entries/sartre/" onclick="shareCard(this)">🔗</button>
-  </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">[Jack Reynolds 和 Pierre-Jean Renaudie 于 2026 年 7 月 10 日修订的条目。更改为：正文、参考书目、notes.html] 很少有哲学家在其一生中像 Jean-Paul Sar 那样出名。</div><a href="https://plato.stanford.edu/entries/sartre/" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-5527033627" data-id="5527033627" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+  <details class="card-expand"><summary>展开 · 3来源</summary><div class="card-expand-body"><div class="card-desc">消防队员到达乍都乍地区的现场，发现顾客在火焰中逃生。</div><div class="related-row">· <span style="font-size:9px;color:#065f46;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#065f4618;border-radius:999px;padding:1px 7px;">🇶🇦&thinsp;Al Jazeera</span> <span style="font-size:9px;color:#003189;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#00318918;border-radius:999px;padding:1px 7px;">🇫🇷&thinsp;France 24</span> <span style="font-size:9px;color:#1a5276;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1a527618;border-radius:999px;padding:1px 7px;">🇮🇳&thinsp;The Hindu</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#f59e0b22;color:#f59e0b;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">印度</span><span style="font-size:8px;background:#6366f122;color:#6366f1;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">法国</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><a href="https://www.bbc.co.uk/news/articles/c24yev53q06o?at_medium=RSS&at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-7963115822" data-id="7963115822" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
   <div class="card-title">第 124 集：安卡拉之后：对 2026 年北约峰会的初步思考</div>
   
   <div class="card-meta">
@@ -1514,7 +1551,22 @@ function shareCard(btn) {
     <button class="share-btn" title="复制分享" data-text="第 124 集：安卡拉之后：对 2026 年北约峰会的初步思考" data-link="https://www.rusi.org/podcasts/global-security-briefing/episode-124-after-ankara-first-reflections-2026-nato-summit" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开 · 1来源</summary><div class="card-expand-body"><div class="card-desc">2026 年北约峰会是在联盟团结脆弱之际召开的。它带来了什么？还有什么问题没有解决？</div><div class="related-row">· <span style="font-size:9px;color:#475569;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#47556918;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;RUSI</span></div><a href="https://www.rusi.org/podcasts/global-security-briefing/episode-124-after-ankara-first-reflections-2026-nato-summit" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-8999922722" data-id="8999922722" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-4740801439" data-id="4740801439" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+  <div class="card-title">让-保罗·萨特</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#7c3aed;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7c3aed18;border-radius:999px;padding:1px 7px;">🎓&thinsp;Stanford SEP</span>
+    
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">昨天 04:42</span>
+    <button class="share-btn" title="复制分享" data-text="让-保罗·萨特" data-link="https://plato.stanford.edu/entries/sartre/" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">[Jack Reynolds 和 Pierre-Jean Renaudie 于 2026 年 7 月 10 日修订的条目。更改为：正文、参考书目、notes.html] 很少有哲学家在其一生中像 Jean-Paul Sar 那样出名。</div><a href="https://plato.stanford.edu/entries/sartre/" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-4940030056" data-id="4940030056" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
   <div class="card-title">技术哲学</div>
   
   <div class="card-meta">
@@ -1524,12 +1576,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 65"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">昨天 03:53</span>
     <button class="share-btn" title="复制分享" data-text="技术哲学" data-link="https://plato.stanford.edu/entries/technology/" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">[Maarten Franssen、Ibo van de Poel、Michael Klenk 和 Filippo Santoni de Sio 于 2026 年 7 月 10 日修订的条目。更改为：正文、参考书目] 如果哲学是“理解事物如何存在”的尝试，</div><a href="https://plato.stanford.edu/entries/technology/" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-6773810017" data-id="6773810017" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-4087503643" data-id="4087503643" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
   <div class="card-title">死亡的定义</div>
   
   <div class="card-meta">
@@ -1539,12 +1591,27 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 65"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">07-11 01:50</span>
     <button class="share-btn" title="复制分享" data-text="死亡的定义" data-link="https://plato.stanford.edu/entries/death-definition/" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">[Adam Omelianchuk 和 David DeGrazia 于 2026 年 7 月 10 日修订的条目。更改为：正文、参考书目、notes.html] 死亡的定义涉及哲学和公共政策问题。该 p</div><a href="https://plato.stanford.edu/entries/death-definition/" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-3983674803" data-id="3983674803" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-4033945659" data-id="4033945659" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+  <div class="card-title">阿拉斯加国民警卫队两天内救出 4 人</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#334155;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#33415518;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Defense.gov</span>
+    
+    
+    
+    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续2天</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 61"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">07-10 16:08</span>
+    <button class="share-btn" title="复制分享" data-text="阿拉斯加国民警卫队两天内救出 4 人" data-link="https://www.war.gov/News/News-Stories/Article/Article/4540150/alaska-national-guard-rescues-4-people-in-2-days/" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">在七月四号假期周末之前，分配给阿拉斯加国民警卫队的士兵和飞行员执行了四次任务，在阿拉斯加荒野中拯救了四人。</div><a href="https://www.war.gov/News/News-Stories/Article/Article/4540150/alaska-national-guard-rescues-4-people-in-2-days/" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-2548974097" data-id="2548974097" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
   <div class="card-title">人工智能增强的陆地航母战斗群：前进之路</div>
   
   <div class="card-meta">
@@ -1559,7 +1626,7 @@ function shareCard(btn) {
     <button class="share-btn" title="复制分享" data-text="人工智能增强的陆地航母战斗群：前进之路" data-link="https://www.rusi.org/explore-our-research/publications/rusi-defence-systems/ai-enhanced-land-carrier-battle-group-way-forward" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">海军航空兵的历史演变为克服当前无人机和人工智能主导的陆地战争的消耗性提供了有用的想法</div><a href="https://www.rusi.org/explore-our-research/publications/rusi-defence-systems/ai-enhanced-land-carrier-battle-group-way-forward" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-8597798487" data-id="8597798487" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+</div><div class="news-card " id="card-5790681455" data-id="5790681455" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
   <div class="card-title">9/11 25 年后。下一次全球冲击可能会更加严重</div>
   
   <div class="card-meta">
@@ -1574,36 +1641,36 @@ function shareCard(btn) {
     <button class="share-btn" title="复制分享" data-text="9/11 25 年后。下一次全球冲击可能会更加严重" data-link="https://www.rusi.org/explore-our-research/publications/commentary/25-years-after-911-next-global-shock-could-be-infinitely-worse" onclick="shareCard(this)">🔗</button>
   </div>
   <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">下一次全球冲击可能是在不太负责任的世界领导人更加随意的态度以及缺乏民众理解和恐惧的情况下使用核武器。</div><a href="https://www.rusi.org/explore-our-research/publications/commentary/25-years-after-911-next-global-shock-could-be-infinitely-worse" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-5711824599" data-id="5711824599" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
-  <div class="card-title">飞利浦 Hue 如何打造正确的智能家居</div>
+</div><div class="news-card " id="card-3782380236" data-id="3782380236" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+  <div class="card-title">确保边境安全：士兵运输关键技术</div>
   
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#e1175e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e1175e18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;The Verge</span>
-    
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 57"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">12小时前</span>
-    <button class="share-btn" title="复制分享" data-text="飞利浦 Hue 如何打造正确的智能家居" data-link="https://www.theverge.com/podcast/964515/philips-hue-smart-lights-version-history" onclick="shareCard(this)">🔗</button>
-  </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">一张发出紫色光芒的灯泡的照片。 |照片：Amelia Holowaty Krales / The Verge 智能家居的现状可能会令人沮丧，因为事情的进展是如此明显</div><a href="https://www.theverge.com/podcast/964515/philips-hue-smart-lights-version-history" class="read-link">→ 查看原文</a></div></details>
-</div><div class="news-card " id="card-1200613835" data-id="1200613835" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
-  <div class="card-title">参观考古学家在这座埋藏在埃及绿洲中、拥有 1,600 年历史的拜占庭基督教小镇中发现的文物</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b45309;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b4530918;border-radius:999px;padding:1px 7px;">🏛️&thinsp;Smithsonian</span>
+    <span style="font-size:10px;color:#334155;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#33415518;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Defense.gov</span>
     
     
     
     <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续2天</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 45"></span>
-    <span class="pub-time">07-10 20:07</span>
-    <button class="share-btn" title="复制分享" data-text="参观考古学家在这座埋藏在埃及绿洲中、拥有 1,600 年历史的拜占庭基督教小镇中发现的文物" data-link="https://www.smithsonianmag.com/smart-news/see-artifacts-that-archaeologists-discovered-in-this-1600-year-old-byzantine-christian-town-buried-in-an-oasis-in-egypt-180989106/" onclick="shareCard(this)">🔗</button>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 58"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">07-08 20:00</span>
+    <button class="share-btn" title="复制分享" data-text="确保边境安全：士兵运输关键技术" data-link="https://www.war.gov/Multimedia/Photo-Collections/20073/securing-the-border-soldiers-transport-critical-tech" onclick="shareCard(this)">🔗</button>
   </div>
-  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">这个泥砖村庄拥有街道、塔楼和一座大教堂。研究人员出土了日常用品，如谷物研磨机、烤箱和大约 200 个陶片——写在破损纸张上的古代收据和笔记。</div><a href="https://www.smithsonianmag.com/smart-news/see-artifacts-that-archaeologists-discovered-in-this-1600-year-old-byzantine-christian-town-buried-in-an-oasis-in-egypt-180989106/" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">在德克萨斯州大本德的 Muleskinner Trailblazer III 行动中，分配到南部边境联合特遣部队的士兵运输了电信网络系统，帮助美国边境巡逻队</div><a href="https://www.war.gov/Multimedia/Photo-Collections/20073/securing-the-border-soldiers-transport-critical-tech" class="read-link">→ 查看原文</a></div></details>
+</div><div class="news-card " id="card-7749958817" data-id="7749958817" style="border-left:3px solid #64748b;;scroll-margin-top:80px;">
+  <div class="card-title">海军水面导航课程毕业生驾驶舰队</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#334155;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#33415518;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Defense.gov</span>
+    
+    
+    
+    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续2天</span>
+    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 58"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
+    <span class="pub-time">07-08 18:05</span>
+    <button class="share-btn" title="复制分享" data-text="海军水面导航课程毕业生驾驶舰队" data-link="https://www.war.gov/News/News-Stories/Article/Article/4538171/graduates-of-navys-surface-navigation-course-steer-fleet/" onclick="shareCard(this)">🔗</button>
+  </div>
+  <details class="card-expand"><summary>展开</summary><div class="card-expand-body"><div class="card-desc">海军的水面导航器课程教授水手传统的天体技能和现代系统，以建立自信的驾驶台团队，无需 GPS 即可安全导航。</div><a href="https://www.war.gov/News/News-Stories/Article/Article/4538171/graduates-of-navys-surface-navigation-course-steer-fleet/" class="read-link">→ 查看原文</a></div></details>
 </div>
   </div>
 </section>
@@ -1620,105 +1687,105 @@ function shareCard(btn) {
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
-      <a href="#card-3328938240" class="rank-title-link">
-        <div class="rank-title">安东尼·祖彻：从特朗普批评者到盟友，林赛·格雷厄姆是马加时代的政治幸存者<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-3767526093" class="rank-title-link">
+        <div class="rank-title">美国坚称霍尔木兹海峡开放，与伊朗交锋<span style="font-size:9px;color:#93c5fd;font-family:sans-serif;">持续119天</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;">5<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.co.uk/news/articles/clyrdn216k2o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#b8940e;">13<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bbc.co.uk/news/articles/cj9gkpp0dkeo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
-      <a href="#card-2477565616" class="rank-title-link">
-        <div class="rank-title">由于双方对霍尔木兹海峡地位存在争议，美国再次对伊朗发动袭击<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-3849605694" class="rank-title-link">
+        <div class="rank-title">林赛·格雷厄姆，共和党参议员，1955-2026 年<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:78%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;">5<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-07-12/us-iran-trade-wave-of-attacks-as-tehran-says-hormuz-closed" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#b8940e;">8<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.ft.com/content/2855aa69-7bce-4921-9c80-66e0f78d2575" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
-      <a href="#card-6118712264" class="rank-title-link">
-        <div class="rank-title">美国坚称霍尔木兹海峡开放，与伊朗交锋<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-4433978682" class="rank-title-link">
+        <div class="rank-title">SK 海力士在美国上市 265 亿美元后股价暴跌<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:64%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:51%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bbc.co.uk/news/articles/cj9gkpp0dkeo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#b8940e;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bloomberg.com/news/articles/2026-07-13/sk-hynix-shares-drop-in-seoul-after-much-hyped-us-trading-debut" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
-      <a href="#card-7691792815" class="rank-title-link">
-        <div class="rank-title">伊朗袭击导致油价上涨，美国股指期货下跌：市场总结<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-6840077285" class="rank-title-link">
+        <div class="rank-title">美国参议员米奇·麦康奈尔因跌倒和肺炎缺席<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:64%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:50%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-07-12/oil-climbs-us-futures-dip-on-fresh-iran-strikes-markets-wrap" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <div class="rank-score" style="color:#b8940e;">2<span style="color:#94a3b8;font-size:9px;">源</span></div>
+      <a href="https://www.bbc.co.uk/news/articles/cvge2nd611zo?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
     <div class="rank-body">
-      <a href="#card-1533030077" class="rank-title-link">
-        <div class="rank-title">随着美国和伊朗再次罢工增加加息押注，金价下跌<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-1353518191" class="rank-title-link">
+        <div class="rank-title">援助人员感染埃博拉病毒后，美国大使馆要求美国人避开刚果<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:64%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:42%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-07-12/gold-declines-as-renewed-us-iran-strikes-raise-rate-hike-bets" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bloomberg.com/news/articles/2026-07-13/us-warns-americans-to-avoid-congo-over-ebola-after-aid-worker-infected" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">06</span>
     <div class="rank-body">
-      <a href="#card-4226602523" class="rank-title-link">
-        <div class="rank-title">【今朝の5本】仕事を始める前に読んでおきたい厳選ニュース</div>
+      <a href="#card-7662905019" class="rank-title-link">
+        <div class="rank-title">《Pokémon Go》问世 10 周年，数百万人仍在尝试捕捉它们<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:64%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:42%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/jp/news/newsletters/2026-07-12/TI2YJ2RKV2TH00" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bbc.co.uk/news/articles/cevlwk4nrm7o?at_medium=RSS&at_campaign=rss" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">07</span>
     <div class="rank-body">
-      <a href="#card-3001925383" class="rank-title-link">
-        <div class="rank-title">新西兰计划在 11 月大选前签署液化天然气进口工厂协议<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-8659377464" class="rank-title-link">
+        <div class="rank-title">摩根大通进一步下调目标价后 MiniMax 股价暴跌<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:63%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:42%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-07-12/nz-aims-to-sign-lng-import-plant-deal-before-november-election" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bloomberg.com/news/articles/2026-07-13/minimax-shares-slump-after-jpmorgan-cuts-target-price-further" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">08</span>
     <div class="rank-body">
-      <a href="#card-8798788288" class="rank-title-link">
-        <div class="rank-title">交易员努力应对对美元有利、对债券不利的世界<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+      <a href="#card-7449698061" class="rank-title-link">
+        <div class="rank-title">中国通过新投资公司扩大战略矿产工具包<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:63%;background:#b8940e;"></div></div>
+      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:42%;background:#b8940e;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#b8940e;">1<span style="color:#94a3b8;font-size:9px;">源</span></div>
-      <a href="https://www.bloomberg.com/news/articles/2026-07-12/traders-grapple-with-world-that-s-good-for-dollar-bad-for-bonds" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      <a href="https://www.bloomberg.com/news/articles/2026-07-13/china-expands-strategic-mineral-toolkit-with-new-investment-firm" target="_blank" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
     </div>
   </div>
 </div>
@@ -1730,7 +1797,7 @@ function shareCard(btn) {
     <div style="padding:10px 12px 12px;"><div style="padding:12px 14px;background:#f5f2ed;border-radius:4px;border-left:3px solid #d97706;margin:4px 0;"><div style="font-size:11px;font-weight:700;color:#92400e;font-family:sans-serif;margin-bottom:6px;">AI 信号今日不可用</div><div style="font-size:11px;color:#6b7280;font-family:sans-serif;line-height:1.7;">AI 信号分析暂时无法生成，请直接查看各版块原文获取参考信息。</div></div></div>
   </div>
   <!-- 视角雷达 -->
-  <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">PERSPECTIVE RADAR · 今日视角分布</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">55</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:14%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#475569;min-width:48px;white-space:nowrap;">英国智库</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:14%;background:#475569;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#6366f1;min-width:48px;white-space:nowrap;">法国</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:9%;background:#6366f1;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">5</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#0891b2;min-width:48px;white-space:nowrap;">亚洲</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:9%;background:#0891b2;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">5</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#e11d48;min-width:48px;white-space:nowrap;">日本</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#e11d48;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">4</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#334155;min-width:48px;white-space:nowrap;">美国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#334155;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">4</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">西班牙</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:5%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">学术</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:5%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#9333ea;min-width:48px;white-space:nowrap;">俄罗斯</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#9333ea;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div></div></div>
+  <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">PERSPECTIVE RADAR · 今日视角分布</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">86</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#2563eb;min-width:48px;white-space:nowrap;">欧洲</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:18%;background:#2563eb;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">16</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#64748b;min-width:48px;white-space:nowrap;">香港</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:17%;background:#64748b;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">15</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#334155;min-width:48px;white-space:nowrap;">美国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:9%;background:#334155;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#475569;min-width:48px;white-space:nowrap;">英国智库</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:9%;background:#475569;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">8</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#d97706;min-width:48px;white-space:nowrap;">中东</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:8%;background:#d97706;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">7</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:8%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">7</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#f59e0b;min-width:48px;white-space:nowrap;">印度</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:6%;background:#f59e0b;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">6</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#6366f1;min-width:48px;white-space:nowrap;">法国</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:5%;background:#6366f1;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">5</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#e11d48;min-width:48px;white-space:nowrap;">日本</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:4%;background:#e11d48;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">4</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">西班牙</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:4%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">4</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">学术</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#9333ea;min-width:48px;white-space:nowrap;">俄罗斯</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:2%;background:#9333ea;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#0891b2;min-width:48px;white-space:nowrap;">亚洲</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:2%;background:#0891b2;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div></div></div>
   <!-- 经济日历 -->
   
   <!-- 持续追踪 -->
@@ -1738,7 +1805,7 @@ function shareCard(btn) {
   <div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">
     <span>持续追踪</span>
   </div>
-  <div style="padding:4px 0;"><a  target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:10px;color:#94a3b8;font-family:sans-serif;min-width:28px;">119天</span><span class="ai-paper-title">trump · strait · prices</span></a><a  target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:10px;color:#94a3b8;font-family:sans-serif;min-width:28px;">82天</span><span class="ai-paper-title">talks · truce · trump</span></a><a  target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:10px;color:#94a3b8;font-family:sans-serif;min-width:28px;">81天</span><span class="ai-paper-title">accuses · iran · bahrain</span></a><a  target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:10px;color:#94a3b8;font-family:sans-serif;min-width:28px;">76天</span><span class="ai-paper-title">shouldn · rates · warsh</span></a><a  target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:10px;color:#94a3b8;font-family:sans-serif;min-width:28px;">59天</span><span class="ai-paper-title">wrap · stocks · asian</span></a></div>
+  <div style="padding:4px 0;"><a  target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:10px;color:#94a3b8;font-family:sans-serif;min-width:28px;">119天</span><span class="ai-paper-title">hormuz · strait · trump</span></a><a  target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:10px;color:#94a3b8;font-family:sans-serif;min-width:28px;">82天</span><span class="ai-paper-title">talks · ceasefire · trump</span></a><a  target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:10px;color:#94a3b8;font-family:sans-serif;min-width:28px;">81天</span><span class="ai-paper-title">qatar · accuses · bahrain</span></a><a  target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:10px;color:#94a3b8;font-family:sans-serif;min-width:28px;">76天</span><span class="ai-paper-title">kevin · dalio · rates</span></a><a  target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:10px;color:#94a3b8;font-family:sans-serif;min-width:28px;">59天</span><span class="ai-paper-title">rally · stocks · rise</span></a></div>
 </div>
   <!-- 知识讲堂入口 -->
   <div class="sidebar-block">
