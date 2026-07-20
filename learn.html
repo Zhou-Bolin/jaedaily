@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>高级算法面试题与代码题 · Jae Daily</title>
+<title>高阶算法题与代码题 · Jae Daily</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
@@ -76,7 +76,7 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
 <div class="page-wrap">
   <header class="kl-header">
     <div class="kl-header-left">
-      <h1>高级算法面试题与代码题</h1>
+      <h1>高阶算法题与代码题</h1>
       <div class="kl-dateline">2026年07月20日 &ensp;·&ensp; 今日 2 题 &ensp;·&ensp; 参考回答 + 分析 + 评分 + 追问 &ensp;·&ensp; Jae Daily</div>
     </div>
     <a href="latest.html" class="kl-back">← 返回日报</a>
@@ -85,44 +85,44 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
 <article class="kl-card" style="border-top:3px solid #1d4ed8;">
   <div class="kl-card-top" style="background:#eff6ff;">
     <div class="kl-card-meta">
-      <span class="kl-type-badge" style="background:#1d4ed8;color:#fff;">面试题</span>
+      <span class="kl-type-badge" style="background:#1d4ed8;color:#fff;">题目</span>
       <span class="kl-num">第一题</span>
     </div>
-    <h2 class="kl-title">约束预算模型路由</h2>
-    <div class="kl-card-links"><a href="https://www.youtube.com/results?search_query=constrained%20model%20routing" target="_blank" rel="noopener" class="kl-vidlink kl-yt">▶ YouTube</a> <a href="https://search.bilibili.com/all?keyword=%E6%A8%A1%E5%9E%8B%E8%B7%AF%E7%94%B1%E4%BC%98%E5%8C%96" target="_blank" rel="noopener" class="kl-vidlink kl-bili">▶ B站</a><a href="https://huggingface.co/blog/ibm-research/model-routing-is-simple-until-it-isnt" target="_blank" rel="noopener" class="kl-paper-link">↗ 原始论文</a></div>
+    <h2 class="kl-title">受限显存解码调度</h2>
+    <div class="kl-card-links"><a href="https://www.youtube.com/results?search_query=LLM%20inference%20scheduling" target="_blank" rel="noopener" class="kl-vidlink kl-yt">▶ YouTube</a> <a href="https://search.bilibili.com/all?keyword=%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E8%B0%83%E5%BA%A6" target="_blank" rel="noopener" class="kl-vidlink kl-bili">▶ B站</a><a href="https://arxiv.org/abs/2607.15865v1" target="_blank" rel="noopener" class="kl-paper-link">↗ 原始论文</a></div>
   </div>
   <div class="kl-question">
     <div class="kl-question-hd">
       <span class="kl-question-label">题目</span>
-      <span class="score-badge">92/100</span>
+      <span class="score-badge">93/100</span>
     </div>
-    <div class="kl-question-body"><p>你负责一个线上 AI 助手的模型路由系统，每天 500 万请求，可选择 Small/Medium/Large 三个模型，也允许级联调用。Large 质量最高但成本和延迟最高；Small 成本仅为 Large 的 8%，但在复杂推理、长上下文、多语言请求上失败率高。产品约束是：整体质量相比全量 Large 下降不超过 1%，平均成本不超过全量 Large 的 35%，端到端 p95 延迟不超过 900ms；日志中只有旧路由策略产生的样本，真实质量标签稀疏且延迟 1-3 天返回，线上还存在节假日和新功能导致的分布漂移。</p><p>请设计一个可落地的模型路由算法：包括如何定义优化目标，如何训练路由器和评估离线收益，线上如何做探索、校准、漂移处理和回退；同时分析推理复杂度、训练复杂度，以及你认为最容易踩坑的边界条件。</p></div>
+    <div class="kl-question-body"><p>你负责把一个 32 层 decoder-only LLM 部署到边缘推理芯片上，芯片有较快片上 SRAM S、较慢 HBM M，模型权重常驻 HBM，KV cache 需要动态分配。线上请求持续到达，每个请求有 prompt 长度 p_i、最大生成长度 g_i、优先级 w_i，SLA 要求 TTFT p95 &lt; 200ms、TPOT p95 &lt; 40ms。编译器后端支持为 prefill/decode 生成不同 tile kernel，但每个 kernel 的片上内存占用、访存量、计算量随 batch、序列长度和 tile 大小变化。 请设计一个端到端的推理调度与编译协同方案：如何做 prefill/decode 分离、动态 batching、KV cache 分配/回收、tile 选择与 admission control，使系统在满足 SLA 的前提下最大化加权吞吐。需要给出问题建模、核心算法、复杂度分析、关键边界条件和工程取舍。</p></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">参考回答</div>
-    <div class="kl-sec-body kl-answer"><p>我会把问题建模成带约束的上下文决策问题。对每个请求特征 x，包括 prompt 长度、语言、业务场景、用户等级、检索命中率、历史失败率、预估输出长度、风险标签等，动作 a 可以是直接调用 S/M/L，也可以是 S→Verifier→M/L 这样的级联策略。目标不是单纯预测哪个模型最好，而是在质量、成本和尾延迟之间做约束优化，例如最大化 E[Q(a,x)]，约束 E[C(a,x)]≤0.35C_L，P95(T(a,x))≤900ms，且 E[Q(L,x)-Q(a,x)]≤1%。</p><p>核心算法我会分三层。第一层是离线质量/收益建模：用历史日志、人审、用户反馈、自动评测器构造质量标签，训练每个模型在请求 x 上的质量预测器 q_a(x)、成本预测器 c_a(x)、延迟分位数预测器 t_a,p95(x)，以及“升级收益” Δq_{S→M/L}(x)。因为日志来自旧策略，有选择偏差，需要用 propensity score 做 IPS 或 doubly robust 估计；如果旧系统完全没有探索，则必须补一批分层随机流量，否则不能可靠估计反事实收益。第二层是约束路由：用拉格朗日形式 score(a,x)=q_a(x)-λc_a(x)-μr_a(x)，其中 r_a(x) 表示尾延迟风险或 SLA 违约概率；λ、μ 由离线网格搜索或线上 dual update 调节。实际线上可简化成“选择满足质量置信下界的最便宜动作”，例如若 Small 的校准通过概率高于阈值且风险低，则走 Small；否则走 Medium；高风险、OOD、强安全场景直接 Large。第三层是级联：先用 Small 生成草稿，再用轻量 verifier 判断是否足够好，只有 verifier 低置信或检测到事实性/安全/格式风险时升级到 M/L。级联要注意总延迟，不能让 S+Verifier+L 的 p95 超过直接 L。</p><p>复杂度上，线上路由器若用 GBDT/小型 MLP，对 K 个候选动作打分复杂度约 O(Kd) 或 O(K·model_size)，K 很小，通常远低于一次 LLM 推理；级联 verifier 若是小模型，需要计入额外几十毫秒延迟。离线训练若有 N 条样本、K 个动作，直接训练每动作一个质量模型是 O(NK) 级别，若使用共享表示则近似 O(N)。在线统计需要维护按业务桶、模型、时间窗口的成本、质量、p95、超时率，空间约 O(BK)。</p><p>工程上我会做几件事：第一，质量预测必须校准，可用 isotonic/temperature calibration 或 conformal prediction 给出置信区间，低置信一律升级；第二，p95 不能用平均延迟替代，要按输出 token 长度、并发队列、地区、模型冷启动分别建模；第三，线上做小流量分层探索，例如 1%-3% ε-greedy 或 Thompson sampling，并设置每业务线预算保护；第四，用 shadow evaluation 和回放评估新路由器，指标同时看质量差、成本、p95、p99、升级率、投诉率；第五，漂移检测包括输入分布 PSI/KL、路由分布变化、verifier 置信度坍缩、分桶质量下降，一旦异常自动提高 λ/μ 或回退到保守策略；第六，高安全、付费关键路径、长上下文截断风险、工具调用失败等场景要有硬规则兜底。</p></div>
+    <div class="kl-sec-body kl-answer"><p>我会把问题拆成两个时间尺度：离线编译期做 kernel/tile 候选集生成与代价建模，在线运行期做带截止时间约束的请求调度、KV 内存管理和 admission control。</p><p>1. 离线代价建模 对 prefill 和 decode 分别生成一组候选 kernel。每个候选 k 记录： - mem_sram(k, B, T)：片上 SRAM 占用； - mem_hbm(k, B, T)：HBM 读写量； - time(k, B, T)：预测延迟； - arithmetic_intensity(k)：计算/访存比。 只保留满足 mem_sram &lt;= S 的 Pareto frontier，即在相同 B、T 下没有同时被更低延迟和更低访存支配的 tile。prefill 的 attention 复杂度近似 O(L * B * T^2 * d)，decode 单步复杂度近似 O(L * B * T_ctx * d)，其中 T_ctx 是当前上下文长度。离线可以用 profile + 回归模型拟合 time，线上查表或插值。</p><p>2. Prefill/decode 分离 prefill 是大块计算，容易阻塞 decode；decode 是短周期、强 SLA。在线调度采用两级队列： - DecodeQueue：按 next-token deadline 排序，优先保证 TPOT； - PrefillQueue：按 TTFT deadline、prompt 长度和优先级排序。 每个调度 tick 先为 decode 预留算力窗口，再用剩余 slack 执行 prefill。长 prompt 做 chunked prefill，比如每次处理 C 个 token，避免一个超长 prompt 长时间占用设备。chunk 大小 C 由 TTFT slack 和 decode backlog 动态调节。</p><p>3. 动态 batching decode batching 的目标是让同一步 token 的请求合并执行，但请求上下文长度不同。可以按长度 bucket 分组，例如 [0,512)、[512,1024)、[1024,2048) 等，减少 padding 和无效 attention。每个 tick 选择一个或多个 bucket 组成 micro-batch。选择策略可以近似为带截止时间的背包： value_i = w_i / estimated_time_i 或 w_i * lateness_penalty_i constraint = 本轮可用时间预算、KV 内存预算、最大 batch size。 精确求解太贵，线上用贪心：先选快到 deadline 的请求，再在同 bucket 内填充高权重请求。复杂度 O(n log n)，n 是活跃请求数。</p><p>prefill batching 与 decode 不同，更适合按 prompt chunk 长度聚合。对于 prompt 很短的请求可以合并 prefill；对于超长 prompt，切 chunk 后与其他请求交错执行。</p><p>4. KV cache 管理 KV cache 按 page/block 管理，例如每页存固定 token 数 P 的所有层 KV，维护： - request -&gt; page table； - free page list； - active length； - refcount 或状态。 每个请求需要的 KV 大小约为： KV_bytes_i = 2 * L * n_kv_heads * head_dim * bytes * current_len_i。 为避免连续大块分配导致碎片，使用 paged KV。释放请求时回收 page；增长时按需追加 page。复杂度：分配/释放 O(number_of_pages)，查找 page table O(1) 或 O(log pages)。</p><p>当 KV 内存紧张时按代价分层处理： - 首选拒绝或排队新请求； - 对低优先级长上下文请求降级最大生成长度； - KV 量化，例如 FP16 -&gt; INT8/FP8； - 对低优先级或可容忍延迟请求 spill 到 HBM/CPU，但会显著伤害 TPOT； - 最后才考虑丢弃请求或重算，因为自回归重算成本通常高。</p><p>5. Admission control 对新请求估计其资源消耗： - prefill_time(p_i)； - per_token_decode_time(current_batch, expected_ctx)； - KV_peak = KV_bytes(p_i + g_i)。 如果加入后预测 TTFT/TPOT p95 会超过 SLA，或者 KV_peak 超过安全水位，则拒绝、降级或排队。这里不能只看平均吞吐，要维护滚动窗口 p95 预测。可以用保守水位，例如 KV 使用超过 85% 时停止接收长上下文低优先级请求。</p><p>6. 在线调度伪流程 每个 tick： - 更新所有活跃请求的 deadline、上下文长度、KV 占用； - 从 DecodeQueue 中选出最紧急且可 batch 的请求； - 查 Pareto kernel 表，选满足 SRAM 约束且预测延迟最低的 tile； - 执行 decode micro-batch，生成 token，更新 KV page； - 若还有时间 slack，从 PrefillQueue 选 chunked prefill batch； - 若 KV 或延迟水位过高，触发 admission 降级策略。</p><p>7. 复杂度 设活跃请求数为 N，KV page 总数为 P，bucket 数为 K： - 每次调度队列维护 O(log N)，一轮选 batch 约 O(N log N) 或按 bucket 优化到 O(K log N + B)； - KV 分配释放 O(pages_per_request)，通常远小于 token 数； - tile 查询若离线建表，线上 O(1) 或 O(log R)，R 是候选 tile 数； - 主要计算仍在 transformer kernel，调度开销应控制在亚毫秒级。</p><ul class="kl-list"><li>工程取舍和风险</li><li>过大 batch 提高吞吐但增加单请求 TPOT，decode 需要小 batch 高频调度；</li><li>chunked prefill 降低 head-of-line blocking，但会增加 kernel launch 和调度开销；</li><li>KV 量化节省显存，但可能影响长上下文质量，需要灰度和 per-layer 误差评估；</li><li>spill KV 可以提升接纳率，但尾延迟容易失控；</li><li>静态 profile 与线上分布可能漂移，需要在线校准 cost model；</li><li>对 speculative decoding、MoE 或不同 LoRA adapter，需要把 expert/router/adaptor 也纳入 batching 维度，否则 batch 合并收益会下降。</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">回答分析</div>
-    <div class="kl-sec-body kl-analysis"><p>强回答应该先把“模型路由”形式化为约束优化或上下文 bandit，而不是简单分类问题；要明确质量、成本、p95 延迟三者的目标关系，并意识到旧策略日志存在反事实评估偏差。好的方案会包含质量预测、成本/延迟预测、校准、级联 verifier、Lagrangian 或阈值策略、线上探索、漂移监控和回退机制。复杂度分析需要覆盖路由器推理开销、级联额外延迟、离线训练规模，以及按分桶维护统计的成本。常见错误包括：只按 prompt 长度路由；只优化平均延迟不看尾延迟；直接用旧日志监督学习而不处理选择偏差；把 LLM-as-judge 当绝对真值；没有探索流量导致无法估计 Medium/Large 的反事实收益；级联策略省了钱但把 p95 打爆。面试官会重点追问候选人如何证明质量只下降 1%、如何处理标签延迟、以及当线上分布突然漂移时如何自动止损。</p></div>
+    <div class="kl-sec-body kl-analysis"><p>强候选人的答案应该先把问题形式化为“受 SLA、SRAM/HBM/KV 约束的在线调度优化”，而不是只说用 vLLM 或 TensorRT-LLM。关键点包括：prefill/decode 分离、decode 优先保证 TPOT、长 prompt chunking、paged KV、基于 deadline 的动态 batching、离线 tile Pareto frontier、在线 admission control、p95 而非均值延迟控制。复杂度上要能说明调度、KV 分配和 tile 查询的成本，并识别真正瓶颈在 attention 和 HBM 带宽。常见错误是只追求最大 batch、忽略 TTFT/TPOT 冲突；把 KV 当连续显存分配导致碎片问题；只谈编译优化不谈在线到达和拒绝策略；或者只谈调度不谈 kernel tile 受 SRAM 约束。出题者可继续追问在长上下文、突发流量、KV cache 爆满、cost model 失准、多租户优先级冲突下方案如何退化。</p></div>
   </div>
   
     <div class="kl-section">
       <div class="kl-sec-label">评分</div>
       <div class="kl-score">
-        <div class="kl-score-main">92/100</div>
-        <div class="kl-score-body"><span class="score-chip">问题定义 20/20</span><span class="score-chip">正确性 24/25</span><span class="score-chip">复杂度 18/20</span><span class="score-chip">工程取舍 18/20</span><span class="score-chip">表达 12/15</span></div>
+        <div class="kl-score-main">93/100</div>
+        <div class="kl-score-body"><span class="score-chip">问题定义 20/20</span><span class="score-chip">正确性 24/25</span><span class="score-chip">复杂度 18/20</span><span class="score-chip">工程取舍 18/20</span><span class="score-chip">表达 13/15</span></div>
       </div>
     </div>
   <div class="kl-section">
     <div class="kl-sec-label">追问</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>如果只有 5% 请求有人审标签，如何构造可靠的质量信号？</li><li>旧策略从未把复杂请求发给 Small，如何估计 Small 在复杂请求上的表现？</li><li>p95 延迟约束与 GPU 批处理吞吐优化冲突时你怎么调度？</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>如果线上 prompt 长度分布突然从短文本变成长文档，调度策略如何自适应？</li><li>如果 SRAM 只能容纳一个很小的 attention tile，如何在重算、分块和访存之间取舍？</li><li>如何设计实验验证 cost model、admission control 和 KV 量化不会破坏 p95 SLA？</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">像医院分诊，轻症去普通门诊，疑难高风险直接专家，但还要保证总成本和等待时间不爆。</div>
+    <div class="kl-sec-body kl-analogy">像机场调度航班：大飞机装载效率高但不能堵住跑道，小飞机频繁起降要优先保证准点。</div>
   </div>
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">Contextual Bandit</span><span class="kl-related-desc">把请求路由视为带上下文的动作选择</span></div><div class="kl-related-item"><span class="kl-related-name">Doubly Robust Estimator</span><span class="kl-related-desc">用于旧策略日志下的反事实评估</span></div><div class="kl-related-item"><span class="kl-related-name">Conformal Prediction</span><span class="kl-related-desc">给质量预测提供置信下界</span></div><div class="kl-related-item"><span class="kl-related-name">Cascade Inference</span><span class="kl-related-desc">用便宜模型先答再按需升级</span></div><div class="kl-related-item"><span class="kl-related-name">Tail Latency Modeling</span><span class="kl-related-desc">避免平均延迟掩盖 SLA 风险</span></div></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">PagedAttention</span><span class="kl-related-desc">KV cache 分页管理</span></div><div class="kl-related-item"><span class="kl-related-name">Chunked Prefill</span><span class="kl-related-desc">降低长 prompt 阻塞</span></div><div class="kl-related-item"><span class="kl-related-name">Deadline Scheduling</span><span class="kl-related-desc">满足 TTFT/TPOT 约束</span></div><div class="kl-related-item"><span class="kl-related-name">Pareto Frontier</span><span class="kl-related-desc">离线筛选 tile/kernel 候选</span></div><div class="kl-related-item"><span class="kl-related-name">Roofline Model</span><span class="kl-related-desc">分析计算与访存瓶颈</span></div></div></div>
 </article>
 <article class="kl-card" style="border-top:3px solid #0f766e;">
   <div class="kl-card-top" style="background:#ecfdf5;">
@@ -130,89 +130,90 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#0f766e;color:#fff;">代码题</span>
       <span class="kl-num">第二题</span>
     </div>
-    <h2 class="kl-title">匹配模式数组的子数组数目 II</h2>
-    <div class="kl-card-links"><a href="https://www.youtube.com/results?search_query=KMP%20pattern%20matching" target="_blank" rel="noopener" class="kl-vidlink kl-yt">▶ YouTube</a> <a href="https://search.bilibili.com/all?keyword=KMP%E7%AE%97%E6%B3%95" target="_blank" rel="noopener" class="kl-vidlink kl-bili">▶ B站</a><a href="https://leetcode.cn/problems/number-of-subarrays-that-match-a-pattern-ii/description/" target="_blank" rel="noopener" class="kl-paper-link">↗ LeetCode</a></div>
+    <h2 class="kl-title">填充每个节点的下一个右侧节点指针 II</h2>
+    <div class="kl-card-links"><a href="https://www.youtube.com/results?search_query=populate%20next%20right%20pointers" target="_blank" rel="noopener" class="kl-vidlink kl-yt">▶ YouTube</a> <a href="https://search.bilibili.com/all?keyword=%E5%A1%AB%E5%85%85%E5%8F%B3%E6%8C%87%E9%92%88" target="_blank" rel="noopener" class="kl-vidlink kl-bili">▶ B站</a><a href="https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/description/" target="_blank" rel="noopener" class="kl-paper-link">↗ LeetCode</a></div>
   </div>
   <div class="kl-question">
     <div class="kl-question-hd">
       <span class="kl-question-label">题目</span>
-      <span class="score-badge">95/100</span>
+      <span class="score-badge">100/100</span>
     </div>
-    <div class="kl-question-body"><p>给你一个下标从 0 开始长度为 `n` 的整数数组 `nums` ，和一个下标从 `0` 开始长度为 `m` 的整数数组 `pattern` ，`pattern` 数组只包含整数 `-1` ，`0` 和 `1` 。</p><p>大小为 `m + 1` 的子数组 `nums[i..j]` 如果对于每个元素 `pattern[k]` 都满足以下条件，那么我们说这个子数组匹配模式数组 `pattern` ：</p><ul class="kl-list"><li>如果 `pattern[k] == 1` ，那么 `nums[i + k + 1] &gt; nums[i + k]`</li></ul><ul class="kl-list"><li>如果 `pattern[k] == 0` ，那么 `nums[i + k + 1] == nums[i + k]`</li></ul><ul class="kl-list"><li>如果 `pattern[k] == -1` ，那么 `nums[i + k + 1]</li></ul><p>请你返回匹配 `pattern` 的 `nums` 子数组的 数目 。</p><p>示例 1：</p><p>输入：nums = [1,2,3,4,5,6], pattern = [1,1] 输出：4 解释：模式 [1,1] 说明我们要找的子数组是长度为 3 且严格上升的。在数组 nums 中，子数组 [1,2,3] ，[2,3,4] ，[3,4,5] 和 [4,5,6] 都匹配这个模式。 所以 nums 中总共有 4 个子数组匹配这个模式。</p><p>示例 2：</p><p>输入：nums = [1,4,4,1,3,5,5,3], pattern = [1,0,-1] 输出：2 解释：这里，模式数组 [1,0,-1] 说明我们需要找的子数组中，第一个元素小于第二个元素，第二个元素等于第三个元素，第三个元素大于第四个元素。在 nums 中，子数组 [1,4,4,1] 和 [3,5,5,3] 都匹配这个模式。 所以 nums 中总共有 2 个子数组匹配这个模式。</p><p>提示：</p><ul class="kl-list"><li>`2 6`</li></ul><ul class="kl-list"><li>`1 9`</li></ul><ul class="kl-list"><li>`1</li></ul></div>
+    <div class="kl-question-body"><p>给定一个二叉树：</p><p>struct Node { int val; Node *left; Node *right; Node *next; }</p><p>填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 `NULL` 。</p><p>初始状态下，所有 next 指针都被设置为 `NULL` 。</p><p>示例 1：</p><p>输入：root = [1,2,3,4,5,null,7] 输出：[1,#,2,3,#,4,5,7,#] 解释：给定二叉树如图 A 所示，你的函数应该填充它的每个 next 指针，以指向其下一个右侧节点，如图 B 所示。序列化输出按层序遍历顺序（由 next 指针连接），&#x27;#&#x27; 表示每层的末尾。</p><p>示例 2：</p><p>输入：root = [] 输出：[]</p><p>提示：</p><ul class="kl-list"><li>树中的节点数在范围 `[0, 6000]` 内</li></ul><ul class="kl-list"><li>`-100</li></ul><p>进阶：</p><ul class="kl-list"><li>你只能使用常量级额外空间。</li></ul><ul class="kl-list"><li>使用递归解题也符合要求，本题中递归程序的隐式栈空间不计入额外空间复杂度。</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">参考解法</div>
-    <div class="kl-sec-body kl-answer"><p>参考解法：把 nums 的相邻大小关系转换成一个由 -1、0、1 组成的序列，然后问题就变成：统计 pattern 在这个关系序列中出现了多少次。使用 KMP 可以在线性时间内完成匹配，并且没有哈希冲突风险。</p><pre class="kl-code"><code>python
-from typing import List
+    <div class="kl-sec-body kl-answer"><p>参考解法使用已经建立好的上一层 next 链，原地构造下一层 next 链，因此不需要队列，额外空间为 O(1)。</p><pre class="kl-code"><code>python
+from typing import Optional
+
+
+class Node:
+    def __init__(
+        self,
+        val: int = 0,
+        left: Optional[&quot;Node&quot;] = None,
+        right: Optional[&quot;Node&quot;] = None,
+        next: Optional[&quot;Node&quot;] = None,
+    ):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
 
 
 class Solution:
-    def countMatchingSubarrays(self, nums: List[int], pattern: List[int]) -&gt; int:
-        n = len(nums)
-        m = len(pattern)
+    def connect(self, root: Optional[Node]) -&gt; Optional[Node]:
+        &quot;&quot;&quot;
+        填充每个节点的 next 指针，使其指向同层右侧相邻节点。
+        返回原二叉树根节点。
+        &quot;&quot;&quot;
+        cur = root
 
-        if n &lt; m + 1:
-            return 0
+        # cur 指向当前层的最左节点。
+        # 当前层已经通过 next 串起来，因此可以像遍历链表一样遍历当前层。
+        while cur:
+            # dummy.next 指向下一层的第一个节点
+            # tail 始终指向下一层已连接链表的尾节点
+            dummy = Node(0)
+            tail = dummy
 
-        # 1. 构建 pattern 的 KMP 前缀函数 pi
-        # pi[i] 表示 pattern[0..i] 的最长相等真前后缀长度
-        pi = [0] * m
-        j = 0
-        for i in range(1, m):
-            while j &gt; 0 and pattern[i] != pattern[j]:
-                j = pi[j - 1]
-            if pattern[i] == pattern[j]:
-                j += 1
-            pi[i] = j
+            # 遍历当前层所有节点，并把它们的孩子按从左到右顺序串起来
+            while cur:
+                if cur.left:
+                    tail.next = cur.left
+                    tail = tail.next
 
-        # 2. 在线扫描 nums 的相邻比较结果，不必额外构造长度 n - 1 的数组
-        ans = 0
-        j = 0  # 当前已经匹配的 pattern 长度
+                if cur.right:
+                    tail.next = cur.right
+                    tail = tail.next
 
-        for i in range(n - 1):
-            if nums[i + 1] &gt; nums[i]:
-                cur = 1
-            elif nums[i + 1] == nums[i]:
-                cur = 0
-            else:
-                cur = -1
+                cur = cur.next
 
-            while j &gt; 0 and cur != pattern[j]:
-                j = pi[j - 1]
+            # 移动到下一层的最左节点
+            cur = dummy.next
 
-            if cur == pattern[j]:
-                j += 1
-
-            # pattern 完整匹配一次
-            # 对应一个长度为 m + 1 的 nums 子数组
-            if j == m:
-                ans += 1
-                # 继续寻找可重叠匹配
-                j = pi[j - 1]
-
-        return ans</code></pre></div>
+        return root</code></pre></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">解题分析</div>
-    <div class="kl-sec-body kl-analysis"><p>关键思想：</p><p>1. 将子数组匹配条件转化为相邻关系匹配 对 nums 中每一对相邻元素 nums[i] 和 nums[i + 1]，生成一个关系值： - nums[i + 1] &gt; nums[i]，记为 1 - nums[i + 1] == nums[i]，记为 0 - nums[i + 1] &lt; nums[i]，记为 -1</p><p>这样 nums 会被转换成一个长度为 n - 1 的关系数组。题目要求统计长度为 m + 1 的 nums 子数组，本质就是统计 pattern 在这个关系数组中出现了多少次。</p><p>2. 为什么使用 KMP n 最大可达 10^6，朴素枚举每个起点再检查 m 个位置，最坏复杂度是 O(nm)，会超时。 KMP 可以在 O(n + m) 时间内完成模式串匹配，并且相比 Rolling Hash 不存在哈希冲突问题，更适合面试现场作为主解法。</p><p>3. 在线扫描优化空间 不一定要显式构造关系数组 diff。遍历 nums 时直接计算当前相邻关系 cur，然后将 cur 喂给 KMP 状态机即可。 这样额外空间只需要 O(m)，用于存储 pattern 的前缀函数。</p><p>复杂度分析：</p><p>- 时间复杂度：O(n + m) 构建 KMP 前缀函数需要 O(m)，扫描 nums 的相邻关系需要 O(n)。</p><p>- 空间复杂度：O(m) 只存储 pattern 的前缀函数 pi。如果先构造 diff 数组，则空间会变成 O(n + m)。</p><p>边界条件：</p><ul class="kl-list"><li>pattern 长度为 1：只需要统计 nums 中相邻元素满足某一种关系的次数，KMP 仍然适用。</li><li>nums 中存在大量相等元素：比较结果为 0，需要正确处理。</li><li>匹配可以重叠：例如关系序列 [1,1,1] 中 pattern [1,1] 出现 2 次，匹配后必须令 j = pi[j - 1]，不能直接清零。</li><li>m + 1 不能超过 n；虽然题目保证 m &lt; n，但工程实现中可以加保护。</li></ul><p>常见错误：</p><ul class="kl-list"><li>把 pattern[k] == 1 理解反了。它要求 nums[i + k + 1] &gt; nums[i + k]。</li><li>忘记匹配的是长度 m + 1 的 nums 子数组，而不是长度 m 的子数组。</li><li>KMP 完整匹配后直接 j = 0，导致漏掉重叠匹配。</li><li>使用 Rolling Hash 但没有处理哈希冲突风险；如果使用单哈希，理论上可能误判。</li><li>构造 diff 后枚举比较 pattern，复杂度仍可能退化为 O(nm)。</li></ul><p>面试评价重点：</p><p>高质量答案应能主动说明“子数组条件”与“相邻关系数组匹配”之间的一一对应关系，并选择 KMP 做线性匹配。代码中需要正确处理前缀函数、失配回退、完整匹配后的重叠匹配，以及 -1、0、1 三种关系。</p></div>
+    <div class="kl-sec-body kl-analysis"><p>关键思想：把每一层看成一条已经由 next 串好的链表。处理当前层时，从左到右遍历当前层节点，把它们的 left、right 子节点依次追加到“下一层链表”末尾。当前层遍历结束后，下一层的 next 指针也就全部填好了，然后跳到下一层继续处理。该方法适用于普通二叉树，不要求是完美二叉树。复杂度：每个节点最多被访问一次，时间复杂度 O(n)；除少量指针变量和一个临时 dummy 节点外不使用额外数据结构，额外空间复杂度 O(1)。边界条件：root 为空时直接返回 None；只有一个节点时不进入子层连接，next 保持 None；节点缺左孩子、缺右孩子、某一层非常稀疏时，仍然按遇到的孩子顺序连接。易错点：一是误用完美二叉树的做法，只连接 root.left.next = root.right，无法处理缺失节点；二是使用队列 BFS，虽然正确但不满足进阶 O(1) 额外空间；三是下一层链表头指针没有保存，导致处理完当前层后找不到下一层入口；四是连接顺序错误，必须先左后右，并且按当前层从左到右遍历。考察中高质量答案需要明确说明为什么可以遍历当前层的 next 链，以及为什么构造出的下一层 next 链顺序正确。</p></div>
   </div>
   
     <div class="kl-section">
       <div class="kl-sec-label">评分</div>
       <div class="kl-score">
-        <div class="kl-score-main">95/100</div>
-        <div class="kl-score-body"><span class="score-chip">思路 25/25</span><span class="score-chip">正确性 25/25</span><span class="score-chip">复杂度 20/20</span><span class="score-chip">工程性 15/15</span><span class="score-chip">表达 10/15</span></div>
+        <div class="kl-score-main">100/100</div>
+        <div class="kl-score-body"><span class="score-chip">思路 25/25</span><span class="score-chip">正确性 25/25</span><span class="score-chip">复杂度 20/20</span><span class="score-chip">工程性 15/15</span><span class="score-chip">表达 15/15</span></div>
       </div>
     </div>
   <div class="kl-section">
     <div class="kl-sec-label">追问</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>如果要求使用 Rolling Hash，如何避免或降低哈希冲突风险？</li><li>能否不构造 diff 数组，做到 O(m) 额外空间？</li><li>为什么完整匹配后要回退到 pi[j - 1] 而不是把 j 置为 0？</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>如果允许使用队列，BFS 写法如何实现、空间复杂度是多少</li><li>为什么 LeetCode 116 的完美二叉树解法不能直接用于本题</li><li>是否可以不用 dummy 节点，仅用 head 和 tail 两个指针实现</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">先把每天股价走势翻译成“涨、平、跌”，再在线性扫描中寻找目标走势模板。</div>
+    <div class="kl-sec-body kl-analogy">像站在当前楼层已经排好的一队人面前，依次把他们的孩子按从左到右排成下一楼层的新队伍。</div>
   </div>
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">KMP</span><span class="kl-related-desc">线性模式匹配核心算法</span></div><div class="kl-related-item"><span class="kl-related-name">Prefix Function</span><span class="kl-related-desc">记录模式串最长相等真前后缀</span></div><div class="kl-related-item"><span class="kl-related-name">Rolling Hash</span><span class="kl-related-desc">另一种字符串匹配方案但有冲突风险</span></div><div class="kl-related-item"><span class="kl-related-name">Difference Transformation</span><span class="kl-related-desc">将原数组转化为相邻关系序列</span></div><div class="kl-related-item"><span class="kl-related-name">Overlapping Match</span><span class="kl-related-desc">处理可重叠出现次数</span></div></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">Level Order Traversal</span><span class="kl-related-desc">按层遍历思想</span></div><div class="kl-related-item"><span class="kl-related-name">Next Pointer</span><span class="kl-related-desc">同层链表连接</span></div><div class="kl-related-item"><span class="kl-related-name">Dummy Node</span><span class="kl-related-desc">简化链表拼接</span></div><div class="kl-related-item"><span class="kl-related-name">Constant Space Traversal</span><span class="kl-related-desc">常数空间遍历</span></div><div class="kl-related-item"><span class="kl-related-name">Binary Tree BFS</span><span class="kl-related-desc">二叉树广度优先</span></div></div></div>
 </article>
   <section class="kl-archive">
   <h3 class="kl-archive-heading">往期题库 <span class="kl-arc-count">129 条记录</span></h3>
