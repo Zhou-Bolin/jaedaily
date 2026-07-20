@@ -88,41 +88,41 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#1d4ed8;color:#fff;">面试题</span>
       <span class="kl-num">第一题</span>
     </div>
-    <h2 class="kl-title">流式多模态记忆检索</h2>
-    <div class="kl-card-links"><a href="https://www.youtube.com/results?search_query=streaming%20multimodal%20memory" target="_blank" rel="noopener" class="kl-vidlink kl-yt">▶ YouTube</a> <a href="https://search.bilibili.com/all?keyword=%E5%A4%9A%E6%A8%A1%E6%80%81%E8%AE%B0%E5%BF%86%E6%A3%80%E7%B4%A2" target="_blank" rel="noopener" class="kl-vidlink kl-bili">▶ B站</a><a href="https://arxiv.org/abs/2607.11487v1" target="_blank" rel="noopener" class="kl-paper-link">↗ 原始论文</a></div>
+    <h2 class="kl-title">约束预算模型路由</h2>
+    <div class="kl-card-links"><a href="https://www.youtube.com/results?search_query=constrained%20model%20routing" target="_blank" rel="noopener" class="kl-vidlink kl-yt">▶ YouTube</a> <a href="https://search.bilibili.com/all?keyword=%E6%A8%A1%E5%9E%8B%E8%B7%AF%E7%94%B1%E4%BC%98%E5%8C%96" target="_blank" rel="noopener" class="kl-vidlink kl-bili">▶ B站</a><a href="https://huggingface.co/blog/ibm-research/model-routing-is-simple-until-it-isnt" target="_blank" rel="noopener" class="kl-paper-link">↗ 原始论文</a></div>
   </div>
   <div class="kl-question">
     <div class="kl-question-hd">
       <span class="kl-question-label">题目</span>
-      <span class="score-badge">91/100</span>
+      <span class="score-badge">92/100</span>
     </div>
-    <div class="kl-question-body"><p>你要设计一个第一视角 AI 记忆系统：用户每天佩戴设备 8 小时，输入为 720p/30fps 视频、16kHz 音频和少量传感器元数据。设备端可用内存 4GB、长期存储每天最多 16GB、平均功耗受限，要求在线写入不阻塞采集；用户可用文本/语音/图片查询“我早上把钥匙放哪了”“刚才会议里谁提到预算”，查询 p95 延迟 &lt; 800ms，且大部分数据必须本地处理。 请给出你的端到端算法方案：如何做流式事件切分、多模态表征、索引与检索、记忆压缩/淘汰、离线合并与模型版本演进。要求说明复杂度、关键阈值如何自适应、如何处理误切分、数据漂移、隐私与边界场景。</p></div>
+    <div class="kl-question-body"><p>你负责一个线上 AI 助手的模型路由系统，每天 500 万请求，可选择 Small/Medium/Large 三个模型，也允许级联调用。Large 质量最高但成本和延迟最高；Small 成本仅为 Large 的 8%，但在复杂推理、长上下文、多语言请求上失败率高。产品约束是：整体质量相比全量 Large 下降不超过 1%，平均成本不超过全量 Large 的 35%，端到端 p95 延迟不超过 900ms；日志中只有旧路由策略产生的样本，真实质量标签稀疏且延迟 1-3 天返回，线上还存在节假日和新功能导致的分布漂移。</p><p>请设计一个可落地的模型路由算法：包括如何定义优化目标，如何训练路由器和评估离线收益，线上如何做探索、校准、漂移处理和回退；同时分析推理复杂度、训练复杂度，以及你认为最容易踩坑的边界条件。</p></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">参考回答</div>
-    <div class="kl-sec-body kl-answer"><p>我会把问题建模为带预算约束的在线记忆构建与检索：对连续流 x_t 构建有层级的记忆 M，使得在存储 B、写入延迟 L_w、查询延迟 L_q 约束下最大化事件级检索召回和答案可信度。核心不是保存所有帧，而是保存“近期原始片段 + 事件级摘要 + 多模态向量 + 时间索引”。</p><p>写入侧分四层。第一层是低成本采样与缓存：视频按场景变化自适应采样，例如 1-3fps 基础采样，检测到运动、OCR、人物、物体变化时升采样；音频用 VAD 切语音段，非语音段只保留低维声学指纹。最近 5-15 分钟保留环形原始缓存，便于误切分后回溯。第二层是在线事件切分：对每个时间窗提取轻量视觉 embedding、ASR/OCR 文本 embedding、音频 embedding 和位置/时间特征，维护滑动窗口统计量。当相邻窗口的融合 embedding 距离、场景分类变化、VAD/说话人变化超过自适应阈值时产生候选边界。阈值不固定，而是用最近一段时间的距离分布分位数或 EWMA 均值方差校准，例如 d_t &gt; μ_t + kσ_t，同时设置最短/最长事件长度，避免抖动。边界先软提交，后台可根据后续上下文做 merge/split 修正。</p><p>第三层是多模态记忆表示。每个事件存：时间范围、少量关键帧、ASR 片段、OCR、检测到的人/物/地点、全局融合向量、分模态向量、置信度和 provenance。融合向量用于粗召回，分模态向量用于避免文本淹没视觉证据。向量可做 int8 或 PQ 压缩；文本摘要用小模型增量生成，必要时只保存结构化 facts。第四层是索引：维护时间 B-tree/interval index、向量 ANN 索引如 HNSW 或 IVF-PQ、实体倒排索引和传感器过滤索引。查询时先解析意图和约束，例如“早上”“钥匙”“谁提到预算”，转为时间过滤、实体过滤和向量查询；然后多路召回 topK 事件，做 temporal expansion，把命中事件前后若干分钟加入候选；最后用更强的跨模态 reranker 或小型 VLM/LLM 对证据片段重排并生成答案，答案必须带时间和证据来源。</p><p>记忆压缩采用层级保留策略。近期数据保留原始片段，中期保留关键帧和语音片段，长期只保留摘要、实体、embedding 和少量高价值证据。事件价值分数可由 recency、salience、diversity、用户访问频次、置信度和隐私等级组成，低价值相似事件聚类合并。为了避免只保留“显著事件”导致日常小物体查询失败，对常见物体位置类事件单独维护轻量状态表，例如 object -&gt; last seen locations with confidence。淘汰时优先丢原始数据，再降采样关键帧，最后才删结构化记忆。</p><p>复杂度上，若每天采样后有 T 个窗口、N 个事件、向量维度 d，写入主要是编码成本 O(T·C_encoder)，事件边界判断 O(Td)，ANN 插入约 O(log N) 或摊销近似常数到对数级。存储约为 O(N·d_q + N·metadata + keyframes)，其中 d_q 是压缩后的向量长度。查询阶段时间过滤 O(log N + m)，ANN 召回近似 O(log N) 到 O(sqrt N)，rerank 为 O(K·C_rerank)，K 通常控制在 50-200，保证 p95 &lt; 800ms。工程上会把编码异步流水线化，优先保证采集不丢帧；低电量时降采样、暂停重模型摘要，只写入轻量索引，充电时后台补全。</p><p>风险点主要有五类。第一，误切分会影响召回，所以事件边界必须允许重叠窗口和后台修正，检索也不能只搜单个事件，要做时间扩展。第二，模型升级导致 embedding 不兼容，需要索引版本化、双写一段时间、后台重建或用 adapter 对齐旧向量。第三，数据漂移，例如用户换环境或摄像头角度变化，需要监控 embedding 分布、边界触发率、召回点击率，并动态调整阈值。第四，隐私上默认本地处理，敏感区域、人脸、屏幕内容可加密或只存摘要，支持用户按时间/地点删除并同步删除索引。第五，评估不能只看向量 recall，要构造事件级问答集，分别评估 time localization、evidence precision、answer exactness、存储占用、功耗和端侧 p95/p99 延迟。</p></div>
+    <div class="kl-sec-body kl-answer"><p>我会把问题建模成带约束的上下文决策问题。对每个请求特征 x，包括 prompt 长度、语言、业务场景、用户等级、检索命中率、历史失败率、预估输出长度、风险标签等，动作 a 可以是直接调用 S/M/L，也可以是 S→Verifier→M/L 这样的级联策略。目标不是单纯预测哪个模型最好，而是在质量、成本和尾延迟之间做约束优化，例如最大化 E[Q(a,x)]，约束 E[C(a,x)]≤0.35C_L，P95(T(a,x))≤900ms，且 E[Q(L,x)-Q(a,x)]≤1%。</p><p>核心算法我会分三层。第一层是离线质量/收益建模：用历史日志、人审、用户反馈、自动评测器构造质量标签，训练每个模型在请求 x 上的质量预测器 q_a(x)、成本预测器 c_a(x)、延迟分位数预测器 t_a,p95(x)，以及“升级收益” Δq_{S→M/L}(x)。因为日志来自旧策略，有选择偏差，需要用 propensity score 做 IPS 或 doubly robust 估计；如果旧系统完全没有探索，则必须补一批分层随机流量，否则不能可靠估计反事实收益。第二层是约束路由：用拉格朗日形式 score(a,x)=q_a(x)-λc_a(x)-μr_a(x)，其中 r_a(x) 表示尾延迟风险或 SLA 违约概率；λ、μ 由离线网格搜索或线上 dual update 调节。实际线上可简化成“选择满足质量置信下界的最便宜动作”，例如若 Small 的校准通过概率高于阈值且风险低，则走 Small；否则走 Medium；高风险、OOD、强安全场景直接 Large。第三层是级联：先用 Small 生成草稿，再用轻量 verifier 判断是否足够好，只有 verifier 低置信或检测到事实性/安全/格式风险时升级到 M/L。级联要注意总延迟，不能让 S+Verifier+L 的 p95 超过直接 L。</p><p>复杂度上，线上路由器若用 GBDT/小型 MLP，对 K 个候选动作打分复杂度约 O(Kd) 或 O(K·model_size)，K 很小，通常远低于一次 LLM 推理；级联 verifier 若是小模型，需要计入额外几十毫秒延迟。离线训练若有 N 条样本、K 个动作，直接训练每动作一个质量模型是 O(NK) 级别，若使用共享表示则近似 O(N)。在线统计需要维护按业务桶、模型、时间窗口的成本、质量、p95、超时率，空间约 O(BK)。</p><p>工程上我会做几件事：第一，质量预测必须校准，可用 isotonic/temperature calibration 或 conformal prediction 给出置信区间，低置信一律升级；第二，p95 不能用平均延迟替代，要按输出 token 长度、并发队列、地区、模型冷启动分别建模；第三，线上做小流量分层探索，例如 1%-3% ε-greedy 或 Thompson sampling，并设置每业务线预算保护；第四，用 shadow evaluation 和回放评估新路由器，指标同时看质量差、成本、p95、p99、升级率、投诉率；第五，漂移检测包括输入分布 PSI/KL、路由分布变化、verifier 置信度坍缩、分桶质量下降，一旦异常自动提高 λ/μ 或回退到保守策略；第六，高安全、付费关键路径、长上下文截断风险、工具调用失败等场景要有硬规则兜底。</p></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">回答分析</div>
-    <div class="kl-sec-body kl-analysis"><p>强回答应先把问题抽象成预算约束下的流式记忆构建，而不是直接堆一个大模型；应覆盖在线事件切分、多模态特征、层级索引、查询重排、记忆压缩、模型升级和隐私治理。算法上要说明为什么需要时间索引、向量索引、实体倒排联合使用，以及为什么检索要做 temporal expansion 和 evidence-based rerank。复杂度上至少要能估算写入、索引、查询和存储随事件数增长的关系。工程上要体现端侧功耗、异步流水、降级策略、原始缓存窗口、索引版本化和后台补偿。常见错误是只说“用 CLIP+向量数据库+RAG”，没有事件边界、淘汰策略和 p95 延迟设计；或者保存所有视频，忽略存储预算；或者只做文本 ASR，无法回答视觉位置类问题。面试官会重点追问阈值如何自适应、误切分如何恢复、embedding 升级如何保持线上一致、以及如何证明系统真的“记住了”而不是靠语言模型幻觉。</p></div>
+    <div class="kl-sec-body kl-analysis"><p>强回答应该先把“模型路由”形式化为约束优化或上下文 bandit，而不是简单分类问题；要明确质量、成本、p95 延迟三者的目标关系，并意识到旧策略日志存在反事实评估偏差。好的方案会包含质量预测、成本/延迟预测、校准、级联 verifier、Lagrangian 或阈值策略、线上探索、漂移监控和回退机制。复杂度分析需要覆盖路由器推理开销、级联额外延迟、离线训练规模，以及按分桶维护统计的成本。常见错误包括：只按 prompt 长度路由；只优化平均延迟不看尾延迟；直接用旧日志监督学习而不处理选择偏差；把 LLM-as-judge 当绝对真值；没有探索流量导致无法估计 Medium/Large 的反事实收益；级联策略省了钱但把 p95 打爆。面试官会重点追问候选人如何证明质量只下降 1%、如何处理标签延迟、以及当线上分布突然漂移时如何自动止损。</p></div>
   </div>
   
     <div class="kl-section">
       <div class="kl-sec-label">评分</div>
       <div class="kl-score">
-        <div class="kl-score-main">91/100</div>
-        <div class="kl-score-body"><span class="score-chip">问题定义 18/20</span><span class="score-chip">算法设计 25/30</span><span class="score-chip">复杂度分析 17/20</span><span class="score-chip">工程取舍 18/20</span><span class="score-chip">风险边界 8/10</span><span class="score-chip">表达 5/5</span></div>
+        <div class="kl-score-main">92/100</div>
+        <div class="kl-score-body"><span class="score-chip">问题定义 20/20</span><span class="score-chip">正确性 24/25</span><span class="score-chip">复杂度 18/20</span><span class="score-chip">工程取舍 18/20</span><span class="score-chip">表达 12/15</span></div>
       </div>
     </div>
   <div class="kl-section">
     <div class="kl-sec-label">追问</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>如果每天存储预算从 16GB 降到 2GB，你会优先牺牲哪些信息，如何保证“钥匙在哪”类查询仍可用？</li><li>如果端侧模型升级后新旧 embedding 空间不兼容，但不能停服重建索引，你如何平滑迁移？</li><li>如何设计离线评测集，区分系统真的利用了视觉/音频证据，还是只利用时间和文本先验？</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>如果只有 5% 请求有人审标签，如何构造可靠的质量信号？</li><li>旧策略从未把复杂请求发给 Small，如何估计 Small 在复杂请求上的表现？</li><li>p95 延迟约束与 GPU 批处理吞吐优化冲突时你怎么调度？</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">像给人的一天自动做“可搜索的分层日记”，最近细节保留照片和录音，久远事件只保留摘要和关键证据。</div>
+    <div class="kl-sec-body kl-analogy">像医院分诊，轻症去普通门诊，疑难高风险直接专家，但还要保证总成本和等待时间不爆。</div>
   </div>
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">Event Segmentation</span><span class="kl-related-desc">决定连续流如何变成可检索单元</span></div><div class="kl-related-item"><span class="kl-related-name">Approximate Nearest Neighbor</span><span class="kl-related-desc">支撑低延迟向量召回</span></div><div class="kl-related-item"><span class="kl-related-name">Multimodal Fusion</span><span class="kl-related-desc">解决视觉、音频、文本证据互补</span></div><div class="kl-related-item"><span class="kl-related-name">Memory Consolidation</span><span class="kl-related-desc">在预算下做长期压缩和合并</span></div><div class="kl-related-item"><span class="kl-related-name">Evidence-grounded Reranking</span><span class="kl-related-desc">降低幻觉并提升答案可信度</span></div></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">Contextual Bandit</span><span class="kl-related-desc">把请求路由视为带上下文的动作选择</span></div><div class="kl-related-item"><span class="kl-related-name">Doubly Robust Estimator</span><span class="kl-related-desc">用于旧策略日志下的反事实评估</span></div><div class="kl-related-item"><span class="kl-related-name">Conformal Prediction</span><span class="kl-related-desc">给质量预测提供置信下界</span></div><div class="kl-related-item"><span class="kl-related-name">Cascade Inference</span><span class="kl-related-desc">用便宜模型先答再按需升级</span></div><div class="kl-related-item"><span class="kl-related-name">Tail Latency Modeling</span><span class="kl-related-desc">避免平均延迟掩盖 SLA 风险</span></div></div></div>
 </article>
 <article class="kl-card" style="border-top:3px solid #0f766e;">
   <div class="kl-card-top" style="background:#ecfdf5;">
@@ -130,23 +130,71 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#0f766e;color:#fff;">代码题</span>
       <span class="kl-num">第二题</span>
     </div>
-    <h2 class="kl-title">T 秒后青蛙的位置</h2>
-    <div class="kl-card-links"><a href="https://www.youtube.com/results?search_query=LeetCode%201377%20Frog%20Position" target="_blank" rel="noopener" class="kl-vidlink kl-yt">▶ YouTube</a> <a href="https://search.bilibili.com/all?keyword=%E9%9D%92%E8%9B%99%E4%BD%8D%E7%BD%AE%20%E6%A6%82%E7%8E%87%E6%A0%91" target="_blank" rel="noopener" class="kl-vidlink kl-bili">▶ B站</a><a href="https://leetcode.cn/problems/frog-position-after-t-seconds/description/" target="_blank" rel="noopener" class="kl-paper-link">↗ LeetCode</a></div>
+    <h2 class="kl-title">匹配模式数组的子数组数目 II</h2>
+    <div class="kl-card-links"><a href="https://www.youtube.com/results?search_query=KMP%20pattern%20matching" target="_blank" rel="noopener" class="kl-vidlink kl-yt">▶ YouTube</a> <a href="https://search.bilibili.com/all?keyword=KMP%E7%AE%97%E6%B3%95" target="_blank" rel="noopener" class="kl-vidlink kl-bili">▶ B站</a><a href="https://leetcode.cn/problems/number-of-subarrays-that-match-a-pattern-ii/description/" target="_blank" rel="noopener" class="kl-paper-link">↗ LeetCode</a></div>
   </div>
   <div class="kl-question">
     <div class="kl-question-hd">
       <span class="kl-question-label">题目</span>
       <span class="score-badge">95/100</span>
     </div>
-    <div class="kl-question-body"><p>给你一棵由 `n` 个顶点组成的无向树，顶点编号从 `1` 到 `n`。青蛙从 顶点 1 开始起跳。规则如下：</p><ul class="kl-list"><li>在一秒内，青蛙从它所在的当前顶点跳到另一个 未访问 过的顶点（如果它们直接相连）。</li></ul><ul class="kl-list"><li>青蛙无法跳回已经访问过的顶点。</li></ul><ul class="kl-list"><li>如果青蛙可以跳到多个不同顶点，那么它跳到其中任意一个顶点上的机率都相同。</li></ul><ul class="kl-list"><li>如果青蛙不能跳到任何未访问过的顶点上，那么它每次跳跃都会停留在原地。</li></ul><p>无向树的边用数组 `edges` 描述，其中 `edges[i] = [ai, bi]` 意味着存在一条直接连通 `ai` 和 `bi` 两个顶点的边。</p><p>返回青蛙在 `t` 秒后位于目标顶点 `target` 上的概率。与实际答案相差不超过 `10-5` 的结果将被视为正确答案。</p><p>示例 1：</p><p>输入：n = 7, edges = [[1,2],[1,3],[1,7],[2,4],[2,6],[3,5]], t = 2, target = 4 输出：0.16666666666666666 解释：上图显示了青蛙的跳跃路径。青蛙从顶点 1 起跳，第 1 秒 有 1/3 的概率跳到顶点 2 ，然后第 2 秒 有 1/2 的概率跳到顶点 4，因此青蛙在 2 秒后位于顶点 4 的概率是 1/3 * 1/2 = 1/6 = 0.16666666666666666 。</p><p>示例 2：</p><p>输入：n = 7, edges = [[1,2],[1,3],[1,7],[2,4],[2,6],[3,5]], t = 1, target = 7 输出：0.3333333333333333 解释：上图显示了青蛙的跳跃路径。青蛙从顶点 1 起跳，有 1/3 = 0.3333333333333333 的概率能够 1 秒 后跳到顶点 7 。</p><p>提示：</p><ul class="kl-list"><li>`1 i, bi</li></ul></div>
+    <div class="kl-question-body"><p>给你一个下标从 0 开始长度为 `n` 的整数数组 `nums` ，和一个下标从 `0` 开始长度为 `m` 的整数数组 `pattern` ，`pattern` 数组只包含整数 `-1` ，`0` 和 `1` 。</p><p>大小为 `m + 1` 的子数组 `nums[i..j]` 如果对于每个元素 `pattern[k]` 都满足以下条件，那么我们说这个子数组匹配模式数组 `pattern` ：</p><ul class="kl-list"><li>如果 `pattern[k] == 1` ，那么 `nums[i + k + 1] &gt; nums[i + k]`</li></ul><ul class="kl-list"><li>如果 `pattern[k] == 0` ，那么 `nums[i + k + 1] == nums[i + k]`</li></ul><ul class="kl-list"><li>如果 `pattern[k] == -1` ，那么 `nums[i + k + 1]</li></ul><p>请你返回匹配 `pattern` 的 `nums` 子数组的 数目 。</p><p>示例 1：</p><p>输入：nums = [1,2,3,4,5,6], pattern = [1,1] 输出：4 解释：模式 [1,1] 说明我们要找的子数组是长度为 3 且严格上升的。在数组 nums 中，子数组 [1,2,3] ，[2,3,4] ，[3,4,5] 和 [4,5,6] 都匹配这个模式。 所以 nums 中总共有 4 个子数组匹配这个模式。</p><p>示例 2：</p><p>输入：nums = [1,4,4,1,3,5,5,3], pattern = [1,0,-1] 输出：2 解释：这里，模式数组 [1,0,-1] 说明我们需要找的子数组中，第一个元素小于第二个元素，第二个元素等于第三个元素，第三个元素大于第四个元素。在 nums 中，子数组 [1,4,4,1] 和 [3,5,5,3] 都匹配这个模式。 所以 nums 中总共有 2 个子数组匹配这个模式。</p><p>提示：</p><ul class="kl-list"><li>`2 6`</li></ul><ul class="kl-list"><li>`1 9`</li></ul><ul class="kl-list"><li>`1</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">参考解法</div>
-    <div class="kl-sec-body kl-answer"><p>参考解法如下，采用 DFS 在树上模拟概率转移： from typing import List</p><p>class Solution: def frogPosition(self, n: int, edges: List[List[int]], t: int, target: int) -&gt; float: graph = [[] for _ in range(n + 1)]</p><p>for a, b in edges: graph[a].append(b) graph[b].append(a)</p><p>def dfs(node: int, parent: int, elapsed: int, prob: float) -&gt; float: # 已经经过 t 秒，只看当前是否正好在 target if elapsed == t: return prob if node == target else 0.0</p><p># 树上从 1 出发，不能回到父节点，因此未访问邻居就是除 parent 外的邻居 children = [nxt for nxt in graph[node] if nxt != parent]</p><p># 如果提前到达 target： # 1. target 没有未访问子节点，青蛙会一直停在这里，概率仍然有效 # 2. target 还有未访问子节点，时间未结束时青蛙必须继续跳走，最终不在 target if node == target: return prob if not children else 0.0</p><p># 当前不是 target，且已经无路可走，只会停在当前节点，无法再到达 target if not children: return 0.0</p><p>next_prob = prob / len(children)</p><p>for child in children: ans = dfs(child, node, elapsed + 1, next_prob) if ans &gt; 0: return ans</p><p>return 0.0</p><p>return dfs(1, 0, 0, 1.0)</p></div>
+    <div class="kl-sec-body kl-answer"><p>参考解法：把 nums 的相邻大小关系转换成一个由 -1、0、1 组成的序列，然后问题就变成：统计 pattern 在这个关系序列中出现了多少次。使用 KMP 可以在线性时间内完成匹配，并且没有哈希冲突风险。</p><pre class="kl-code"><code>python
+from typing import List
+
+
+class Solution:
+    def countMatchingSubarrays(self, nums: List[int], pattern: List[int]) -&gt; int:
+        n = len(nums)
+        m = len(pattern)
+
+        if n &lt; m + 1:
+            return 0
+
+        # 1. 构建 pattern 的 KMP 前缀函数 pi
+        # pi[i] 表示 pattern[0..i] 的最长相等真前后缀长度
+        pi = [0] * m
+        j = 0
+        for i in range(1, m):
+            while j &gt; 0 and pattern[i] != pattern[j]:
+                j = pi[j - 1]
+            if pattern[i] == pattern[j]:
+                j += 1
+            pi[i] = j
+
+        # 2. 在线扫描 nums 的相邻比较结果，不必额外构造长度 n - 1 的数组
+        ans = 0
+        j = 0  # 当前已经匹配的 pattern 长度
+
+        for i in range(n - 1):
+            if nums[i + 1] &gt; nums[i]:
+                cur = 1
+            elif nums[i + 1] == nums[i]:
+                cur = 0
+            else:
+                cur = -1
+
+            while j &gt; 0 and cur != pattern[j]:
+                j = pi[j - 1]
+
+            if cur == pattern[j]:
+                j += 1
+
+            # pattern 完整匹配一次
+            # 对应一个长度为 m + 1 的 nums 子数组
+            if j == m:
+                ans += 1
+                # 继续寻找可重叠匹配
+                j = pi[j - 1]
+
+        return ans</code></pre></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">解题分析</div>
-    <div class="kl-sec-body kl-analysis"><p>关键思想：因为输入是一棵树，从根节点 1 出发后，青蛙不能回到访问过的点，所以每个节点的“可跳节点”就是它在以 1 为根时的子节点。DFS 过程中维护当前节点、父节点、已经用掉的时间以及到达当前节点的概率。每次从当前节点跳向所有未访问子节点时，概率平均分配，即除以可选子节点数量。最重要的判断是提前到达 target 的情况：如果 elapsed &lt; t 且 target 还有未访问子节点，青蛙下一秒一定会离开，因此 t 秒后在 target 的概率是 0；如果 target 没有未访问子节点，青蛙会一直停留在 target，因此概率保持不变。复杂度：建图 O(n)，DFS 最多访问每个节点一次，时间复杂度 O(n)，空间复杂度 O(n)，递归深度 O(n)。边界条件：n = 1 且 target = 1 时应返回 1；target 是叶子且提前到达时可以停留；target 非叶子且提前到达时概率为 0；t 小于到达 target 的路径长度时概率为 0；t 正好等于路径长度时返回路径概率。常见错误：把度数直接当作分母，忘记排除父节点；提前到达 target 后直接返回概率，忽略 target 还有子节点会继续跳走；叶子节点停留规则处理错误；用普通图 DFS 时没有避免回到父节点。面试追问通常会关注：为什么只用 parent 就能表示 visited、如何推导 target 提前到达时的条件、能否用 BFS 或只沿唯一根到 target 路径计算概率。</p></div>
+    <div class="kl-sec-body kl-analysis"><p>关键思想：</p><p>1. 将子数组匹配条件转化为相邻关系匹配 对 nums 中每一对相邻元素 nums[i] 和 nums[i + 1]，生成一个关系值： - nums[i + 1] &gt; nums[i]，记为 1 - nums[i + 1] == nums[i]，记为 0 - nums[i + 1] &lt; nums[i]，记为 -1</p><p>这样 nums 会被转换成一个长度为 n - 1 的关系数组。题目要求统计长度为 m + 1 的 nums 子数组，本质就是统计 pattern 在这个关系数组中出现了多少次。</p><p>2. 为什么使用 KMP n 最大可达 10^6，朴素枚举每个起点再检查 m 个位置，最坏复杂度是 O(nm)，会超时。 KMP 可以在 O(n + m) 时间内完成模式串匹配，并且相比 Rolling Hash 不存在哈希冲突问题，更适合面试现场作为主解法。</p><p>3. 在线扫描优化空间 不一定要显式构造关系数组 diff。遍历 nums 时直接计算当前相邻关系 cur，然后将 cur 喂给 KMP 状态机即可。 这样额外空间只需要 O(m)，用于存储 pattern 的前缀函数。</p><p>复杂度分析：</p><p>- 时间复杂度：O(n + m) 构建 KMP 前缀函数需要 O(m)，扫描 nums 的相邻关系需要 O(n)。</p><p>- 空间复杂度：O(m) 只存储 pattern 的前缀函数 pi。如果先构造 diff 数组，则空间会变成 O(n + m)。</p><p>边界条件：</p><ul class="kl-list"><li>pattern 长度为 1：只需要统计 nums 中相邻元素满足某一种关系的次数，KMP 仍然适用。</li><li>nums 中存在大量相等元素：比较结果为 0，需要正确处理。</li><li>匹配可以重叠：例如关系序列 [1,1,1] 中 pattern [1,1] 出现 2 次，匹配后必须令 j = pi[j - 1]，不能直接清零。</li><li>m + 1 不能超过 n；虽然题目保证 m &lt; n，但工程实现中可以加保护。</li></ul><p>常见错误：</p><ul class="kl-list"><li>把 pattern[k] == 1 理解反了。它要求 nums[i + k + 1] &gt; nums[i + k]。</li><li>忘记匹配的是长度 m + 1 的 nums 子数组，而不是长度 m 的子数组。</li><li>KMP 完整匹配后直接 j = 0，导致漏掉重叠匹配。</li><li>使用 Rolling Hash 但没有处理哈希冲突风险；如果使用单哈希，理论上可能误判。</li><li>构造 diff 后枚举比较 pattern，复杂度仍可能退化为 O(nm)。</li></ul><p>面试评价重点：</p><p>高质量答案应能主动说明“子数组条件”与“相邻关系数组匹配”之间的一一对应关系，并选择 KMP 做线性匹配。代码中需要正确处理前缀函数、失配回退、完整匹配后的重叠匹配，以及 -1、0、1 三种关系。</p></div>
   </div>
   
     <div class="kl-section">
@@ -158,13 +206,13 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
     </div>
   <div class="kl-section">
     <div class="kl-sec-label">追问</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>如果改成一般无向图而不是树，如何处理 visited 状态和概率？</li><li>能否只找到 1 到 target 的唯一路径并计算概率？</li><li>如果 t 很大且 n 很大，如何避免无意义搜索？</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>如果要求使用 Rolling Hash，如何避免或降低哈希冲突风险？</li><li>能否不构造 diff 数组，做到 O(m) 额外空间？</li><li>为什么完整匹配后要回退到 pi[j - 1] 而不是把 j 置为 0？</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">青蛙像在一棵单向向下走的树形迷宫里随机选岔路，走到死胡同后就原地等待。</div>
+    <div class="kl-sec-body kl-analogy">先把每天股价走势翻译成“涨、平、跌”，再在线性扫描中寻找目标走势模板。</div>
   </div>
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">树上DFS</span><span class="kl-related-desc">沿父子关系传播状态</span></div><div class="kl-related-item"><span class="kl-related-name">概率DP</span><span class="kl-related-desc">状态概率转移</span></div><div class="kl-related-item"><span class="kl-related-name">BFS分层</span><span class="kl-related-desc">按秒推进青蛙位置</span></div><div class="kl-related-item"><span class="kl-related-name">根树化</span><span class="kl-related-desc">把无向树转成有根树</span></div><div class="kl-related-item"><span class="kl-related-name">叶子节点停留</span><span class="kl-related-desc">无可选动作时状态保持</span></div></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">KMP</span><span class="kl-related-desc">线性模式匹配核心算法</span></div><div class="kl-related-item"><span class="kl-related-name">Prefix Function</span><span class="kl-related-desc">记录模式串最长相等真前后缀</span></div><div class="kl-related-item"><span class="kl-related-name">Rolling Hash</span><span class="kl-related-desc">另一种字符串匹配方案但有冲突风险</span></div><div class="kl-related-item"><span class="kl-related-name">Difference Transformation</span><span class="kl-related-desc">将原数组转化为相邻关系序列</span></div><div class="kl-related-item"><span class="kl-related-name">Overlapping Match</span><span class="kl-related-desc">处理可重叠出现次数</span></div></div></div>
 </article>
   <section class="kl-archive">
   <h3 class="kl-archive-heading">往期题库 <span class="kl-arc-count">129 条记录</span></h3>
