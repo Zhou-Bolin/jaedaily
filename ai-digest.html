@@ -409,7 +409,7 @@ footer{
     </div>
     <div class="stat-sep"></div>
     <div class="stat-item">
-      <div class="stat-val">6</div>
+      <div class="stat-val">5</div>
       <div class="stat-lbl">🤗 HF 精选</div>
     </div>
     <div class="stat-sep"></div>
@@ -427,7 +427,7 @@ footer{
 
 <!-- 分类导航 tabs -->
 <div class="cat-nav">
-  <a href="#speech-priority" class="nav-tab nav-tab-audio">🎙️ 语音优先<span class="nav-count">8</span></a><a href="#audio" class="nav-tab nav-tab-audio">&#127925; 语音与音频<span class="nav-count">10</span></a><a href="#llm" class="nav-tab">&#129504; 大语言模型<span class="nav-count">8</span></a><a href="#vision" class="nav-tab">&#128065; 视觉生成<span class="nav-count">6</span></a><a href="#eng" class="nav-tab">&#9881; 工程进展<span class="nav-count">8</span></a>
+  <a href="#speech-priority" class="nav-tab nav-tab-audio">🎙️ 音视频/日志优先<span class="nav-count">8</span></a><a href="#audio" class="nav-tab nav-tab-audio">&#127925; 语音与音频<span class="nav-count">10</span></a><a href="#llm" class="nav-tab">&#129504; 大语言模型<span class="nav-count">8</span></a><a href="#vision" class="nav-tab">&#128065; 视觉生成<span class="nav-count">6</span></a><a href="#eng" class="nav-tab">&#9881; 工程进展<span class="nav-count">8</span></a>
 </div>
 
 <!-- 图例 -->
@@ -438,7 +438,7 @@ footer{
   </span>
   <span class="legend-item">
     <span class="legend-dot" style="background:#3a8f5a;"></span>
-    🎧 音频关键词加权（你的专业领域）
+    🎙️ 说话人日志 / 音视频理解专项加权（你的专业领域）
   </span>
   <span class="legend-item">
     <span class="legend-dot" style="background:#8a1212;"></span>
@@ -454,79 +454,79 @@ footer{
   <section class="speech-priority" id="speech-priority">
   <div class="speech-priority-head">
     <div>
-      <div class="speech-priority-kicker">For Speech / Audio LLM Researchers</div>
-      <h2>语音大模型优先阅读</h2>
+      <div class="speech-priority-kicker">For Audio-Visual Understanding Researchers</div>
+      <h2>音视频理解 · 说话人日志优先阅读</h2>
     </div>
-    <div class="speech-priority-sub">按语音大模型相关性重排：核心架构、S2S、TTS/ASR 训练与评估优先</div>
+    <div class="speech-priority-sub">说话人日志、重叠语音、说话人归因与 Active Speaker Detection 最高优先，其次覆盖音视频理解</div>
   </div>
   <div class="speech-radar">
-    <span class="speech-radar-label">今日语音雷达</span>
-    <span class="speech-radar-chip">评测基准 <b>3</b></span><span class="speech-radar-chip">对话/S2S <b>2</b></span><span class="speech-radar-chip">训练/数据 <b>2</b></span><span class="speech-radar-chip">架构/统一模型 <b>1</b></span>
+    <span class="speech-radar-label">今日音视频雷达</span>
+    <span class="speech-radar-chip">音视频理解 <b>4</b></span><span class="speech-radar-chip">评测基准 <b>2</b></span><span class="speech-radar-chip">对话/S2S <b>1</b></span><span class="speech-radar-chip">语音相关 <b>1</b></span>
   </div>
-  <div class="speech-queue"><a class="speech-queue-row" href="https://arxiv.org/abs/2608.06718v1" target="_blank" rel="noopener">
-  <span class="queue-tier tier-must">必读</span>
+  <div class="speech-queue"><a class="speech-queue-row" href="https://arxiv.org/abs/2608.05663v2" target="_blank" rel="noopener">
+  <span class="queue-tier tier-scan">可扫</span>
   <span class="queue-body">
-    <span class="queue-title">音频语言模型是否利用副语言证据</span>
-    <span class="queue-title-en">Do Audio Language Models Use Paralinguistic Evidence? Counterfactual Audits for Response Evaluation</span>
-    <span class="queue-value">价值：直接触及实时口语交互、全双工或 speech-to-speech 的核心评测/建模问题。</span>
+    <span class="queue-title">Vorch-Streamer：实时长视频音画生成</span>
+    <span class="queue-title-en">Vorch-Streamer: Extending Human Audio-Visual Generation to Real-Time Long-Form Streaming</span>
+    <span class="queue-value">价值：覆盖音视频联合理解、时序对齐或视觉语音线索，可补充多模态理解方法。</span>
   </span>
-  <span class="queue-tags"><span class="queue-mini">语音大模型核心</span><span class="queue-mini">arXiv · cs.CL</span></span>
-</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.03050v1" target="_blank" rel="noopener">
-  <span class="queue-tier tier-must">必读</span>
+  <span class="queue-tags"><span class="queue-mini">音视频理解 · 对话/S2S</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · cs.SD</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.09930v1" target="_blank" rel="noopener">
+  <span class="queue-tier tier-scan">可扫</span>
   <span class="queue-body">
-    <span class="queue-title">通过跨模态自举学习钢琴改编风格</span>
-    <span class="queue-title-en">Learning Music Style for Piano Arrangement Through Cross-Modal Bootstrapping</span>
-    <span class="queue-value">价值：涉及统一 audio-text / speech LLM 架构，可能影响语音大模型训练范式。</span>
+    <span class="queue-title">从语言维度探测自动TTS评估器</span>
+    <span class="queue-title-en">Beyond Naturalness: Probing Automated Text-To-Speech Evaluators on Linguistically Grounded Dimensions</span>
+    <span class="queue-value">价值：关注 LLM-based TTS 的可控性、韵律或内容一致性，适合扫读方法细节。</span>
   </span>
-  <span class="queue-tags"><span class="queue-mini">语音大模型核心</span><span class="queue-mini">arXiv · cs.MM</span></span>
+  <span class="queue-tags"><span class="queue-mini">评测 · 生成/TTS</span><span class="queue-mini">Meta</span><span class="queue-mini">arXiv · cs.CL</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.03964v2" target="_blank" rel="noopener">
+  <span class="queue-tier tier-scan">可扫</span>
+  <span class="queue-body">
+    <span class="queue-title">忠实身份的音视频目标说话人提取</span>
+    <span class="queue-title-en">Identity-Faithful Audio-Visual Target Speaker Extraction with REAL-2MIX and VOXBLINK2-AVSE</span>
+    <span class="queue-value">价值：覆盖音视频联合理解、时序对齐或视觉语音线索，可补充多模态理解方法。</span>
+  </span>
+  <span class="queue-tags"><span class="queue-mini">音视频理解 · 评测</span><span class="queue-mini">arXiv · eess.AS</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.08638v1" target="_blank" rel="noopener">
+  <span class="queue-tier tier-scan">可扫</span>
+  <span class="queue-body">
+    <span class="queue-title">CuteTTS：连续潜变量自回归语音合成</span>
+    <span class="queue-title-en">CuteTTS: Efficient and High-Quality Speech Synthesis via Autoregressive Modeling of Continuous Latents</span>
+    <span class="queue-value">价值：关注 LLM-based TTS 的可控性、韵律或内容一致性，适合扫读方法细节。</span>
+  </span>
+  <span class="queue-tags"><span class="queue-mini">对话/S2S · 生成/TTS</span><span class="queue-mini">arXiv · cs.SD</span></span>
 </a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.05507v1" target="_blank" rel="noopener">
   <span class="queue-tier tier-scan">可扫</span>
   <span class="queue-body">
-    <span class="queue-title">AffectDF：面向情感攻击的语音深伪检测基准</span>
+    <span class="queue-title">AffectDF：情感语音深伪检测基准</span>
     <span class="queue-title-en">AffectDF: The Most Comprehensive Benchmark for Speech Deepfake Detection against Emotionally Expressive Attacks</span>
     <span class="queue-value">价值：关注 LLM-based TTS 的可控性、韵律或内容一致性，适合扫读方法细节。</span>
   </span>
   <span class="queue-tags"><span class="queue-mini">评测 · 生成/TTS</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · eess.AS</span></span>
-</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.03215v1" target="_blank" rel="noopener">
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.07279v1" target="_blank" rel="noopener">
   <span class="queue-tier tier-scan">可扫</span>
   <span class="queue-body">
-    <span class="queue-title">GROW：自回归扩散TTS的在策略强化学习</span>
-    <span class="queue-title-en">GROW: Group-Relative Advantage-Weighted On-Policy Reinforcement Learning of Autoregressive-Diffusion Text-to-Speech model</span>
-    <span class="queue-value">价值：提供合成语音、强化学习或数据构建线索，可用于改进语音模型训练闭环。</span>
+    <span class="queue-title">多模态大模型的Token通信</span>
+    <span class="queue-title-en">Token Communication for Multimodal Large Language Model</span>
+    <span class="queue-value">价值：覆盖音视频联合理解、时序对齐或视觉语音线索，可补充多模态理解方法。</span>
   </span>
-  <span class="queue-tags"><span class="queue-mini">训练/数据 · 生成/TTS</span><span class="queue-mini">arXiv · eess.AS</span></span>
-</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.05663v2" target="_blank" rel="noopener">
+  <span class="queue-tags"><span class="queue-mini">音视频理解 · LLM相关</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · eess.SP</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.09861v1" target="_blank" rel="noopener">
   <span class="queue-tier tier-scan">可扫</span>
   <span class="queue-body">
-    <span class="queue-title">Vorch-Streamer：实时长篇音视频生成</span>
-    <span class="queue-title-en">Vorch-Streamer: Extending Human Audio-Visual Generation to Real-Time Long-Form Streaming</span>
-    <span class="queue-value">价值：提供合成语音、强化学习或数据构建线索，可用于改进语音模型训练闭环。</span>
+    <span class="queue-title">迈向实时视频问诊的专家级医疗AI</span>
+    <span class="queue-title-en">Towards Expert-level Medical AI for Real-time Video Consultations</span>
+    <span class="queue-value">价值：覆盖音视频联合理解、时序对齐或视觉语音线索，可补充多模态理解方法。</span>
   </span>
-  <span class="queue-tags"><span class="queue-mini">对话/S2S · 评测</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · cs.SD</span></span>
-</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.07341v1" target="_blank" rel="noopener">
+  <span class="queue-tags"><span class="queue-mini">音视频理解 · 对话/S2S</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · cs.CL</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.09867v1" target="_blank" rel="noopener">
   <span class="queue-tier tier-scan">可扫</span>
   <span class="queue-body">
-    <span class="queue-title">零差距并非恢复：基准污染评估改进</span>
-    <span class="queue-title-en">Zero Gap Is Not Restoration: Stratified Per-Question Probability Evaluation and Step-wise Mitigation of Benchmark Contamination</span>
-    <span class="queue-value">价值：提供合成语音、强化学习或数据构建线索，可用于改进语音模型训练闭环。</span>
+    <span class="queue-title">从专有LLM API窃取推理轨迹</span>
+    <span class="queue-title-en">Stealing Reasoning Traces from Proprietary LLM APIs</span>
+    <span class="queue-value">价值：与 LLM 结合的语音任务，适合判断是否能迁移到当前研究线。</span>
   </span>
-  <span class="queue-tags"><span class="queue-mini">评测 · 训练/数据</span><span class="queue-mini">HF 3♥</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · cs.CL</span></span>
-</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.03610v1" target="_blank" rel="noopener">
-  <span class="queue-tier tier-scan">可扫</span>
-  <span class="queue-body">
-    <span class="queue-title">面向多语LLM ASR的多教师在策略蒸馏</span>
-    <span class="queue-title-en">Language-Specialized Multi-Teacher On-Policy Distillation for Multilingual LLM-Based ASR</span>
-    <span class="queue-value">价值：提供合成语音、强化学习或数据构建线索，可用于改进语音模型训练闭环。</span>
-  </span>
-  <span class="queue-tags"><span class="queue-mini">训练/数据 · LLM相关</span><span class="queue-mini">arXiv · eess.AS</span></span>
-</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.07051v1" target="_blank" rel="noopener">
-  <span class="queue-tier tier-scan">可扫</span>
-  <span class="queue-body">
-    <span class="queue-title">YOLO-PEFT：YOLO系列的参数高效微调</span>
-    <span class="queue-title-en">YOLO-PEFT: Parameter-Efficient Fine-Tuning on YOLO Family</span>
-    <span class="queue-value">价值：提供合成语音、强化学习或数据构建线索，可用于改进语音模型训练闭环。</span>
-  </span>
-  <span class="queue-tags"><span class="queue-mini">对话/S2S · 训练/数据</span><span class="queue-mini">HF 15♥</span><span class="queue-mini">arXiv · cs.CV</span></span>
+  <span class="queue-tags"><span class="queue-mini">LLM相关</span><span class="queue-mini">HF 3♥</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · cs.AI</span></span>
 </a></div>
   <div class="speech-queue-note">另有 1 篇传统音频/数据集/工程项已降为低优先级，仍保留在“语音与音频”中供扫读。</div>
 </section>
@@ -542,78 +542,14 @@ footer{
   <div class="papers-grid"><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
-    
-    <span class="reason-badge">必读</span><span class="reason-badge">评测基准</span><span class="reason-badge">核心模型</span>
-    <span class="paper-src">arXiv · cs.CL</span>
-    <span class="paper-date">08-07</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.06718v1" target="_blank" rel="noopener">音频语言模型是否利用副语言证据</a>
-  <div class="paper-title-en">Do Audio Language Models Use Paralinguistic Evidence? Counterfactual Audits for Response Evaluation</div>
-  <p class="paper-abstract">提出反事实审计，固定转写文本并改变情感、韵律等线索，评估音频语言模型裁判是否真正利用副语言信息。</p>
-  
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.06718')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.06718v1" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
-    
-    <span class="reason-badge">必读</span><span class="reason-badge">架构/统一模型</span><span class="reason-badge">核心模型</span>
-    <span class="paper-src">arXiv · cs.MM</span>
-    <span class="paper-date">08-04</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.03050v1" target="_blank" rel="noopener">通过跨模态自举学习钢琴改编风格</a>
-  <div class="paper-title-en">Learning Music Style for Piano Arrangement Through Cross-Modal Bootstrapping</div>
-  <p class="paper-abstract">提出跨模态框架，从原始音频中学习隐式音乐风格，并用于符号音乐生成与钢琴改编。</p>
-  
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.03050')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.03050v1" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     <span class="inst-badge">MIT</span>
-    <span class="reason-badge">可扫</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
-    <span class="paper-src">arXiv · eess.AS</span>
-    <span class="paper-date">08-06</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.05507v1" target="_blank" rel="noopener">AffectDF：面向情感攻击的语音深伪检测基准</a>
-  <div class="paper-title-en">AffectDF: The Most Comprehensive Benchmark for Speech Deepfake Detection against Emotionally Expressive Attacks</div>
-  <p class="paper-abstract">构建覆盖情感表达与LALM攻击的语音深伪基准AffectDF，扩展现有数据在规模和攻击多样性上的不足。</p>
-  
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.05507')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.05507v1" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
-    
-    <span class="reason-badge">可扫</span><span class="reason-badge">训练/数据</span><span class="reason-badge">生成/TTS</span>
-    <span class="paper-src">arXiv · eess.AS</span>
-    <span class="paper-date">08-04</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.03215v1" target="_blank" rel="noopener">GROW：自回归扩散TTS的在策略强化学习</a>
-  <div class="paper-title-en">GROW: Group-Relative Advantage-Weighted On-Policy Reinforcement Learning of Autoregressive-Diffusion Text-to-Speech model</div>
-  <p class="paper-abstract">提出GROW，直接作用于流匹配目标，用组相对优势加权进行在策略强化学习，降低TTS训练开销。</p>
-  
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.03215')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.03215v1" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
-    <span class="inst-badge">MIT</span>
-    <span class="reason-badge">可扫</span><span class="reason-badge">对话/S2S</span><span class="reason-badge">评测</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">音视频理解</span><span class="reason-badge">对话/S2S</span>
     <span class="paper-src">arXiv · cs.SD</span>
     <span class="paper-date">08-06</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.05663v2" target="_blank" rel="noopener">Vorch-Streamer：实时长篇音视频生成</a>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.05663v2" target="_blank" rel="noopener">Vorch-Streamer：实时长视频音画生成</a>
   <div class="paper-title-en">Vorch-Streamer: Extending Human Audio-Visual Generation to Real-Time Long-Form Streaming</div>
-  <p class="paper-abstract">面向实时长篇数字人音视频生成，缓解自回归上下文导致的曝光偏差和视觉漂移，并改进因果语音对齐。</p>
+  <p class="paper-abstract">提出因果连续生成方法，缓解长时流式头像音视频中的曝光偏差与语音定位问题。</p>
   
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2608.05663')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
@@ -622,82 +558,146 @@ footer{
 </div><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
-    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;3♥</span><span class="inst-badge">MIT</span>
+    <span class="inst-badge">Meta</span>
     <span class="reason-badge">可扫</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
     <span class="paper-src">arXiv · cs.CL</span>
-    <span class="paper-date">08-07</span>
+    <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07341v1" target="_blank" rel="noopener">零差距并非恢复：基准污染评估改进</a>
-  <div class="paper-title-en">Zero Gap Is Not Restoration: Stratified Per-Question Probability Evaluation and Step-wise Mitigation of Benchmark Contamination</div>
-  <p class="paper-abstract">指出基准污染缓解中的G-AP指标缺陷，提出按题概率分层评估与逐步缓解，更准确衡量真实能力恢复。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09930v1" target="_blank" rel="noopener">从语言维度探测自动TTS评估器</a>
+  <div class="paper-title-en">Beyond Naturalness: Probing Automated Text-To-Speech Evaluators on Linguistically Grounded Dimensions</div>
+  <p class="paper-abstract">将TTS自然度拆解为10个感知维度，构建首个维度级元评估基准。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07341')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07341v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.09930')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09930v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     
-    <span class="reason-badge">可扫</span><span class="reason-badge">训练/数据</span><span class="reason-badge">LLM相关</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">音视频理解</span><span class="reason-badge">评测</span>
     <span class="paper-src">arXiv · eess.AS</span>
     <span class="paper-date">08-04</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.03610v1" target="_blank" rel="noopener">面向多语LLM ASR的多教师在策略蒸馏</a>
-  <div class="paper-title-en">Language-Specialized Multi-Teacher On-Policy Distillation for Multilingual LLM-Based ASR</div>
-  <p class="paper-abstract">提出语言专门化多教师在策略蒸馏，缓解多语ASR联合建模中的优化冲突，提升各语言识别能力。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.03964v2" target="_blank" rel="noopener">忠实身份的音视频目标说话人提取</a>
+  <div class="paper-title-en">Identity-Faithful Audio-Visual Target Speaker Extraction with REAL-2MIX and VOXBLINK2-AVSE</div>
+  <p class="paper-abstract">提出REAL-2MIX普通话真实双人混合基准及VOXBLINK2-AVSE，检验视觉身份忠实性。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.03610')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.03610v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.03964')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.03964v2" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
-    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;15♥</span>
-    <span class="reason-badge">可扫</span><span class="reason-badge">对话/S2S</span><span class="reason-badge">训练/数据</span>
-    <span class="paper-src">arXiv · cs.CV</span>
-    <span class="paper-date">08-07</span>
+    
+    <span class="reason-badge">可扫</span><span class="reason-badge">对话/S2S</span><span class="reason-badge">生成/TTS</span>
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">08-09</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07051v1" target="_blank" rel="noopener">YOLO-PEFT：YOLO系列的参数高效微调</a>
-  <div class="paper-title-en">YOLO-PEFT: Parameter-Efficient Fine-Tuning on YOLO Family</div>
-  <p class="paper-abstract">提出结构感知YOLO-PEFT，将适配器放置建模为可审计约束规划，适配实时检测器的异构结构。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.08638v1" target="_blank" rel="noopener">CuteTTS：连续潜变量自回归语音合成</a>
+  <div class="paper-title-en">CuteTTS: Efficient and High-Quality Speech Synthesis via Autoregressive Modeling of Continuous Latents</div>
+  <p class="paper-abstract">以连续潜变量自回归建模实现高效高质量零样本TTS，兼顾音质、说话人一致性与低延迟。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07051')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07051v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.08638')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.08638v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     <span class="inst-badge">MIT</span>
-    <span class="reason-badge">可扫</span><span class="reason-badge">对话/S2S</span><span class="reason-badge">MIT</span>
-    <span class="paper-src">arXiv · cs.SD</span>
-    <span class="paper-date">08-07</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">08-06</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07423v1" target="_blank" rel="noopener">云端增强的低算力多通道语音增强</a>
-  <div class="paper-title-en">Cloud-Boosted Low-Compute Multi-Channel Speech Enhancement</div>
-  <p class="paper-abstract">提出端云协同语音增强框架，利用延迟服务器输出等技术，在低延迟低算力设备上提升增强性能。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.05507v1" target="_blank" rel="noopener">AffectDF：情感语音深伪检测基准</a>
+  <div class="paper-title-en">AffectDF: The Most Comprehensive Benchmark for Speech Deepfake Detection against Emotionally Expressive Attacks</div>
+  <p class="paper-abstract">构建覆盖情感表达和新型LALM攻击的综合语音深伪检测基准，扩展攻击多样性。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07423')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07423v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.05507')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.05507v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     <span class="inst-badge">MIT</span>
-    <span class="reason-badge">可扫</span><span class="reason-badge">对话/S2S</span><span class="reason-badge">训练/数据</span>
-    <span class="paper-src">arXiv · cs.SD</span>
-    <span class="paper-date">08-04</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">音视频理解</span><span class="reason-badge">LLM相关</span>
+    <span class="paper-src">arXiv · eess.SP</span>
+    <span class="paper-date">08-07</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.03054v1" target="_blank" rel="noopener">迈向更具表现力的口语LLM</a>
-  <div class="paper-title-en">Towards More Expressive Spoken LLMs: Fine-Grained Intent Benchmarking and Acoustic-Lexical Decoupled Policy Optimization</div>
-  <p class="paper-abstract">提出细粒度意图基准与声学-词汇解耦策略优化，提升口语LLM对显式与副语言情感意图的理解和表达。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.07279v1" target="_blank" rel="noopener">多模态大模型的Token通信</a>
+  <div class="paper-title-en">Token Communication for Multimodal Large Language Model</div>
+  <p class="paper-abstract">研究MLLM交互中Token高效传输，减少数据量同时保持模型性能。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.03054')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.03054v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.07279')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07279v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">音视频理解</span><span class="reason-badge">对话/S2S</span>
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">08-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09861v1" target="_blank" rel="noopener">迈向实时视频问诊的专家级医疗AI</a>
+  <div class="paper-title-en">Towards Expert-level Medical AI for Real-time Video Consultations</div>
+  <p class="paper-abstract">探索音视频医疗AI，使其在实时视频问诊中利用非语言线索并接近临床医生水平。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.09861')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09861v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;3♥</span><span class="inst-badge">MIT</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">语音相关</span><span class="reason-badge">LLM相关</span>
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">08-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09867v1" target="_blank" rel="noopener">从专有LLM API窃取推理轨迹</a>
+  <div class="paper-title-en">Stealing Reasoning Traces from Proprietary LLM APIs</div>
+  <p class="paper-abstract">揭示加密思维链块可跨会话互换的架构漏洞，可能泄露专有推理轨迹。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.09867')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09867v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    
+    <span class="reason-badge">可扫</span><span class="reason-badge">训练/数据</span><span class="reason-badge">语音/音频</span>
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">08-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09559v1" target="_blank" rel="noopener">AudioMap：面向时序密集音频描述的强化学习</a>
+  <div class="paper-title-en">AudioMap: Cloze-and-Choice Reinforcement Learning for Time-Aware Dense Audio Captioning</div>
+  <p class="paper-abstract">提出完形与选择式强化学习，改进带时间边界的多事件细粒度音频描述。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.09559')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09559v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    
+    <span class="reason-badge">可扫</span><span class="reason-badge">音视频理解</span><span class="reason-badge">LLM相关</span>
+    <span class="paper-src">arXiv · cs.MM</span>
+    <span class="paper-date">08-09</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.08794v1" target="_blank" rel="noopener">面向Omni-LLM的延迟音频剪枝</a>
+  <div class="paper-title-en">Deferred Audio Pruning with Local Audio-Visual Dynamics for Omni-LLMs</div>
+  <p class="paper-abstract">提出A-PACK，在查询条件多模态交互形成后剪枝音频，降低预填充与KV缓存成本。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.08794')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.08794v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div></div>
 </section><section class="cat-section" id="llm">
@@ -712,18 +712,34 @@ footer{
   <div class="papers-grid"><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
-    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;5♥</span>
-    <span class="reason-badge">LLM相关</span><span class="reason-badge">HF精选5赞</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;42♥</span>
+    <span class="reason-badge">HF精选42赞</span><span class="reason-badge">高分</span>
     <span class="paper-src">arXiv · cs.CL</span>
-    <span class="paper-date">08-07</span>
+    <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07222v1" target="_blank" rel="noopener">Skaling：结合Chinchilla指数与Kaplan耦合</a>
-  <div class="paper-title-en">Skaling: Chinchilla&#x27;s Exponents Meet Kaplan&#x27;s Coupling</div>
-  <p class="paper-abstract">提出Skaling缩放律，用交互指数耦合模型容量与数据量，改善数据稀缺和过训练极端下的损失预测。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09819v1" target="_blank" rel="noopener">Macaron-V1：自改进与Mixture-of-LoRA开放持续学习</a>
+  <div class="paper-title-en">Macaron-V1: Towards Open Continual Learning with Self-Improvement and Mixture-of-LoRA</div>
+  <p class="paper-abstract">发布开放智能体模型族，通过版本化自改进与Mixture-of-LoRA支持部署后持续学习。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07222')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07222v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.09819')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09819v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;0♥</span>
+    <span class="reason-badge">对话/S2S</span><span class="reason-badge">HF精选</span>
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">08-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09848v1" target="_blank" rel="noopener">CEAA：交互计算系统的认知具身智能体架构</a>
+  <div class="paper-title-en">CEAA: A Cognitive Embodied Agents Architecture for Interactive Computing Systems</div>
+  <p class="paper-abstract">提出面向实时虚拟环境的认知具身智能体架构，连接低层反应控制与高层推理。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.09848')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09848v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
@@ -733,9 +749,9 @@ footer{
     <span class="paper-src">arXiv · eess.AS</span>
     <span class="paper-date">08-05</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.05222v1" target="_blank" rel="noopener">Diff-Symbo：文本控制的长时符号音乐生成</a>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.05222v1" target="_blank" rel="noopener">Diff-Symbo：文本控制长时符号音乐生成</a>
   <div class="paper-title-en">Diff-Symbo: Text-Controlled Long-Duration Symbolic Music Generation Using Autoregressive Latent Diffusion Model</div>
-  <p class="paper-abstract">提出Diff-Symbo，利用自回归潜在扩散模型生成高质量、多样且长时长的文本控制符号音乐。</p>
+  <p class="paper-abstract">用自回归潜扩散生成高质量、多样、可控且长时的文本控制符号音乐。</p>
   <div class="paper-downgrade">降权：缺少 speech/audio LLM 主线，只保留作背景参考。</div>
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2608.05222')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
@@ -744,82 +760,18 @@ footer{
 </div><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
-    <span class="inst-badge">Meta</span>
-    <span class="reason-badge">对话/S2S</span><span class="reason-badge">Meta</span>
-    <span class="paper-src">arXiv · cs.CL</span>
-    <span class="paper-date">08-07</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07458v1" target="_blank" rel="noopener">CoinRAG：长上下文RAG的信息粒KV缓存复用</a>
-  <div class="paper-title-en">CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG</div>
-  <p class="paper-abstract">提出CoinRAG，在信息粒级别复用KV缓存，减少长检索上下文冗余与噪声，优化延迟和准确率权衡。</p>
-  
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07458')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07458v1" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
-    <span class="inst-badge">MIT</span>
-    <span class="reason-badge">评测基准</span><span class="reason-badge">评测</span><span class="reason-badge">MIT</span>
-    <span class="paper-src">arXiv · cs.CL</span>
-    <span class="paper-date">08-07</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07411v1" target="_blank" rel="noopener">GeoBenchLLM：地理相关任务LLM基准</a>
-  <div class="paper-title-en">GeoBenchLLM: A Comprehensive Benchmark for Evaluating LLMs on Geo-Related Tasks</div>
-  <p class="paper-abstract">提出GeoBenchLLM，整合12个地理相关数据集，评估LLM的地理空间与时间理解及泛化能力。</p>
-  
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07411')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07411v1" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
-    <span class="inst-badge">Meta</span>
-    <span class="reason-badge">评测基准</span><span class="reason-badge">评测</span><span class="reason-badge">Meta</span>
-    <span class="paper-src">arXiv · cs.CL</span>
-    <span class="paper-date">08-07</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07370v1" target="_blank" rel="noopener">LitTraceQA：科学问答的多阶段溯源基准</a>
-  <div class="paper-title-en">LitTraceQA: A Benchmark for Multi-Stage Grounding and Verification in Scientific Question Answering</div>
-  <p class="paper-abstract">提出LitTraceQA，评估系统在科学论文问答中检索相关论文、定位证据并生成忠实答案的能力。</p>
-  
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07370')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07370v1" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
     <span class="inst-badge">MIT</span>
     <span class="reason-badge">LLM相关</span><span class="reason-badge">MIT</span>
-    <span class="paper-src">arXiv · cs.AI</span>
-    <span class="paper-date">08-07</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07251v1" target="_blank" rel="noopener">解读Copom语调的加权LLM框架</a>
-  <div class="paper-title-en">Reading Copom&#x27;s Tone: A Weighted LLM Framework for Hawkish-Dovish Sentiment, Forward Guidance, and Uncertainty</div>
-  <p class="paper-abstract">提出用于巴西央行Copom声明的NLP框架，识别鹰派与鸽派表达，并衡量前瞻指引和不确定性。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09907v1" target="_blank" rel="noopener">DistMoE：分布式指令调优的私有数据路由</a>
+  <div class="paper-title-en">DistMoE: Private-data Rehearsal-free Routing in Mixture-of-Experts for Distributed Instruction Tuning</div>
+  <p class="paper-abstract">提出分布式视觉指令调优MoE方法，无需集中私有数据或联合重训。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07251')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07251v1" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
-    <span class="inst-badge">MIT</span>
-    <span class="reason-badge">MIT</span>
-    <span class="paper-src">arXiv · cs.CL</span>
-    <span class="paper-date">08-07</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07067v1" target="_blank" rel="noopener">DocMemo：记忆引导的多模态文档证据发现</a>
-  <div class="paper-title-en">DocMemo: Dynamic Evidence Discovery via Probabilistic Memory-Guided Retrieval for Multi-Modal Document Understanding</div>
-  <p class="paper-abstract">提出DocMemo，用概率记忆引导多轮检索，在长文档多模态理解中动态发现稀疏异构证据。</p>
-  
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07067')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07067v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.09907')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09907v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
@@ -827,15 +779,63 @@ footer{
     <span class="inst-badge">MIT</span>
     <span class="reason-badge">LLM相关</span><span class="reason-badge">MIT</span>
     <span class="paper-src">arXiv · cs.CV</span>
-    <span class="paper-date">08-07</span>
+    <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.06939v1" target="_blank" rel="noopener">退化感知提示学习用于恶劣天气去除</a>
-  <div class="paper-title-en">Degradation-Aware Prompt Learning with Cross-Modal Compensation for Adverse Weather Removal</div>
-  <p class="paper-abstract">提出DCMPC-Net，通过退化感知提示与跨模态补偿，显式建模空间和语义退化以提升全天气图像恢复。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09880v1" target="_blank" rel="noopener">将金融数值预测与配置视为Token生成</a>
+  <div class="paper-title-en">Financial Numerical Prediction and Allocation as Token Generation</div>
+  <p class="paper-abstract">FinATOM用受约束Token生成统一股票收益预测与ETF动态配置，无需专用预测头。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.06939')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.06939v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.09880')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09880v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">08-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09764v1" target="_blank" rel="noopener">MoNo：通用几何上的多尺度最优传输神经算子</a>
+  <div class="paper-title-en">MoNo: Multiscale Optimal Transport Neural Operator for Solving PDEs on General Geometries</div>
+  <p class="paper-abstract">以多尺度最优传输改进观测点到潜Token分配，提升PDE神经算子稳定性。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.09764')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09764v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">LLM相关</span><span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.AI</span>
+    <span class="paper-date">08-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09685v1" target="_blank" rel="noopener">并行生成推荐的自适应语义容量分配</a>
+  <div class="paper-title-en">Adaptive Semantic Capacity Allocation for Parallel Generative Recommendation</div>
+  <p class="paper-abstract">为并行语义ID推荐自适应分配槽位与码本容量，突破固定同质ID结构限制。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.09685')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09685v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">08-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09682v1" target="_blank" rel="noopener">用工具而非像素思考：视觉推理的文本支架</a>
+  <div class="paper-title-en">Thinking With Tools, Not With Pixels: Tool Calls as Text Scaffolds for Visual Reasoning</div>
+  <p class="paper-abstract">发现工具调用前的结构化文本信号而非返回像素，是视觉推理增益的关键来源。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.09682')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09682v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div></div>
 </section><section class="cat-section" id="vision">
@@ -855,29 +855,13 @@ footer{
     <span class="paper-src">arXiv · cs.MM</span>
     <span class="paper-date">08-05</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.05000v2" target="_blank" rel="noopener">迈向多模态预训练的物理学</a>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.05000v2" target="_blank" rel="noopener">迈向多模态预训练物理：知识流与模态协同</a>
   <div class="paper-title-en">Towards Physics of Multimodal Pretraining: Knowledge Flow, Modality Synergy, Early Unification, and Recipes</div>
-  <p class="paper-abstract">系统研究统一多模态预训练，揭示知识流、模态协同、早期统一等机制，并总结实践配方。</p>
+  <p class="paper-abstract">系统实验揭示多模态预训练中的知识流、模态协同、早期统一与训练配方规律。</p>
   
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2608.05000')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
     <a class="arxiv-link" href="https://arxiv.org/abs/2608.05000v2" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
-    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;22♥</span>
-    <span class="reason-badge">HF精选22赞</span><span class="reason-badge">高分</span>
-    <span class="paper-src">arXiv · cs.CV</span>
-    <span class="paper-date">08-07</span>
-  </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07468v1" target="_blank" rel="noopener">SimWAM：端到端自动驾驶的简单世界动作模型</a>
-  <div class="paper-title-en">SimWAM: A Simple World Action Model for End-to-End Autonomous Driving</div>
-  <p class="paper-abstract">提出SimWAM，仅将视频生成作为训练信号，通过联合流匹配训练动作专家，推理时无需生成未来视频。</p>
-  
-  <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07468')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07468v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
@@ -887,9 +871,9 @@ footer{
     <span class="paper-src">arXiv · cs.SD</span>
     <span class="paper-date">08-06</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.05798v1" target="_blank" rel="noopener">KVAE：多模态生成模型分词器族</a>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.05798v1" target="_blank" rel="noopener">KVAE：多模态生成模型的Tokenizer族</a>
   <div class="paper-title-en">KVAE: Family of Tokenizers for Multimodal Generative Models</div>
-  <p class="paper-abstract">提出面向音频、图像、视频文本条件生成的KVAE分词器，提升压缩表示与生成质量。</p>
+  <p class="paper-abstract">提出面向文本条件生成的KVAE音频、图像和视频Tokenizer系列，支持高质量压缩表示。</p>
   
   <div class="paper-actions">
     <button class="deepread-btn" onclick="openDeepRead('2608.05798')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
@@ -901,47 +885,63 @@ footer{
     <span class="inst-badge">MIT</span>
     <span class="reason-badge">MIT</span>
     <span class="paper-src">arXiv · cs.AI</span>
-    <span class="paper-date">08-07</span>
+    <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07417v1" target="_blank" rel="noopener">面向人物视频推理的身份条件查询</a>
-  <div class="paper-title-en">I Seek You in Videos: Identity-Conditioned Queries for Person-Centric Video Reasoning</div>
-  <p class="paper-abstract">提出ICQ任务，结合视频与人物参考图像，评估身份定位、行为理解和人物中心推理。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09610v1" target="_blank" rel="noopener">结构增强特征与质量感知动态锚评分</a>
+  <div class="paper-title-en">Structure-Enhanced Features and Quality-Aware Dynamic Anchor Scoring for Robust Lane Detection</div>
+  <p class="paper-abstract">提出用于车道检测的结构增强特征与动态锚评分，提升遮挡和复杂场景下的连续性与定位可靠性。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07417')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07417v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.09610')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09610v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
     <span class="inst-badge">MIT</span>
     <span class="reason-badge">MIT</span>
-    <span class="paper-src">arXiv · cs.AI</span>
-    <span class="paper-date">08-07</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07368v1" target="_blank" rel="noopener">用深度学习从ZTE MRI自动测量FAI角</a>
-  <div class="paper-title-en">Measurements Automatically Extracted from Zero Echo Time MRI Using Deep Learning Image Segmentation and Geometric Modeling Agree with Expert…</div>
-  <p class="paper-abstract">从ZTE MRI自动分割并建模计算FAI角，结果与专家手工读数一致，减少CT辐射依赖。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09597v1" target="_blank" rel="noopener">ResemBrick：兼顾相似性与可拼装的积木重建</a>
+  <div class="paper-title-en">ResemBrick: Brick Reconstruction from Photographs with Perceptual Fidelity and Buildability</div>
+  <p class="paper-abstract">ResemBrick从少量照片生成可手工拼装的彩色积木模型，联合优化视觉相似、结构稳定与体素表示。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07368')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07368v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.09597')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09597v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
     <span class="inst-badge">MIT</span>
-    <span class="reason-badge">传统音频</span><span class="reason-badge">MIT</span>
-    <span class="paper-src">arXiv · cs.AI</span>
-    <span class="paper-date">08-07</span>
+    <span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://arxiv.org/abs/2608.07359v1" target="_blank" rel="noopener">真实广播中AI生成音乐检测评估</a>
-  <div class="paper-title-en">Assessing AI-generated music detection in real-world broadcast monitoring</div>
-  <p class="paper-abstract">提出40小时真实电视录制数据集BAMM，评估广播条件下AI生成音乐检测可靠性。</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09550v1" target="_blank" rel="noopener">PressureMesh：多设备压力图估计3D人体网格</a>
+  <div class="paper-title-en">PressureMesh: 3D Human Mesh Estimation from Multi-Device Pressure Images</div>
+  <p class="paper-abstract">提出MDP-Net，利用多设备时序压力数据端到端估计人体网格，扩展隐私友好姿态监测范围。</p>
   
   <div class="paper-actions">
-    <button class="deepread-btn" onclick="openDeepRead('2608.07359')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
-    <a class="arxiv-link" href="https://arxiv.org/abs/2608.07359v1" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.09550')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09550v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">评测基准</span><span class="reason-badge">评测</span><span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CV</span>
+    <span class="paper-date">08-10</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.09529v1" target="_blank" rel="noopener">面向高表达与忠实性的音频生图</a>
+  <div class="paper-title-en">Towards Expressive and Faithful Audio-to-Image Generation: A Unified Multimodal Dataset and Synthesis Framework</div>
+  <p class="paper-abstract">构建统一多模态数据集与合成框架，提升音频到图像生成的视觉质量和跨模态对齐。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.09529')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.09529v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div></div>
 </section><section class="cat-section" id="eng">
@@ -961,9 +961,9 @@ footer{
     <span class="paper-src">OpenAI Blog</span>
     <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/building-an-ai-native-finance-function" target="_blank" rel="noopener">构建AI原生财务职能的五点经验</a>
+  <a class="paper-title" href="https://openai.com/index/building-an-ai-native-finance-function" target="_blank" rel="noopener">建设 AI 原生财务职能的五点经验</a>
   <div class="paper-title-en">What building an AI-native finance function taught me</div>
-  <p class="paper-abstract">OpenAI CFO分享AI原生财务建设经验，涵盖自动预测、内控强化与AI投资回报。</p>
+  <p class="paper-abstract">OpenAI CFO Sarah Friar分享AI原生财务建设经验，涵盖自动预测、内控强化与AI投资回报。</p>
   
   <div class="paper-actions">
     
@@ -977,9 +977,9 @@ footer{
     <span class="paper-src">OpenAI Blog</span>
     <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/responsible-ai-infrastructure-texas" target="_blank" rel="noopener">OpenAI致Abbott州长的德州AI基建信</a>
+  <a class="paper-title" href="https://openai.com/index/responsible-ai-infrastructure-texas" target="_blank" rel="noopener">OpenAI 致 Abbott 州长的德州 AI 基础设施信</a>
   <div class="paper-title-en">OpenAI’s letter to Governor Abbott on responsible AI infrastructure in Texas</div>
-  <p class="paper-abstract">OpenAI致信德州州长，阐述负责任AI基础设施承诺，支持可靠透明且惠及当地的增长。</p>
+  <p class="paper-abstract">OpenAI致信德州州长Greg Abbott，阐述其负责任建设AI基础设施的承诺。</p>
   
   <div class="paper-actions">
     
@@ -993,9 +993,9 @@ footer{
     <span class="paper-src">PyTorch Blog</span>
     <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://pytorch.org/blog/fast-ondevice-agentic-ai-with-executorch/" target="_blank" rel="noopener">Muse Glimmer与ExecuTorch实现端侧智能体AI</a>
+  <a class="paper-title" href="https://pytorch.org/blog/fast-ondevice-agentic-ai-with-executorch/" target="_blank" rel="noopener">Muse Glimmer 与 ExecuTorch 实现端侧智能体 AI</a>
   <div class="paper-title-en">Fast, On Device Agentic AI with Muse Glimmer on ExecuTorch</div>
-  <p class="paper-abstract">Meta发布300亿参数开放权重Muse Glimmer，并在ExecuTorch支持端侧智能体工作流。</p>
+  <p class="paper-abstract">Meta发布Muse Glimmer开放权重300亿参数模型，并在ExecuTorch中支持端侧智能体工作流。</p>
   
   <div class="paper-actions">
     
@@ -1027,7 +1027,7 @@ footer{
   </div>
   <a class="paper-title" href="https://openai.com/index/putting-frontier-cyber-models-in-more-trusted-hands" target="_blank" rel="noopener">将前沿网络安全模型交给可信伙伴</a>
   <div class="paper-title-en">Putting frontier cyber models in more trusted hands</div>
-  <p class="paper-abstract">获批Daybreak伙伴可使用OpenAI前沿网络安全模型，提供授权且受治理的安全服务。</p>
+  <p class="paper-abstract">经批准的Daybreak伙伴可使用OpenAI前沿网络安全模型，为客户提供受授权和治理的安全服务。</p>
   
   <div class="paper-actions">
     
@@ -1041,9 +1041,9 @@ footer{
     <span class="paper-src">OpenAI Blog</span>
     <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/premium-seats-chatgpt-business" target="_blank" rel="noopener">ChatGPT Business将推出高级席位</a>
+  <a class="paper-title" href="https://openai.com/index/premium-seats-chatgpt-business" target="_blank" rel="noopener">ChatGPT Business 将推出高级席位</a>
   <div class="paper-title-en">Premium seats are coming to ChatGPT Business</div>
-  <p class="paper-abstract">ChatGPT Business将上线高级席位，限期注册可获工作区额度并提升团队高强度使用量。</p>
+  <p class="paper-abstract">ChatGPT Business将上线高级席位，提供更高使用额度，并面向限时报名团队发放工作区额度。</p>
   
   <div class="paper-actions">
     
@@ -1057,9 +1057,9 @@ footer{
     <span class="paper-src">OpenAI Blog</span>
     <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/zapier" target="_blank" rel="noopener">Zapier用ChatGPT Work改造营销流程</a>
+  <a class="paper-title" href="https://openai.com/index/zapier" target="_blank" rel="noopener">Zapier 用 ChatGPT Work 改造营销流程</a>
   <div class="paper-title-en">How Zapier transformed core marketing processes with ChatGPT Work</div>
-  <p class="paper-abstract">Zapier企业营销团队用ChatGPT Work减少线索流失，生成活动素材并自动化报告。</p>
+  <p class="paper-abstract">Zapier企业营销团队用ChatGPT Work优化线索漏斗、生成活动资产并自动化报告。</p>
   
   <div class="paper-actions">
     
@@ -1073,7 +1073,7 @@ footer{
     <span class="paper-src">OpenAI Blog</span>
     <span class="paper-date">08-10</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/virgin-atlantic/chatgpt-work" target="_blank" rel="noopener">Virgin Atlantic用ChatGPT Work优化客户旅程</a>
+  <a class="paper-title" href="https://openai.com/index/virgin-atlantic/chatgpt-work" target="_blank" rel="noopener">Virgin Atlantic 用 ChatGPT Work 优化客户旅程</a>
   <div class="paper-title-en">Virgin Atlantic sharpens customer journeys with ChatGPT Work</div>
   <p class="paper-abstract">Virgin Atlantic借助ChatGPT Work加速研究、产品规划和决策，串联客户旅程信号。</p>
   
