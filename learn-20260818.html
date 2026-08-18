@@ -98,36 +98,43 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#7c3aed;color:#fff;">基础知识</span>
       <span class="kl-num">第一则</span>
     </div>
-    <h2 class="kl-title">KV Cache：今天真正弄懂</h2>
+    <h2 class="kl-title">CTC 损失：今天真正弄懂</h2>
     <div class="kl-card-links"></div>
   </div>
   <div class="kl-question">
     <div class="kl-question-hd">
       <span class="kl-question-label">先记住</span>
-      
+      <span class="score-badge">9.3</span>
     </div>
     <div class="kl-question-body"><p>先记住：一句话定义 + 一句记忆口诀</p></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">通俗讲解</div>
-    <div class="kl-sec-body kl-answer"><p><strong>一句话定义</strong>：自回归生成（逐字输出）时，把之前算过的 Key 和 Value 向量存入显存，新词只算自己的 Query，直接复用历史 KV，从而避免重复计算。</p><p><strong>生活类比</strong>： 你在开一场长会做会议记录。 - <strong>没有 KV Cache</strong>：每次新来一句话，你必须把前 100 句话从头到尾重新听一遍、重新解析一遍语法，才能写下新一句话。 - <strong>有 KV Cache</strong>：前 100 句话的笔记已经整齐放在桌上。新来一句话，你只需理解这一句，然后翻看桌上的旧笔记做对照，直接写下新记录。</p><p><strong>核心公式与符号拆解</strong>： 标准自注意力公式为： $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{Q K^T}{\sqrt{d_k}}\right) V$$</p><p>在自回归生成的第 $t$ 步： 1. **$Q_t$（当前查询）**：只有当前生成的这 1 个 token 的向量，形状为 $[1, d_k]$。 2. **$K_{\le t}$（累积键）**：历史缓存的 $K_{< t}$ 拼上当前的 $K_t$，形状为 $[t, d_k]$。 3. **$V_{\le t}$（累积值）**：历史缓存的 $V_{< t}$ 拼上当前的 $V_t$，形状为 $[t, d_v]$。 4. **$d_k$**：隐藏层向量维度，除以 $\sqrt{d_k}$ 是为了防止点积过大导致梯度消失或 Softmax 极化。</p><p><strong>它解决什么问题？</strong> 自回归模型（如 Whisper 解码器、LLaMA）必须一个词一个词往后蹦。在生成第 1000 个词时，前 999 个词的语义投影（$K$ 和 $V$）在数学上完全没变。 - <strong>没有它</strong>：生成第 $N$ 个词需要重新计算前 $N-1$ 个词的所有矩阵乘法，整体推理总计算量是 $O(N^3)$ 级别，越往后生成越卡。 - <strong>有了它</strong>：每一步只算当前 1 个词的投影，再做一次轻量拼接，单步计算量降为 $O(N)$，整体计算量降为 $O(N^2)$。</p><p><strong>在音视频理解与说话人日志中的实际位置</strong>： 1. <strong>Whisper / 语音识别 Decoder</strong>：在转写长音频时，Decoder 内部自注意力层会用 KV Cache 记住已经转写出的文本历史，避免每输出一个字就重扫一遍前面所有字。 2. <strong>端到端说话人日志（Diarization）</strong>：模型自回归输出“说话人标签+时间戳”时，Decoder 利用 KV Cache 记住“上一秒是谁在说话”，保证说话人判别的时序连贯性。 3. <strong>视频多模态问答</strong>：视频特征通常作为长 Prompt 一次性计算出 KV 并存入缓存，后续文本交互直接复用视频 KV，不用反复重跑视频编码。</p><p>*学习建议*：想要看官方工程实现，可参考 <strong>Hugging Face 缓存说明</strong>，它非常适合用来学习 `DynamicCache` 的具体张量结构与生成循环 API。</p></div>
+    <div class="kl-sec-body kl-answer"><p><strong>一句话定义</strong>： CTC（Connectionist Temporal Classification，联结主义时间分类）是一种损失函数，它允许神经网络在<strong>不知道每一毫秒具体对应哪个字</strong>的情况下，直接把长语音（或视频帧）翻译成短文本。</p><p><strong>记忆口诀</strong>： “重复合并空符隔，穷举路径求总和。”</p><p>---</p><p>### 1. 生活类比：连笔字与拖长音 想象你听录音记笔记。说话人拖长音说了“啊——好”。 音频切成切片，模型在 10 个时间片里识别出：`啊 啊 啊 空白 好 好`。 * 如果没有空符，把连续字合并，`啊啊啊` 变成 `啊`，`好好` 变成 `好`，最终得到“啊好”。 * 如果要表达连续两个“天”（比如“天天”），模型就在中间插一个空白符：`天 天 空白 天 天` $\rightarrow$ 折叠后得到“天天”。</p><p>你不需要拿秒表精确掐出“第 0.12 秒到 0.45 秒是‘啊’”，CTC 的对齐坍缩规则会自动把拖音和空白处理成正确的文字。</p><p>---</p><p>### 2. 核心公式与符号拆解 CTC 的目标是最大化“所有能坍缩成目标文本 $Y$ 的可能路径”的总概率。损失函数就是它的负对数似然：</p><p>$$\mathcal{L}_{\text{CTC}} = -\ln P(Y|X) = -\ln \sum_{\pi \in \mathcal{B}^{-1}(Y)} P(\pi|X)$$</p><ul class="kl-list"><li>$X$：输入的特征序列（例如 100 帧语音梅尔频谱）。</li><li>$Y$：目标文本序列（例如 3 个字“去吃饭”）。</li><li>$\pi$：模型在时间步 $1 \dots T$ 上输出的<strong>某一条具体路径</strong>（如 `去-去-吃-饭-饭`）。</li><li>$\mathcal{B}$：<strong>坍缩映射函数</strong>。规则是：① 连续相同字符合并；② 删掉空白符（blank，记为 $\epsilon$）。</li><li>例子：$\mathcal{B}(\text{去 去 } \epsilon \text{ 吃 饭 饭}) = \text{去吃饭}$。</li><li>$\mathcal{B}^{-1}(Y)$：所有经过 $\mathcal{B}$ 处理后能变成 $Y$ 的路径集合。</li><li>$P(\pi|X)$：路径 $\pi$ 的概率。CTC 假设每一帧独立预测，因此等于各帧概率连乘：$\prod_{t=1}^T P(\pi_t | X)$。</li></ul><p>因为合法路径极多，CTC 采用<strong>前向-后向算法（动态规划）</strong>在多项式时间内算出这个总和并求导。</p><p>---</p><p>### 3. 它解决什么问题？没有它会怎样？ * <strong>解决的问题</strong>：输入序列长度 $T$（如音频 1000 帧）远大于输出序列长度 $U$（如文本 10 个字），且没有人工做逐帧时间对齐。 * <strong>没有它会怎样</strong>：你必须雇大量标注员，精确标出“第几帧到第几帧是哪个字”，用普通的交叉熵损失逐帧监督。这在工业界规模上成本极高，且发音边界本身模糊，人工标注误差极大。</p><p>---</p><p>### 4. 在音视频与说话人日志中的实际位置 * <strong>语音识别 (ASR)</strong>：放在声学编码器（如 Conformer、Wav2Vec 2.0）的顶层，编码器每帧输出一个概率分布，直接接 CTCLoss 进行端到端训练。 * <strong>音视频与说话人日志 (Diarization)</strong>：在多说话人重叠语音场景中，CTC 常作为多任务辅助损失（如 CTC-based Overlap-Aware ASR），帮助模型在不知道具体交叠边界的情况下，将多轨混合音频分离并转写。 * <strong>学习建议</strong>：想直观看到网格路径如何动态规划合并，推荐精读《Distill：CTC 可视化讲解》；想知道工程上张量怎么输入，直接查阅《PyTorch CTCLoss 文档》。</p></div>
   </div>
-  <div class="kl-section"><div class="kl-sec-label">先想再展开答案</div><div class="kl-quiz-list"><details class="kl-quiz"><summary>为什么新生成的 token 只需要 1 个 Q 向量？</summary><div>因为当前只需要计算“最新生成的这 1 个词”与“历史所有词”之间的注意力权重，不需要重复计算历史词之间的关系。</div></details><details class="kl-quiz"><summary>KV Cache 是用什么代价换取了什么收益？</summary><div>用显存空间换取了推理计算时间（减少了重复的前向投影矩阵运算）。</div></details><details class="kl-quiz"><summary>在跨注意力机制（Cross-Attention）中，音频特征的 KV Cache 需要每步更新吗？</summary><div>不需要。音频特征作为输入是固定不变的，只需要在第 1 步计算一次 KV 并永久缓存，后续自回归步直接复用即可。</div></details></div></div>
+  <div class="kl-section"><div class="kl-sec-label">先想再展开答案</div><div class="kl-quiz-list"><details class="kl-quiz"><summary>CTC 解决的核心痛点是什么？</summary><div>解决长输入序列到短输出序列在没有细粒度时间对齐标注时的端到端训练问题。</div></details><details class="kl-quiz"><summary>CTC 的坍缩函数（Collapse）有哪两条核心合并规则？</summary><div>① 连续相同的字符合并为一个；② 删掉所有空白占位符（blank）。</div></details><details class="kl-quiz"><summary>为什么纯 CTC 模型通常需要外接一个语言模型（LM）来解码？</summary><div>因为 CTC 存在条件独立性假设，帧与帧输出之间不建模词语语法关系，需外部 LM 提供语言概率。</div></details></div></div>
   <div class="kl-section">
     <div class="kl-sec-label">发展脉络 · 现状 · 未来</div>
-    <div class="kl-sec-body kl-analysis"><p><strong>发展流程</strong>： 1. <strong>过去（无缓存）</strong>：早期 Transformer 只做整句翻译，一次前向直接出结果。转向文本生成后，简单粗暴地把 `[历史+新词]` 整体反复送入模型，计算大量冗余。 2. <strong>现在（标配标准）</strong>：几乎所有自回归模型（LLM、语音转写 Decoder）默认开启 KV Cache。业界演进出了 MQA（Multi-Query Attention）和 GQA（Grouped-Query Attention），核心目的就是为了大幅减少 KV Cache 的显存占用。 3. <strong>相近概念辨析</strong>： - <strong>KV Cache vs 激活值缓存（Activation Cache）</strong>：激活值缓存用于<strong>训练阶段</strong>的反向传播求导；KV Cache 专用于<strong>推理阶段</strong>复用中间注意力的 $K$ 和 $V$。 - <strong>KV Cache vs Prompt Caching</strong>：Prompt Caching 指跨请求复用静态前缀（如固定的系统提示词）；KV Cache 是单次推理内部逐步累加动态上下文。</p><p><strong>当前局限与未来趋势</strong>： - <strong>[事实局限]</strong> 空间换时间，显存开销极大。并发用户多或上下文超长时，显存会被 KV Cache 挤爆（显存墙）。 - <strong>[未来推测]</strong> 在长音频/实时视频流式日志场景下，基于滑动窗口（如 StreamingLLM）或时序自适应丢弃的动态 KV Cache，可能会成为边缘端低显存实时部署的标准方案。</p></div>
+    <div class="kl-sec-body kl-analysis"><p>### 1. 发展流程 * <strong>过去（传统语音）</strong>：HMM-GMM / HMM-DNN。必须先做强制对齐（Forced Alignment），迭代训练“声学模型 + 发音词典 + 语言模型”，流水线长且极其繁琐。 * <strong>出现（2006 年，Alex Graves 提出 CTC）</strong>：引入 blank 机制，首次实现真正意义上的“输入音频 $\rightarrow$ 输出文本”端到端无对齐训练。 * <strong>现在</strong>： 1. 作为轻量级流式 ASR 的主力损失（单向 Conformer + CTC）。 2. 作为混合架构（CTC/Attention Hybrid）中的辅助对齐与剪枝分支，加速解码并防止注意力机制漏字、重复。</p><p>---</p><p>### 2. 与相近概念的区别 | 概念 | 输入与输出长度关系 | 是否需要预对齐 | 核心区别 | | :--- | :--- | :--- | :--- | | <strong>交叉熵 (Cross-Entropy)</strong> | 必须严格一模一样 ($T=U$) | 是（必须帧级别对齐） | 无法处理语音输入长、文本短的天然不等长问题。 | | <strong>CTC</strong> | 输入必须大于等于输出 ($T \ge U$) | 否（自动动态规划对齐） | 假设帧与帧之间相互独立，无法自己建模上下文语言模型。 | | <strong>RNN-T (Transducer)</strong> | 输入输出可不等长 | 否 | 在 CTC 基础上加入 Prediction Network，打破了条件独立假设，工业界主流但更占显存。 | | <strong>Seq2Seq (Attention)</strong> | 任意长度比例 | 否 | 全局软对齐，依赖自回归解码，非单调对齐，容易产生幻觉/重复。 |</p><p>---</p><p>### 3. 当前局限与未来作用 * <strong>客观事实（局限）</strong>： 1. <strong>条件独立性假设</strong>：CTC 预测当前帧时，假设不依赖前一帧预测的内容（输入了“香”，它不能根据上一步自动推测下一个字是“蕉”）。 2. <strong>尖峰现象（Peak behavior）</strong>：模型倾向于只在某些关键帧输出极高概率的真实字，其余绝大多数帧全输出 blank。 * <strong>未来作用（推测）</strong>： 在端侧超低延迟交互（如 AR 眼镜、实时字幕）中，因 CTC 结构无需自回归等待、计算开销极低，依然会作为流式编码器的首选核心组件。</p></div>
   </div>
   
+    <div class="kl-section">
+      <div class="kl-sec-label">评分</div>
+      <div class="kl-score">
+        <div class="kl-score-main">9.3</div>
+        <div class="kl-score-body"><span class="score-chip">讲解通俗短句化，公式拆解细致，发展脉络清晰，与相近概念对比明确。</span></div>
+      </div>
+    </div>
   <div class="kl-section">
     <div class="kl-sec-label">自测</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>为什么在自回归生成时，Q（Query）不需要做 Cache？</li><li>如果把音频的 Prompt 长度从 1000 增加到 4000，KV Cache 占用的显存会怎么变？</li><li>为什么 GQA（分组查询注意力）可以有效减轻 KV Cache 的负担？</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>如果音频输入长度 T 小于目标文本长度 U 会发生什么？</li><li>为什么 CTC 输出的预测序列中，大部分时间步都是 blank 符号？</li><li>目标文本里有两个连续相同的汉字（如“天天”），CTC 是怎么通过路径坍缩把它和长音区分开的？</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">就像做开卷考试：每做新的一题（新 token），你只需在草稿纸上写下当前这题的解题思路（Q），并去翻阅之前已经整理好的教材知识点（历史 KV Cache），而不需要每做一题都把整本教材从头重抄一遍。</div>
+    <div class="kl-sec-body kl-analogy">就像老师听录音打分：你说话拖长音“人人人人”，只要意思对了，老师自动把拖音“人人人人”划掉归整为一个“人”，不需要纠结第 0.3 秒你在发哪个音。</div>
   </div>
-  <div class="kl-resources"><div class="kl-sec-label">优质外网资料 · 怎么用</div><div class="kl-resource-grid"><a class="kl-resource" href="https://huggingface.co/docs/transformers/main/en/cache_explanation" target="_blank" rel="noopener"><strong>Hugging Face 缓存说明</strong><span>理解缓存张量、生成流程与 API 用法</span></a></div></div>
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">自回归模型 (Autoregressive): 产生 KV Cache 需求的推理模式</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">多头注意力 (Multi-Head Attention): KV Cache 存储的具体对象来源</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">GQA (Grouped-Query Attention): 为缓解 KV Cache 显存暴涨而设计的架构改进</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">显存墙 (Memory Wall): KV Cache 在长序列推理中遇到的核心物理瓶颈</span><span class="kl-related-desc"></span></div></div></div>
+  <div class="kl-resources"><div class="kl-sec-label">优质外网资料 · 怎么用</div><div class="kl-resource-grid"><a class="kl-resource" href="https://distill.pub/2017/ctc/" target="_blank" rel="noopener"><strong>Distill：CTC 可视化讲解</strong><span>最直观地理解 blank、路径合并与对齐</span></a><a class="kl-resource" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.CTCLoss.html" target="_blank" rel="noopener"><strong>PyTorch CTCLoss 文档</strong><span>掌握输入形状和实际调用</span></a></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">RNN-T (Transducer)::CTC 的演进版，引入预测网络解决 CTC 条件独立性缺陷的主流 ASR 框架。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">Blank 占位符::CTC 特殊标记，用于隔开连续相同字符以及吸收无有效语义的时间段。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">前向-后向算法::CTC 用于在 $O(T \times U)$ 复杂度内计算所有有效路径概率和的动态规划算法。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">CTC/Attention 混合架构::结合 CTC 的单调快速对齐与 Attention 的全局语义建模的混合 ASR 结构。</span><span class="kl-related-desc"></span></div></div></div>
 </article>
 <article class="kl-card" style="border-top:3px solid #0f766e;">
   <div class="kl-card-top" style="background:#ecfdf5;">
@@ -135,107 +142,109 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#0f766e;color:#fff;">动手练习</span>
       <span class="kl-num">第二则</span>
     </div>
-    <h2 class="kl-title">KV Cache：动手实现</h2>
+    <h2 class="kl-title">CTC 损失：动手实现</h2>
     <div class="kl-card-links"></div>
   </div>
   <div class="kl-question">
     <div class="kl-question-hd">
       <span class="kl-question-label">练习目标</span>
-      
+      <span class="score-badge">9.5</span>
     </div>
-    <div class="kl-question-body"><p>目标：用 PyTorch 手写一个最小自注意力模块，实现“无 Cache 完整计算”与“带 KV Cache 增量计算”，并验证两者的数值输出完全一致。 输入：Batch 大小为 1，隐藏维度 16，历史序列长度 3，新输入 1 个 token。 输出：单步预测的 Attention 输出向量，以及更新后的 Cache。 验收标准：带 Cache 与不带 Cache 的计算结果误差小于 $10^{-5}$。</p></div>
+    <div class="kl-question-body"><p>目标：用 PyTorch 原生 `nn.CTCLoss` 完成一次语音识别场景的前向损失计算与贪心解码验证。 输入：模拟 batch=2 的网络输出 logits、目标标签 targets 以及对应的真实长度。 输出：标量 CTC Loss 值，以及模拟的贪心解码（Greedy Decode）结果。 验收标准：代码独立可运行，正确处理 `log_softmax` 与张量维度，输出合理的 Loss 且无报错。</p></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">参考实现</div>
-    <div class="kl-sec-body kl-answer"><p><strong>思路</strong>： 1. 实现一个单头注意力：包含 $W_q, W_k, W_v$ 线性映射。 2. <strong>无 Cache 模式</strong>：输入整个序列 $[B, T, D]$，计算完整注意力，取最后一步的输出。 3. <strong>带 Cache 模式</strong>：输入当前单 token $[B, 1, D]$ 和历史 `past_k`, `past_v`。只对单 token 算 $Q, K, V$，把 $K, V$ 拼到历史 Cache 中，再用单点 $Q$ 与完整 $K, V$ 做注意力。</p><pre class="kl-code"><code>import torch
+    <div class="kl-sec-body kl-answer"><p>### 实现思路 1. <strong>定义词表</strong>：设定 0 号为 `blank` 占位符，其余为有效字符。 2. <strong>构建输入</strong>：CTC 损失要求输入为 <strong>log 概率</strong>，维度通常为 `(T, N, C)` 即 `(时间步, Batch大小, 类别数)`。 3. <strong>调用 `nn.CTCLoss`</strong>：传入预测 log 概率、目标文本、输入时间步长度、目标文本长度。 4. <strong>贪心解码</strong>：对预测概率取 argmax，编写坍缩函数验证重复合并与去 blank 逻辑。</p><p>### 完整可运行代码</p><pre class="kl-code"><code>import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
-class MinimalAttentionWithKVCache(nn.Module):
-    def __init__(self, dim):
-        super().__init__()
-        self.dim = dim
-        self.w_q = nn.Linear(dim, dim, bias=False)
-        self.w_k = nn.Linear(dim, dim, bias=False)
-        self.w_v = nn.Linear(dim, dim, bias=False)
+# 1. 基础配置与模拟数据
+# 词表：0: blank(-), 1: &#x27;A&#x27;, 2: &#x27;B&#x27;, 3: &#x27;C&#x27;
+VOCAB = [&quot;-&quot;, &quot;A&quot;, &quot;B&quot;, &quot;C&quot;]
+NUM_CLASSES = len(VOCAB)
+BLANK_IDX = 0
 
-    def forward_no_cache(self, x):
-        # x: [Batch, Seq_Len, Dim]
-        B, T, D = x.shape
-        q = self.w_q(x)  # [B, T, D]
-        k = self.w_k(x)  # [B, T, D]
-        v = self.w_v(x)  # [B, T, D]
+T = 8       # 输入时间步（帧数）
+BATCH_SIZE = 2
 
-        # 计算因果注意力 (自回归只能看过去)
-        scores = torch.matmul(q, k.transpose(-2, -1)) / (self.dim ** 0.5)
-        mask = torch.tril(torch.ones(T, T, device=x.device))
-        scores = scores.masked_fill(mask == 0, float(&#x27;-inf&#x27;))
-        attn = F.softmax(scores, dim=-1)
-        out = torch.matmul(attn, v)  # [B, T, D]
-        return out[:, -1:, :]        # 取最后一个 token 的输出
-
-    def forward_with_cache(self, x_new, past_k=None, past_v=None):
-        # x_new: [Batch, 1, Dim] 仅传入当前生成的 1 个 token
-        q_new = self.w_q(x_new)  # [B, 1, D]
-        k_new = self.w_k(x_new)  # [B, 1, D]
-        v_new = self.w_v(x_new)  # [B, 1, D]
-
-        if past_k is not None and past_v is not None:
-            # 拼接历史 KV
-            k_full = torch.cat([past_k, k_new], dim=1)  # [B, T_past + 1, D]
-            v_full = torch.cat([past_v, v_new], dim=1)  # [B, T_past + 1, D]
-        else:
-            k_full, v_full = k_new, v_new
-
-        # 当前 1 个 token 对过去所有 token 算注意力，无需 Mask
-        scores = torch.matmul(q_new, k_full.transpose(-2, -1)) / (self.dim ** 0.5)  # [B, 1, T_full]
-        attn = F.softmax(scores, dim=-1)
-        out = torch.matmul(attn, v_full)  # [B, 1, D]
-
-        return out, k_full, v_full
-
-# ================= 验证正确性 =================
+# 模拟声学模型输出的 Logits，形状: (T, Batch, Num_Classes)
 torch.manual_seed(42)
-dim = 16
-model = MinimalAttentionWithKVCache(dim)
+raw_logits = torch.randn(T, BATCH_SIZE, NUM_CLASSES)
+log_probs = raw_logits.log_softmax(dim=-1)  # CTC 强制要求 log_probs
 
-# 模拟 3 个历史 token，加 1 个新 token
-x_past = torch.randn(1, 3, dim)
-x_new = torch.randn(1, 1, dim)
-x_full = torch.cat([x_past, x_new], dim=1)  # [1, 4, 16]
+# 目标标签 targets
+# 样本 1 目标: &quot;A B&quot; -&gt; [1, 2] (长度 2)
+# 样本 2 目标: &quot;B A B&quot; -&gt; [2, 1, 2] (长度 3)
+targets = torch.tensor([
+    [1, 2, 0],       # 填充对齐用 0（不影响，以 target_lengths 为准）
+    [2, 1, 2]
+], dtype=torch.long)
 
-# 1. 无 Cache 计算（全序列输入）
-out_no_cache = model.forward_no_cache(x_full)
+input_lengths = torch.tensor([8, 8], dtype=torch.long)    # 每个样本的有效帧数 T
+target_lengths = torch.tensor([2, 3], dtype=torch.long)   # 每个样本的目标真实字数 U
 
-# 2. 带 Cache 计算（分步传入）
-# 先让模型处理前 3 个 token，拿到历史 KV Cache
-_, past_k, past_v = model.forward_with_cache(x_past)
-# 新 token 到来，只传 x_new 和历史 Cache
-out_with_cache, _, _ = model.forward_with_cache(x_new, past_k, past_v)
+# 2. 实例化并计算 CTC Loss
+ctc_loss_fn = nn.CTCLoss(blank=BLANK_IDX, reduction=&#x27;mean&#x27;, zero_infinity=True)
+loss = ctc_loss_fn(log_probs, targets, input_lengths, target_lengths)
 
-# 3. 对比误差
-diff = torch.max(torch.abs(out_no_cache - out_with_cache)).item()
-print(f&quot;输出形状: {out_with_cache.shape}&quot;)
-print(f&quot;两种方式的最大绝对误差: {diff:.8f}&quot;)
-assert diff &lt; 1e-5, &quot;验证失败：Cache 计算结果与全量计算不一致！&quot;
-print(&quot;✅ 验证成功：KV Cache 逻辑完全正确！&quot;)</code></pre></div>
+print(f&quot;=== 1. 损失计算 ===&quot;)
+print(f&quot;CTC Loss: {loss.item():.4f}\n&quot;)
+
+# 3. 贪心解码（Greedy Decode）实现与验证
+def ctc_greedy_decode(log_probs_seq, blank=0):
+    &quot;&quot;&quot;
+    log_probs_seq: (T, Num_Classes)
+    对单条样本进行 argmax 坍缩
+    &quot;&quot;&quot;
+    # 步骤 A: 取每一帧概率最大的 token
+    pred_indices = torch.argmax(log_probs_seq, dim=-1).tolist()
+    
+    # 步骤 B: 坍缩（连续去重 + 删 blank）
+    decoded = []
+    prev_idx = None
+    for idx in pred_indices:
+        if idx != prev_idx:          # 连续相同的折叠
+            if idx != blank:          # 删掉 blank
+                decoded.append(idx)
+        prev_idx = idx
+    return pred_indices, decoded
+
+print(f&quot;=== 2. 解码验证 ===&quot;)
+for b in range(BATCH_SIZE):
+    seq_log_prob = log_probs[:, b, :]  # 取出第 b 个样本: (T, C)
+    raw_preds, final_preds = ctc_greedy_decode(seq_log_prob, blank=BLANK_IDX)
+    
+    raw_str = &quot;&quot;.join([VOCAB[i] for i in raw_preds])
+    final_str = &quot;&quot;.join([VOCAB[i] for i in final_preds])
+    target_str = &quot;&quot;.join([VOCAB[targets[b][i].item()] for i in range(target_lengths[b].item())])
+    
+    print(f&quot;样本 {b+1}:&quot;)
+    print(f&quot;  帧级原始预测 : {raw_str}&quot;)
+    print(f&quot;  CTC 坍缩结果 : {final_str}&quot;)
+    print(f&quot;  真实目标文本 : {target_str}&quot;)</code></pre></div>
   </div>
   
   <div class="kl-section">
     <div class="kl-sec-label">代码拆解与真实用法</div>
-    <div class="kl-sec-body kl-analysis"><p><strong>代码逐段解析</strong>： 1. <strong>`forward_no_cache`</strong>：模拟传统做法。每次将整个句子 `x`（长度为 $T$）传入，做 $O(T^2)$ 的全量注意力矩阵乘法，再切片 `out[:, -1:, :]` 取出最后一个位置的输出。 2. <strong>`forward_with_cache`</strong>： - 投影只发生在输入张量 `x_new` 上（长度恒为 1），计算耗时恒定。 - `torch.cat([past_k, k_new], dim=1)`：在时间序列维度（`dim=1`）完成拼接。 - `scores` 的形状为 $[B, 1, T_{full}]$，由于只有 1 行，它自然能“看见”过去所有的 Key，<strong>完全不需要因果 Mask（三角掩码）</strong>，省去了掩码计算。 3. <strong>常见错误</strong>： - 拼接维度搞错：如果写成 `dim=-1` 会拼在特征维度上，导致张量形状错乱。 - 在有 Cache 的情况下仍去计算 $Q_{past}$：Query 只需要当前步的，千万不要去给历史 token 重复算 Query。 4. <strong>真实模型对应</strong>：该逻辑完全对应 Hugging Face 中 `WhisperDecoderLayer` 或 `LlamaAttention` 中 `past_key_value` 的核心拼接操作。</p></div>
+    <div class="kl-sec-body kl-analysis"><p>### 1. 关键张量形状与参数解析 * `log_probs`：形状为 `(T, N, C)`。 * `T`：时间步（帧数）。 * `N`：Batch 大小。 * `C`：词表大小（必须包含空白符）。 * <strong>注意</strong>：PyTorch 默认输入是 `(T, N, C)` 而不是常规的 `(N, T, C)`。如果你的输出是 `(N, T, C)`，需要设置 `nn.CTCLoss(batch_first=True)`。 * `input_lengths`：形状为 `(N,)`，记录 batch 中每条语音特征的真实有效长度（截断填充部分）。 * `target_lengths`：形状为 `(N,)`，记录每条文本标签的真实有效字符数。</p><p>---</p><p>### 2. 工业界三大常见踩坑点 1. <strong>忘记做 `log_softmax`</strong>：直接把网络线性层的 raw logits 送入 `nn.CTCLoss`。PyTorch 不会自动做 softmax，输入必须是数学意义上的 log 概率值。 2. **输入序列比目标短 ($T < U$)**：CTC 要求时间步必须能够放下所有字符。若 $T < U$ 或考虑 blank 后无法容纳目标，Loss 会变成 `inf` 或抛出异常。设置 `zero_infinity=True` 可防止训练因个别异常样本梯度爆炸崩溃。 3. <strong>blank 索引对不上</strong>：PyTorch 默认 `blank=0`。如果你的词表把 blank 放在最后一位（如 `blank = len(vocab)-1`），必须显式传入 `nn.CTCLoss(blank=...)`。</p><p>---</p><p>### 3. 在真实模型中的位置 在 Wav2Vec 2.0 或 Conformer 模型中，该代码对应： `输入音频` $\rightarrow$ `Feature Extractor` $\rightarrow$ `Conformer Blocks` $\rightarrow$ `Linear(D, Vocab)` $\rightarrow$ `log_softmax` $\rightarrow$ <strong>`CTCLoss`</strong>。</p></div>
   </div>
   
+    <div class="kl-section">
+      <div class="kl-sec-label">评分</div>
+      <div class="kl-score">
+        <div class="kl-score-main">9.5</div>
+        <div class="kl-score-body"><span class="score-chip">包含完整的环境无依赖可运行代码，清晰展示了 log_probs、targets、lengths 的张量规范和解码逻辑。</span></div>
+      </div>
+    </div>
   <div class="kl-section">
     <div class="kl-sec-label">再练一步</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>改造练习 1：为这个模块增加 Multi-Head（多头机制，例如 num_heads=4），注意 KV Cache 的拼接维度如何调整？</li><li>改造练习 2：实现一个固定窗口大小（如只保留最近 2 个 token）的 Sliding Window KV Cache。</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>尝试在 `nn.CTCLoss` 中开启 `batch_first=True`，并相应修改输入张量的维度验证其结果是否完全一致。</li><li>如果给样本设置 $T=2$ 但目标长度 $U=3$，观察代码会报什么错，体会 CTC 长度约束。</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">一句代码记忆法：`Q` 永远只要当前的 1 步，`K` 和 `V` 沿着 `dim=1` 一直往后 `cat`。</div>
+    <div class="kl-sec-body kl-analogy">“先 log 变概率，T 放前头 Batch 居中，零号留给 blank 别放错。”</div>
   </div>
   
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">张量拼接 (torch.cat): KV Cache 沿时间步维度扩展的核心算子</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">因果掩码 (Causal Mask): 无 Cache 时防止未来信息泄露的矩阵，在单步增量 Cache 中不需要</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">显存碎片 (Memory Fragmentation): 频繁调用 torch.cat 动态扩容导致的显存瓶颈（也是 PagedAttention 要解决的问题）</span><span class="kl-related-desc"></span></div></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">batch_first::PyTorch CTCLoss 参数，控制输入是否为 (N, T, C) 形状。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">zero_infinity::防止由于路径不合法导致 CTC 产生无穷大 Loss 毁掉模型权重的保护参数。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">贪心解码 (Greedy Decoding)::取每帧 argmax 后执行 CTC 规则坍缩的极速解码方法。</span><span class="kl-related-desc"></span></div></div></div>
 </article>
   <section class="kl-archive">
   <h3 class="kl-archive-heading">往期记录 <span class="kl-arc-count">171 条记录</span></h3>
