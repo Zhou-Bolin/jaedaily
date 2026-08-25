@@ -7,12 +7,12 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#f5f2ec;color:#1f2933;font-family:'Noto Serif SC','Songti SC','SimSun',Georgia,serif;line-height:1.8;padding:28px 16px 56px;}
-.wrap{max-width:820px;margin:0 auto;}
+.wrap{max-width:980px;margin:0 auto;}
 .top{border-bottom:1px solid #cdbf9f;padding-bottom:18px;margin-bottom:24px;}
 .eyebrow{font:700 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:8px;}
 h1{font-size:36px;letter-spacing:4px;color:#2b2118;line-height:1.2;}
 .sub{font:13px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;margin-top:8px;}
-.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;align-items:start;}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start;}
 .card{background:#fffefa;border:1px solid #ded3bb;border-radius:8px;box-shadow:0 2px 10px rgba(60,42,20,.06);overflow:hidden;}
 .lesson-head{padding:18px 22px;background:#fff6e6;border-bottom:1px solid #e5d7b8;}
 .kicker{font:700 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#9a5b12;letter-spacing:1px;margin-bottom:6px;}
@@ -20,6 +20,23 @@ h2{font-size:24px;color:#2b2118;line-height:1.35;}
 .memory{margin-top:12px;display:inline-block;font:800 14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;background:#7a2f1210;border:1px solid #7a2f1230;border-radius:999px;padding:5px 12px;}
 .section{padding:16px 22px;border-bottom:1px solid #eee5d3;}
 .section:last-child{border-bottom:none;}
+.chapter{padding:20px 22px;border-bottom:1px solid #eee5d3;}
+.chapter:last-child{border-bottom:none;}
+.chapter-no{font:800 10px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#9a5b12;letter-spacing:1.2px;margin-bottom:4px;}
+.chapter h2{font-size:22px;margin-bottom:12px;}
+.fact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.fact{background:#f8f5ee;border-radius:6px;padding:11px 12px;}
+.fact b{display:block;font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;margin-bottom:4px;}
+.fact p{font-size:13px;line-height:1.7;}
+.takeaway{margin-top:12px;background:#fff6e6;border-left:3px solid #b7791f;padding:10px 12px;border-radius:0 6px 6px 0;font-size:14px;}
+.kind{display:inline-block;font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#fff;background:#7a2f12;border-radius:999px;padding:4px 9px;margin-bottom:8px;}
+.video-link{display:flex;gap:12px;align-items:center;background:#2b2118;color:#fff;text-decoration:none;border-radius:8px;padding:14px;margin-top:10px;}
+.video-link:hover{text-decoration:none;background:#473425;}
+.video-link .play{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#fff2;color:#fff;flex:none;}
+.video-link b{display:block;font-size:14px;}
+.video-link small{display:block;color:#e7ded2;margin-top:3px;font:11px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+.video-note{font-size:12px;margin-top:8px;color:#6b7280;}
+.video-empty{font:13px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f3f4f6;padding:12px;border-radius:6px;color:#4b5563;}
 .label{font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;letter-spacing:1.2px;margin-bottom:8px;}
 p{font-size:15px;color:#374151;}
 ol{padding-left:22px;}
@@ -36,7 +53,7 @@ li{margin:7px 0;font-size:15px;color:#374151;}
 .plan-body span{display:block;font:12px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;}
 .note{padding:14px 16px;font:12px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;}
 .back{display:inline-block;margin-top:22px;font:700 12px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;text-decoration:none;}
-@media(max-width:760px){.grid{display:block;}.side{margin-top:16px;}h1{font-size:30px;}h2{font-size:21px;}body{padding:20px 12px 44px;}}
+@media(max-width:760px){.grid{display:block;}.side{margin-top:16px;}.fact-grid{grid-template-columns:1fr;}h1{font-size:30px;}h2{font-size:21px;}body{padding:20px 12px 44px;}}
 </style>
 </head>
 <body>
@@ -44,30 +61,60 @@ li{margin:7px 0;font-size:15px;color:#374151;}
   <header class="top">
     <div class="eyebrow">Health Classroom · 2026年08月25日</div>
     <h1>健康学堂</h1>
-    <div class="sub">每日一个容易执行的健康行动。内容用于健康素养与生活方式管理，不替代医生诊断。</div>
+    <div class="sub">每天 10–20 分钟：读懂一种食物、一个人体机制和一项训练技巧，再看一节不重复的视频课。</div>
   </header>
   <div class="grid">
     <article class="card">
-      <div class="lesson-head">
-        <div class="kicker">第 17/44 讲 · 今日行动卡</div>
+      <section class="chapter">
+        <div class="chapter-no">01 · 今日食物 · 13/14</div>
+        <h2>西兰花：它是营养丰富的蔬菜，但没有任何一种蔬菜能包办健康。</h2>
+        <div class="fact-grid">
+          <div class="fact"><b>里面有什么</b><p>含维生素 C、维生素 K、叶酸、纤维及多种植物化学物。</p></div>
+          <div class="fact"><b>进入身体后</b><p>纤维帮助肠道规律，维生素 C 参与胶原合成并促进非血红素铁吸收。</p></div>
+          <div class="fact"><b>训练日怎么吃</b><p>训练前不宜突然吃大量高纤维蔬菜；训练后的完整正餐则应把它作为蔬菜的一部分。</p></div>
+          <div class="fact"><b>挑选与搭配</b><p>蒸、焯或快炒至适口即可；与不同颜色蔬菜轮换，比天天只吃西兰花更全面。</p></div>
+        </div>
+        <div class="takeaway"><b>别被这个误区带偏：</b>它不能单独抗癌或“排毒”，健康收益来自长期多样化饮食。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">02 · 人体知识 · 13/14</div>
+        <h2>睡眠与恢复</h2>
+        <div class="memory">训练计划包括睡觉。</div>
+        <p style="margin-top:12px">睡眠支持神经学习、激素调节、免疫和组织修复。缺觉也会增加饥饿感与主观用力感。</p>
+        <div class="fact-grid">
+          <div class="fact"><b>和你的训练有什么关系</b><p>篮球技术和力量动作都依赖神经学习；连续睡不好时，降低训练难度通常比硬顶更明智。</p></div>
+          <div class="fact"><b>今天观察什么</b><p>记录昨晚睡眠时长、醒来精神和今天训练感受，找自己的关联。</p></div>
+        </div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">03 · 今日训练 · 13/16</div>
+        <div class="kind">篮球</div>
+        <h2>防守滑步先守住脚下秩序</h2>
+        <p>面向对手、髋部降低，移动方向一侧的脚先走，双脚不交叉。</p>
+        <div class="fact-grid">
+          <div class="fact"><b>今天这样练</b><p>在两点之间做 5 组 15 秒滑步，组间休息 30 秒。</p></div>
+          <div class="fact"><b>常见错误</b><p>上下跳动太多、脚跟沉重，或疲劳后双脚交叉。</p></div>
+        </div>
+        <div class="warn" style="margin-top:12px">安全边界：地面湿滑或脚踝不稳时不要高速练。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">04 · 今日视频课 · 不重复推荐</div>
+        <h2>看一次示范，再带着一个重点练</h2>
+        
+        <a class="video-link" href="https://www.bilibili.com/video/BV1dv4y1U7q3/?p=1" target="_blank" rel="noopener noreferrer">
+          <span class="play">▶</span>
+          <span><b>5 分钟跑前动态热身</b><small>跑步 · 热身 · 约 5 分钟</small></span>
+        </a>
+        <p class="video-note">观看提示：先看动作顺序，再用低幅度跟练。</p>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">05 · 今日行动与自测 · 第 17/44 讲</div>
         <h2>酒精不是助眠工具</h2>
         <div class="memory">困得快，不等于睡得好。</div>
-      </div>
-      <section class="section">
-        <div class="label">为什么重要</div>
-        <p>酒精可能让人更快入睡，却会破坏后半夜睡眠并增加意外与药物相互作用风险。</p>
-      </section>
-      <section class="section">
-        <div class="label">今天就做</div>
-        <ol><li>今晚用无糖饮品替代第一杯酒。</li><li>不把酒与安眠药、镇静药同用。</li><li>饮酒后不驾驶，也不做高风险运动。</li></ol>
-      </section>
-      <section class="section">
-        <div class="label">睡前检查</div>
-        <div class="check">今天是否完成一个无酒精夜晚？</div>
-      </section>
-      <section class="section">
-        <div class="label">安全边界</div>
-        <div class="warn">出现戒断、失控饮酒或晨起饮酒时，不要突然独自停酒，应寻求专业帮助。</div>
+        <p style="margin-top:12px">酒精可能让人更快入睡，却会破坏后半夜睡眠并增加意外与药物相互作用风险。</p>
+        <ol style="margin-top:8px"><li>今晚用无糖饮品替代第一杯酒。</li><li>不把酒与安眠药、镇静药同用。</li><li>饮酒后不驾驶，也不做高风险运动。</li></ol>
+        <div class="check">睡前检查：今天是否完成一个无酒精夜晚？</div>
+        <div class="warn" style="margin-top:10px">出现戒断、失控饮酒或晨起饮酒时，不要突然独自停酒，应寻求专业帮助。</div>
       </section>
     </article>
     <aside class="side">
@@ -76,8 +123,9 @@ li{margin:7px 0;font-size:15px;color:#374151;}
         <div class="plan-row"><div class="plan-day">周一</div><div class="plan-body"><strong>规律起床</strong><span>固定起床时间并接触晨光。</span></div></div><div class="plan-row active"><div class="plan-day">周二</div><div class="plan-body"><strong>全身力量</strong><span>练习推、拉、蹲、髋四类动作。</span></div></div><div class="plan-row"><div class="plan-day">周三</div><div class="plan-body"><strong>少盐一天</strong><span>减少汤、酱料和加工食品。</span></div></div><div class="plan-row"><div class="plan-day">周四</div><div class="plan-body"><strong>活动度</strong><span>温和活动肩、胸椎、髋和脚踝。</span></div></div><div class="plan-row"><div class="plan-day">周五</div><div class="plan-body"><strong>社交连接</strong><span>主动完成一次真诚交流。</span></div></div><div class="plan-row"><div class="plan-day">周六</div><div class="plan-body"><strong>户外时间</strong><span>安全地在户外活动半小时。</span></div></div><div class="plan-row"><div class="plan-day">周日</div><div class="plan-body"><strong>恢复检查</strong><span>观察疲劳、酸痛和睡眠，不硬加量。</span></div></div>
       </div>
       <div class="card note">
-        <strong>减重最小闭环：</strong><br>
-        每周只追踪 3 个数：体重均值、腰围、完成运动次数。每天只改一个动作，连续比完美更重要。
+        <strong>训练最小闭环：</strong><br>
+        每周只追踪训练完成次数、睡眠、疼痛与疲劳趋势。篮球、长跑和力量训练的负荷需要一起计算。
+        
       </div>
     </aside>
   </div>
