@@ -98,7 +98,7 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#7c3aed;color:#fff;">基础知识</span>
       <span class="kl-num">第一则</span>
     </div>
-    <h2 class="kl-title">分帧、加窗与帧移：今天真正弄懂</h2>
+    <h2 class="kl-title">链式法则与梯度：今天真正弄懂</h2>
     <div class="kl-card-links"></div>
   </div>
   <div class="kl-question">
@@ -106,28 +106,28 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-question-label">先记住</span>
       
     </div>
-    <div class="kl-question-body"><p>先记住：一句话定义 + 一句记忆口诀 定义：分帧是把长音频切成重叠的短时间片段，加窗是用平滑曲线压低两端以消除边缘突变，帧移是每次切片向前移动的步长。 口诀：“长声切短叫分帧，两头压低是加窗；每次往前移一步，步长就是叫帧移。”</p></div>
+    <div class="kl-question-body"><p>先记住：一句话定义 + 一句记忆口诀</p></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">通俗讲解</div>
-    <div class="kl-sec-body kl-answer"><p>【生活类比】 想象你在看一段 100 米赛跑的高清慢动作视频。 1. 语音就像奔跑的人，一直在变化（非平稳）。如果你只拍一张曝光 10 秒的照片，画面全是重影，根本看不清细节。 2. 分帧：就像每隔 10 毫秒按一次快门，每次快门曝光 25 毫秒。因为 25 毫秒内人几乎没动，照片是清晰的（短时平稳）。 3. 加窗：如果直接拿剪刀咔嚓剪出一张照片，边缘处可能会把人剪成两半，边缘特别毛糙刺眼。加窗相当于给照片四周套一个“渐变暗角滤镜”，让中心最亮，两端慢慢变黑变透明，拼起来时边缘就不会打架。 4. 帧移：就是你端着相机往前走时，两张连续照片“起点”之间的距离。</p><p>【数学公式与符号拆解】 提取第 $m$ 帧信号并在该帧内取第 $n$ 个采样点： $$x_m[n] = x[m \cdot H + n] \cdot w[n]$$</p><p>符号逐一解释： - $x$: 原始完整音频一维序列（例如 $16000\text{ Hz}$ 采样率下的离散点）。 - $m$: 帧编号（第 0 帧、第 1 帧、第 2 帧……）。 - $n$: 某一帧内的相对采样点索引，范围从 $0$ 到 $N - 1$。 - $N$: 窗长（Window Length / Frame Length），即一帧包含多少个采样点（例如 25ms 对应 400 个点）。 - $H$: 帧移（Hop Length），即相邻两帧起点之间跨越的采样点数（例如 10ms 对应 160 个点）。 - $m \cdot H + n$: 映射回原始连续音频上的真实绝对采样点位置。 - $w[n]$: 窗函数（如 Hamming 窗或 Hanning 窗），在两端接近 0，中间接近 1。 - $x_m[n]$: 第 $m$ 帧加窗后的最终输出序列。</p><p>【解决的核心问题：没有它会怎样？】 傅里叶变换（FFT）有一个死穴：它假设信号是“周期且永恒不变”的（平稳信号）。 现实中的语音包含元音、辅音、语调起伏，完全是非平稳信号。 - 如果没有分帧：对整段语音做一次 FFT，你只能知道“这段话里出现过哪些音调”，但完全不知道“哪个字在哪一秒被说出来的”（时域定位能力归零）。 - 如果分帧但不加窗（即使用矩形窗硬切）：硬切边界会导致波形出现剧烈阶跃断崖，在频域中凭空冒出一大堆高频假杂音，这叫“频谱泄露”（Spectral Leakage）。 - 如果有分帧但无帧移（帧移等于窗长，即无重叠）：因为加窗把每帧两端的声音都压成了 0，如果不重叠，两端的信息就会永远丢失；重叠帧移确保了整段声音无死角覆盖。</p></div>
+    <div class="kl-sec-body kl-answer"><p><strong>一句话定义</strong>： 梯度是让损失函数上升最快的方向向量，而链式法则就是把复合函数从外到内一层层拆开求导、再把各层变化率乘起来的数学规则。</p><p><strong>生活类比</strong>： 想象一家面包厂做出的面包太咸了（产生损失 Loss）。 厂长（最终输出）质问车间主管（隐藏层），主管质问配料师傅（输入层）。 配料师傅的责任 = “主管对总口味的连带责任” × “师傅对主管指令的执行偏差”。 链式法则就是这样自后向前、把总责任逐级拆解并连乘的过程。</p><p><strong>必要公式与符号解释</strong>： 若函数嵌套为 $y = f(u)$ 且 $u = g(x)$，对输入 $x$ 求导的链式法则为： $$\frac{\partial y}{\partial x} = \frac{\partial y}{\partial u} \cdot \frac{\partial u}{\partial x}$$ 当输入是多维参数（如权重向量 $\mathbf{w} = [w_1, w_2, \dots, w_n]^T$）时，损失 $L$ 对所有参数的偏导数打包成一个向量，就叫梯度： $$\nabla_{\mathbf{w}} L = \left[ \frac{\partial L}{\partial w_1}, \frac{\partial L}{\partial w_2}, \dots, \frac{\partial L}{\partial w_n} \right]^T$$ - $L$：标量损失值（模型预测与真实标签的差距）。 - $\mathbf{w}$：模型中需要更新的权重参数。 - $\frac{\partial L}{\partial w_i}$：第 $i$ 个权重微调时，对总损失造成的影响速率。 - $\nabla$（Nabla 算子）：表示把所有偏导数打包成梯度向量。</p><p><strong>它解决什么问题？没有它会怎样？</strong> 深度模型通常包含几十上百层（如提取声学特征的卷积层与 Transformer 层）。 如果没有链式法则，我们想更新第一层卷积的参数，就只能对每一个参数做微调扰动去重新测一遍损失（数值差分），一个亿级参数的模型做一次更新就需要跑一亿次前向传播，计算量直接爆炸。 有了链式法则，只需一次前向计算保存中间状态，再做一次反向传递，就能同时算出所有层参数的梯度。</p><p><strong>在音视频与说话人日志中的实际用法</strong>： 在说话人日志（Speaker Diarization）中，前端网络（如 ECAPA-TDNN 或 Conformer）负责将连续语音切片编码为说话人表征向量（Speaker Embedding，如 x-vector）。 后端计算损失（如 AAM-Softmax 损失或对比学习损失）。 系统通过链式法则把损失从分类头逆向传回投影层、注意力层、最后传到卷积前端，告诉特征提取网络：“如何调整滤波器，才能把张三和李四的声音分得更开”。</p></div>
   </div>
-  <div class="kl-section"><div class="kl-sec-label">先想再展开答案</div><div class="kl-quiz-list"><details class="kl-quiz"><summary>采样率 16000Hz 下，窗长 25ms 对应的采样点数是多少？</summary><div>400 点（16000 * 0.025）</div></details><details class="kl-quiz"><summary>帧移 Hop Length 变小，模型计算量和时间分辨率会如何变化？</summary><div>时间分辨率变高，但生成的帧数增多，计算量变大</div></details><details class="kl-quiz"><summary>加窗的主要目的是抑制什么现象？</summary><div>抑制频谱泄露（Spectral Leakage）</div></details></div></div>
+  <div class="kl-section"><div class="kl-sec-label">先想再展开答案</div><div class="kl-quiz-list"><details class="kl-quiz"><summary>损失函数 $L$ 对参数 $w$ 的梯度为正数，若想降低损失，更新参数时应该加上还是减去梯度？</summary><div>减去（负梯度方向才是下降最快方向）。</div></details><details class="kl-quiz"><summary>链式法则求导的计算顺序与模型前向推理的顺序是相同的还是相反的？</summary><div>相反（自最终输出向输入层逆向传递）。</div></details><details class="kl-quiz"><summary>深度网络中将许多小于 1 的导数层层连乘，会引发什么常见训练问题？</summary><div>梯度消失（Gradient Vanishing）。</div></details></div></div>
   <div class="kl-section">
     <div class="kl-sec-label">发展脉络 · 现状 · 未来</div>
-    <div class="kl-sec-body kl-analysis"><p>【发展流程：从哪来，现在怎么用】 1. 过去（整段 Fourier）：早期信号处理直接对整段信号做频域分析，发现无法处理连续变化的语音。 2. 演进（短时傅里叶变换 STFT）：Gabor 等人提出在局部滑动窗口做变换，确立了“分帧 + 汉明窗 + 帧移”的标准范式。在语音识别（ASR）与 GMM-HMM 时代，25ms 窗长、10ms 帧移提取 MFCC 成为了行业铁律。 3. 现在（现代深度学习与说话人日志）： - 在前端特征提取：如 WavLM、Conformer、ECAPA-TDNN，输入层依然普遍依赖“25ms 窗长 / 10ms 帧移”计算得到的 Filter Bank 或 Mel 频谱图。 - 在说话人日志（Diarization）：通常先按 10ms 提取底层帧特征，再在更高层以滑动窗口（如 1.5s 窗长、0.75s 帧移）切块提取说话人向量（Speaker Embedding），本质上是分帧思想在不同时间尺度的层级复用。</p><p>【与相近概念的区别】 1. 采样率（Sample Rate）vs 帧率（Frame Rate）： - 采样率是原始声音离散化的速度（如 $16000\text{ Hz}$，1 秒 16000 点）。 - 帧率是分帧后每秒产生的特征帧数，等于 $\text{采样率} / H$（如 $16000 / 160 = 100\text{ Hz}$，1 秒 100 帧）。 2. 窗长（Window Length）vs 帧移（Hop Length）： - 窗长决定了“单帧看多宽”（决定频率分辨率与短时平稳性）； - 帧移决定了“滑动走多快”（决定时间分辨率与计算量）。 3. 加窗（Windowing）vs 零填充（Zero Padding）： - 加窗是改变振幅形状以减少频域泄漏； - 零填充是在帧末尾补 0，让长度变成 2 的幂次方便做快速傅里叶变换（FFT），并不改变信号本身的信息量。</p><p>【当前局限与未来演进】 - 确定事实（局限性）：海森堡-高伯不确定性原理限制——窗长越长，频率看得越准，但时间越模糊；窗长越短，时间抓得越准，但频率越糊。固定窗长和帧移无法同时兼顾瞬间爆破音（需要超短窗）和悠长元音（需要长窗）。 - 未来推测（趋势）：端到端直接处理原始波形（如 SincNet、Learnable Filterbanks、Waveform 预训练大模型）在某些任务上展现了自适应能力；但在大规模工程落地和说话人日志流水线中，经典固定参数分帧加窗因计算极快、物理意义明确，依然是绝对主流。</p><p>【推荐学习路径】 想要系统建立音频直觉，推荐查阅 Hugging Face Audio Course 学习音频数据表示；如果想快速验证不同窗函数与帧移对特征图的影响，推荐运行 TorchAudio Tutorials 的音频变换示例。</p></div>
+    <div class="kl-sec-body kl-analysis"><p><strong>发展流程</strong>： 1. <strong>之前怎么做</strong>：早期浅层模型（如单层感知机、传统 GMM-UBM 说话人识别）主要依赖人工推导单层解析解，或采用无监督聚类。 2. <strong>为什么出现</strong>：多层神经网络非线性复合严重，手动逐层求导极其繁琐且易出错；数值微分耗时不可接受。反向传播算法（Backpropagation，本质是动态规划版的链式法则）让多层网络参数梯度的高效并行计算成为可能。 3. <strong>现在怎么用</strong>：工程师不再手写求导。PyTorch 等框架内置自动微分引擎（Autograd），在前向传播时动态构建计算图（DAG），调用 `.backward()` 即可全自动执行链式法则。</p><p><strong>相近概念区别</strong>： - <strong>导数（Derivative）</strong>：单变量函数的变化率（标量对标量）。 - <strong>偏导数（Partial Derivative）</strong>：多变量函数中，固定其他变量、只看某一个变量变化时的变化率。 - <strong>梯度（Gradient）</strong>：所有偏导数组合成的多维向量，指向函数值增长最快的方向。 - <strong>反向传播（Backpropagation）</strong>：利用链式法则在计算图上自输出向输入高效计算梯度的工程算法。</p><p><strong>当前局限与未来作用</strong>： - <strong>事实局限</strong>：链式法则连乘容易导致梯度消失（梯度趋近 0）或梯度爆炸（梯度无穷大）；遇到不可导操作（如日志中的硬聚类阈值、离散取样）时无法直接传递梯度。 - <strong>推测探索</strong>：未来在端到端音视频联合建模中，隐式神经表示与离散符号模块的结合，可能进一步催生非梯度优化与梯度反传的混合机制。</p><p><strong>学习建议</strong>： 学习本概念时，推荐先阅读《Dive into Deep Learning》对应的微积分与反向传播章节，吃透直觉与推导；再结合《PyTorch Tutorials》对照张量运算与自动微分的官方实现。</p></div>
   </div>
   
   <div class="kl-section">
     <div class="kl-sec-label">自测</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>为什么语音分帧通常选 20ms-30ms，而不是 5ms 或 500ms？</li><li>如果将帧移设置得比窗长还要大，会发生什么后果？</li><li>汉明窗（Hamming）相比于矩形窗（直接截断），在频域上有何核心优势？</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>1. 为什么把函数链条拉长（网络加深）后，连乘会导致梯度消失？</li><li>2. 在包含注意力机制的声学网络中，Softmax 激活函数的梯度是如何通过链式法则传递给前一层 Q 和 K 矩阵的？</li><li>3. 如果在说话人聚类环节加了一个绝对不可导的 argmax 判定，链式法则会卡在哪里？业内通常如何绕过？</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">就像用一台高速连拍相机给舞者拍照：分帧是按快门，窗长是曝光时长，帧移是两次按快门的时间差，加窗则是镜头自带的四周平滑暗角。</div>
+    <div class="kl-sec-body kl-analogy">链式法则就像流水线责任倒查：最终产品出了次品，质检主管先担责，再按工序乘上每道工位的偏差率，精确算出螺丝工该领多少罚单。</div>
   </div>
-  <div class="kl-resources"><div class="kl-sec-label">优质外网资料 · 怎么用</div><div class="kl-resource-grid"><a class="kl-resource" href="https://huggingface.co/learn/audio-course/chapter0/introduction" target="_blank" rel="noopener"><strong>Hugging Face Audio Course</strong><span>按章节补齐音频数据与模型基础</span></a><a class="kl-resource" href="https://docs.pytorch.org/audio/stable/tutorials/index.html" target="_blank" rel="noopener"><strong>TorchAudio Tutorials</strong><span>运行音频特征与推理示例</span></a></div></div>
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">短时傅里叶变换（STFT）：分帧加窗后的直接数学运算</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">梅尔频谱（Mel-Spectrogram）：分帧加窗与 STFT 之后的能量压缩特征</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">频谱泄露（Spectral Leakage）：不加窗强行截断引起的频域假高频干扰</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">重叠相加法（Overlap-Add）：分帧逆变换重建原始语音的还原算法</span><span class="kl-related-desc"></span></div></div></div>
+  <div class="kl-resources"><div class="kl-sec-label">优质外网资料 · 怎么用</div><div class="kl-resource-grid"><a class="kl-resource" href="https://d2l.ai/" target="_blank" rel="noopener"><strong>Dive into Deep Learning</strong><span>先看直觉和公式，再运行章节中的代码</span></a><a class="kl-resource" href="https://pytorch.org/tutorials/" target="_blank" rel="noopener"><strong>PyTorch Tutorials</strong><span>对照官方示例掌握张量与训练写法</span></a></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">损失函数（Loss Function）：梯度的起点，衡量输出与标签的差异</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">学习率（Learning Rate）：控制沿着梯度反方向迈出步长大小的超参数</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">自动微分（Autograd）：在计算图上自动执行链式法则的底层引擎</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">梯度消失与爆炸（Vanishing/Exploding Gradients）：链式法则在深层网络中连乘引发的数值问题</span><span class="kl-related-desc"></span></div></div></div>
 </article>
 <article class="kl-card" style="border-top:3px solid #0f766e;">
   <div class="kl-card-top" style="background:#ecfdf5;">
@@ -135,7 +135,7 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#0f766e;color:#fff;">动手练习</span>
       <span class="kl-num">第二则</span>
     </div>
-    <h2 class="kl-title">分帧、加窗与帧移：动手实现</h2>
+    <h2 class="kl-title">链式法则与梯度：动手实现</h2>
     <div class="kl-card-links"></div>
   </div>
   <div class="kl-question">
@@ -143,88 +143,83 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-question-label">练习目标</span>
       
     </div>
-    <div class="kl-question-body"><p>10-20 分钟上手目标： 1. 用 PyTorch 底层张量切片算子（unfold）手动实现标准的分帧与加窗操作。 2. 输入一段合成音频，输出分帧后的多维张量，并与 TorchAudio 的标准行为对齐验收。 验收标准：清晰打印原始形状、分帧后形状、加窗前后振幅变化，代码一键无报错运行。</p></div>
+    <div class="kl-question-body"><p>10-20分钟小练习：手写纯 Python 链式法则求导，并与 PyTorch 自动微分结果严格对齐校验。输入为模拟的 2 维声学特征，经过简单两层网络计算标量损失，验收标准为两者的梯度绝对误差小于 1e-6。</p></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">参考实现</div>
-    <div class="kl-sec-body kl-answer"><p>【实现思路】 1. 生成一段包含高低频叠加的合成音频（采样率 $16000\text{ Hz}$，长度 $1\text{ s}$）。 2. 设置典型参数：窗长 $25\text{ ms}$（400 点），帧移 $10\text{ ms}$（160 点）。 3. 使用 `torch.Tensor.unfold` 算子沿着时间维度滑动切片完成“分帧”。 4. 生成 `torch.hamming_window`，利用广播机制相乘完成“加窗”。 5. 对比未加窗与加窗后的帧首尾振幅。</p><p>【完整可运行代码】</p><pre class="kl-code"><code>import torch
+    <div class="kl-sec-body kl-answer"><p><strong>实现思路</strong>： 1. 设定一个简单的两层全连接复合函数：$z = X W_1 + b_1 \to a = \text{ReLU}(z) \to \hat{y} = a W_2 \to L = \frac{1}{2} (\hat{y} - y_{true})^2$。 2. 按照链式法则手工推导出 $\frac{\partial L}{\partial W_2}, \frac{\partial L}{\partial W_1}, \frac{\partial L}{\partial X}$ 的数学公式并在 NumPy/纯 Python 中实现反向传递。 3. 用 PyTorch 构建相同计算图并执行 `.backward()`。 4. 使用 `np.allclose` 验收手算梯度与 PyTorch 梯度是否完全一致。</p><p><strong>完整可运行代码</strong>：</p><pre class="kl-code"><code>import torch
+import numpy as np
 
-def manual_framing_and_windowing(
-    waveform: torch.Tensor,
-    sample_rate: int = 16000,
-    frame_length_ms: float = 25.0,
-    hop_length_ms: float = 10.0,
-):
-    &quot;&quot;&quot;
-    手动实现音频分帧与加窗
-    waveform: [batch_size, num_samples] 或 [num_samples]
-    &quot;&quot;&quot;
-    if waveform.dim() == 1:
-        waveform = waveform.unsqueeze(0)  # 扩维为 [1, num_samples]
+# 1. 固定随机种子，确保可复现
+torch.manual_seed(42)
+np.random.seed(42)
 
-    # 1. 计算点数
-    frame_length = int(sample_rate * frame_length_ms / 1000.0)  # 400
-    hop_length = int(sample_rate * hop_length_ms / 1000.0)      # 160
+# 2. 构造模拟数据（例如：1个样本，输入特征维度为 2，隐藏层维度为 3，输出维度为 1）
+# 模拟：输入 X 为某语音帧的简单特征，y_true 为说话人标签对应的标量目标
+X_np = np.array([[1.5, -0.5]], dtype=np.float32)       # 形状: (1, 2)
+W1_np = np.random.randn(2, 3).astype(np.float32)       # 形状: (2, 3)
+b1_np = np.random.randn(1, 3).astype(np.float32)       # 形状: (1, 3)
+W2_np = np.random.randn(3, 1).astype(np.float32)       # 形状: (3, 1)
+y_true_np = np.array([[1.0]], dtype=np.float32)        # 形状: (1, 1)
 
-    num_samples = waveform.size(-1)
-    print(f&quot;[配置] 采样率: {sample_rate}Hz, 窗长: {frame_length}点 ({frame_length_ms}ms), 帧移: {hop_length}点 ({hop_length_ms}ms)&quot;)
-    print(f&quot;[输入] 音频总点数: {num_samples} ({num_samples / sample_rate:.2f}秒)&quot;)
+# ----------------- 手写链式法则（前向 + 反向） -----------------
+# 前向过程
+z_np = np.dot(X_np, W1_np) + b1_np                     # (1, 3)
+a_np = np.maximum(0, z_np)                             # ReLU 激活: (1, 3)
+y_pred_np = np.dot(a_np, W2_np)                        # (1, 1)
+loss_np = 0.5 * np.sum((y_pred_np - y_true_np) ** 2)   # 标量
 
-    # 2. 分帧：使用 Tensor.unfold(dimension, size, step)
-    # 作用：沿维度 1，每隔 step 滑动一次，截取长度为 size 的切片
-    frames = waveform.unfold(dimension=1, size=frame_length, step=hop_length)
-    # frames 形状: [batch_size, num_frames, frame_length]
-    print(f&quot;[分帧完成] 输出张量形状: {frames.shape} (Batch, 帧数, 单帧点数)&quot;)
+# 反向链式求导过程
+dL_dypred = y_pred_np - y_true_np                      # (1, 1)
+dL_dW2 = np.dot(a_np.T, dL_dypred)                     # (3, 1)
+dL_da = np.dot(dL_dypred, W2_np.T)                     # (1, 3)
+dL_dz = dL_da * (z_np &gt; 0).astype(np.float32)          # ReLU 导数: (1, 3)
+dL_dW1 = np.dot(X_np.T, dL_dz)                         # (2, 3)
+dL_db1 = np.sum(dL_dz, axis=0, keepdims=True)          # (1, 3)
+dL_dX = np.dot(dL_dz, W1_np.T)                         # (1, 2)
 
-    # 3. 加窗：生成标准汉明窗 (Hamming Window)
-    window = torch.hamming_window(frame_length, periodic=False, dtype=waveform.dtype, device=waveform.device)
-    
-    # 4. 执行逐点相乘 (利用广播)
-    windowed_frames = frames * window
+# ----------------- PyTorch 自动微分对比 -----------------
+X_pt = torch.tensor(X_np, requires_grad=True)
+W1_pt = torch.tensor(W1_np, requires_grad=True)
+b1_pt = torch.tensor(b1_np, requires_grad=True)
+W2_pt = torch.tensor(W2_np, requires_grad=True)
+y_true_pt = torch.tensor(y_true_np)
 
-    return frames, windowed_frames, window
+# PyTorch 前向
+z_pt = torch.matmul(X_pt, W1_pt) + b1_pt
+a_pt = torch.relu(z_pt)
+y_pred_pt = torch.matmul(a_pt, W2_pt)
+loss_pt = 0.5 * torch.sum((y_pred_pt - y_true_pt) ** 2)
 
-# ================= 验收测试 =================
-if __name__ == &quot;__main__&quot;:
-    torch.manual_seed(42)
-    sr = 16000
-    duration = 1.0  # 1秒
-    t = torch.linspace(0, duration, int(sr * duration), endpoint=False)
-    # 合成一段含有 440Hz 和 1000Hz 混合正弦波的假音频
-    mock_audio = torch.sin(2 * torch.pi * 440 * t) + 0.5 * torch.sin(2 * torch.pi * 1000 * t)
+# PyTorch 反向自动求导
+loss_pt.backward()
 
-    # 运行手动分帧与加窗
-    raw_frames, win_frames, win = manual_framing_and_windowing(
-        mock_audio, sample_rate=sr, frame_length_ms=25.0, hop_length_ms=10.0
-    )
+# ----------------- 验收比对 -----------------
+assert np.allclose(dL_dW2, W2_pt.grad.numpy(), atol=1e-6), &quot;W2 梯度不一致！&quot;
+assert np.allclose(dL_dW1, W1_pt.grad.numpy(), atol=1e-6), &quot;W1 梯度不一致！&quot;
+assert np.allclose(dL_db1, b1_pt.grad.numpy(), atol=1e-6), &quot;b1 梯度不一致！&quot;
+assert np.allclose(dL_dX, X_pt.grad.numpy(), atol=1e-6),   &quot;X 梯度不一致！&quot;
 
-    # 观察第一帧的前后对比
-    sample_frame_idx = 0
-    raw_f0 = raw_frames[0, sample_frame_idx]
-    win_f0 = win_frames[0, sample_frame_idx]
-
-    print(&quot;\n--- 效果验证 ---&quot;)
-    print(f&quot;原始帧首端振幅: {raw_f0[0].item():.4f} -&gt; 加窗后首端振幅: {win_f0[0].item():.4f}&quot;)
-    print(f&quot;原始帧中心振幅: {raw_f0[200].item():.4f} -&gt; 加窗后中心振幅: {win_f0[200].item():.4f}&quot;)
-    print(f&quot;原始帧尾端振幅: {raw_f0[-1].item():.4f} -&gt; 加窗后尾端振幅: {win_f0[-1].item():.4f}&quot;)
-    print(&quot;结论：加窗成功抑制了两端的边缘跳变，中心能量被完整保留！&quot;)</code></pre></div>
+print(&quot;✅ 验收通过！手写链式法则梯度与 PyTorch autograd 结果完全一致！&quot;)
+print(f&quot;W1 手算梯度形状: {dL_dW1.shape}, 范数: {np.linalg.norm(dL_dW1):.4f}&quot;)
+print(f&quot;W2 手算梯度形状: {dL_dW2.shape}, 范数: {np.linalg.norm(dL_dW2):.4f}&quot;)</code></pre></div>
   </div>
   
   <div class="kl-section">
     <div class="kl-sec-label">代码拆解与真实用法</div>
-    <div class="kl-sec-body kl-analysis"><p>【代码逐段解析与张量变化】 1. `waveform.unfold(dimension=1, size=frame_length, step=hop_length)`： - 这是 PyTorch 实现滑窗分帧最优雅高效的方式，底层直接共享内存视图（Strided View），完全无需循环 `for` 去切片拷贝。 - 输入 `[1, 16000]`，执行后张量变为 `[1, 98, 400]`。其中 $98$ 帧的计算公式为 $\lfloor (16000 - 400)/160 \rfloor + 1 = 98$。 2. `torch.hamming_window(400)`： - 生成一维张量 `[400]`，其首尾两端数值接近 $0.08$（汉明窗两端非绝对为 0，若用 Hanning 窗则两端严格为 0），中间峰值为 $1.0$。 3. `frames * window`： - 形状 `[1, 98, 400] * [400]`，PyTorch 自动在最后一维进行逐点相乘，瞬间完成所有帧的加窗。</p><p>【常见错误与避坑指南】 - 坑 1：忘记对齐单位。传入参数时把毫秒（ms）直接当采样点数用。切记点数 = $\text{采样率} \times \text{毫秒} / 1000$。 - 坑 2：尾部点丢失。若音频总长度不能被 `hop_length` 整除，`unfold` 会直接丢弃最后不足一帧的点。工程上（如 TorchAudio）通常在分帧前先对两端做 `pad`（反射填充或零填充）。 - 坑 3：在说话人日志模型中重复加窗。若下游调用了 `torchaudio.transforms.Spectrogram` 或 `torch.stft`，它们内部自带加窗参数（默认 `window=torch.hann_window`），切勿在外部手动加窗后再传进去，否则会导致两端能量被“双重压制”。</p><p>【模型对应位置】 这段代码手动还原了 `torchaudio.compliance.kaldi.fbank` 和 `torch.stft` 的最前置预处理步骤，是所有声学模型（如 Whisper、WavLM、ECAPA-TDNN）吃进第一口特征的必经之路。推荐在 TorchAudio Tutorials 中对比官方 `transforms.Spectrogram` 的输出。</p></div>
+    <div class="kl-sec-body kl-analysis"><p><strong>代码逐段拆解与张量形状</strong>： 1. `X_np (1, 2)` 乘 `W1_np (2, 3)` 得到中间隐层 `z_np (1, 3)`。 2. `dL_dypred (1, 1)` 是最外层均方误差对预测值的导数，是整个链式反传的源头。 3. `dL_dW2` 计算时使用了矩阵转置 `a_np.T (3, 1)` 与 `dL_dypred (1, 1)` 相乘，形状完美匹配权重形状 `(3, 1)`。 4. `dL_dz = dL_da * (z_np &gt; 0)` 实现了 ReLU 的门控求导：输入大于 0 导数为 1，小于等于 0 导数为 0（梯度直接被阻断）。</p><p><strong>常见易错点</strong>： - <strong>矩阵乘法维度对不齐</strong>：求导时矩阵转置顺序弄反（例如误写成 `np.dot(dL_dz, X_np.T)` 会直接报错形状不匹配）。记住原则：参数的梯度矩阵维度必然与参数本身的维度完全一致。 - <strong>PyTorch 忘记清空梯度</strong>：在真实训练循环中，每次反向传播前必须调用 `optimizer.zero_grad()`，否则 PyTorch 默认会把梯度累加（`+=`）到已有的 `.grad` 上。</p><p><strong>在真实模型中的对应位置</strong>： 此处的两层结构与说话人识别模型（如 ECAPA-TDNN）末端全连接分类器（Linear -&gt; ReLU -&gt; Linear -&gt; Loss）底层的梯度回传机制完全一致。</p></div>
   </div>
   
   <div class="kl-section">
     <div class="kl-sec-label">再练一步</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>修改代码，在分帧前加入 `torch.nn.functional.pad`（两端各补 frame_length // 2），观察输出总帧数如何变化？</li><li>将 `torch.hamming_window` 换成 `torch.hann_window`，对比两者首尾第一点的振幅抑制程度有何差异？</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>1. 将激活函数从 ReLU 替换为 Sigmoid：$\sigma(z) = \frac{1}{1 + e^{-z}}$，手动推导其导数 $\sigma(z)(1 - \sigma(z))$ 并修改手写反向传播部分，验证其与 PyTorch 的一致性。</li><li>2. 在 PyTorch 训练代码中故意去掉 `optimizer.zero_grad()`，连续运行两次反向传播，观察并打印两次梯度数值的变化。</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">`unfold` 就像一把等间距滚轮切刀，`* window` 就像在切出来的每一片肉两端各抹一层平滑酱料。</div>
+    <div class="kl-sec-body kl-analogy">链式代码口诀：前向是从左乘到右，反向是从右倒着乘回左，梯度的形状永远和参数长得一模一样。</div>
   </div>
   
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">torch.Tensor.unfold：实现高维滑窗分块的核心高效算子</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">torch.stft：PyTorch 官方集成了分帧、加窗、FFT 的一体化函数</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">torchaudio.transforms.MelSpectrogram：工业级 Mel 频谱提取模块</span><span class="kl-related-desc"></span></div></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">张量维度变换（Tensor Transpose/Reshape）：确保矩阵求导维度匹配的基础</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">激活函数导数（Activation Derivative）：控制反向传播中信号通断或衰减的关键节点</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">自动求导图（Computation Graph）：PyTorch 在前向过程中记录运算拓扑以便执行链式法则的结构</span><span class="kl-related-desc"></span></div></div></div>
 </article>
   <section class="kl-archive">
   <h3 class="kl-archive-heading">往期记录 <span class="kl-arc-count">191 条记录</span></h3>

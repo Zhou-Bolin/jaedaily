@@ -399,22 +399,22 @@ footer{
   <div class="mast-subtitle">Research Digest &middot; 人工智能学术前沿追踪 &middot; 2026年08月27日</div>
   <div class="mast-stats">
     <div class="stat-item">
-      <div class="stat-val">0</div>
+      <div class="stat-val">24</div>
       <div class="stat-lbl">arXiv 论文</div>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-item">
-      <div class="stat-val">20</div>
+      <div class="stat-val">8</div>
       <div class="stat-lbl">机构博客</div>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-item">
-      <div class="stat-val">0</div>
+      <div class="stat-val">5</div>
       <div class="stat-lbl">🤗 HF 精选</div>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-item">
-      <div class="stat-val" style="color:#3a8f5a;">3</div>
+      <div class="stat-val" style="color:#3a8f5a;">10</div>
       <div class="stat-lbl">🎧 音频语音</div>
     </div>
     <div class="stat-sep"></div>
@@ -427,7 +427,7 @@ footer{
 
 <!-- 分类导航 tabs -->
 <div class="cat-nav">
-  <a href="#speech-priority" class="nav-tab nav-tab-audio">🎙️ 音视频/日志优先<span class="nav-count">1</span></a><a href="#audio" class="nav-tab nav-tab-audio">&#127925; 语音与音频<span class="nav-count">3</span></a><a href="#llm" class="nav-tab">&#129504; 大语言模型<span class="nav-count">8</span></a><a href="#vision" class="nav-tab">&#128065; 视觉生成<span class="nav-count">1</span></a><a href="#eng" class="nav-tab">&#9881; 工程进展<span class="nav-count">8</span></a>
+  <a href="#speech-priority" class="nav-tab nav-tab-audio">🎙️ 音视频/日志优先<span class="nav-count">8</span></a><a href="#audio" class="nav-tab nav-tab-audio">&#127925; 语音与音频<span class="nav-count">10</span></a><a href="#llm" class="nav-tab">&#129504; 大语言模型<span class="nav-count">8</span></a><a href="#vision" class="nav-tab">&#128065; 视觉生成<span class="nav-count">6</span></a><a href="#eng" class="nav-tab">&#9881; 工程进展<span class="nav-count">8</span></a>
 </div>
 
 <!-- 图例 -->
@@ -461,18 +461,74 @@ footer{
   </div>
   <div class="speech-radar">
     <span class="speech-radar-label">今日音视频雷达</span>
-    <span class="speech-radar-chip">对话/S2S <b>1</b></span>
+    <span class="speech-radar-chip">评测基准 <b>3</b></span><span class="speech-radar-chip">架构/统一模型 <b>2</b></span><span class="speech-radar-chip">说话人日志 <b>2</b></span><span class="speech-radar-chip">TTS控制 <b>1</b></span>
   </div>
-  <div class="speech-queue"><a class="speech-queue-row" href="https://huggingface.co/blog/nvidia/magpie-tts-multilingual-voice-agents" target="_blank" rel="noopener">
+  <div class="speech-queue"><a class="speech-queue-row" href="https://arxiv.org/abs/2608.22196v1" target="_blank" rel="noopener">
+  <span class="queue-tier tier-must">必读</span>
+  <span class="queue-body">
+    <span class="queue-title">基于说话人日志转录修正的多说话人串联ASR漏音抑制</span>
+    <span class="queue-title-en">Mitigating Speaker Leakage in Cascaded Multi-talker ASR with Diarization-based Transcript Correction</span>
+    <span class="queue-value">价值：直接覆盖说话人日志、重叠语音或说话人聚类，是当前主线的最高优先级。</span>
+  </span>
+  <span class="queue-tags"><span class="queue-mini">说话人日志</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · eess.AS</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.22796v1" target="_blank" rel="noopener">
+  <span class="queue-tier tier-must">必读</span>
+  <span class="queue-body">
+    <span class="queue-title">DiaScriber：用于多说话人场景联合日志分析与转录的语音LLM</span>
+    <span class="queue-title-en">DiaScriber: A Speech LLM for Joint Diarization and Transcription in Multi-Speaker Scenarios</span>
+    <span class="queue-value">价值：直接覆盖说话人日志、重叠语音或说话人聚类，是当前主线的最高优先级。</span>
+  </span>
+  <span class="queue-tags"><span class="queue-mini">说话人日志</span><span class="queue-mini">arXiv · eess.AS</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.25218v1" target="_blank" rel="noopener">
+  <span class="queue-tier tier-must">必读</span>
+  <span class="queue-body">
+    <span class="queue-title">TurnBench：用于口语对话轮替动态的多领域基准</span>
+    <span class="queue-title-en">TurnBench: A Multi-Domain Benchmark for Turn-Taking Dynamics in Spoken Dialogue</span>
+    <span class="queue-value">价值：直接触及实时口语交互、全双工或 speech-to-speech 的核心评测/建模问题。</span>
+  </span>
+  <span class="queue-tags"><span class="queue-mini">语音大模型核心</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · eess.AS</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.24958v1" target="_blank" rel="noopener">
+  <span class="queue-tier tier-must">必读</span>
+  <span class="queue-body">
+    <span class="queue-title">我们能读懂语音LLM的思维吗？可言语化的多语言中间层工作区</span>
+    <span class="queue-title-en">Can We Read the Mind of an Audio LLM? A Verbalizable, Multilingual Middle-Layer Workspace</span>
+    <span class="queue-value">价值：涉及统一 audio-text / speech LLM 架构，可能影响语音大模型训练范式。</span>
+  </span>
+  <span class="queue-tags"><span class="queue-mini">语音大模型核心</span><span class="queue-mini">MIT</span><span class="queue-mini">arXiv · cs.SD</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.24168v1" target="_blank" rel="noopener">
+  <span class="queue-tier tier-must">必读</span>
+  <span class="queue-body">
+    <span class="queue-title">FireRedAudio：采用解耦连续表征的通用音频语言模型</span>
+    <span class="queue-title-en">FireRedAudio: A General-Purpose Audio Language Model with Decoupled Continuous Representations for Understanding and Generation</span>
+    <span class="queue-value">价值：涉及统一 audio-text / speech LLM 架构，可能影响语音大模型训练范式。</span>
+  </span>
+  <span class="queue-tags"><span class="queue-mini">语音大模型核心</span><span class="queue-mini">arXiv · cs.SD</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.26005v1" target="_blank" rel="noopener">
   <span class="queue-tier tier-scan">可扫</span>
   <span class="queue-body">
-    <span class="queue-title">构建低延迟多语言语音代理：使用 NVIDIA Magpie TTS 进行开放权重和全面部署控制</span>
-    <span class="queue-title-en">Build Low-Latency Multilingual Voice Agents: Open Weights &amp; Full Deployment Control with NVIDIA Magpie TTS</span>
+    <span class="queue-title">VoiceMem：用于实时交互的流式双脑记忆系统</span>
+    <span class="queue-title-en">VoiceMem: Streaming Dual-Brain Memory for Real-Time Interaction</span>
+    <span class="queue-value">价值：暴露 ASR/TTS/S2S 评测偏差或新基准，适合作为实验设计参考。</span>
+  </span>
+  <span class="queue-tags"><span class="queue-mini">对话/S2S · 评测</span><span class="queue-mini">HF 54♥</span><span class="queue-mini">arXiv · cs.MM</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.23791v1" target="_blank" rel="noopener">
+  <span class="queue-tier tier-scan">可扫</span>
+  <span class="queue-body">
+    <span class="queue-title">EmoTra-TTS：面向语音合成的平滑句内情感过渡</span>
+    <span class="queue-title-en">EmoTra-TTS: Smooth Intra-Utterance Emotion Transitions for Speech Synthesis</span>
     <span class="queue-value">价值：关注 LLM-based TTS 的可控性、韵律或内容一致性，适合扫读方法细节。</span>
   </span>
-  <span class="queue-tags"><span class="queue-mini">对话/S2S · 生成/TTS</span><span class="queue-mini">Hugging Face Blog</span><span class="queue-mini">Hugging Face Blog</span></span>
+  <span class="queue-tags"><span class="queue-mini">生成/TTS · LLM相关</span><span class="queue-mini">arXiv · eess.AS</span></span>
+</a><a class="speech-queue-row" href="https://arxiv.org/abs/2608.25574v1" target="_blank" rel="noopener">
+  <span class="queue-tier tier-scan">可扫</span>
+  <span class="queue-body">
+    <span class="queue-title">生成式与编码器大语言模型在ASR评估中的对比研究</span>
+    <span class="queue-title-en">Generative vs. Encoder Large Language Models for ASR Evaluation: A Comparative Study</span>
+    <span class="queue-value">价值：暴露 ASR/TTS/S2S 评测偏差或新基准，适合作为实验设计参考。</span>
+  </span>
+  <span class="queue-tags"><span class="queue-mini">评测</span><span class="queue-mini">arXiv · cs.CL</span></span>
 </a></div>
-  <div class="speech-queue-note">另有 2 篇传统音频/数据集/工程项已降为低优先级，仍保留在“语音与音频”中供扫读。</div>
+  
 </section>
   <section class="cat-section" id="audio">
   <div class="cat-header" style="border-left:4px solid #0d4a28;">
@@ -481,55 +537,167 @@ footer{
       <div class="cat-name">语音与音频</div>
       <div class="cat-en">SPEECH & AUDIO</div>
     </div>
-    <div class="cat-badge" style="background:#e8f5ee;color:#0d4a28;">3 篇</div>
+    <div class="cat-badge" style="background:#e8f5ee;color:#0d4a28;">10 篇</div>
   </div>
   <div class="papers-grid"><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">Hugging Face Blog</span>
-    <span class="reason-badge">可扫</span><span class="reason-badge">对话/S2S</span><span class="reason-badge">生成/TTS</span>
-    <span class="paper-src">Hugging Face Blog</span>
-    <span class="paper-date">08-10</span>
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">必读</span><span class="reason-badge">说话人日志</span><span class="reason-badge">核心模型</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">08-23</span>
   </div>
-  <a class="paper-title" href="https://huggingface.co/blog/nvidia/magpie-tts-multilingual-voice-agents" target="_blank" rel="noopener">构建低延迟多语言语音代理：使用 NVIDIA Magpie TTS 进行开放权重和全面部署控制</a>
-  <div class="paper-title-en">Build Low-Latency Multilingual Voice Agents: Open Weights &amp; Full Deployment Control with NVIDIA Magpie TTS</div>
-  
+  <a class="paper-title" href="https://arxiv.org/abs/2608.22196v1" target="_blank" rel="noopener">基于说话人日志转录修正的多说话人串联ASR漏音抑制</a>
+  <div class="paper-title-en">Mitigating Speaker Leakage in Cascaded Multi-talker ASR with Diarization-based Transcript Correction</div>
+  <p class="paper-abstract">针对串联多说话人ASR中分离导致的说话人漏音问题，提出基于剪枝的新范式，利用预训练说话人日志模型作为多模态验证器，有效识别并消除转录文本中的漏音伪影。</p>
   
   <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://huggingface.co/blog/nvidia/magpie-tts-multilingual-voice-agents" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.22196')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.22196v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">Hugging Face Blog</span>
-    <span class="reason-badge">低优先级</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
-    <span class="paper-src">Hugging Face Blog</span>
-    <span class="paper-date">08-21</span>
-  </div>
-  <a class="paper-title" href="https://huggingface.co/blog/asr-benchmark-optimization" target="_blank" rel="noopener">Measuring benchmark optimization in speech recognition</a>
-  <div class="paper-title-en">Measuring benchmark optimization in speech recognition</div>
-  
-  <div class="paper-downgrade">降权：缺少 speech/audio LLM 主线，只保留作背景参考。</div>
-  <div class="paper-actions">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     
-    <a class="arxiv-link" href="https://huggingface.co/blog/asr-benchmark-optimization" target="_blank" rel="noopener">→ 原文</a>
+    <span class="reason-badge">必读</span><span class="reason-badge">说话人日志</span><span class="reason-badge">核心模型</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">08-24</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.22796v1" target="_blank" rel="noopener">DiaScriber：用于多说话人场景联合日志分析与转录的语音LLM</a>
+  <div class="paper-title-en">DiaScriber: A Speech LLM for Joint Diarization and Transcription in Multi-Speaker Scenarios</div>
+  <p class="paper-abstract">提出端到端多说话人语音大模型DiaScriber，可在快速轮替、重叠语音等复杂场景下联合预测文本内容、说话人身份及时间戳，解决“谁在何时说了什么”的问题。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.22796')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.22796v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">Google DeepMind</span>
-    <span class="reason-badge">低优先级</span><span class="reason-badge">语音相关</span><span class="reason-badge">Google DeepMind</span>
-    <span class="paper-src">Google DeepMind</span>
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">必读</span><span class="reason-badge">评测基准</span><span class="reason-badge">核心模型</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">08-25</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25218v1" target="_blank" rel="noopener">TurnBench：用于口语对话轮替动态的多领域基准</a>
+  <div class="paper-title-en">TurnBench: A Multi-Domain Benchmark for Turn-Taking Dynamics in Spoken Dialogue</div>
+  <p class="paper-abstract">提出多领域基准TurnBench，包含30小时人工标注的双人对话语料库与标准化评估协议，用于全面评测语音系统对实时话轮交接、保持与让出等轮替动态的把握能力。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.25218')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25218v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">必读</span><span class="reason-badge">架构/统一模型</span><span class="reason-badge">核心模型</span>
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">08-25</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.24958v1" target="_blank" rel="noopener">我们能读懂语音LLM的思维吗？可言语化的多语言中间层工作区</a>
+  <div class="paper-title-en">Can We Read the Mind of an Audio LLM? A Verbalizable, Multilingual Middle-Layer Workspace</div>
+  <p class="paper-abstract">通过在语音token位置应用logit lens探测Qwen3-Omni，发现模型在输出token前已在中间层以文字形式形成答案，揭示了其内部多语言工作区机制。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.24958')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.24958v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    
+    <span class="reason-badge">必读</span><span class="reason-badge">架构/统一模型</span><span class="reason-badge">核心模型</span>
+    <span class="paper-src">arXiv · cs.SD</span>
+    <span class="paper-date">08-25</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.24168v1" target="_blank" rel="noopener">FireRedAudio：采用解耦连续表征的通用音频语言模型</a>
+  <div class="paper-title-en">FireRedAudio: A General-Purpose Audio Language Model with Decoupled Continuous Representations for Understanding and Generation</div>
+  <p class="paper-abstract">推出基于9B LLM的通用音频模型FireRedAudio，解耦紧凑的理解表征与可重构的生成表征，统一支持音频/副语言理解、语音合成与编辑任务。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.24168')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.24168v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;54♥</span>
+    <span class="reason-badge">可扫</span><span class="reason-badge">评测基准</span><span class="reason-badge">对话/S2S</span>
+    <span class="paper-src">arXiv · cs.MM</span>
     <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://deepmind.google/blog/intelligent-transcription-with-gemini-3-5-transcribe/" target="_blank" rel="noopener">Intelligent transcription with Gemini 3.5 Transcribe</a>
-  <div class="paper-title-en">Intelligent transcription with Gemini 3.5 Transcribe</div>
-  <p class="paper-abstract">Now you can get more intelligent speech-to-text transcription with Gemini 3.5 Transcribe.</p>
-  <div class="paper-downgrade">降权：传统音频、数据集或工程优化，非当前语音大模型主线。</div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.26005v1" target="_blank" rel="noopener">VoiceMem：用于实时交互的流式双脑记忆系统</a>
+  <div class="paper-title-en">VoiceMem: Streaming Dual-Brain Memory for Real-Time Interaction</div>
+  <p class="paper-abstract">提出VoiceMem架构，包含处理信息的左脑与处理情感的右脑，配合流式I/O机制，为双工语音语言模型构建了兼具准确性与共情能力的端到端实时记忆系统。</p>
+  
   <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.26005')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.26005v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
     
-    <a class="arxiv-link" href="https://deepmind.google/blog/intelligent-transcription-with-gemini-3-5-transcribe/" target="_blank" rel="noopener">→ 原文</a>
+    <span class="reason-badge">可扫</span><span class="reason-badge">TTS控制</span><span class="reason-badge">生成/TTS</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">08-24</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.23791v1" target="_blank" rel="noopener">EmoTra-TTS：面向语音合成的平滑句内情感过渡</a>
+  <div class="paper-title-en">EmoTra-TTS: Smooth Intra-Utterance Emotion Transitions for Speech Synthesis</div>
+  <p class="paper-abstract">针对现有情感TTS系统依赖离散或静态标签的局限，提出EmoTra-TTS，实现了细粒度、平滑且显式可控的句内动态情感过渡语音合成。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.23791')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.23791v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    
+    <span class="reason-badge">可扫</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">08-26</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25574v1" target="_blank" rel="noopener">生成式与编码器大语言模型在ASR评估中的对比研究</a>
+  <div class="paper-title-en">Generative vs. Encoder Large Language Models for ASR Evaluation: A Comparative Study</div>
+  <p class="paper-abstract">对比了编码器和解码器类LLM在ASR评估中的表现，系统分析了BERTScore和SemDist在不同层与池化策略下的效果，为语义级语音识别评估提供指导。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.25574')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25574v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    
+    <span class="reason-badge">可扫</span><span class="reason-badge">对话/S2S</span><span class="reason-badge">语音/音频</span>
+    <span class="paper-src">arXiv · 专题检索 · Speaker Diarization</span>
+    <span class="paper-date">08-20</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.20198v1" target="_blank" rel="noopener">一种资源高效的CNN脑电听觉注意力解码ASIC芯片</a>
+  <div class="paper-title-en">A Resource-Efficient CNN-Based EEG Auditory Attention Decoding ASIC</div>
+  <p class="paper-abstract">面向人工耳蜗用户在鸡尾酒会环境下的助听需求，设计并实现了一种集成量化CNN推理引擎与皮尔逊相关分类器的资源高效型实时脑电听觉注意力解码ASIC。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.20198')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.20198v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#0d4a28;border-color:#0d4a2840;background:#0d4a2812;">arXiv</span>
+    
+    <span class="reason-badge">可扫</span><span class="reason-badge">评测基准</span><span class="reason-badge">评测</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">08-20</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.19959v1" target="_blank" rel="noopener">追踪语音合成器对人类欺骗性的演变趋势</a>
+  <div class="paper-title-en">Tracking the Trend in How Speech Synthesizers Deceive People</div>
+  <p class="paper-abstract">评测2019至2024年三款语音合成工具在82名IT专业人员及6个检测器下的表现；发现ElevenLabs生成音频使人类检测F1分数从90%骤降至48%。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.19959')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.19959v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div></div>
 </section><section class="cat-section" id="llm">
@@ -543,131 +711,131 @@ footer{
   </div>
   <div class="papers-grid"><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">NVIDIA Blog</span>
-    <span class="reason-badge">NVIDIA Blog</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">NVIDIA Blog</span>
-    <span class="paper-date">08-24</span>
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;34♥</span>
+    <span class="reason-badge">LLM相关</span><span class="reason-badge">HF精选34赞</span><span class="reason-badge">高分</span>
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://blogs.nvidia.com/blog/nvlink-fusion-xpu-ai-factory/" target="_blank" rel="noopener">How XPUs Meet a World-Class AI Factory</a>
-  <div class="paper-title-en">How XPUs Meet a World-Class AI Factory</div>
-  <p class="paper-abstract">To generate intelligence at scale, AI factories run continuously, and their economics are defined by delivered output: tokens per second, tokens per watt, cost per token, utilization and uptime.  That requires AI infrastructure designed and built as a full factory, not a collection of individual accelerators. Hyperscalers and AI-native companies building custom XPUs must consider [&amp;#8230;]</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25593v1" target="_blank" rel="noopener">JIT-Agent：基于即时演化扩展智能体运行框架</a>
+  <div class="paper-title-en">JIT-Agent: Scaling Harness Intelligence via Just-in-Time Harness Evolution</div>
+  <p class="paper-abstract">提出JIT-Agent框架，能针对任意现成Agentic LLM即时动态合成自适应的记忆、规划和工具编排等运行环境配置，实现智能体效能的大幅扩展。</p>
   
   <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://blogs.nvidia.com/blog/nvlink-fusion-xpu-ai-factory/" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.25593')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25593v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">NVIDIA Blog</span>
-    <span class="reason-badge">NVIDIA Blog</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">NVIDIA Blog</span>
-    <span class="paper-date">08-24</span>
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;16♥</span>
+    <span class="reason-badge">HF精选16赞</span><span class="reason-badge">高分</span>
+    <span class="paper-src">arXiv · cs.MM</span>
+    <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://blogs.nvidia.com/blog/vera-rubin-lpx-spectrum-x-nvlink-fusion/" target="_blank" rel="noopener">With Groq 3 LPX in Full Production, NVIDIA Extends Vera Rubin Inference for Agents</a>
-  <div class="paper-title-en">With Groq 3 LPX in Full Production, NVIDIA Extends Vera Rubin Inference for Agents</div>
-  <p class="paper-abstract">The next era of AI inference won’t be defined by a single breakthrough chip, network or system. It’ll be defined by how every layer of the AI factory works together. That’s why NVIDIA is extending Vera Rubin NVL72 with fast token generation for agentic systems. Announced today, the NVIDIA Vera Rubin rack-scale system NVIDIA Groq [&amp;#8230;]</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.26105v1" target="_blank" rel="noopener">VBVR-Pro：用于原生视觉推理的可扩展与可验证套件</a>
+  <div class="paper-title-en">VBVR-Pro: A Scalable and Verifiable Suite for Native Visual Reasoning</div>
+  <p class="paper-abstract">提出闭环测试平台VBVR-Pro，将视觉生成作为直接推理介质，为超越语言的原生视觉推理提供了可扩展的训练任务、可靠反馈与受控对比基准。</p>
   
   <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://blogs.nvidia.com/blog/vera-rubin-lpx-spectrum-x-nvlink-fusion/" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.26105')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.26105v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">NVIDIA Blog</span>
-    <span class="reason-badge">NVIDIA Blog</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">NVIDIA Blog</span>
-    <span class="paper-date">08-24</span>
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;8♥</span>
+    <span class="reason-badge">HF精选8赞</span>
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://blogs.nvidia.com/blog/vera-rubin-nvl72-efficiency-ai-agents/" target="_blank" rel="noopener">Up to 30x More Work Per Watt: NVIDIA Vera Rubin NVL72 Sets a New Efficiency Standard for AI Agents</a>
-  <div class="paper-title-en">Up to 30x More Work Per Watt: NVIDIA Vera Rubin NVL72 Sets a New Efficiency Standard for AI Agents</div>
-  <p class="paper-abstract">According to OpenRouter data, agentic AI workloads consume 15x more tokens than a simple chat request. Why?  Consider what happens when an AI agent researches a company for an investment decision. The agent queries financial databases, searches news and filings, invokes a sub-agent to run peer comparisons and model valuations, then synthesizes everything into a [&amp;#8230;]</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25927v1" target="_blank" rel="noopener">Code World Model：将编程智能体作为世界大脑</a>
+  <div class="paper-title-en">Code World Model: Coding Agent as World Brain</div>
+  <p class="paper-abstract">提出Code World Model框架，将世界演化规律与视觉渲染解耦，利用编程智能体生成并执行底层代码规则，实现具有因果一致性与持久性的开放世界模拟。</p>
   
   <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://blogs.nvidia.com/blog/vera-rubin-nvl72-efficiency-ai-agents/" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.25927')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25927v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">OpenAI</span>
-    <span class="reason-badge">OpenAI</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">OpenAI Blog</span>
-    <span class="paper-date">08-24</span>
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="hf-badge" title="Hugging Face Daily Papers 精选">🤗&thinsp;6♥</span>
+    <span class="reason-badge">LLM相关</span><span class="reason-badge">HF精选6赞</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">08-20</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/gpt-5-6-in-kiro" target="_blank" rel="noopener">Advancing price-performance for developers with GPT‑5.6 in Kiro</a>
-  <div class="paper-title-en">Advancing price-performance for developers with GPT‑5.6 in Kiro</div>
-  <p class="paper-abstract">GPT‑5.6 is now available in Kiro, helping developers plan, build, review, and test software with better price-performance.</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.19863v1" target="_blank" rel="noopener">Listening Forward：基于预测下一个Patch嵌入的可扩展音频学习器</a>
+  <div class="paper-title-en">Listening Forward: Next Patch Embedding Prediction Enables Scalable Audio Learners</div>
+  <p class="paper-abstract">借鉴语言与视觉自回归范式，提出通过预测下一个连续patch嵌入进行自监督预训练的音频模型，无需复杂的启发式设计即可实现出色的表征扩展能力。</p>
   
   <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://openai.com/index/gpt-5-6-in-kiro" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.19863')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.19863v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">Ahead of AI</span>
-    <span class="reason-badge">Ahead of AI</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">Ahead of AI</span>
-    <span class="paper-date">08-22</span>
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://magazine.sebastianraschka.com/p/claude-watermarking" target="_blank" rel="noopener">How Claude Watermarks AI-Generated Text</a>
-  <div class="paper-title-en">How Claude Watermarks AI-Generated Text</div>
-  <p class="paper-abstract">A 48-minute video walkthrough of token sampling, watermark detection, and removal</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25922v1" target="_blank" rel="noopener">针对GNN知识库问答的查询端攻击与故障溯源分析</a>
+  <div class="paper-title-en">Query-Side Attacks on GNN-Based KGQA: Tracing Failures from Entity Linking to Answer Generation</div>
+  <p class="paper-abstract">提出分阶段隔离评估方法，分析输入问题对抗扰动下基于GNN的KGQA系统在实体链接、子图检索、GNN推理及答案生成四个阶段的具体脆弱点与失效机制。</p>
   
   <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://magazine.sebastianraschka.com/p/claude-watermarking" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.25922')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25922v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">OpenAI</span>
-    <span class="reason-badge">OpenAI</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">OpenAI Blog</span>
-    <span class="paper-date">08-19</span>
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">LLM相关</span><span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/replit" target="_blank" rel="noopener">Replit expands access to software creation with GPT-5.6 Luna</a>
-  <div class="paper-title-en">Replit expands access to software creation with GPT-5.6 Luna</div>
-  <p class="paper-abstract">Replit introduces Free Mode, powered by GPT-5.6 Luna, so anyone can turn ideas into working software without worrying about token costs.</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25894v1" target="_blank" rel="noopener">从被动响应到主动纠错：增强LLM对输入事实扰动的鲁棒性</a>
+  <div class="paper-title-en">From Passive Response to Proactive Correction: Enhancing LLM Robustness Against Input Fact Perturbations</div>
+  <p class="paper-abstract">针对用户输入包含错误前提导致LLM幻觉的问题，提出三阶段框架DEDUCE，使大语言模型从被动应答转为主动识别并纠正输入中的事实扰动。</p>
   
   <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://openai.com/index/replit" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.25894')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25894v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">Hugging Face Blog</span>
-    <span class="reason-badge">Hugging Face Blog</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">Hugging Face Blog</span>
-    <span class="paper-date">08-18</span>
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">评测基准</span><span class="reason-badge">评测</span><span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.CL</span>
+    <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://huggingface.co/blog/ibm-research/altk-evolve-hmm" target="_blank" rel="noopener">How Much Memory Does Your Agent Actually Need?</a>
-  <div class="paper-title-en">How Much Memory Does Your Agent Actually Need?</div>
-  
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25854v1" target="_blank" rel="noopener">关键点分析需要结构恢复：任务定义、数据集诊断与新基准</a>
+  <div class="paper-title-en">Key Point Analysis Needs Structure Recovery: Task Definition, Dataset Diagnosis, and a Structure-Aware Benchmark</div>
+  <p class="paper-abstract">将论点关键点分析重新定义为结构化预测问题，指出既有基准的缺陷，并提出了要求恢复语义分组、生成代表性观点及估计覆盖率的结构感知新基准。</p>
   
   <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://huggingface.co/blog/ibm-research/altk-evolve-hmm" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.25854')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25854v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">OpenAI</span>
-    <span class="reason-badge">评测基准</span><span class="reason-badge">评测</span><span class="reason-badge">OpenAI</span>
-    <span class="paper-src">OpenAI Blog</span>
-    <span class="paper-date">08-18</span>
+    <span class="paper-type" style="color:#1c3d6e;border-color:#1c3d6e40;background:#1c3d6e12;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.MM</span>
+    <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/pacing-model-development-cyber-capabilities" target="_blank" rel="noopener">Pacing model development in an era of cyber-critical capabilities</a>
-  <div class="paper-title-en">Pacing model development in an era of cyber-critical capabilities</div>
-  <p class="paper-abstract">OpenAI is strengthening monitoring, alignment, and security for frontier AI models. See how new safeguards are guiding the pace of model development.</p>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25818v1" target="_blank" rel="noopener">WaveOp-LiteFM：用于卫星到雷达降水反演的轻量神经算子流匹配</a>
+  <div class="paper-title-en">WaveOp-LiteFM: Lightweight Neural-Operator Flow Matching for Satellite-to-Radar Precipitation Retrieval</div>
+  <p class="paper-abstract">提出轻量流匹配模型WaveOp-LiteFM，结合小波神经算子与流匹配算法，在显著降低计算成本的同时，高保真反演基于静止卫星云图的地面雷达精细降水。</p>
   
   <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://openai.com/index/pacing-model-development-cyber-capabilities" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.25818')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25818v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div></div>
 </section><section class="cat-section" id="vision">
@@ -677,23 +845,103 @@ footer{
       <div class="cat-name">视觉生成</div>
       <div class="cat-en">VISION & GENERATION</div>
     </div>
-    <div class="cat-badge" style="background:#f0eaf8;color:#5a2d82;">1 篇</div>
+    <div class="cat-badge" style="background:#f0eaf8;color:#5a2d82;">6 篇</div>
   </div>
   <div class="papers-grid"><div class="paper-card">
   <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">Meta</span>
-    <span class="reason-badge">Meta</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">Hugging Face Blog</span>
-    <span class="paper-date">08-10</span>
+    <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · eess.SP</span>
+    <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://huggingface.co/blog/muse-glimmer" target="_blank" rel="noopener">Meta 带着 Muse Glimmer 回归：本地、代理、多模式和开源</a>
-  <div class="paper-title-en">Meta is back with Muse Glimmer: local, agentic, multimodal, and open source</div>
-  
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25589v1" target="_blank" rel="noopener">来自太空的能量：离网无线系统的协同卫星充电技术</a>
+  <div class="paper-title-en">Power from Space: Coordinated Satellite Charging for Off-Grid Wireless Systems</div>
+  <p class="paper-abstract">探讨利用微波长距离无线能量传输的卫星充电技术，提出多星协同对地为离网IoT设备网络联合供电的愿景，并综述了关键优势、局限与应用场景。</p>
   
   <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://huggingface.co/blog/muse-glimmer" target="_blank" rel="noopener">→ 原文</a>
+    <button class="deepread-btn" onclick="openDeepRead('2608.25589')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25589v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · eess.SP</span>
+    <span class="paper-date">08-26</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25510v1" target="_blank" rel="noopener">近场双UPA通信：一种广义几何分析方法</a>
+  <div class="paper-title-en">Near-Field Dual-UPA Communications: A Generalized Geometric Approach</div>
+  <p class="paper-abstract">针对配备双均匀面阵（UPA）的近场MIMO系统建立广义三维几何模型，推导出闭式近远场边界，并提出低复杂度的信道分解与波束赋形设计方案。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.25510')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25510v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · eess.SP</span>
+    <span class="paper-date">08-26</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.25393v1" target="_blank" rel="noopener">基于遮挡检测与闭式黎曼更新的端到端移动感知多RIS优化</a>
+  <div class="paper-title-en">End-to-End Mobility-Aware Multi-RIS Optimization via Blockage Detection and Closed-Form Riemannian Updates</div>
+  <p class="paper-abstract">针对毫米波MIMO系统中RIS链路易受动态遮挡的问题，提出端到端移动感知多RIS优化框架，结合单RIS遮挡检测与闭式黎曼更新以提升通信可靠性。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.25393')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.25393v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">评测基准</span><span class="reason-badge">评测</span><span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.MM</span>
+    <span class="paper-date">08-25</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.24730v1" target="_blank" rel="noopener">可靠偏好学习：基于校准融合的错误增强情感偏好优化</a>
+  <div class="paper-title-en">Learning to Prefer Reliably: Error-Augmented Emotion Preference Optimization with Calibrated Fusion</div>
+  <p class="paper-abstract">针对情感偏好学习中成对监督稀疏的问题，提出结合校准融合与错误增强的情感偏好优化方法，提升多模态大模型对开放式情感描述的对齐效果与奖励模型精度。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.24730')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.24730v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · cs.MM</span>
+    <span class="paper-date">08-25</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.24640v1" target="_blank" rel="noopener">EVEREST：面向城市社会语义分割的内生视觉-语言强化推理探索</a>
+  <div class="paper-title-en">EVEREST:Endogenous Vision-Language Reinforcement Reasoning Exploration for Urban Socio-Semantic Segmentation</div>
+  <p class="paper-abstract">针对现有模型被动聚合跨模态线索导致边界不精确的问题，提出EVEREST框架，通过内生视觉-语言强化推理主动探索环境，提升城市社会语义分割精度。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.24640')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.24640v1" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#5a2d82;border-color:#5a2d8240;background:#5a2d8212;">arXiv</span>
+    <span class="inst-badge">MIT</span>
+    <span class="reason-badge">MIT</span>
+    <span class="paper-src">arXiv · eess.AS</span>
+    <span class="paper-date">08-25</span>
+  </div>
+  <a class="paper-title" href="https://arxiv.org/abs/2608.24558v1" target="_blank" rel="noopener">基于扩散后验采样的阵列无关Ambisonics编码</a>
+  <div class="paper-title-en">Array-Agnostic Ambisonics Encoding via Diffusion Posterior Sampling</div>
+  <p class="paper-abstract">针对传统麦克风阵列几何受限及编码伪影问题，提出生成式框架ADEPS，利用扩散后验采样显式嵌入物理先验，实现阵列无关的高保真空间音频编码。</p>
+  
+  <div class="paper-actions">
+    <button class="deepread-btn" onclick="openDeepRead('2608.24558')" title="需运行 paper_server.py，调用 Claude 实时深度解读">📖 详细介绍</button>
+    <a class="arxiv-link" href="https://arxiv.org/abs/2608.24558v1" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div></div>
 </section><section class="cat-section" id="eng">
@@ -708,14 +956,62 @@ footer{
   <div class="papers-grid"><div class="paper-card">
   <div class="paper-meta">
     <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">NVIDIA Blog</span>
+    <span class="reason-badge">NVIDIA Blog</span><span class="reason-badge">机构博客</span>
+    <span class="paper-src">NVIDIA Blog</span>
+    <span class="paper-date">08-26</span>
+  </div>
+  <a class="paper-title" href="https://blogs.nvidia.com/blog/nvlink-fusion-nvhbm-custom-high-bandwidth-memory/" target="_blank" rel="noopener">NVIDIA NVLink Fusion扩展支持NVHBM定制高带宽内存</a>
+  <div class="paper-title-en">NVIDIA NVLink Fusion Expands With NVHBM Custom High-Bandwidth Memory</div>
+  <p class="paper-abstract">面对万亿参数模型与AI智能体的工作负载需求，NVIDIA扩展NVLink Fusion架构，引入NVHBM定制高带宽内存，实现算力、内存与网络协同优化。</p>
+  
+  <div class="paper-actions">
+    
+    <a class="arxiv-link" href="https://blogs.nvidia.com/blog/nvlink-fusion-nvhbm-custom-high-bandwidth-memory/" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">PyTorch Blog</span>
+    <span class="reason-badge">PyTorch Blog</span><span class="reason-badge">机构博客</span>
+    <span class="paper-src">PyTorch Blog</span>
+    <span class="paper-date">08-26</span>
+  </div>
+  <a class="paper-title" href="https://pytorch.org/blog/pytorch-ecosystem-landscape-q3-update/" target="_blank" rel="noopener">PyTorch生态迎来Perforated、AReaL与TorchJD等10个新项目</a>
+  <div class="paper-title-en">PyTorch Ecosystem Landscape Welcomes Perforated, AReaL, TorchJD, RLinf, Miles, SMG, FiftyOne, TokenSpeed, VisualTorch, and TorchSurv</div>
+  <p class="paper-abstract">PyTorch生态工作组宣布将Perforated、AReaL、TorchJD、RLinf及FiftyOne等10个新项目纳入PyTorch生态版图。</p>
+  
+  <div class="paper-actions">
+    
+    <a class="arxiv-link" href="https://pytorch.org/blog/pytorch-ecosystem-landscape-q3-update/" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
+    <span class="inst-badge">Google</span>
+    <span class="reason-badge">LLM相关</span><span class="reason-badge">Google</span><span class="reason-badge">机构博客</span>
+    <span class="paper-src">Google Research</span>
+    <span class="paper-date">08-26</span>
+  </div>
+  <a class="paper-title" href="https://research.google/blog/glucofm-foundation-model-for-continuous-glucose-monitoring/" target="_blank" rel="noopener">GlucoFM：用于连续血糖监测的基础模型</a>
+  <div class="paper-title-en">GlucoFM: Foundation model for continuous glucose monitoring</div>
+  <p class="paper-abstract">面向健康与生物科学领域，推出专用于连续血糖监测（CGM）的时间序列基础模型GlucoFM。</p>
+  
+  <div class="paper-actions">
+    
+    <a class="arxiv-link" href="https://research.google/blog/glucofm-foundation-model-for-continuous-glucose-monitoring/" target="_blank" rel="noopener">→ 原文</a>
+  </div>
+</div><div class="paper-card">
+  <div class="paper-meta">
+    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
     <span class="inst-badge">OpenAI</span>
     <span class="reason-badge">OpenAI</span><span class="reason-badge">机构博客</span>
     <span class="paper-src">OpenAI Blog</span>
     <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/bringing-chatgpt-for-teachers-to-more-us-school-districts" target="_blank" rel="noopener">Bringing ChatGPT for Teachers to more U.S. school districts</a>
+  <a class="paper-title" href="https://openai.com/index/bringing-chatgpt-for-teachers-to-more-us-school-districts" target="_blank" rel="noopener">教师版ChatGPT扩展至更多美国学区</a>
   <div class="paper-title-en">Bringing ChatGPT for Teachers to more U.S. school districts</div>
-  <p class="paper-abstract">ChatGPT for Teachers is expanding to 55 U.S. school systems, bringing secure AI tools, training, and support to over 100,000 more educators and staff.</p>
+  <p class="paper-abstract">教师版ChatGPT扩展至美国55个学区系统，为逾10万名教育工作者和教职工提供安全的AI工具、系统培训与支持。</p>
   
   <div class="paper-actions">
     
@@ -729,9 +1025,9 @@ footer{
     <span class="paper-src">OpenAI Blog</span>
     <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/learning-never-stops" target="_blank" rel="noopener">Learning never stops: How AI makes learning continuous</a>
+  <a class="paper-title" href="https://openai.com/index/learning-never-stops" target="_blank" rel="noopener">学习永无止境：AI如何推动持续学习</a>
   <div class="paper-title-en">Learning never stops: How AI makes learning continuous</div>
-  <p class="paper-abstract">OpenAI’s new report explores how students and educators use ChatGPT to make learning more continuous, with support that extends beyond the classroom.</p>
+  <p class="paper-abstract">OpenAI发布最新报告，探讨学生与教育工作者如何借助ChatGPT打破课堂边界，实现更具连续性与支持性的学习体验。</p>
   
   <div class="paper-actions">
     
@@ -745,9 +1041,9 @@ footer{
     <span class="paper-src">OpenAI Blog</span>
     <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://openai.com/index/loveholidays" target="_blank" rel="noopener">How loveholidays is making everyone a builder with Codex</a>
+  <a class="paper-title" href="https://openai.com/index/loveholidays" target="_blank" rel="noopener">loveholidays如何借助Codex赋能全民开发</a>
   <div class="paper-title-en">How loveholidays is making everyone a builder with Codex</div>
-  <p class="paper-abstract">Discover how loveholidays uses OpenAI Codex to make software development accessible across the business, helping teams turn ideas into products faster.</p>
+  <p class="paper-abstract">介绍在线旅游平台loveholidays如何利用OpenAI Codex降低软件开发门槛，帮助跨职能团队将业务创意加速转化为落地产品。</p>
   
   <div class="paper-actions">
     
@@ -761,7 +1057,7 @@ footer{
     <span class="paper-src">Hugging Face Blog</span>
     <span class="paper-date">08-26</span>
   </div>
-  <a class="paper-title" href="https://huggingface.co/blog/train-multi-vector-encoder" target="_blank" rel="noopener">Training and Finetuning Multi-Vector Embedding Models with Sentence Transformers</a>
+  <a class="paper-title" href="https://huggingface.co/blog/train-multi-vector-encoder" target="_blank" rel="noopener">使用Sentence Transformers训练与微调多向量嵌入模型</a>
   <div class="paper-title-en">Training and Finetuning Multi-Vector Embedding Models with Sentence Transformers</div>
   
   
@@ -777,61 +1073,13 @@ footer{
     <span class="paper-src">NVIDIA Blog</span>
     <span class="paper-date">08-25</span>
   </div>
-  <a class="paper-title" href="https://blogs.nvidia.com/blog/gamescom-rtx-spark-pc-games-technology/" target="_blank" rel="noopener">Leading Publishers Bring Blockbuster PC Games and Technology to NVIDIA RTX Spark</a>
+  <a class="paper-title" href="https://blogs.nvidia.com/blog/gamescom-rtx-spark-pc-games-technology/" target="_blank" rel="noopener">头部发行商将PC游戏大作及技术引入NVIDIA RTX Spark</a>
   <div class="paper-title-en">Leading Publishers Bring Blockbuster PC Games and Technology to NVIDIA RTX Spark</div>
-  <p class="paper-abstract">NVIDIA is bringing the next wave of RTX gaming to the Gamescom conference running this week in Cologne, Germany, with support for new games, anti-cheat technologies and increased visual quality.  Electronic Arts, Embark and Ubisoft are among the latest game publishers and developers bringing their blockbuster titles to NVIDIA RTX Spark ahead of its launch [&amp;#8230;]</p>
+  <p class="paper-abstract">EA、Ubisoft等知名游戏厂商在科隆游戏展宣布将重磅PC游戏、反作弊技术及高画质特性接入NVIDIA RTX Spark平台。</p>
   
   <div class="paper-actions">
     
     <a class="arxiv-link" href="https://blogs.nvidia.com/blog/gamescom-rtx-spark-pc-games-technology/" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">Hugging Face Blog</span>
-    <span class="reason-badge">Hugging Face Blog</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">Hugging Face Blog</span>
-    <span class="paper-date">08-25</span>
-  </div>
-  <a class="paper-title" href="https://huggingface.co/blog/ibm-granite/granite-4-2" target="_blank" rel="noopener">Granite 4.2 LLMs: How They&#x27;re Built</a>
-  <div class="paper-title-en">Granite 4.2 LLMs: How They&#x27;re Built</div>
-  
-  
-  <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://huggingface.co/blog/ibm-granite/granite-4-2" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">Hugging Face Blog</span>
-    <span class="reason-badge">Hugging Face Blog</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">Hugging Face Blog</span>
-    <span class="paper-date">08-25</span>
-  </div>
-  <a class="paper-title" href="https://huggingface.co/blog/MultiverseComputingCAI/quantization-aware-healing" target="_blank" rel="noopener">Quantization-Aware Healing: a compressed, 4-bit model that outperforms its full-precision original</a>
-  <div class="paper-title-en">Quantization-Aware Healing: a compressed, 4-bit model that outperforms its full-precision original</div>
-  
-  
-  <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://huggingface.co/blog/MultiverseComputingCAI/quantization-aware-healing" target="_blank" rel="noopener">→ 原文</a>
-  </div>
-</div><div class="paper-card">
-  <div class="paper-meta">
-    <span class="paper-type" style="color:#e09a30;border-color:#e09a3040;background:#e09a3012;">博客</span>
-    <span class="inst-badge">OpenAI</span>
-    <span class="reason-badge">OpenAI</span><span class="reason-badge">机构博客</span>
-    <span class="paper-src">OpenAI Blog</span>
-    <span class="paper-date">08-25</span>
-  </div>
-  <a class="paper-title" href="https://openai.com/index/the-full-stack-behind-abundant-intelligence" target="_blank" rel="noopener">The full stack behind abundant intelligence</a>
-  <div class="paper-title-en">The full stack behind abundant intelligence</div>
-  <p class="paper-abstract">OpenAI CFO Sarah Friar explains how advances across chips, compute, models, and products compound to deliver more useful intelligence at greater scale and lower cost.</p>
-  
-  <div class="paper-actions">
-    
-    <a class="arxiv-link" href="https://openai.com/index/the-full-stack-behind-abundant-intelligence" target="_blank" rel="noopener">→ 原文</a>
   </div>
 </div></div>
 </section>
