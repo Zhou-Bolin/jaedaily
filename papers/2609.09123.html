@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Mask Forcing：通过双重噪声掩码展开改进自回归视频扩散蒸馏 · 论文解读 · Jae Daily</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238a1212'/%3E%3Ccircle cx='50' cy='50' r='43' fill='none' stroke='%23e8c87a' stroke-width='2.5' stroke-opacity='0.55'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-family='STLiti%2CLiSu%2CFangSong%2Cserif' font-size='54' font-weight='400' fill='%23f5ead0' opacity='0.95'%3E%E7%A0%94%3C%2Ftext%3E%3C%2Fsvg%3E"/>
+<script>
+MathJax = {
+  tex: {inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},
+  options: {skipHtmlTags:['script','noscript','style','textarea','pre']}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB',
+    'Noto Sans SC',sans-serif;
+  background:#f0ece4;color:#1e1a16;min-height:100vh;font-size:14px;line-height:1.7;
+}
+/* ── 顶栏 ── */
+.topbar{
+  position:sticky;top:0;z-index:100;background:#8a1212;
+  border-bottom:1px solid rgba(0,0,0,.25);
+  padding:0 24px;display:flex;align-items:center;gap:16px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:12px 0;
+  color:#f5ead0;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.5px;
+}
+.back-btn:hover{color:#fff;}
+.topbar-brand{font-size:10px;color:rgba(245,234,208,.38);letter-spacing:3px;
+  text-transform:uppercase;margin-left:auto;}
+/* ── 论文头部 ── */
+.masthead{
+  background:linear-gradient(160deg,#6e0a0a 0%,#8a1212 50%,#7a0e0e 100%);
+  border-bottom:2px solid #5a0a0a;padding:32px 24px 28px;
+}
+.mh-inner{max-width:860px;margin:0 auto;}
+.arxiv-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:2px;
+  color:#f5ead0;background:rgba(255,255,255,.12);border:1px solid rgba(245,234,208,.25);
+  border-radius:3px;padding:2px 10px;margin-bottom:14px;font-family:sans-serif;
+}
+.paper-title-zh{font-size:21px;font-weight:700;color:#f5ead0;line-height:1.45;margin-bottom:10px;}
+.paper-title-en{font-size:12px;color:rgba(245,234,208,.55);line-height:1.5;
+  margin-bottom:16px;font-style:italic;}
+.one-liner{
+  display:inline-block;
+  background:rgba(245,234,208,.12);border:1px solid rgba(245,234,208,.22);
+  border-radius:5px;padding:9px 16px;margin-bottom:18px;
+  font-size:14px;color:#f5ead0;font-weight:500;line-height:1.5;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:14px;}
+.meta-tag{
+  font-size:11px;padding:2px 8px;border-radius:3px;border:1px solid;
+  font-family:sans-serif;
+}
+.link-row{display:flex;gap:10px;flex-wrap:wrap;}
+.lbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.3px;transition:opacity .15s;
+}
+.lbtn:hover{opacity:.85;}
+.lbtn-arxiv{background:#b8940e;color:#1e1a16;}
+.lbtn-pdf{background:#065f46;color:#f0ece4;}
+/* ── 收藏按钮 ── */
+.fav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:4px;font-size:12px;font-weight:700;
+  background:transparent;border:1px solid rgba(245,234,208,.3);
+  color:rgba(245,234,208,.7);cursor:pointer;font-family:inherit;
+  letter-spacing:.3px;transition:all .2s;
+}
+.fav-btn:hover{background:rgba(245,234,208,.12);border-color:rgba(245,234,208,.5);color:#f5ead0;}
+.fav-btn.faved{background:#b8940e28;border-color:#b8940e;color:#e8c87a;}
+.fav-btn .fav-star{font-size:14px;transition:transform .2s;}
+.fav-btn.faved .fav-star{transform:scale(1.2);}
+/* ── 内容区 ── */
+.container{max-width:860px;margin:0 auto;padding:24px 20px 56px;}
+/* 要点卡 */
+.ta-card{
+  background:#fff8f0;border:1px solid #f0d9b5;border-left:4px solid #b8940e;
+  border-radius:6px;padding:16px 20px;margin-bottom:24px;
+}
+.ta-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#92400e;
+  font-family:sans-serif;margin-bottom:12px;text-transform:uppercase;
+}
+.ta-list{list-style:none;padding:0;display:grid;gap:9px;}
+.ta-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.65;color:#1e1a16;
+}
+.ta-item::before{content:'▶';color:#b8940e;font-size:9px;margin-top:5px;flex-shrink:0;}
+/* 章节卡 */
+.sec-card{
+  background:#fff;border-radius:6px;border:1px solid #e8e0d4;
+  margin-bottom:14px;overflow:hidden;
+}
+.sec-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;background:#f8f6f2;border-bottom:1px solid #e8e0d4;
+}
+.sec-icon{font-size:15px;}
+.sec-title{
+  font-size:11px;font-weight:800;letter-spacing:1.5px;
+  color:#374151;font-family:sans-serif;text-transform:uppercase;
+}
+.sec-body{
+  padding:14px 18px;font-size:13px;line-height:1.85;color:#1e1a16;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* MathJax 渲染区 */
+.mathjax-content .MJX-TEX{font-size:.95em;}
+/* Q&A 深度问答 */
+.qa-card{
+  background:#0f172a;border-radius:6px;border:1px solid #1e3a5f;
+  margin-bottom:14px;overflow:hidden;
+}
+.qa-title{
+  font-size:10px;font-weight:800;letter-spacing:2px;color:#7dd3fc;
+  font-family:sans-serif;padding:12px 18px;
+  background:#0f172a;border-bottom:1px solid #1e3a5f;text-transform:uppercase;
+}
+.qa-item{
+  padding:16px 18px;border-bottom:1px solid #1e3a5f20;
+}
+.qa-item:last-child{border-bottom:none;}
+.qa-q{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;font-weight:700;color:#e2e8f0;line-height:1.6;margin-bottom:10px;
+}
+.qa-num{
+  flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:#1d4ed8;color:#fff;font-size:10px;font-weight:800;
+  font-family:sans-serif;margin-top:2px;
+}
+.qa-a{
+  font-size:13px;color:#94a3b8;line-height:1.8;padding-left:30px;
+  white-space:pre-wrap;word-break:break-word;
+}
+/* 页脚 */
+.footer{text-align:center;padding:28px 20px;color:#94a3b8;font-size:11px;line-height:1.8;}
+.footer a{color:#b8940e;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../ai-digest.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    返回 AI 研报
+  </a>
+  <a href="../favorites.html" style="color:rgba(245,234,208,.6);font-size:12px;
+     text-decoration:none;padding:12px 0;display:inline-flex;align-items:center;gap:5px;">
+    ⭐ 收藏夹
+  </a>
+  <span class="topbar-brand">JAE DAILY · 论文深度解读</span>
+</div>
+
+<div class="masthead">
+  <div class="mh-inner">
+    <div class="arxiv-badge">PAPER DEEP DIVE · arXiv:2609.09123</div>
+    <div class="paper-title-zh">Mask Forcing：通过双重噪声掩码展开改进自回归视频扩散蒸馏</div>
+    <div class="paper-title-en">Mask Forcing: Improving Autoregressive Video Diffusion Distillation via Dual-Noise Masking Rollout</div>
+    <div class="one-liner">💡 通过双噪声掩码扰动自回归展开，缓解DMD模式崩溃与累积误差</div>
+    <div class="meta-row">
+      <span class="meta-tag" style="color:#e8c87a;border-color:#e8c87a40;background:rgba(232,200,122,.12);">2026-09-08</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.7);border-color:rgba(245,234,208,.2);background:rgba(255,255,255,.08);">cs.CV</span>
+      <span class="meta-tag" style="color:rgba(245,234,208,.55);border-color:rgba(245,234,208,.15);background:rgba(255,255,255,.05);">Zhuoran Zhao, Shengju Qian, Tongtong Liang, Xianghao Kong, Songchun Zhang, Junchao Huang 等10人</span>
+    </div>
+    
+    <div class="link-row" style="margin-top:14px;">
+      <a class="lbtn lbtn-arxiv" href="https://arxiv.org/abs/2609.09123" target="_blank" rel="noopener">→ arXiv 原文</a>
+      <a class="lbtn lbtn-pdf"   href="https://arxiv.org/pdf/2609.09123" target="_blank" rel="noopener">⬇ PDF</a>
+      <button class="fav-btn" id="fav-btn" onclick="toggleFav()">
+        <span class="fav-star">☆</span>
+        <span class="fav-label">收藏</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ta-card"><div class="ta-title">KEY TAKEAWAYS · 核心要点</div><ul class="ta-list"><li class="ta-item">双噪声掩码扰动自回归展开轨迹，本质上打破了DMD的模式寻求坍缩</li><li class="ta-item">局部引入低噪声token作为干净上下文，显著抑制自回归时序累积误差</li><li class="ta-item">无需真实视频数据集与复杂的RL/GAN后训练，即插即用泛化至多种AR模型</li><li class="ta-item">实践中仅需修改展开输入的加噪与掩码逻辑，算力开销与标准蒸馏完全一致</li></ul></div>
+  <div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">💡</span>
+    <span class="sec-title">研究出发点</span>
+  </div>
+  <div class="sec-body mathjax-content">自回归（AR）视频扩散模型因支持实时流式推理而备受关注。现有主流方案（如Self Forcing）通过分布匹配蒸馏（DMD）将双向教师蒸馏为因果学生模型，但生成视频普遍存在过度饱和与过度平滑现象，视觉质感严重下降。其根本局限在于：(1) DMD底层的Reverse-KL散度具有固有的mode-seeking（模式寻求）特性，使学生分布坍缩至教师分布的极少数高概率区域；(2) 中间展开预测缺乏单步监督信号，面临严重的自回归累积误差。现有方案多依赖真实视频正则或多阶段RL/GAN后训练，破坏了蒸馏的高效性与纯净度。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">🚀</span>
+    <span class="sec-title">核心思路与创新</span>
+  </div>
+  <div class="sec-body mathjax-content">Mask Forcing提出双噪声掩码自回归展开（Dual-Noise Masking Rollout）机制，无需真实数据或额外阶段即可缓解模式崩溃。(1) 双噪声空间扰动：在每个展开步内，以掩码比例$\alpha$随机选取时空latent位置，并重加噪至更低噪声时间步$t'_k < t_j$形成混合输入$x_i^{t_\text{mix}}$，促使自回归展开探索更广阔的样本流形，使DMD梯度能从学生尚未覆盖的教师分布区域提供监督。(2) 掩码去噪先验注入：利用低噪声token作为干净上下文引导高噪声token去噪，极大降低中间预测误差并阻断误差沿时间轴传递。(3) 区别于显式混合Forward-KL或引入判别器，本文从rollout生成轨迹本身施加随机摄动，从输入表征维度打破了模式寻求的确定性局部陷阱。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #5a2d82;">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">数学原理</span>
+  </div>
+  <div class="sec-body mathjax-content">流匹配加噪表示为 $\Psi(x, \epsilon, t) = (1 - t)x + t\epsilon$。在展开步 $j$ 时，对上一中间预测 $\hat{x}_{i, j+1}^0$ 分别加噪至全局步 $t_j$ 和低噪声步 $t'_k \sim \text{Uniform}([\max(t_\text{min}, t_j - \Delta/N_t), t_j])$，并通过二进制掩码 $M_i \in \{0, 1\}^{L \times H \times W}$ 混合：$$x_i^{t_\text{mix}} = M_i \odot \Psi(\hat{x}_{i,j+1}^0, \epsilon_j, t'_k) + (1 - M_i) \odot \Psi(\hat{x}_{i,j+1}^0, \epsilon_j, t_j)$$输入因果学生网络 $G_\theta$ 但仍指定时间步为 $t_j$ 得到预测 $\hat{x}_{i,j}^0 = G_\theta(x_i^{t_\text{mix}}; c, t_j, \text{KV})$。蒸馏损失仅在退出步 $s$ 评估，通过教师与学生得分差反传更新：$$\nabla_\theta L_\text{DMD} = -\mathbb{E}\left[\left(s_\text{real}(x_t, t) - s_\text{fake}(x_t, t)\right) \frac{dG_\theta}{d\theta}\right]$$其中 $s_\text{real} = \nabla_{x_t}\log p_\text{real,t}$, $s_\text{fake} = \nabla_{x_t}\log p_\text{fake,t}$。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">📊</span>
+    <span class="sec-title">数据准备</span>
+  </div>
+  <div class="sec-body mathjax-content">训练过程完全免除真实视频数据采集，纯依赖文本提示词驱动学生模型自展开蒸馏；测试评估涵盖公开视频基准集（包括100-prompt测试集、MovieGen视频提示词集以及Sekai-Game/Sekai-Walking长视频场景测试），包含短视频、长文本单Prompt多镜生成及相机轨迹控制I2V等多种生成评估协议。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #1c3d6e;">
+    <span class="sec-icon">🧱</span>
+    <span class="sec-title">模型架构</span>
+  </div>
+  <div class="sec-body mathjax-content">基于因果注意力（Causal Attention）机制的3D DiT架构；引入KV Cache实现自回归时序外推。单视频拆分为 $F$ 个chunk（每个chunk含 $L$ 帧latent）。与双向Transformer相比，仅向历史chunk保持因果依赖，中间步推理复杂度大幅降低（蒸馏后单chunk仅需 $T=4$ 步去噪即可完成实时流式推断）。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #7c2d12;">
+    <span class="sec-icon">🔥</span>
+    <span class="sec-title">训练方法</span>
+  </div>
+  <div class="sec-body mathjax-content">端到端蒸馏训练。采用随机退出步 $s \sim \text{Uniform}\{1, \dots, T\}$ 机制截断梯度图以节省显存；掩码比例 $\alpha$ 及时间步扰动窗口 $\Delta$ 约束在局部范围；采用AdamW优化器；利用KV Cache冻结历史状态，在多卡GPU集群上仅需标准DMD自展开的同等算力即可收敛，且收敛速度显著快于纯Self Forcing baseline。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #065f46;">
+    <span class="sec-icon">📈</span>
+    <span class="sec-title">实验效果</span>
+  </div>
+  <div class="sec-body mathjax-content">在Self Forcing、LongLive、Causal Forcing等主流AR蒸馏框架上均取得显著增益：消除了严重饱和与发黑伪影，高频纹理与光影真实感大幅增强；在长时程展开中有效维持了画质不崩塌。消融实验证实时空双维度掩码协同效果最优（纯时间掩码或纯空间掩码增益受限）。已开源代码与主页：https://alicezrzhao.github.io/mask-forcing。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #374151;">
+    <span class="sec-icon">🏛️</span>
+    <span class="sec-title">作者与机构</span>
+  </div>
+  <div class="sec-body mathjax-content">前6位作者：Zhuoran Zhao（HKUST(GZ)与HKUST，中国）、Shengju Qian（LIGHTSPEED，中国/美国）、Tongtong Liang（UCSD，美国）、Xianghao Kong（HKUST，中国）、Songchun Zhang（HKUST，中国）、Junchao Huang（CUHK(SZ)，中国）。通讯作者为Anyi Rao（HKUST）。该团队汇聚了来自港科大（广州/本部）、中大深圳、UCSD及Lightspeed的顶尖研究力量，在自回归视频生成、扩散模型快速蒸馏（如Self Forcing、Causal Forcing等前沿方向）拥有扎实的技术积累与先发研究优势。</div>
+</div><div class="sec-card">
+  <div class="sec-hdr" style="border-left:4px solid #92400e;">
+    <span class="sec-icon">🔭</span>
+    <span class="sec-title">启示与展望</span>
+  </div>
+  <div class="sec-body mathjax-content">Mask Forcing颠覆了必须借助判别器或多目标混合才能解决DMD模式崩溃的认知，证明通过输入表征轨迹扰动即可纠正分布偏移。未来方向包括：(1) 自适应动态掩码率与噪声调度策略；(2) 拓展至交互式多模态自回归生成；(3) 结合流式实时超分辨率与端侧实时视频生成落地。</div>
+</div>
+  <div class="qa-card"><div class="qa-title">THREE KEY QUESTIONS · 深度问答</div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q1</span>在双噪声掩码展开中，为何向模型输入局部低噪声token但保持全局时间步t_j不变不会导致条件表征失真，反而能缓解Reverse-KL的模式崩溃？</div><div class="qa-a">DMD的Reverse-KL目标倾向于使学生分布收缩到教师的高概率局部极值，导致过饱和与过平滑。Mask Forcing构建混合输入x_i^{t_mix}，保持全局时间步t_j不变但注入低噪声t'_k < t_j的token。这种局部噪声不一致性打破了确定性自回归轨迹，迫使学生探索更广泛的流形空间，为DMD梯度提供了覆盖教师全貌的非局部监督信号；同时低噪声token充当空间-时间去噪锚点（Prior Context），降低了中间rollout预测误差沿时间维度的累积传递，在不引入真实数据或判别器的情况下从轨迹分布端解决了模式寻求问题。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q2</span>消融实验表明时空双维度掩码显著优于纯空间或纯时间掩码，其内在机理是什么？该机制对超参数是否存在潜在的敏感性风险？</div><div class="qa-a">自回归视频生成同时面临空间退化（模糊、过饱和）与时序误差累积（发黑、崩塌）。纯空间掩码无法阻断跨chunk的历史误差传播，纯时间掩码则难以提供同帧内高频局部细节的引导上下文。时空联合掩码协同构建了跨帧与同帧的多尺度干净先验，实现了最优平衡。然而，该方法依赖掩码比例α与重加噪时间步t'_k的经验采样。若掩码比例过大或噪声差值过高，会过早泄露未来信息破坏因果蒸馏约束；若过小则扰动不足以跳出模式塌陷，缺乏根据展开深度动态自适应调整超参的理论机制。</div></div><div class="qa-item"><div class="qa-q"><span class="qa-num">Q3</span>Mask Forcing作为一种即插即用的轨迹扰动策略，未来如何与强化学习（RL）微调或长时程流式交互架构深度融合？</div><div class="qa-a">Mask Forcing证明了在蒸馏rollout中引入局部确定性扰动可拓宽探索流形，这与强化学习中的探索机制高度互补。未来方向包括：(1) 将静态掩码采样升级为基于不确定性或RL奖励自适应引导的主动掩码策略（Active Masking），针对模型易塌陷区域进行针对性加噪；(2) 在无限长实时流式生成中，结合KV Cache动态记忆机制，将双噪声扰动延伸至长上下文窗口，解决数十秒甚至分钟级无界生成中的画质漂移问题，推动实时因果视频大模型的落地。</div></div></div>
+</div>
+
+<div class="footer">
+  由 Jae Daily AI 自动解读（Claude Sonnet）· 解读时间：2026-09-10 16:09<br/>
+  内容仅供参考，请以
+  <a href="https://arxiv.org/abs/2609.09123" target="_blank" rel="noopener">原始论文</a>
+  为准
+</div>
+
+<script>
+// ── 收藏功能（localStorage）──────────────────────────────────────────
+var PAPER_META = {
+  id:       '2609.09123',
+  title_zh: "Mask Forcing：通过双重噪声掩码展开改进自回归视频扩散蒸馏",
+  title_en: "Mask Forcing: Improving Autoregressive Video Diffusion Distillation via Dual-Noise Masking Rollout",
+  one_liner:"通过双噪声掩码扰动自回归展开，缓解DMD模式崩溃与累积误差",
+  category: "cs.CV",
+  published:'2026-09-08',
+  analyzed: '2026-09-10 16:09'
+};
+
+var FAV_KEY = 'jd_favorites';
+
+function getFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+
+function isFaved() {
+  return !!getFavs()[PAPER_META.id];
+}
+
+function updateBtn(faved) {
+  var btn = document.getElementById('fav-btn');
+  if (!btn) return;
+  btn.querySelector('.fav-star').textContent  = faved ? '★' : '☆';
+  btn.querySelector('.fav-label').textContent = faved ? '已收藏' : '收藏';
+  faved ? btn.classList.add('faved') : btn.classList.remove('faved');
+}
+
+function toggleFav() {
+  var favs = getFavs();
+  var id = PAPER_META.id;
+  if (favs[id]) {
+    delete favs[id];
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(false);
+    showToast('已取消收藏');
+  } else {
+    favs[id] = Object.assign({saved_at: new Date().toISOString()}, PAPER_META);
+    localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+    updateBtn(true);
+    showToast('已收藏 ⭐', true);
+  }
+}
+
+function showToast(msg, gold) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = (
+    'position:fixed;bottom:24px;right:24px;z-index:9999;'
+    + 'padding:10px 18px;border-radius:6px;font-size:13px;font-weight:600;'
+    + 'box-shadow:0 4px 16px rgba(0,0,0,.2);transition:opacity .3s;'
+    + (gold
+       ? 'background:#b8940e;color:#1e1a16;'
+       : 'background:#374151;color:#f0ece4;')
+  );
+  document.body.appendChild(t);
+  setTimeout(function() { t.style.opacity='0'; setTimeout(function(){t.remove();},300); }, 2000);
+}
+
+// 初始化按钮状态
+updateBtn(isFaved());
+</script>
+</body>
+</html>
