@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>健康学堂 · Jae Daily</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f5f2ec;color:#1f2933;font-family:'Noto Serif SC','Songti SC','SimSun',Georgia,serif;line-height:1.8;padding:28px 16px 56px;}
+.wrap{max-width:980px;margin:0 auto;}
+.top{border-bottom:1px solid #cdbf9f;padding-bottom:18px;margin-bottom:24px;}
+.eyebrow{font:700 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:8px;}
+h1{font-size:36px;letter-spacing:4px;color:#2b2118;line-height:1.2;}
+.sub{font:13px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;margin-top:8px;}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start;}
+.card{background:#fffefa;border:1px solid #ded3bb;border-radius:8px;box-shadow:0 2px 10px rgba(60,42,20,.06);overflow:hidden;}
+.lesson-head{padding:18px 22px;background:#fff6e6;border-bottom:1px solid #e5d7b8;}
+.kicker{font:700 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#9a5b12;letter-spacing:1px;margin-bottom:6px;}
+h2{font-size:24px;color:#2b2118;line-height:1.35;}
+.memory{margin-top:12px;display:inline-block;font:800 14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;background:#7a2f1210;border:1px solid #7a2f1230;border-radius:999px;padding:5px 12px;}
+.section{padding:16px 22px;border-bottom:1px solid #eee5d3;}
+.section:last-child{border-bottom:none;}
+.chapter{padding:20px 22px;border-bottom:1px solid #eee5d3;}
+.chapter:last-child{border-bottom:none;}
+.chapter-no{font:800 10px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#9a5b12;letter-spacing:1.2px;margin-bottom:4px;}
+.chapter h2{font-size:22px;margin-bottom:12px;}
+.theme-lead{background:#2b2118;color:#f9f3e7;padding:20px 22px;border-bottom:1px solid #4a3928;}
+.theme-lead h2{color:#fff7e8;font-size:23px;margin-bottom:9px;}
+.theme-lead p{color:#e7ded2;font-size:14px;}
+.fact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.fact{background:#f8f5ee;border-radius:6px;padding:11px 12px;}
+.fact b{display:block;font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;margin-bottom:4px;}
+.fact p{font-size:13px;line-height:1.7;}
+.takeaway{margin-top:12px;background:#fff6e6;border-left:3px solid #b7791f;padding:10px 12px;border-radius:0 6px 6px 0;font-size:14px;}
+.kind{display:inline-block;font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#fff;background:#7a2f12;border-radius:999px;padding:4px 9px;margin-bottom:8px;}
+.video-link{display:flex;gap:12px;align-items:center;background:#2b2118;color:#fff;text-decoration:none;border-radius:8px;padding:14px;margin-top:10px;}
+.video-link:hover{text-decoration:none;background:#473425;}
+.video-link .play{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#fff2;color:#fff;flex:none;}
+.video-link b{display:block;font-size:14px;}
+.video-link small{display:block;color:#e7ded2;margin-top:3px;font:11px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+.video-note{font-size:12px;margin-top:8px;color:#6b7280;}
+.video-empty{font:13px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f3f4f6;padding:12px;border-radius:6px;color:#4b5563;}
+.deep-read{background:#f8f5ee;border-radius:7px;padding:14px;margin-top:10px;}
+.deep-read p+ p{margin-top:10px;}
+.sources{padding-left:18px;}
+.sources li{font-size:12px;margin:4px 0;}
+.label{font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;letter-spacing:1.2px;margin-bottom:8px;}
+p{font-size:15px;color:#374151;}
+ol{padding-left:22px;}
+li{margin:7px 0;font-size:15px;color:#374151;}
+.check{font:700 14px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#065f46;background:#ecfdf5;border-left:3px solid #059669;padding:10px 12px;border-radius:0 6px 6px 0;}
+.warn{font:12px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7c2d12;background:#fff7ed;border-left:3px solid #ea580c;padding:10px 12px;border-radius:0 6px 6px 0;}
+.side{display:flex;flex-direction:column;gap:14px;}
+.plan{padding:14px 16px;}
+.plan-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #eee5d3;}
+.plan-row:last-child{border-bottom:none;}
+.plan-row.active{background:#7a2f120c;margin:0 -8px;padding:9px 8px;border-radius:6px;}
+.plan-day{font:800 11px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;min-width:34px;}
+.plan-body strong{display:block;font:800 13px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#2b2118;}
+.plan-body span{display:block;font:12px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;}
+.note{padding:14px 16px;font:12px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;}
+.back{display:inline-block;margin-top:22px;font:700 12px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;text-decoration:none;}
+@media(max-width:760px){.grid{display:block;}.side{margin-top:16px;}.fact-grid{grid-template-columns:1fr;}h1{font-size:30px;}h2{font-size:21px;}body{padding:20px 12px 44px;}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div class="eyebrow">Health Classroom · 2026年10月14日</div>
+    <h1>健康学堂</h1>
+    <div class="sub">每天 10–20 分钟：读懂一种食物、一个人体机制和一项训练技巧，再看一节不重复的视频课。</div>
+  </header>
+  <div class="grid">
+    <article class="card">
+      <section class="theme-lead">
+        <div class="chapter-no" style="color:#e8c87a">今日学习主线 · 力量</div>
+        <h2>刺激、原料与恢复：今天围绕力量适应学习</h2>
+        <p>增肌和力量增长来自训练刺激、足够营养与恢复的长期叠加。蛋白质提供原料，碳水支持训练质量，睡眠帮助神经与组织恢复；任何一个单品、补剂或一次力竭训练都不能替代这个系统。</p>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">01 · 今日食物 · 10/134</div>
+        <h2>牛肉：牛肉的价值不只在蛋白质，也在较易吸收的铁。</h2>
+        <div class="fact-grid">
+          <div class="fact"><b>里面有什么</b><p>瘦牛肉提供蛋白质、血红素铁、锌、肌酸和维生素 B12。</p></div>
+          <div class="fact"><b>进入身体后</b><p>铁参与血红蛋白携氧；长期耐力训练者若铁储备不足，可能表现为疲劳和成绩下降。</p></div>
+          <div class="fact"><b>训练日怎么吃</b><p>长跑与力量训练日都适合，但训练前应选较瘦、份量适中的做法，避免胃部负担。</p></div>
+          <div class="fact"><b>挑选与搭配</b><p>选择瘦部位，一餐约一掌心，与蔬菜和主食搭配；不必用加工肉制品替代。</p></div>
+        </div>
+        <div class="takeaway"><b>别被这个误区带偏：</b>感到疲劳不能直接自行大量补铁，应结合饮食、症状和必要的医学检查。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">02 · 人体知识 · 29/100</div>
+        <h2>超量恢复</h2>
+        <div class="memory">恢复不是自动变强，刺激也必须合适。</div>
+        <p style="margin-top:12px">训练后能力短暂下降，经过营养和休息可能恢复并适应；刺激太小、太密或太大都会改变结果。</p>
+        <div class="fact-grid">
+          <div class="fact"><b>和你的训练有什么关系</b><p>篮球、跑步和健身必须放进同一张负荷表，不能各自都按满计划。</p></div>
+          <div class="fact"><b>今天观察什么</b><p>写下过去七天三类训练的总次数与最累的一天。</p></div>
+        </div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">03 · 今日训练 · 47/60</div>
+        <div class="kind">力量</div>
+        <h2>组间休息</h2>
+        <p>复合力量动作需要足够恢复维持质量。</p>
+        <div class="fact-grid">
+          <div class="fact"><b>今天这样练</b><p>重组休 2–3 分钟并记录。</p></div>
+          <div class="fact"><b>常见错误</b><p>因为心急把力量训练做成有氧。</p></div>
+        </div>
+        <div class="warn" style="margin-top:12px">安全边界：头晕时延长休息。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">04 · 今日视频课 · 不重复推荐</div>
+        <h2>看一次示范，再带着一个重点练</h2>
+        <div class="video-empty">“力量”相关视频已经全部学完。为保证相关且不重复，今天不推荐无关课程。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">05 · 今日行动与自测 · 第 23/44 讲</div>
+        <h2>楼梯是免费的短训练</h2>
+        <div class="memory">一层开始，不必逞强。</div>
+        <p style="margin-top:12px">把较短的活动分散进一天，同样可以累积运动量；楼梯能同时刺激心肺和下肢。</p>
+        <ol style="margin-top:8px"><li>今天任选一次少乘一层电梯。</li><li>上楼保持能说短句的节奏。</li><li>扶好扶手，下楼不要抢速度。</li></ol>
+        <div class="check">睡前检查：今天主动选择了几层楼梯？</div>
+        <div class="warn" style="margin-top:10px">膝痛、平衡障碍或心肺疾病患者应选择更安全的替代活动。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">06 · 串起来理解 · 深度阅读</div>
+        <h2>从知道，变成会安排</h2>
+        <div class="deep-read">
+          <p><b>放进真实训练：</b>训练前的目标是有能量、胃部舒服；训练后的目标是恢复正常进食，而不是抢一个极窄窗口。大多数训练组保留少量余力更容易维持技术与总训练量，渐进超负荷也可以来自次数、组数、动作幅度或控制质量，而不只是加重量。</p>
+          <p><b>建立自己的反馈：</b>记录重量、次数、剩余次数和动作质量，再结合睡眠与疼痛趋势判断是否进步。酸痛不是训练质量评分；如果表现连续下降、疲劳累积或疼痛改变动作，应先减量而不是继续加码。</p>
+          <p><b>今天的连接：</b>“牛肉”解决吃什么与怎么搭配；“超量恢复”解释身体为何这样反应；“组间休息”则把原理变成一个可练习动作。不要单独记三个结论，要观察它们在一次真实训练中如何互相影响。</p>
+        </div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">资料来源 · 用于继续核对</div>
+        <ul class="sources"><li><a href="https://www.who.int/en/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener noreferrer">WHO 健康饮食原则</a></li><li><a href="https://ods.od.nih.gov/factsheets/list-VitaminsMinerals/" target="_blank" rel="noopener noreferrer">NIH 维生素与矿物质资料</a></li><li><a href="https://acsm.org/education-resources/pronouncements-scientific-communications/position-stands/" target="_blank" rel="noopener noreferrer">ACSM 运动医学立场文件</a></li></ul>
+        <p style="font-size:12px;color:#6b7280;margin-top:8px">正文是健康教育与训练常识，不用于诊断疾病或替代个体化医疗、营养和康复建议。</p>
+      </section>
+    </article>
+    <aside class="side">
+      <div class="card plan">
+        <div class="label">本周循环计划</div>
+        <div class="plan-row"><div class="plan-day">周一</div><div class="plan-body"><strong>久坐清零</strong><span>每小时起身两分钟。</span></div></div><div class="plan-row"><div class="plan-day">周二</div><div class="plan-body"><strong>平衡练习</strong><span>靠近支撑完成单脚站立。</span></div></div><div class="plan-row active"><div class="plan-day">周三</div><div class="plan-body"><strong>食物准备</strong><span>提前准备明天的一份蔬果和蛋白质。</span></div></div><div class="plan-row"><div class="plan-day">周四</div><div class="plan-body"><strong>轻快活动</strong><span>分三次各走 10 分钟。</span></div></div><div class="plan-row"><div class="plan-day">周五</div><div class="plan-body"><strong>注意力休息</strong><span>安排一餐完全离屏。</span></div></div><div class="plan-row"><div class="plan-day">周六</div><div class="plan-body"><strong>家务运动</strong><span>用整理、清洁或采购累计活动量。</span></div></div><div class="plan-row"><div class="plan-day">周日</div><div class="plan-body"><strong>环境整理</strong><span>清理一个影响健康习惯的障碍。</span></div></div>
+      </div>
+      <div class="card note">
+        <strong>训练最小闭环：</strong><br>
+        每周只追踪训练完成次数、睡眠、疼痛与疲劳趋势。篮球、长跑和力量训练的负荷需要一起计算。
+        <br><br><strong>视频库状态：</strong>已全部学完，等待补充新课程。</div>
+    </aside>
+  </div>
+  <a class="back" href="latest.html">← 返回简报</a>
+</main>
+</body>
+</html>
