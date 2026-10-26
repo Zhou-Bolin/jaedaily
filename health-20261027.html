@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>健康学堂 · Jae Daily</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f5f2ec;color:#1f2933;font-family:'Noto Serif SC','Songti SC','SimSun',Georgia,serif;line-height:1.8;padding:28px 16px 56px;}
+.wrap{max-width:980px;margin:0 auto;}
+.top{border-bottom:1px solid #cdbf9f;padding-bottom:18px;margin-bottom:24px;}
+.eyebrow{font:700 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:8px;}
+h1{font-size:36px;letter-spacing:4px;color:#2b2118;line-height:1.2;}
+.sub{font:13px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;margin-top:8px;}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start;}
+.card{background:#fffefa;border:1px solid #ded3bb;border-radius:8px;box-shadow:0 2px 10px rgba(60,42,20,.06);overflow:hidden;}
+.lesson-head{padding:18px 22px;background:#fff6e6;border-bottom:1px solid #e5d7b8;}
+.kicker{font:700 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#9a5b12;letter-spacing:1px;margin-bottom:6px;}
+h2{font-size:24px;color:#2b2118;line-height:1.35;}
+.memory{margin-top:12px;display:inline-block;font:800 14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;background:#7a2f1210;border:1px solid #7a2f1230;border-radius:999px;padding:5px 12px;}
+.section{padding:16px 22px;border-bottom:1px solid #eee5d3;}
+.section:last-child{border-bottom:none;}
+.chapter{padding:20px 22px;border-bottom:1px solid #eee5d3;}
+.chapter:last-child{border-bottom:none;}
+.chapter-no{font:800 10px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#9a5b12;letter-spacing:1.2px;margin-bottom:4px;}
+.chapter h2{font-size:22px;margin-bottom:12px;}
+.theme-lead{background:#2b2118;color:#f9f3e7;padding:20px 22px;border-bottom:1px solid #4a3928;}
+.theme-lead h2{color:#fff7e8;font-size:23px;margin-bottom:9px;}
+.theme-lead p{color:#e7ded2;font-size:14px;}
+.fact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.fact{background:#f8f5ee;border-radius:6px;padding:11px 12px;}
+.fact b{display:block;font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;margin-bottom:4px;}
+.fact p{font-size:13px;line-height:1.7;}
+.takeaway{margin-top:12px;background:#fff6e6;border-left:3px solid #b7791f;padding:10px 12px;border-radius:0 6px 6px 0;font-size:14px;}
+.kind{display:inline-block;font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#fff;background:#7a2f12;border-radius:999px;padding:4px 9px;margin-bottom:8px;}
+.video-link{display:flex;gap:12px;align-items:center;background:#2b2118;color:#fff;text-decoration:none;border-radius:8px;padding:14px;margin-top:10px;}
+.video-link:hover{text-decoration:none;background:#473425;}
+.video-link .play{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#fff2;color:#fff;flex:none;}
+.video-link b{display:block;font-size:14px;}
+.video-link small{display:block;color:#e7ded2;margin-top:3px;font:11px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+.video-note{font-size:12px;margin-top:8px;color:#6b7280;}
+.video-empty{font:13px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f3f4f6;padding:12px;border-radius:6px;color:#4b5563;}
+.deep-read{background:#f8f5ee;border-radius:7px;padding:14px;margin-top:10px;}
+.deep-read p+ p{margin-top:10px;}
+.sources{padding-left:18px;}
+.sources li{font-size:12px;margin:4px 0;}
+.label{font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;letter-spacing:1.2px;margin-bottom:8px;}
+p{font-size:15px;color:#374151;}
+ol{padding-left:22px;}
+li{margin:7px 0;font-size:15px;color:#374151;}
+.check{font:700 14px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#065f46;background:#ecfdf5;border-left:3px solid #059669;padding:10px 12px;border-radius:0 6px 6px 0;}
+.warn{font:12px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7c2d12;background:#fff7ed;border-left:3px solid #ea580c;padding:10px 12px;border-radius:0 6px 6px 0;}
+.side{display:flex;flex-direction:column;gap:14px;}
+.plan{padding:14px 16px;}
+.plan-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #eee5d3;}
+.plan-row:last-child{border-bottom:none;}
+.plan-row.active{background:#7a2f120c;margin:0 -8px;padding:9px 8px;border-radius:6px;}
+.plan-day{font:800 11px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;min-width:34px;}
+.plan-body strong{display:block;font:800 13px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#2b2118;}
+.plan-body span{display:block;font:12px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;}
+.note{padding:14px 16px;font:12px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;}
+.back{display:inline-block;margin-top:22px;font:700 12px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;text-decoration:none;}
+@media(max-width:760px){.grid{display:block;}.side{margin-top:16px;}.fact-grid{grid-template-columns:1fr;}h1{font-size:30px;}h2{font-size:21px;}body{padding:20px 12px 44px;}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div class="eyebrow">Health Classroom · 2026年10月27日</div>
+    <h1>健康学堂</h1>
+    <div class="sub">每天 10–20 分钟：读懂一种食物、一个人体机制和一项训练技巧，再看一节不重复的视频课。</div>
+  </header>
+  <div class="grid">
+    <article class="card">
+      <section class="theme-lead">
+        <div class="chapter-no" style="color:#e8c87a">今日学习主线 · 拉伸</div>
+        <h2>活动度、疼痛与恢复：今天围绕身体维护学习</h2>
+        <p>拉伸、活动度和恢复不是同一件事。训练前更需要升温和动态活动，训练后可做温和静态拉伸；泡沫轴通常只带来短期感觉和活动范围变化，不能揉开筋膜、排掉乳酸或治疗损伤。</p>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">01 · 今日食物 · 41/134</div>
+        <h2>酸奶水果燕麦杯：组合比任何一个单品更完整，也需留意层层叠加。</h2>
+        <div class="fact-grid">
+          <div class="fact"><b>里面有什么</b><p>酸奶供蛋白质和钙，燕麦与水果供碳水和纤维，坚果供脂肪。</p></div>
+          <div class="fact"><b>进入身体后</b><p>蛋白质、纤维和脂肪共同延缓消化，饱腹通常优于果汁或甜麦片。</p></div>
+          <div class="fact"><b>训练日怎么吃</b><p>适合训练前 1–3 小时或训练后加餐；长训练后可增加燕麦。</p></div>
+          <div class="fact"><b>挑选与搭配</b><p>用无糖酸奶、完整水果、适量燕麦和一小撮坚果，不额外淋蜂蜜。</p></div>
+        </div>
+        <div class="takeaway"><b>别被这个误区带偏：</b>健康配料叠得太多也会超过实际需要。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">02 · 人体知识 · 13/100</div>
+        <h2>睡眠与恢复</h2>
+        <div class="memory">训练计划包括睡觉。</div>
+        <p style="margin-top:12px">睡眠支持神经学习、激素调节、免疫和组织修复。缺觉也会增加饥饿感与主观用力感。</p>
+        <div class="fact-grid">
+          <div class="fact"><b>和你的训练有什么关系</b><p>篮球技术和力量动作都依赖神经学习；连续睡不好时，降低训练难度通常比硬顶更明智。</p></div>
+          <div class="fact"><b>今天观察什么</b><p>记录昨晚睡眠时长、醒来精神和今天训练感受，找自己的关联。</p></div>
+        </div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">03 · 今日训练 · 60/60</div>
+        <div class="kind">拉伸</div>
+        <h2>恢复日活动度流</h2>
+        <p>把踝、髋、胸椎动作串联，保持低强度。</p>
+        <div class="fact-grid">
+          <div class="fact"><b>今天这样练</b><p>完成 10 分钟轻松活动度。</p></div>
+          <div class="fact"><b>常见错误</b><p>把恢复练成高强度挑战。</p></div>
+        </div>
+        <div class="warn" style="margin-top:12px">安全边界：做完应更轻松。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">04 · 今日视频课 · 不重复推荐</div>
+        <h2>看一次示范，再带着一个重点练</h2>
+        <div class="video-empty">“拉伸”相关视频已经全部学完。为保证相关且不重复，今天不推荐无关课程。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">05 · 今日行动与自测 · 第 36/44 讲</div>
+        <h2>防晒先保护暴露最多的地方</h2>
+        <div class="memory">脸、颈、耳、手。</div>
+        <p style="margin-top:12px">紫外线伤害会累积。遮阳、衣物和广谱防晒组合使用，比只在海边偶尔涂一次更可靠。</p>
+        <ol style="margin-top:8px"><li>出门前查看紫外线和暴露时长。</li><li>优先使用帽子、遮阳和覆盖性衣物。</li><li>需要时给暴露皮肤足量涂抹并按说明补涂。</li></ol>
+        <div class="check">睡前检查：今天是否保护了耳朵、颈后和手背？</div>
+        <div class="warn" style="margin-top:10px">皮肤痣快速变化、不愈合伤口或异常出血，应看皮肤科。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">06 · 串起来理解 · 深度阅读</div>
+        <h2>从知道，变成会安排</h2>
+        <div class="deep-read">
+          <p><b>放进真实训练：</b>把牵拉感控制在温和范围，并区分肌肉紧张、关节夹痛、麻木放射和固定点疼痛。需要更大活动范围时，还要用力量训练学会控制新范围。恢复日的目标是做完更轻松，不是把拉伸练成另一场高强度训练。</p>
+          <p><b>建立自己的反馈：</b>比较动作前后是否更舒服、范围是否更可控，以及第二天是否影响训练。出现明显肿胀、持续无力、卡锁、麻木或疼痛不断恶化时，不继续靠拉伸解决。</p>
+          <p><b>今天的连接：</b>“酸奶水果燕麦杯”解决吃什么与怎么搭配；“睡眠与恢复”解释身体为何这样反应；“恢复日活动度流”则把原理变成一个可练习动作。不要单独记三个结论，要观察它们在一次真实训练中如何互相影响。</p>
+        </div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">资料来源 · 用于继续核对</div>
+        <ul class="sources"><li><a href="https://www.who.int/en/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener noreferrer">WHO 健康饮食原则</a></li><li><a href="https://ods.od.nih.gov/factsheets/list-VitaminsMinerals/" target="_blank" rel="noopener noreferrer">NIH 维生素与矿物质资料</a></li><li><a href="https://acsm.org/education-resources/pronouncements-scientific-communications/position-stands/" target="_blank" rel="noopener noreferrer">ACSM 运动医学立场文件</a></li></ul>
+        <p style="font-size:12px;color:#6b7280;margin-top:8px">正文是健康教育与训练常识，不用于诊断疾病或替代个体化医疗、营养和康复建议。</p>
+      </section>
+    </article>
+    <aside class="side">
+      <div class="card plan">
+        <div class="label">本周循环计划</div>
+        <div class="plan-row"><div class="plan-day">周一</div><div class="plan-body"><strong>饮水触发</strong><span>起床、午餐和运动后各补一次水。</span></div></div><div class="plan-row active"><div class="plan-day">周二</div><div class="plan-body"><strong>楼梯微练</strong><span>安全前提下少乘一层电梯。</span></div></div><div class="plan-row"><div class="plan-day">周三</div><div class="plan-body"><strong>纤维加法</strong><span>增加一份蔬菜、豆类或全谷物。</span></div></div><div class="plan-row"><div class="plan-day">周四</div><div class="plan-body"><strong>中等强度</strong><span>活动到略喘但还能说话。</span></div></div><div class="plan-row"><div class="plan-day">周五</div><div class="plan-body"><strong>口腔护理</strong><span>完整刷牙并清洁牙缝。</span></div></div><div class="plan-row"><div class="plan-day">周六</div><div class="plan-body"><strong>家庭安全</strong><span>清理一处绊倒或交叉污染风险。</span></div></div><div class="plan-row"><div class="plan-day">周日</div><div class="plan-body"><strong>准备下周</strong><span>写下一个具体、可计数的小目标。</span></div></div>
+      </div>
+      <div class="card note">
+        <strong>训练最小闭环：</strong><br>
+        每周只追踪训练完成次数、睡眠、疼痛与疲劳趋势。篮球、长跑和力量训练的负荷需要一起计算。
+        <br><br><strong>视频库状态：</strong>已全部学完，等待补充新课程。</div>
+    </aside>
+  </div>
+  <a class="back" href="latest.html">← 返回简报</a>
+</main>
+</body>
+</html>
