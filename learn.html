@@ -87,7 +87,7 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
   <header class="kl-header">
     <div class="kl-header-left">
       <h1>每日基础课</h1>
-      <div class="kl-dateline">2026年10月31日 &ensp;·&ensp; 1 个核心概念 + 1 个动手练习 &ensp;·&ensp; 通俗讲解 + 发展脉络 + 实际用法 &ensp;·&ensp; Jae Daily</div>
+      <div class="kl-dateline">2026年11月01日 &ensp;·&ensp; 1 个核心概念 + 1 个动手练习 &ensp;·&ensp; 通俗讲解 + 发展脉络 + 实际用法 &ensp;·&ensp; Jae Daily</div>
     </div>
     <a href="latest.html" class="kl-back">← 返回日报</a>
   </header>
@@ -98,7 +98,7 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#7c3aed;color:#fff;">基础知识</span>
       <span class="kl-num">第一则</span>
     </div>
-    <h2 class="kl-title">早期、晚期与中间融合：今天真正弄懂</h2>
+    <h2 class="kl-title">BatchNorm：今天真正弄懂</h2>
     <div class="kl-card-links"></div>
   </div>
   <div class="kl-question">
@@ -106,28 +106,28 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-question-label">先记住</span>
       
     </div>
-    <div class="kl-question-body"><p>先记住：一句话定义 + 一句记忆口诀 一句话定义：多模态融合就是把音频、视频等不同渠道的信息合在一起；按照“合并发生的时机”，分为在输入端直接拼（早期）、在特征提取中互相交互（中间）和在最后输出结果时做投票加权（晚期）。 记忆口诀：早拼输入难对齐，晚加结果失默契，中间交互最给力。</p></div>
+    <div class="kl-question-body"><p>先记住：一句话定义 + 一句记忆口诀 定义：BatchNorm（批量归一化）是在前向传播时，沿着一个小批次（Batch）维度，把每个通道的特征强行拉回到均值为 0、方差为 1 的标准分布，再用两个可学习参数进行尺度和偏置微调的操作。 记忆口诀：“跨样本算均方差，训练存下推理查；乘上缩放加偏置，深层梯度不抓瞎。”</p></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">通俗讲解</div>
-    <div class="kl-sec-body kl-answer"><p>1. 生活类比：做一道“音视频双拼菜” 假设你想用“声音（鱼）”和“画面（肉）”做一道菜： - 早期融合（Early Fusion）：生鱼和生肉一上来就直接剁碎混成肉馅，然后丢进一个锅里煮。优点是火候完全同步；缺点是鱼肉和猪肉生熟度不同、质地不同，生硬剁在一起容易破坏各自独特的口感（采样率不同、特征尺度不一时很难直接对齐）。 - 晚期融合（Late Fusion）：鱼单独做成清蒸鱼，肉单独做成红烧肉。两位厨师各自打分，最后你把两个分数按 6:4 加权平均。优点是互不干扰、极其稳定；缺点是鱼和肉在做菜过程中毫无交流，做不出“鱼肉复合鲜味”（完全失去了音视频细粒度的时序互动）。 - 中间融合（Intermediate Fusion）：鱼和肉先各自煎到半熟（提取各自的浅层特征），然后把鱼汤浇到肉上、肉汁淋回鱼上，用交叉火候反复入味（通过 Cross-Attention 交互），最后统一出锅。这是现代模型最常用的方式。</p><p>2. 核心公式与符号拆解 假设音频输入为 $x_a$，视频输入为 $x_v$，分类预测结果为 $y$。</p><p>- 早期融合公式： $$y = F([x_a ; x_v])$$ - $[x_a ; x_v]$：在输入维度将音频和视频数据直接拼接（Concatenate）。 - $F(\cdot)$：一个统一的主干网络，直接吞入拼接后的多模态原始输入并输出预测值。</p><p>- 晚期融合公式： $$y = \alpha \cdot \text{Softmax}(M_a(x_a)) + (1 - \alpha) \cdot \text{Softmax}(M_v(x_v))$$ - $M_a(\cdot), M_v(\cdot)$：各自独立的音频分支与视频分支，独立输出预测分数（Logits）。 - $\alpha$：融合权重系数（通常在 0 到 1 之间）。最终结果是两个独立分数的加权和。</p><p>- 中间融合公式（特征级交互）： $$h_a = E_a(x_a), \quad h_v = E_v(x_v)$$ $$h_{fuse} = \text{CrossAttention}(h_a, h_v)$$ $$y = \text{Classifier}(h_{fuse})$$ - $E_a, E_v$：音频和视频各自的单模态编码器（如音频用 WavLM，视频用 Video-Swin）。 - $h_a, h_v$：提取出的中间隐藏层特征向量。 - $\text{CrossAttention}(\cdot)$：交叉注意力层，让声音特征去视频特征里“查字典”，找到对齐的人脸与唇形。 - $\text{Classifier}(\cdot)$：下游任务分类头。</p><p>3. 它解决什么问题？没有它会怎样？ 它解决的是“多感官信息如何协同判断”的问题。 如果没有融合机制，你只能退化为单模态处理： - 只有音频：遇到背景噪音大、多人同时说话时，说话人识别直接崩溃。 - 只有视频：遇到人物背对镜头、光线变暗或者假唱嘴型时，无法准确检测谁在说话。 融合让模型拥有“听不清时看口型，看不清时听声音”的互补鲁棒性。</p><ul class="kl-list"><li>在音视频理解与说话人日志（Diarization）中的实际位置</li><li>说话人日志中的晚期融合：音频聚类给出一份“谁在第几秒说了话”的时间线，人脸识别给出一份“谁在画面中露脸”的时间线，最后通过匈牙利匹配算法或分数加权硬对齐。结构简单，老系统常用。</li><li>视听主动说话人检测（AV-ASD）中的中间融合：先把人脸视频裁切框喂入 3D-CNN/ViT，把语音喂入 1D-CNN/Conformer，然后在第 4~8 层 Transformer 块中加入 Cross-Attention，让唇动特征去调制声学特征。这是目前业界性能最好的标配架构。</li></ul></div>
+    <div class="kl-sec-body kl-answer"><p>【生活类比】 想象你在录制一档多人访谈播客（类似说话人日志系统处理多条语音）。 每个嘉宾（样本）说话的麦克风增益各不相同，有的嗓门极大，有的细若游丝。如果直接把这些音频信号灌给后续的降噪模型，模型会被忽大忽小的能量搞晕。 BatchNorm 就像一个“动态调音师”： 每次进来的 16 位嘉宾（Batch Size = 16），调音师把这一轮所有人同一频段的音量拉到一个统一的标准响度（均值 0，方差 1）。拉齐后，调音师还拥有两个旋钮（$\gamma$ 缩放，$\beta$ 偏移）：如果某些频段本来就该响一点，调音师可以再微调回去，不破坏原本的声音表现力。</p><p>【核心公式与符号】 对一个批次内 $m$ 个样本在某个特定通道上的特征值 $\{x_1, x_2, \dots, x_m\}$： 1. 算批次均值： $$\mu_B = \frac{1}{m} \sum_{i=1}^m x_i$$ 2. 算批次方差： $$\sigma_B^2 = \frac{1}{m} \sum_{i=1}^m (x_i - \mu_B)^2$$ 3. 标准化（归一化）： $$\hat{x}_i = \frac{x_i - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}$$ 4. 缩放与平移（恢复表达力）： $$y_i = \gamma \hat{x}_i + \beta$$</p><p>符号逐个解释： - $m$：当前 Batch 的大小（Batch Size）。 - $x_i$：第 $i$ 个样本在当前通道的输入特征。 - $\mu_B$ 与 $\sigma_B^2$：当前这一批样本算出来的均值与方差。 - $\epsilon$（Epsilon）：一个极小的常数（如 $1e-5$），防止除以零崩溃。 - $\hat{x}_i$：归一化后的数据，此时均值为 0，方差为 1。 - $\gamma$（Scale，缩放）与 $\beta$（Shift，偏置）：两个可学习参数，随反向传播自动更新。如果网络觉得“全都变成标准正态分布反而限制了特征”，优化器可以让 $\gamma=\sigma_B, \beta=\mu_B$，无损还原原始输入。</p><p>【解决什么问题？没有它会怎样？】 - 解决的问题：深层网络中前一层参数哪怕变动一点点，后一层输入的分布就会剧烈漂移（内部协变量偏移假说）。这导致深层神经元必须不断重新适应新的输入范围，学习极其缓慢。 - 没有它会怎样： 1. 学习率只能开极小（如 1e-4），否则梯度瞬间爆炸或消失； 2. 对权重初始化极其敏感，初始化稍差就直接崩掉训不动； 3. 梯度传不过十几层深的 Conv 堆叠，深层特征直接坏死。</p><p>【在音视频理解与说话人日志中的实际位置】 - 常见位置：通常紧跟在 1D 卷积（Conv1d）或 2D 卷积（Conv2d）之后，激活函数（如 ReLU）之前。 - 说话人日志（Diarization）：在提取说话人嵌入（Speaker Embedding）的经典骨干中，例如 x-vector、ECAPA-TDNN，或者基于 ResNet 的声纹提取前端，前几层处理时域 Fbank 特征的 Conv1d / Time-Delay 卷积层后，无一例外全挂着 BatchNorm1d。它抹平了不同录音批次之间的平均能量差异，让网络专注于提取音色声纹本身。 - 学习建议：在《Dive into Deep Learning》中先看直觉和公式，再运行章节中的代码；随后在《PyTorch Tutorials》对照官方示例掌握张量与训练写法。</p></div>
   </div>
-  <div class="kl-section"><div class="kl-sec-label">先想再展开答案</div><div class="kl-quiz-list"><details class="kl-quiz"><summary>早期融合的核心操作发生在模型的哪一步？</summary><div>输入层（Raw Data 或 Patch Embedding 直接拼接）。</div></details><details class="kl-quiz"><summary>晚期融合相比中间融合最大的工程优势是什么？</summary><div>解耦性强，各模态分支可独立训练、单独部署，单模态缺失时不易全盘崩溃。</div></details><details class="kl-quiz"><summary>现代音视频模型最常使用哪种中间融合机制实现唇音对齐？</summary><div>交叉注意力机制（Cross-Attention）。</div></details></div></div>
+  <div class="kl-section"><div class="kl-sec-label">先想再展开答案</div><div class="kl-quiz-list"><details class="kl-quiz"><summary>为什么训练模式和推理模式下的 BatchNorm 行为不同？</summary><div>训练时用当前批次实时均方差并更新全局滑动平均；推理时冻结参数，直接使用存好的全局滑动平均。</div></details><details class="kl-quiz"><summary>Conv 层的 bias 遇到 BatchNorm 为什么多余？</summary><div>因为 BatchNorm 随后会减去均值 $\mu_B$，常数 bias 会在相减中被完全抵消，白白占用显存。</div></details><details class="kl-quiz"><summary>音频变长序列使用 BatchNorm 为什么会有潜在风险？</summary><div>因为批次内短音频包含大量 zero-padding（零填充），填充的零会拉低均值并扭曲方差，导致有效音频特征失真。</div></details></div></div>
   <div class="kl-section">
     <div class="kl-sec-label">发展脉络 · 现状 · 未来</div>
-    <div class="kl-sec-body kl-analysis"><ul class="kl-list"><li>发展流程：从简单粗暴到深度协同</li><li>之前怎么做（早期/晚期为主）：早期深度学习算力有限，大家要么在输入端把语谱图和视频帧平铺拼成大矩阵（早期融合），要么分别训练一个音频 SVM 和一个视频 SVM，最后把后验概率相加（晚期融合）。</li><li>为什么出现中间融合：早期融合忽略了模态间数据异构性（音频 16kHz 时序高频，视频 25fps 空间高维），强制拼接导致模型只学强势模态；晚期融合又完全错失了“唇齿开合瞬间与爆破音能量同时出现”的底层物理关联。</li><li>现在怎么用：主流统一转向中间融合，特别是以交叉注意力（Cross-Attention）和多模态门控（Gated Fusion）为代表的架构。在预训练阶段，大家还会配合对比学习来拉近音视频表征空间。</li></ul><ul class="kl-list"><li>与相近概念的区别</li><li>早期融合 vs 数据增强：早期融合是把两个不同通道的信息合成为一个新输入，而多模态数据增强（如音视频抖动）是对单模态数据人为添加扰动。</li><li>晚期融合 vs 模型集成（Ensemble）：模型集成通常是同一种模态（如 3 个不同的音频模型）输出做平均；晚期融合是跨模态（1 个音频模型 + 1 个视频模型）输出做决策合并。</li><li>中间融合 vs 对比学习（Contrastive Learning）：中间融合是网络内部的“结构层”，负责特征计算；对比学习是训练时的“损失函数目标”，负责把音视频向量拉到同一个几何空间里（这部分推荐精读 Lil’Log 关于对比学习的系统梳理）。</li></ul><p>3. 当前局限与未来作用 - 当前局限（已知事实）： 1. 模态竞争（Modality Competition）：中间融合在反向传播时，往往某一模态优化得更快，导致网络偷懒（例如模型只靠听声音就能猜对 90%，就逐渐忽略了视频分支）。 2. 算力与同步开销大：中间多次交互导致显存占用暴增，且现实中音视频丢帧和微秒级音画不同步会显著破坏交互层。 - 未来作用（合理推测）： 未来的大模型（Any-to-Any）趋势更倾向于“Token 化早期融合 + 深度中间层统一计算”，即把音频和视频都量化为离散 Token，在超大自回归 Transformer 的浅层就混合输入，依靠海量参数自动学习多层次的动态融合。学习实操时，可以参考 Hugging Face Multimodal Tasks 了解目前最新的视频预处理与调用接口。</p></div>
+    <div class="kl-sec-body kl-analysis"><p>【发展流程】 1. 之前怎么做：2015年以前，训练深层 CNN 必须极度小心，依赖严格的参数初始化（如 He / Xavier 初始化）、极小学习率，以及繁琐的预训练或逐层预热。 2. 为什么出现：2015 年 Ioffe 和 Szegedy 提出 BatchNorm。核心发现是只要在每层激活前把特征尺度重新固定，梯度就能稳定流动。引入 BN 后，学习率可以放大 10 倍以上，训练速度提高数倍，且自带微弱的正则化效果（不再高度依赖 Dropout）。 3. 现在怎么用：在 CV 卷积模型（ResNet、ConvNeXt 原型）以及音频 1D 卷积前端中，BN 仍是统治级标准配置；但在纯 Transformer 结构和变长 NLP / 音频序列自注意力层中，基本已让位给 LayerNorm。</p><p>【与相近概念的区别】 - BatchNorm（BN）：沿着 Batch 维度求统计量。同通道内，算所有样本、所有时空位置的均值方差。强依赖 Batch 大小。 - LayerNorm（LN）：沿着 Channel / Feature 维度求统计量。单个样本内，算其自身所有通道的均值方差。与 Batch 大小完全无关，适合变长序列和 Transformer。 - InstanceNorm（IN）：单个样本、单个通道内，仅在空间/时间维度求统计量。多用于图像风格迁移或音频去混响（抹平单个音频样本自身的声学环境增益）。 - GroupNorm（GN）：把通道分成若干组，在单样本各组内做归一化。是 Batch 极小时 BN 的绝佳替代品。</p><p>【当前局限与未来推测】 - 局限（客观事实）： 1. Batch Size 敏感：当 Batch Size 小于 8（如音频长片段显存受限时），估计的均值方差极不准确，模型性能断崖式下跌； 2. 训练与推理不一致：训练用批次实时统计量，推理用全局滑动平均（Running Mean/Var）。如果推理时输入分布发生偏移，极易掉点； 3. 无法直接用于自回归时序生成，因为未来时刻的批次统计量会导致信息泄漏。 - 未来推测： 在音视频声学前端的 Conv1d/TDNN 等轻量化实时推理场景，BatchNorm 凭借其“推理时可将参数无损融合进前置卷积权重（Conv-BN Fusion）实现零计算开销”的物理优势，仍将长期存在；但在多模态端到端大模型内部，统一向 LayerNorm 或 RMSNorm 收敛的趋势难以逆转。</p></div>
   </div>
   
   <div class="kl-section">
     <div class="kl-sec-label">自测</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>1. 为什么在嘈杂餐厅场景下，用中间融合做说话人日志通常显著优于晚期融合？</li><li>2. 早期融合中，音频采样率（如 16000Hz）和视频帧率（如 25fps）存在巨大差异，传统做法一般如何做时序对齐？</li><li>3. 如果测试集里突然出现了“纯音频（视频损坏全黑）”的样本，早期、晚期和中间融合哪个更容易直接崩溃？为什么？</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>如果 Batch Size 设为 1，BatchNorm 会发生什么？如何避免？</li><li>为什么在测试（eval）阶段，BatchNorm 不需要计算当前输入批次的均值和方差？</li><li>在 PyTorch 中，Conv 后面紧跟 BatchNorm 时，为什么 Conv 的 bias 通常设为 False？</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">早期融合是“生料剁碎包饺子”，晚期融合是“各做各菜最后拼盘打总分”，中间融合是“煮到半熟互相浇汁入味”。</div>
+    <div class="kl-sec-body kl-analogy">就像合唱团进录音室前的音量调控台：先把一组人（Batch）喊出的声音强行拉到统一分贝基准，再由母带师微调音色旋钮，免得有人嗓门太大把麦克风震爆。</div>
   </div>
-  <div class="kl-resources"><div class="kl-sec-label">优质外网资料 · 怎么用</div><div class="kl-resource-grid"><a class="kl-resource" href="https://huggingface.co/docs/transformers/tasks/video_classification" target="_blank" rel="noopener"><strong>Hugging Face Multimodal Tasks</strong><span>查看视频输入、预处理和模型调用</span></a><a class="kl-resource" href="https://lilianweng.github.io/posts/2021-05-31-contrastive/" target="_blank" rel="noopener"><strong>Lil’Log：对比学习</strong><span>理解跨模态表征对齐的核心目标</span></a></div></div>
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">交叉注意力（Cross-Attention）: 中间融合的核心实现组件，让一个模态作为 Query 去检索另一模态的 Key/Value。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">模态竞争（Modality Dominance）: 融合训练时的常见病，某强模态抑制弱模态梯度的现象。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">视听主动说话人检测（AV-ASD）: 中间融合在说话人领域的经典下游应用任务。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">对比学习（Contrastive Learning）: 在做中间融合前对齐音视频特征空间的有效预训练方法。</span><span class="kl-related-desc"></span></div></div></div>
+  <div class="kl-resources"><div class="kl-sec-label">优质外网资料 · 怎么用</div><div class="kl-resource-grid"><a class="kl-resource" href="https://d2l.ai/" target="_blank" rel="noopener"><strong>Dive into Deep Learning</strong><span>先看直觉和公式，再运行章节中的代码</span></a><a class="kl-resource" href="https://pytorch.org/tutorials/" target="_blank" rel="noopener"><strong>PyTorch Tutorials</strong><span>对照官方示例掌握张量与训练写法</span></a></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">LayerNorm：沿通道维度归一化，解决变长序列与小 Batch 难题</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">Weight Initialization：初始权重设定方法，BN 出现后大幅降低了对其的脆弱依赖</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">Running Statistics：BN 在训练阶段维护的全局滑动均值与方差，专供推理使用</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">Conv-BN Fusion：推理加速技术，把 BN 参数直接折叠进卷积核权重以消灭计算延迟</span><span class="kl-related-desc"></span></div></div></div>
 </article>
 <article class="kl-card" style="border-top:3px solid #0f766e;">
   <div class="kl-card-top" style="background:#ecfdf5;">
@@ -135,7 +135,7 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#0f766e;color:#fff;">动手练习</span>
       <span class="kl-num">第二则</span>
     </div>
-    <h2 class="kl-title">早期、晚期与中间融合：动手实现</h2>
+    <h2 class="kl-title">BatchNorm：动手实现</h2>
     <div class="kl-card-links"></div>
   </div>
   <div class="kl-question">
@@ -143,111 +143,119 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-question-label">练习目标</span>
       
     </div>
-    <div class="kl-question-body"><p>目标：用 PyTorch 实现一个包含【早期融合】、【晚期融合】和【中间融合（交叉注意力）】的多模态分类器模块。 输入：批大小为 2 的模拟音频特征（维度 64）与视频特征（维度 128）。 输出：三种融合方式各自输出维度为 (2, 2) 的二分类预测概率（Logits）。 验收标准：代码无多余外部依赖，可单文件直接运行，打印出三者的输出形状并验证前向传播逻辑无误。</p></div>
+    <div class="kl-question-body"><p>【10-20分钟动手目标】 1. 不调用 PyTorch 内置的 `nn.BatchNorm1d`，纯用张量数学手写一个带 `running_mean`、`running_var`、$\gamma$、$\beta$ 的简易 BatchNorm1d 模块。 2. 验证：在训练模式和评估模式下，手写模块的数值输出与 PyTorch 官方 `nn.BatchNorm1d` 完全一致（误差 &lt; 1e-5）。</p><p>【输入与输出】 - 输入张量：形状为 `(Batch=4, Channels=3, Length=8)` 的随机特征（模拟 4 段音频经 Conv1d 提取的 3 通道 8 帧声学特征）。 - 验收标准： - 训练时：输出值与官方模块对齐，手写滑动统计量与官方统计量对齐； - 评估时：固定使用已记录的滑动均值和方差，通过断言测试。</p></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">参考实现</div>
-    <div class="kl-sec-body kl-answer"><p>思路： 1. 早期融合：通过 `torch.cat` 把音频和视频特征在通道维拼接，送入一个共享 MLP。 2. 晚期融合：音频和视频分别通过独立的分类头得到分类 Logits，最后加权求和。 3. 中间融合：音频和视频映射到相同隐藏维度，用简易 `MultiheadAttention` 做交叉交互，再拼接送入分类头。</p><p>完整可运行代码如下：</p><pre class="kl-code"><code>import torch
+    <div class="kl-sec-body kl-answer"><p>【实现思路】 1. 维护参数：可学习参数 $\gamma$（初始化全 1）和 $\beta$（初始化全 0）；缓冲区 `running_mean`（全 0）和 `running_var`（全 1）。 2. 区分模式： - `training=True`：跨维度 `(0, 2)`（即 Batch 和 Time 维度）计算均值和无偏/有偏方差。更新 `running_mean = (1 - momentum) * running_mean + momentum * current_mean`。 - `training=False`：直接取出存好的 `running_mean` 和 `running_var` 进行标准化。 3. 对齐官方：注意 PyTorch 的 `running_var` 更新采用无偏方差（样本方差，分母 $m-1$），而归一化自身计算采用有偏方差（总体方差，分母 $m$）。</p><p>【完整可运行代码】</p><pre class="kl-code"><code>import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
-class MultiModalFusionToy(nn.Module):
-    def __init__(self, audio_dim=64, video_dim=128, hidden_dim=32, num_classes=2):
+class MyBatchNorm1d(nn.Module):
+    def __init__(self, num_features, eps=1e-5, momentum=0.1):
         super().__init__()
-        
-        # 1. 早期融合所需网络：直接吃拼接后的输入
-        self.early_classifier = nn.Sequential(
-            nn.Linear(audio_dim + video_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, num_classes)
-        )
-        
-        # 2. 晚期融合所需网络：各自独立的分类网络
-        self.late_audio_branch = nn.Sequential(
-            nn.Linear(audio_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, num_classes)
-        )
-        self.late_video_branch = nn.Sequential(
-            nn.Linear(video_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, num_classes)
-        )
-        self.late_weight = nn.Parameter(torch.tensor(0.5))  # 可学习的决策权重
-        
-        # 3. 中间融合所需网络：映射到相同维度后进行交叉注意力交互
-        self.audio_proj = nn.Linear(audio_dim, hidden_dim)
-        self.video_proj = nn.Linear(video_dim, hidden_dim)
-        # 音频去查视频的 Cross-Attention (Query=Audio, Key/Value=Video)
-        self.cross_attn = nn.MultiheadAttention(embed_dim=hidden_dim, num_heads=2, batch_first=True)
-        self.intermediate_classifier = nn.Sequential(
-            nn.Linear(hidden_dim * 2, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, num_classes)
-        )
+        self.num_features = num_features
+        self.eps = eps
+        self.momentum = momentum
 
-    def forward_early(self, a, v):
-        # 输入直接拼接: [B, Da + Dv]
-        x_early = torch.cat([a, v], dim=-1)
-        return self.early_classifier(x_early)
+        # 可学习参数 (Affine)
+        self.gamma = nn.Parameter(torch.ones(1, num_features, 1))
+        self.beta = nn.Parameter(torch.zeros(1, num_features, 1))
 
-    def forward_late(self, a, v):
-        # 各自分支独立出 Logits: [B, num_classes]
-        logits_a = self.late_audio_branch(a)
-        logits_v = self.late_video_branch(v)
-        # 加权融合 (用 sigmoid 限制权重在 0~1 之间)
-        w = torch.sigmoid(self.late_weight)
-        return w * logits_a + (1 - w) * logits_v
+        # 运行时统计量（不参与梯度计算）
+        self.register_buffer(&#x27;running_mean&#x27;, torch.zeros(num_features))
+        self.register_buffer(&#x27;running_var&#x27;, torch.ones(num_features))
 
-    def forward_intermediate(self, a, v):
-        # 先提取中间特征并对齐维度: [B, 1, hidden_dim]
-        feat_a = self.audio_proj(a).unsqueeze(1)
-        feat_v = self.video_proj(v).unsqueeze(1)
-        
-        # 交叉注意力：音频关注视频信息
-        attn_out, _ = self.cross_attn(query=feat_a, key=feat_v, value=feat_v)
-        
-        # 融合特征：结合原始音频特征与交互后特征 [B, hidden_dim * 2]
-        feat_fused = torch.cat([feat_a.squeeze(1), attn_out.squeeze(1)], dim=-1)
-        return self.intermediate_classifier(feat_fused)
+    def forward(self, x):
+        # x 形状: (B, C, L)
+        assert x.ndim == 3, &quot;输入必须是 3 维张量 (B, C, L)&quot;
+        B, C, L = x.shape
 
+        if self.training:
+            # 沿 (Batch, Length) 维度计算统计量，保留 Channel 维度
+            mean = x.mean(dim=(0, 2), keepdim=True)          # (1, C, 1)
+            var_biased = x.var(dim=(0, 2), unbiased=False, keepdim=True) # (1, C, 1)
+            var_unbiased = x.var(dim=(0, 2), unbiased=True)  # (C,)
+
+            # 更新滑动统计量 (注意 PyTorch 官方使用的是无偏方差更新 running_var)
+            self.running_mean = (1 - self.momentum) * self.running_mean + self.momentum * mean.squeeze()
+            self.running_var = (1 - self.momentum) * self.running_var + self.momentum * var_unbiased
+
+            # 归一化（使用当前批次有偏方差）
+            x_norm = (x - mean) / torch.sqrt(var_biased + self.eps)
+        else:
+            # 评估模式：直接使用滑动统计量
+            mean = self.running_mean.view(1, C, 1)
+            var = self.running_var.view(1, C, 1)
+            x_norm = (x - mean) / torch.sqrt(var + self.eps)
+
+        # 缩放平移
+        return self.gamma * x_norm + self.beta
+
+
+# ================== 验收测试 ==================
 if __name__ == &quot;__main__&quot;:
     torch.manual_seed(42)
-    B = 2
-    audio_feat = torch.randn(B, 64)   # 模拟音频嵌入向量
-    video_feat = torch.randn(B, 128)  # 模拟人脸/唇形嵌入向量
-    
-    model = MultiModalFusionToy(audio_dim=64, video_dim=128, hidden_dim=32, num_classes=2)
-    
-    out_early = model.forward_early(audio_feat, video_feat)
-    out_late = model.forward_late(audio_feat, video_feat)
-    out_inter = model.forward_intermediate(audio_feat, video_feat)
-    
-    print(f&quot;输入音频形状: {audio_feat.shape}, 视频形状: {video_feat.shape}&quot;)
-    print(f&quot;早期融合输出: {out_early.shape} -&gt; \n{out_early}&quot;)
-    print(f&quot;晚期融合输出: {out_late.shape} -&gt; \n{out_late}&quot;)
-    print(f&quot;中间融合输出: {out_inter.shape} -&gt; \n{out_inter}&quot;)</code></pre></div>
+    B, C, L = 4, 3, 8
+    dummy_input = torch.randn(B, C, L)
+
+    # 1. 实例化手写与官方层
+    my_bn = MyBatchNorm1d(num_features=C)
+    official_bn = nn.BatchNorm1d(num_features=C)
+
+    # 保证初始权重一致
+    with torch.no_grad():
+        official_bn.weight.copy_(my_bn.gamma.squeeze())
+        official_bn.bias.copy_(my_bn.beta.squeeze())
+
+    # --- 测试 1: 训练阶段输出对齐 ---
+    my_bn.train()
+    official_bn.train()
+    out_my_train = my_bn(dummy_input)
+    out_off_train = official_bn(dummy_input)
+
+    train_diff = torch.max(torch.abs(out_my_train - out_off_train)).item()
+    print(f&quot;训练阶段最大绝对误差: {train_diff:.2e}&quot;)
+    assert train_diff &lt; 1e-5, &quot;训练阶段输出不对齐！&quot;
+
+    # --- 测试 2: 滑动统计量更新对齐 ---
+    mean_diff = torch.max(torch.abs(my_bn.running_mean - official_bn.running_mean)).item()
+    var_diff = torch.max(torch.abs(my_bn.running_var - official_bn.running_var)).item()
+    print(f&quot;running_mean 误差: {mean_diff:.2e}, running_var 误差: {var_diff:.2e}&quot;)
+    assert mean_diff &lt; 1e-5 and var_diff &lt; 1e-5, &quot;滑动统计量更新不对齐！&quot;
+
+    # --- 测试 3: 评估阶段（eval）输出对齐 ---
+    my_bn.eval()
+    official_bn.eval()
+    new_input = torch.randn(B, C, L)
+    out_my_eval = my_bn(new_input)
+    out_off_eval = official_bn(new_input)
+
+    eval_diff = torch.max(torch.abs(out_my_eval - out_off_eval)).item()
+    print(f&quot;评估阶段最大绝对误差: {eval_diff:.2e}&quot;)
+    assert eval_diff &lt; 1e-5, &quot;评估阶段输出不对齐！&quot;
+
+    print(&quot;\n✅ 恭喜！手写 BatchNorm1d 完美通过所有对齐测试！&quot;)</code></pre></div>
   </div>
   
   <div class="kl-section">
     <div class="kl-sec-label">代码拆解与真实用法</div>
-    <div class="kl-sec-body kl-analysis"><ul class="kl-list"><li>代码逐段与张量解析：</li><li>早期融合 (`forward_early`)：`torch.cat([a, v], dim=-1)` 将 `(2, 64)` 和 `(2, 128)` 拼成 `(2, 192)`。网络从第一层开始就强行共同处理两个模态，没有任何单模态专属特征提取层。</li><li>晚期融合 (`forward_late`)：`logits_a` 和 `logits_v` 的形状都是 `(2, 2)`。融合只发生在最后一步的加法中，两个分支梯度在分类头之前完全隔离。</li><li>中间融合 (`forward_intermediate`)：通过 `audio_proj` 和 `video_proj` 把不一致的输入维度（64 和 128）映射到统一的 `hidden_dim=32`；利用 `nn.MultiheadAttention` 实现声学向视觉的信息查询（Query-Key-Value），最后将带有上下文交互的特征送入下游分类器。</li></ul><ul class="kl-list"><li>工业界最常见错误与避坑：</li><li>维度对齐陷阱：早期融合直接拼接要求两个模态必须在时间步（Sequence Length）上完全对齐。如果音频有 100 帧、视频只有 25 帧，未做时序重采样直接 `torch.cat` 会直接报张量维度不匹配错误。</li><li>晚期融合概率未归一化：如果在晚期融合时直接拿未过 Softmax 的 Logits 进行加权，当某个分支数值绝对值偏大（如由于学习率或初始化引起）时，它会无意中主导整个输出，因此权重最好配合校准机制或在 Softmax 后融合。</li></ul><ul class="kl-list"><li>真实模型中的对应映射：</li><li>早期融合对应：早期的简易视听分类 baseline。</li><li>晚期融合对应：传统 Speaker Diarization 系统中音频说话人聚类矩阵与人脸识别聚类矩阵的分数融合。</li><li>中间融合对应：TalkNet、SyncNet 等现代视听主动说话人检测（AV-ASD）模型中的 Cross-Attention 核心交互模块。</li></ul></div>
+    <div class="kl-sec-body kl-analysis"><p>【代码逐段拆解与张量追踪】 1. 统计量计算维度： - 输入为 `(B, C, L)`，这是标准的音频 1D 卷积输出。我们对维度 `(0, 2)`（即 Batch 和 Time）同时做聚合，保留第 1 维 `C`。计算出的均值形状是 `(1, C, 1)`，广播机制会自动应用到每一个样本和每一个时间步。 2. 无偏 vs 有偏（极其容易踩坑）： - PyTorch 内部计算归一化张量时，分母方差除以的是 $N$（有偏估计，`unbiased=False`）。 - 但是维护 `running_var` 时，除以的是 $N-1$（无偏估计，`unbiased=True`）。如果不做区分，`running_var` 每次更新都会和官方有微小偏差，在多轮后越放越大。 3. `register_buffer` 的作用： - 把 `running_mean` 注册为模型状态，它不是可学习的 `Parameter`（不需要梯度），但在保存 `state_dict` 和迁移到 GPU 时，会被 PyTorch 一起自动打包带走。</p><p>【常见错误排查】 - 忘记加 `eps`：归一化除法时如果遇到静音声谱（特征方差为 0），会直接出现除零 `NaN`。 - 忘记切 `model.eval()`：推理时如果忘了切换评估模式，单个 batch 的分布异常（比如全噪声片段）会彻底带偏整组输出。</p><p>【真实模型中的位置】 在主流声纹模型（如 ECAPA-TDNN）中，这个模块紧随 `nn.Conv1d(..., bias=False)` 之后，用于在时域帧级别特征提取时抑制不同说话人音量的总体均值漂移。</p></div>
   </div>
   
   <div class="kl-section">
     <div class="kl-sec-label">再练一步</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>1. 将中间融合中的单向 Cross-Attention 改为双向交互（音频查视频 + 视频查音频），观察张量拼接逻辑如何变化。</li><li>2. 尝试给晚期融合分支加入 DropPath / Dropout，模拟某一个模态（如视频）在训练时以 30% 概率随机丢失的情况。</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>修改代码使其支持类似 2D 卷积特征的 4 维输入 (B, C, H, W)</li><li>如果把 momentum 设为 0 会怎样？设为 1 又会怎样？</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">早期用 cat，晚期用 add，中间 attention 查一查。</div>
+    <div class="kl-sec-body kl-analogy">训时算批次、存平滑；测时只用存下值，两套状态严防差。</div>
   </div>
   
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">Cross-Attention（交叉注意力）: 中间融合连接不同模态最常用的交互算子。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">Feature Projection（特征投影层）: 在做特征融合前将异构维度对齐到统一隐层维度的全连接层。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">Decision-level Fusion（决策级融合）: 晚期融合的标准学术别名。</span><span class="kl-related-desc"></span></div></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">LayerNorm 手写实现：沿 Channel 维度做归一化，对比两者的 dim 差异</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">register_buffer：PyTorch 中管理不可导持久化张量的核心机制</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">Tensor Broadcasting：归一化计算中 (B, C, L) 与 (1, C, 1) 的形状自动对齐原理</span><span class="kl-related-desc"></span></div></div></div>
 </article>
   <section class="kl-archive">
-  <h3 class="kl-archive-heading">往期记录 <span class="kl-arc-count">409 条记录</span></h3>
-  <div class="kl-archive-row"><span class="kl-arc-date">2026年10月30日</span><span class="kl-arc-title"><a href="learn-20261030.html" class="kl-arc-link">Mel 频率与 Mel 滤波器组：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">Mel scale</span><span class="kl-arc-chip">filterbank</span><span class="kl-arc-chip">audio feature</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月30日</span><span class="kl-arc-title"><a href="learn-20261030.html" class="kl-arc-link">Mel 频率与 Mel 滤波器组：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Mel 频率与 Mel 滤波器组</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">自动微分 Autograd：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">autograd</span><span class="kl-arc-chip">computation graph</span><span class="kl-arc-chip">backward</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">自动微分 Autograd：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">自动微分 Autograd</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">STFT 短时傅里叶变换：
+  <h3 class="kl-archive-heading">往期记录 <span class="kl-arc-count">413 条记录</span></h3>
+  <div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">Dropout 为什么有效：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">dropout</span><span class="kl-arc-chip">regularization</span><span class="kl-arc-chip">overfitting</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">Dropout 为什么有效：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Dropout 为什么有效</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">早期、晚期与中间融合：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">early fusion</span><span class="kl-arc-chip">late fusion</span><span class="kl-arc-chip">intermediate fusion</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">早期、晚期与中间融合：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">早期融合</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月30日</span><span class="kl-arc-title"><a href="learn-20261030.html" class="kl-arc-link">Mel 频率与 Mel 滤波器组：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">Mel scale</span><span class="kl-arc-chip">filterbank</span><span class="kl-arc-chip">audio feature</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月30日</span><span class="kl-arc-title"><a href="learn-20261030.html" class="kl-arc-link">Mel 频率与 Mel 滤波器组：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Mel 频率与 Mel 滤波器组</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">自动微分 Autograd：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">autograd</span><span class="kl-arc-chip">computation graph</span><span class="kl-arc-chip">backward</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">自动微分 Autograd：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">自动微分 Autograd</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">STFT 短时傅里叶变换：
 今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">STFT</span><span class="kl-arc-chip">spectrum</span><span class="kl-arc-chip">time-frequency</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">STFT 短时傅里叶变换：
 动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">STFT 短时傅里叶
 变换</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">参数初始化：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">initialization</span><span class="kl-arc-chip">Xavier</span><span class="kl-arc-chip">Kaiming</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">参数初始化：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">参数初始化</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">Cross-Attention：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">cross-attention</span><span class="kl-arc-chip">query</span><span class="kl-arc-chip">multimodal fusion</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">Cross-Attention：动手实现
