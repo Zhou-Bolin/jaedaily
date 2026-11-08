@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>健康学堂 · Jae Daily</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f5f2ec;color:#1f2933;font-family:'Noto Serif SC','Songti SC','SimSun',Georgia,serif;line-height:1.8;padding:28px 16px 56px;}
+.wrap{max-width:980px;margin:0 auto;}
+.top{border-bottom:1px solid #cdbf9f;padding-bottom:18px;margin-bottom:24px;}
+.eyebrow{font:700 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:8px;}
+h1{font-size:36px;letter-spacing:4px;color:#2b2118;line-height:1.2;}
+.sub{font:13px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;margin-top:8px;}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start;}
+.card{background:#fffefa;border:1px solid #ded3bb;border-radius:8px;box-shadow:0 2px 10px rgba(60,42,20,.06);overflow:hidden;}
+.lesson-head{padding:18px 22px;background:#fff6e6;border-bottom:1px solid #e5d7b8;}
+.kicker{font:700 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#9a5b12;letter-spacing:1px;margin-bottom:6px;}
+h2{font-size:24px;color:#2b2118;line-height:1.35;}
+.memory{margin-top:12px;display:inline-block;font:800 14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;background:#7a2f1210;border:1px solid #7a2f1230;border-radius:999px;padding:5px 12px;}
+.section{padding:16px 22px;border-bottom:1px solid #eee5d3;}
+.section:last-child{border-bottom:none;}
+.chapter{padding:20px 22px;border-bottom:1px solid #eee5d3;}
+.chapter:last-child{border-bottom:none;}
+.chapter-no{font:800 10px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#9a5b12;letter-spacing:1.2px;margin-bottom:4px;}
+.chapter h2{font-size:22px;margin-bottom:12px;}
+.theme-lead{background:#2b2118;color:#f9f3e7;padding:20px 22px;border-bottom:1px solid #4a3928;}
+.theme-lead h2{color:#fff7e8;font-size:23px;margin-bottom:9px;}
+.theme-lead p{color:#e7ded2;font-size:14px;}
+.fact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.fact{background:#f8f5ee;border-radius:6px;padding:11px 12px;}
+.fact b{display:block;font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;margin-bottom:4px;}
+.fact p{font-size:13px;line-height:1.7;}
+.takeaway{margin-top:12px;background:#fff6e6;border-left:3px solid #b7791f;padding:10px 12px;border-radius:0 6px 6px 0;font-size:14px;}
+.kind{display:inline-block;font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#fff;background:#7a2f12;border-radius:999px;padding:4px 9px;margin-bottom:8px;}
+.video-link{display:flex;gap:12px;align-items:center;background:#2b2118;color:#fff;text-decoration:none;border-radius:8px;padding:14px;margin-top:10px;}
+.video-link:hover{text-decoration:none;background:#473425;}
+.video-link .play{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#fff2;color:#fff;flex:none;}
+.video-link b{display:block;font-size:14px;}
+.video-link small{display:block;color:#e7ded2;margin-top:3px;font:11px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+.video-note{font-size:12px;margin-top:8px;color:#6b7280;}
+.video-empty{font:13px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f3f4f6;padding:12px;border-radius:6px;color:#4b5563;}
+.deep-read{background:#f8f5ee;border-radius:7px;padding:14px;margin-top:10px;}
+.deep-read p+ p{margin-top:10px;}
+.sources{padding-left:18px;}
+.sources li{font-size:12px;margin:4px 0;}
+.label{font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;letter-spacing:1.2px;margin-bottom:8px;}
+p{font-size:15px;color:#374151;}
+ol{padding-left:22px;}
+li{margin:7px 0;font-size:15px;color:#374151;}
+.check{font:700 14px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#065f46;background:#ecfdf5;border-left:3px solid #059669;padding:10px 12px;border-radius:0 6px 6px 0;}
+.warn{font:12px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7c2d12;background:#fff7ed;border-left:3px solid #ea580c;padding:10px 12px;border-radius:0 6px 6px 0;}
+.side{display:flex;flex-direction:column;gap:14px;}
+.plan{padding:14px 16px;}
+.plan-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #eee5d3;}
+.plan-row:last-child{border-bottom:none;}
+.plan-row.active{background:#7a2f120c;margin:0 -8px;padding:9px 8px;border-radius:6px;}
+.plan-day{font:800 11px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;min-width:34px;}
+.plan-body strong{display:block;font:800 13px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#2b2118;}
+.plan-body span{display:block;font:12px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;}
+.note{padding:14px 16px;font:12px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;}
+.back{display:inline-block;margin-top:22px;font:700 12px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;text-decoration:none;}
+@media(max-width:760px){.grid{display:block;}.side{margin-top:16px;}.fact-grid{grid-template-columns:1fr;}h1{font-size:30px;}h2{font-size:21px;}body{padding:20px 12px 44px;}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div class="eyebrow">Health Classroom · 2026年11月09日</div>
+    <h1>健康学堂</h1>
+    <div class="sub">每天 10–20 分钟：读懂一种食物、一个人体机制和一项训练技巧，再看一节不重复的视频课。</div>
+  </header>
+  <div class="grid">
+    <article class="card">
+      <section class="theme-lead">
+        <div class="chapter-no" style="color:#e8c87a">今日学习主线 · 篮球</div>
+        <h2>反复冲刺、急停与起跳：今天围绕篮球表现学习</h2>
+        <p>篮球不是单纯的有氧运动。一次训练会在低强度移动、短促冲刺、身体对抗和跳跃之间反复切换，因此既需要糖原，也需要神经肌肉协调和下肢组织逐步适应。今天的食物负责解决供能或恢复，人体知识解释身体为何这样反应，训练技巧则把原理落到球场。</p>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">01 · 今日食物 · 44/134</div>
+        <h2>鸡蛋蔬菜三明治：煎蛋用油和沙拉酱决定额外能量。</h2>
+        <div class="fact-grid">
+          <div class="fact"><b>里面有什么</b><p>面包供碳水，鸡蛋供蛋白质，蔬菜供纤维。</p></div>
+          <div class="fact"><b>进入身体后</b><p>烹饪与组合会改变水分、消化速度和能量密度。煎蛋用油和沙拉酱决定额外能量。</p></div>
+          <div class="fact"><b>训练日怎么吃</b><p>适合训练前 1–3 小时，也可作为训练后便携餐。</p></div>
+          <div class="fact"><b>挑选与搭配</b><p>选全麦或普通面包都可，少酱并确保有两个蛋或其他蛋白质。</p></div>
+        </div>
+        <div class="takeaway"><b>别被这个误区带偏：</b>全麦标签不代表馅料和酱汁可以忽略。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">02 · 人体知识 · 26/100</div>
+        <h2>快肌与慢肌</h2>
+        <div class="memory">纤维类型有倾向，但训练仍能改变能力。</div>
+        <p style="margin-top:12px">慢肌抗疲劳、偏有氧；快肌产生力量快、疲劳也快。每个人比例不同，功能还会随训练改变。</p>
+        <div class="fact-grid">
+          <div class="fact"><b>和你的训练有什么关系</b><p>篮球需要爆发与耐力混合，长跑偏耐力，力量训练帮助保留高力输出。</p></div>
+          <div class="fact"><b>今天观察什么</b><p>观察自己在短冲刺和持续跑中哪一种更自然，不急着给自己定型。</p></div>
+        </div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">03 · 今日训练 · 13/60</div>
+        <div class="kind">篮球</div>
+        <h2>防守滑步先守住脚下秩序</h2>
+        <p>面向对手、髋部降低，移动方向一侧的脚先走，双脚不交叉。</p>
+        <div class="fact-grid">
+          <div class="fact"><b>今天这样练</b><p>在两点之间做 5 组 15 秒滑步，组间休息 30 秒。</p></div>
+          <div class="fact"><b>常见错误</b><p>上下跳动太多、脚跟沉重，或疲劳后双脚交叉。</p></div>
+        </div>
+        <div class="warn" style="margin-top:12px">安全边界：地面湿滑或脚踝不稳时不要高速练。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">04 · 今日视频课 · 不重复推荐</div>
+        <h2>看一次示范，再带着一个重点练</h2>
+        <a class="video-link" href="https://www.bilibili.com/video/BV1Do4y1B76i/?p=16" target="_blank" rel="noopener noreferrer">
+          <span class="play">▶</span>
+          <span><b>击地传球</b><small>篮球 · 传球 · 约 8–17 分钟</small></span>
+        </a>
+        <p class="video-note"><b>对应今日训练：</b>防守滑步先守住脚下秩序<br>观看提示：先看完整示范，再用低速完成少量高质量重复。</p>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">05 · 今日行动与自测 · 第 5/44 讲</div>
+        <h2>碳水不是敌人，精制碳水才容易失控</h2>
+        <div class="memory">主食留着，换粗一点。</div>
+        <p style="margin-top:12px">完全戒主食常导致情绪波动和反弹。更稳的做法是减少糖和精制淀粉，保留适量全谷物和薯类。</p>
+        <ol style="margin-top:8px"><li>今天把一餐白米饭换成半碗米饭加半份粗粮或薯类。</li><li>甜点不空腹吃，放在正餐后少量吃。</li><li>买包装食品先看配料表前三位有没有糖、糖浆或精制油。</li></ol>
+        <div class="check">睡前检查：今天有没有把一种精制主食换成更粗的版本？</div>
+        <div class="warn" style="margin-top:10px">糖尿病患者需按医嘱管理碳水和药物，避免自行大幅调整。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">06 · 串起来理解 · 深度阅读</div>
+        <h2>从知道，变成会安排</h2>
+        <div class="deep-read">
+          <p><b>放进真实训练：</b>如果两小时内要训练，优先选择熟悉、适量、较低脂的碳水，并搭配少量蛋白质；如果刚训练完，则把碳水、蛋白质、液体和正常正餐放在同一条恢复线上。不要用一次高热量奖励餐替代恢复，也不要因为想减脂长期空腹参加高强度篮球。</p>
+          <p><b>建立自己的反馈：</b>今天只记录四项：训练前一餐距开练多久、后半程是否明显掉速、落地或急停有没有固定点疼痛、第二天是否恢复。连续记录比凭一次感觉更能帮助调整。</p>
+          <p><b>今天的连接：</b>“鸡蛋蔬菜三明治”解决吃什么与怎么搭配；“快肌与慢肌”解释身体为何这样反应；“防守滑步先守住脚下秩序”则把原理变成一个可练习动作。不要单独记三个结论，要观察它们在一次真实训练中如何互相影响。</p>
+        </div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">资料来源 · 用于继续核对</div>
+        <ul class="sources"><li><a href="https://www.who.int/en/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener noreferrer">WHO 健康饮食原则</a></li><li><a href="https://ods.od.nih.gov/factsheets/list-VitaminsMinerals/" target="_blank" rel="noopener noreferrer">NIH 维生素与矿物质资料</a></li><li><a href="https://acsm.org/education-resources/pronouncements-scientific-communications/position-stands/" target="_blank" rel="noopener noreferrer">ACSM 运动医学立场文件</a></li></ul>
+        <p style="font-size:12px;color:#6b7280;margin-top:8px">正文是健康教育与训练常识，不用于诊断疾病或替代个体化医疗、营养和康复建议。</p>
+      </section>
+    </article>
+    <aside class="side">
+      <div class="card plan">
+        <div class="label">本周循环计划</div>
+        <div class="plan-row active"><div class="plan-day">周一</div><div class="plan-body"><strong>久坐清零</strong><span>每小时起身两分钟。</span></div></div><div class="plan-row"><div class="plan-day">周二</div><div class="plan-body"><strong>平衡练习</strong><span>靠近支撑完成单脚站立。</span></div></div><div class="plan-row"><div class="plan-day">周三</div><div class="plan-body"><strong>食物准备</strong><span>提前准备明天的一份蔬果和蛋白质。</span></div></div><div class="plan-row"><div class="plan-day">周四</div><div class="plan-body"><strong>轻快活动</strong><span>分三次各走 10 分钟。</span></div></div><div class="plan-row"><div class="plan-day">周五</div><div class="plan-body"><strong>注意力休息</strong><span>安排一餐完全离屏。</span></div></div><div class="plan-row"><div class="plan-day">周六</div><div class="plan-body"><strong>家务运动</strong><span>用整理、清洁或采购累计活动量。</span></div></div><div class="plan-row"><div class="plan-day">周日</div><div class="plan-body"><strong>环境整理</strong><span>清理一个影响健康习惯的障碍。</span></div></div>
+      </div>
+      <div class="card note">
+        <strong>训练最小闭环：</strong><br>
+        每周只追踪训练完成次数、睡眠、疼痛与疲劳趋势。篮球、长跑和力量训练的负荷需要一起计算。
+        </div>
+    </aside>
+  </div>
+  <a class="back" href="latest.html">← 返回简报</a>
+</main>
+</body>
+</html>
