@@ -87,7 +87,7 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
   <header class="kl-header">
     <div class="kl-header-left">
       <h1>每日基础课</h1>
-      <div class="kl-dateline">2026年11月09日 &ensp;·&ensp; 1 个核心概念 + 1 个动手练习 &ensp;·&ensp; 通俗讲解 + 发展脉络 + 实际用法 &ensp;·&ensp; Jae Daily</div>
+      <div class="kl-dateline">2026年11月10日 &ensp;·&ensp; 1 个核心概念 + 1 个动手练习 &ensp;·&ensp; 通俗讲解 + 发展脉络 + 实际用法 &ensp;·&ensp; Jae Daily</div>
     </div>
     <a href="latest.html" class="kl-back">← 返回日报</a>
   </header>
@@ -98,7 +98,7 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#7c3aed;color:#fff;">基础知识</span>
       <span class="kl-num">第一则</span>
     </div>
-    <h2 class="kl-title">梯度裁剪：今天真正弄懂</h2>
+    <h2 class="kl-title">CLIP 的图文对齐思路：今天真正弄懂</h2>
     <div class="kl-card-links"></div>
   </div>
   <div class="kl-question">
@@ -110,24 +110,24 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">通俗讲解</div>
-    <div class="kl-sec-body kl-answer"><p><strong>一句话定义</strong>： 梯度裁剪就是在反向传播算出梯度后，检查它的“总长度”；如果太长，就等比例缩短到设定的安全值内，再交给优化器去更新参数。</p><p><strong>生活类比</strong>： 就像汽车的“限速器”。你一脚油门踩得太猛（算出的梯度巨大），限速器立刻介入，把车速强行压在 120 km/h 以内。注意，方向盘的方向一点没变（更新方向完全一致），只是速度被死死按在了安全线内。</p><p><strong>必要公式与符号</strong>： 最主流的做法是“L2 范数裁剪”（按整体长度裁剪）： $$g \leftarrow g \cdot \min\left(1, \frac{\theta}{\|g\|_2}\right)$$</p><p>拆开看就是两个分支： - 如果 $\|g\|_2 \le \theta$：不缩放，保持 $g$ 不变。 - 如果 $\|g\|_2 > \theta$：执行 $g \leftarrow \theta \cdot \frac{g}{\|g\|_2}$。</p><p>符号逐个拆解： - $g$：把模型里所有可学习参数的梯度扁平化后，拼成的一个长向量。 - $\|g\|_2$：这个长向量的欧氏长度（模长），即所有梯度元素平方和再开根号。 - $\theta$：人为设定的安全上限（阈值，例如 1.0 或 5.0）。 - $\frac{g}{\|g\|_2}$：单位方向向量，保证只改大小、不改方向。</p><p><strong>解决什么问题？没有它会怎样？</strong> - 解决的问题：<strong>梯度爆炸</strong>。 - 没有它会怎样：在训练几万步后，遇到一个异常样本，梯度突然爆到几千甚至上万。参数更新瞬间跨入数值不稳定区域，Loss 直接变成 `NaN`（Not a Number）或 `Inf`，前面辛辛苦苦训了几天的模型当场报废。</p><p><strong>在音视频理解与说话人日志中的实际位置</strong>： 在说话人日志（如基于 Conformer 的说话人切分与聚类、ECAPA-TDNN 说话人编码）或语音识别（Whisper 等）中，输入的音频序列往往极长（一两千个时间帧）。长序列在多层自注意力机制或时序卷积中反向传播，极易因为连乘积累导致梯度骤增。 它在训练代码中的固定位置是： 1. `loss.backward()` 算完梯度后； 2. <strong>立即执行梯度裁剪</strong>（`torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)`）； 3. 最后再执行 `optimizer.step()`。</p><p><strong>记忆口诀</strong>： <strong>算完梯度先别走，超标等比剁一手；方向不偏长度守，不怕损失变南瓜（NaN）！</strong></p></div>
+    <div class="kl-sec-body kl-answer"><p><strong>一句话定义</strong>： CLIP 的图文对齐，就是用“图像”和“文本”两个独立的编码器把不同模态都映射到同一个向量空间，让配对的图文特征向量靠得最近，不配对的推得最远。</p><p><strong>生活类比</strong>： 这就像一个“跨国相亲会”。男生只懂看图，女生只懂看文字。主持人是一个翻译官。他给每位男生的照片提取一组核心特征（如：运动型、戴眼镜、爱笑），也给每位女生的自我介绍提取同一组维度的特征。如果男1号和女1号是一对，主持人就给他们安排在同一桌（向量夹角小、相似度高）；如果男1号和女2号不配，就把他们推到房间两端（向量夹角大、相似度低）。</p><p><strong>核心公式</strong>： 给定一个批次（Batch）内有 $N$ 对真实匹配的图像和文本。 第 $i$ 张图特征为 $v_i$，第 $j$ 篇文本特征为 $t_j$。</p><p>1. <strong>余弦相似度矩阵</strong>： $$S_{i, j} = \frac{v_i \cdot t_j}{\|v_i\| \|t_j\|} \cdot e^{\tau}$$</p><p>2. <strong>对称交叉熵损失（Symmetric Cross-Entropy Loss）</strong>： - 图像找文本的损失： $$\mathcal{L}_{I} = -\frac{1}{N}\sum_{i=1}^N \log \frac{\exp(S_{i, i})}{\sum_{j=1}^N \exp(S_{i, j})}$$ - 文本找图像的损失： $$\mathcal{L}_{T} = -\frac{1}{N}\sum_{j=1}^N \log \frac{\exp(S_{j, j})}{\sum_{i=1}^N \exp(S_{i, j})}$$ - 最终损失： $$\mathcal{L} = \frac{\mathcal{L}_{I} + \mathcal{L}_{T}}{2}$$</p><p><strong>逐个符号拆解</strong>： - $v_i, t_j$：分别是图像编码器和文本编码器输出的嵌入向量（Embedding）。 - $\frac{v_i}{\|v_i\|}$：L2 归一化，把向量长度缩放到 1，让点积纯粹代表方向相似度。 - $\tau$：可学习的温度系数缩放因子（Logit scale）。$\tau$ 越大，高低分的差距被拉得越开，Softmax 的概率分布越陡峭。 - $S_{i, i}$：正样本对（对角线元素），即第 $i$ 张图和第 $i$ 个真实文本的相似度。 - $S_{i, j} (i \neq j)$：负样本对（非对角线元素），即同批次内误配的图文。 - $N$：批次大小（Batch Size）。负样本全靠批次内其他样本顺手提供（In-batch Negatives）。</p><p><strong>解决什么问题？没有它会怎样？</strong> - 传统视觉模型只能做固定类别的分类（比如 ImageNet 的 1000 类）。一旦来了一个新概念“穿格子衬衫的代码极客”，模型就瞎了。 - 没有 CLIP 的对齐思路，文字是文字，画面是画面，计算机无法理解“一段文本描述”和“一帧画面”讲的是同一件事。 - 有了它，分类任务变成了“图文检索任务”：把类别名写成句子（如“a photo of a cat”），谁和图的特征最接近，图就是什么类别。这就实现了零样本分类（Zero-shot Classification）。</p><p><strong>在音视频与说话人日志中的实际位置</strong>： 1. <strong>视频理解（VideoCLIP / CLIP4Clip）</strong>：把连续帧的特征聚合（如平均或时序卷积），直接拿去和音频转写文本（ASR字幕）对齐，检索“谁在哪一秒踢了足球”。 2. <strong>说话人日志（Audio-Visual Diarization）</strong>：思路完全可以平移。比如 CLAP 将音频与文本对齐；在视听双模态日志中，可将面部视觉特征塔与声纹特征塔对齐，让“正在说话的嘴型”和“当前声学嵌入”在共享空间对齐，解决多人重叠说话时的归属难题。 3. <strong>学习指引</strong>：想吃透对比学习数学本质，建议研读 *Lil’Log：对比学习*；想看如何在视频特征抽取和 Hugging Face 生态中落地调用，直接参考 *Hugging Face Multimodal Tasks*。</p><p><strong>记忆口诀</strong>： <strong>双塔各抽各，归一乘积挪；正对拉近非对扯，对角线上把分夺。</strong></p></div>
   </div>
-  <div class="kl-section"><div class="kl-sec-label">先想再展开答案</div><div class="kl-quiz-list"><details class="kl-quiz"><summary>梯度裁剪应该放在 loss.backward() 前面还是后面？</summary><div>必须放在后面，因为 backward() 才会算出参数的 grad 属性。</div></details><details class="kl-quiz"><summary>梯度裁剪修改了梯度的大小，会改变梯度的更新方向吗？</summary><div>按范数裁剪（Norm Clipping）不会改变更新方向，它是等比例缩放；但按绝对值裁剪（Value Clipping）会改变方向。</div></details><details class="kl-quiz"><summary>训练长音频模型时 Loss 突然变成 NaN，最先应该排查什么？</summary><div>排查是否漏掉了梯度裁剪，或者梯度是否在特定音频异常长片段处发生爆炸。</div></details></div></div>
+  <div class="kl-section"><div class="kl-sec-label">先想再展开答案</div><div class="kl-quiz-list"><details class="kl-quiz"><summary>为什么 CLIP 能够实现零样本（Zero-Shot）分类？</summary><div>因为分类标签被转换成了文本句子并提取了特征，测试时只需计算图像向量与各文本向量的余弦相似度，取最高分即可，无需重训。</div></details><details class="kl-quiz"><summary>温度系数 tau 在对齐损失里起什么具体物理作用？</summary><div>它是一个缩放因子。归一化后的点积相似度在 -1 到 1 之间，数值偏平缓；通过乘以 exp(tau) 放大差异，让 Softmax 能集中惩罚那些混淆的负样本。</div></details><details class="kl-quiz"><summary>CLIP 双塔架构相比交叉注意力（Cross-Attention）单塔架构的最大工程优势是什么？</summary><div>解耦。图像和文本特征可以离线预先计算并存库，在线检索时只需计算内积，速度提升几个数量级。</div></details></div></div>
   <div class="kl-section">
     <div class="kl-sec-label">发展脉络 · 现状 · 未来</div>
-    <div class="kl-sec-body kl-analysis"><p><strong>发展流程</strong>： 1. <strong>之前怎么做</strong>：没有裁剪前，遇到梯度爆炸只能拼命改小学习率，或者把网络做浅、改激活函数。但学习率一旦设得极小，模型就基本训不动了。 2. <strong>为什么出现</strong>：2012-2013 年 Mikolov 和 Bengio 等人在训练循环神经网络（RNN）处理长文本和长音频时，发现时序展开的反向传播极易产生指数级放大的梯度。Bengio 团队明确提出了通过约束梯度范数来“踩刹车”的方法。 3. <strong>现在怎么用</strong>：不仅在 RNN 中用，在现代长音频 Conformer、视频多模态 Transformer 中，梯度裁剪已成为防止偶发数值暴击的标配“防弹衣”，通常配合 AdamW 一起使用。</p><p><strong>与相近概念的区别</strong>： - <strong>vs 权重衰减（Weight Decay）</strong>：权重衰减是针对“模型参数本身的大小”做惩罚，目的是防过拟合；梯度裁剪只针对“本轮算出来的更新步长”做限制，目的是防数值崩溃。 - <strong>vs 学习率调整（LR Scheduler）</strong>：学习率是每一轮都按计划缩放所有梯度；梯度裁剪是“条件触发”，只要梯度没超标，它就完全不介入。 - <strong>vs 按数值裁剪（Value Clipping）</strong>：按数值裁剪是把每个梯度元素强行限制在 $[-c, c]$ 之间，这会严重改变梯度的合力方向；按范数裁剪（Norm Clipping）是整体缩放，更新方向完全保留。</p><p><strong>局限与未来可能作用</strong>： - <strong>当前局限（事实）</strong>：它只能治“梯度爆炸”，对“梯度消失”无能为力（梯度要是变成了 0，裁剪不起任何作用）；裁剪阈值（如 `max_norm=1.0`）是超参数，设得过小会导致模型学得过慢。 - <strong>未来作用（推测）</strong>：在处理超长音视频（如几小时无切分的会议音频日志）原生流式模型中，固定的全局阈值可能不够灵活。未来更精细的自适应逐层动态裁剪或与优化器状态内嵌融合的机制，可能会进一步减少人工调参成本。</p><p><strong>推荐学习路径</strong>： - 想打牢数学直觉与底层公式，推荐翻阅《Dive into Deep Learning》（先看直觉和公式，再运行章节中的代码）。 - 想要写出最标准的工程流水线，推荐对照《PyTorch Tutorials》（对照官方示例掌握张量与训练写法）。</p></div>
+    <div class="kl-sec-body kl-analysis"><p><strong>发展流程：从哪来，到哪去</strong> 1. <strong>过去（单模态+硬编码）</strong>：视觉用 ResNet 预测固定的独热编码（One-hot），文本用 BERT 做语言模型。两者井水不犯河水。如果要做多模态，通常用重度 Cross-Attention 在深层暴力拼接，计算量爆炸，无法做大规模检索。 2. <strong>转折（CLIP 的诞生）</strong>：OpenAI 发现互联网上有海量弱标记图文对。不需要人工精标，只要用轻量双塔架构 + 批次内负采样，算力开销低，能利用 4 亿对图文直接暴力训出泛化能力极强的统一向量空间。 3. <strong>现在</strong>：已成为多模态大模型（MLLM 如 LLaVA）的标准视觉前端（Vision Encoder），同时是文生图模型（Stable Diffusion）的文本条件注入器。</p><p><strong>与相近概念的区别</strong>： - <strong>vs 单塔融合（Cross-Attention）</strong>：单塔把图文拼在一起过 Transformer，效果细致但无法预计算。CLIP 是双塔，可以把几亿张图的向量离线存入向量数据库，毫秒级检索。 - <strong>vs 三元组损失（Triplet Loss）</strong>：三元组每次只看“锚点-正例-负例”三个样本；CLIP 矩阵化操作，一个批次大小为 $N$ 时，一张图瞬间拥有 1 个正例和 $N-1$ 个负例，显卡利用率极高。 - <strong>vs 有监督分类</strong>：有监督分类输出层维度固定（如 1000 类 logits）；CLIP 输出是连续几何空间，支持任意词表推断。</p><p><strong>当前局限 vs 未来作用</strong>： - <strong>当前局限（事实）</strong>： 1. *词袋效应（Bag-of-words fallacy）*：对空间和逻辑关系不敏感。比如它很难分清“猫在狗左边”和“狗在猫左边”。 2. *大 Batch Size 依赖*：如果 Batch 变小（如小于 1024），批次内负样本多样性暴跌，效果急剧退化。 3. *长文本截断*：原版 CLIP 文本端限制 77 个 Token，无法理解复杂长视频脚本。 - <strong>未来作用（推测）</strong>： 在音视频与说话人日志领域，未来的方向是<strong>细粒度时间对齐（Temporal Alignment）</strong>。不仅仅是对齐整段音视频，而是把声纹、面部表情、时序转写词在毫秒级统一对齐，从而彻底攻克鸡尾酒会效应下的说话人切分。</p></div>
   </div>
   
   <div class="kl-section">
     <div class="kl-sec-label">自测</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>1. 如果把 max_norm 设得特别小（比如 1e-4），模型训练会出现什么现象？</li><li>2. 为什么工业界更偏爱“按范数裁剪 (Norm Clipping)”而不是“按数值裁剪 (Value Clipping)”？</li><li>3. 梯度裁剪能够挽救梯度消失问题吗？为什么？</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>为什么 CLIP 计算余弦相似度前必须做 L2 归一化？如果不做会发生什么？</li><li>在 Batch Size 只有 4 的极端情况下训练 CLIP，模型会出现什么退化现象？</li><li>说话人日志中如果用 CLIP 思路做“人脸-声音”对齐，这里的正样本对和负样本对分别是什么？</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">就像带限速器的大排量赛车：无论驾驶员踩得多猛，车身速度绝不准超过最高限速，但车轮前进的方向完全听从方向盘指引。</div>
+    <div class="kl-sec-body kl-analogy">图文对齐就像把中英文词典翻译成同一套“世界语代码”：无论你拿来的是一张苹果照片还是一句法文“une pomme”，只要翻译出的代码相同，它们就是同一件事物。</div>
   </div>
-  <div class="kl-resources"><div class="kl-sec-label">优质外网资料 · 怎么用</div><div class="kl-resource-grid"><a class="kl-resource" href="https://d2l.ai/" target="_blank" rel="noopener"><strong>Dive into Deep Learning</strong><span>先看直觉和公式，再运行章节中的代码</span></a><a class="kl-resource" href="https://pytorch.org/tutorials/" target="_blank" rel="noopener"><strong>PyTorch Tutorials</strong><span>对照官方示例掌握张量与训练写法</span></a></div></div>
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">梯度爆炸：梯度裁剪直接针对并解决的核心故障现象。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">学习率（Learning Rate）：和梯度一起决定最终参数变化量，裁剪只控梯度本身。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">L2范数（L2 Norm）：用于衡量全部梯度向量总长度的数学度量工具。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">说话人日志（Diarization）：处理长时音频时容易遇到反向传播梯度累积爆炸的典型业务场景。</span><span class="kl-related-desc"></span></div></div></div>
+  <div class="kl-resources"><div class="kl-sec-label">优质外网资料 · 怎么用</div><div class="kl-resource-grid"><a class="kl-resource" href="https://huggingface.co/docs/transformers/tasks/video_classification" target="_blank" rel="noopener"><strong>Hugging Face Multimodal Tasks</strong><span>查看视频输入、预处理和模型调用</span></a><a class="kl-resource" href="https://lilianweng.github.io/posts/2021-05-31-contrastive/" target="_blank" rel="noopener"><strong>Lil’Log：对比学习</strong><span>理解跨模态表征对齐的核心目标</span></a></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">对比学习（Contrastive Learning）:CLIP 采用的核心学习范式，靠拉近正例、推开负例建构表征</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">双塔模型（Dual-Encoder）:图像和文本相互独立的特征提取架构，检索系统的基石</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">InfoNCE 损失:CLIP 对称交叉熵的基础数学形态，用于度量互信息下界</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">开放词表评估（Open-Vocabulary）:突破固定类别限制，支持任意自然语言类别的能力</span><span class="kl-related-desc"></span></div></div></div>
 </article>
 <article class="kl-card" style="border-top:3px solid #0f766e;">
   <div class="kl-card-top" style="background:#ecfdf5;">
@@ -135,7 +135,7 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-type-badge" style="background:#0f766e;color:#fff;">动手练习</span>
       <span class="kl-num">第二则</span>
     </div>
-    <h2 class="kl-title">梯度裁剪：动手实现</h2>
+    <h2 class="kl-title">CLIP 的图文对齐思路：动手实现</h2>
     <div class="kl-card-links"></div>
   </div>
   <div class="kl-question">
@@ -143,122 +143,95 @@ body{background:#f3f5f7;color:#0f172a;font-family:'Inter','PingFang SC','Noto Sa
       <span class="kl-question-label">练习目标</span>
       
     </div>
-    <div class="kl-question-body"><p>10-20分钟小练习目标、输入输出和验收标准： - <strong>目标</strong>：手动实现一个基于 L2 范数的梯度裁剪函数，并与 PyTorch 官方的 `torch.nn.utils.clip_grad_norm_` 对比，验证数值完全一致。 - <strong>输入</strong>：一个人为构造的具有巨大梯度的简单多层感知机（MLP）。 - <strong>输出</strong>：裁剪前后的梯度的全局 L2 范数，以及手写版本与官方版本的参数更新差异。 - <strong>验收标准</strong>：手写裁剪后的总范数必须被严格压在 `max_norm` 之下，且手写裁剪结果与官方函数在相同参数上的计算误差小于 `1e-6`。</p></div>
+    <div class="kl-question-body"><p>15 分钟实现 CLIP 核心图文对称对齐损失函数。 - <strong>输入</strong>：随机生成的图像特征张量 `image_features`（形状 `[B, D]`）与文本特征张量 `text_features`（形状 `[B, D]`）。 - <strong>任务</strong>：实现特征归一化、相似度矩阵计算、双向交叉熵损失计算，并通过一个极简循环使正对相似度最大化。 - <strong>验收标准</strong>： 1. 输出的相似度矩阵形状必须严格为 `[B, B]`。 2. 初始 Loss 应接近 $\log(B)$；训练几步后 Loss 显著下降，矩阵对角线元素值显著高于非对角线元素。</p></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">参考实现</div>
-    <div class="kl-sec-body kl-answer"><p><strong>思路</strong>： 1. 建立一个简单的网络，故意制造一个极大的 Loss（模拟长音频中某帧爆炸的场景），触发梯度爆炸。 2. 手写 `manual_clip_grad_norm`： - 提取所有有梯度的参数。 - 计算所有参数梯度的平方和并开方，得到全局范数。 - 算出缩放比例：`clip_coef = max_norm / (total_norm + 1e-6)`。 - 如果超标，就用 `grad.mul_(clip_coef)` 原位缩小。 3. 调用 PyTorch 官方 API 对比，打印前后对比结果。</p><p><strong>完整可运行代码</strong>：</p><pre class="kl-code"><code>import torch
+    <div class="kl-sec-body kl-answer"><p><strong>实现思路</strong>： 1. 准备伪特征：模拟图像塔和文本塔输出的原始向量。 2. 特征 L2 归一化：保证向量长度为 1，使得点积等价于余弦相似度。 3. 矩阵相乘：`image @ text.T`，一步得到全批次两两相似度矩阵。 4. 生成对齐标签：配对数据在对角线上，因此目标标签就是 `torch.arange(B)`。 5. 双向交叉熵：同时对行（图查文）和列（文查图）做 CrossEntropy，取平均。</p><p><strong>完整可运行代码</strong>：</p><pre class="kl-code"><code>import torch
 import torch.nn as nn
-import copy
+import torch.nn.functional as F
 
-def manual_clip_grad_norm_(parameters, max_norm, norm_type=2.0):
-    &quot;&quot;&quot;
-    手写实现按 L2 范数裁剪梯度（修改参数的 .grad 属性，原位操作）
-    &quot;&quot;&quot;
-    if isinstance(parameters, torch.Tensor):
-        parameters = [parameters]
-    # 只取有梯度的参数
-    params = [p for p in parameters if p.grad is not None]
-    max_norm = float(max_norm)
-    
-    # 1. 计算全局总范数 (L2)
-    total_norm = 0.0
-    for p in params:
-        param_norm = p.grad.detach().data.norm(norm_type)
-        total_norm += param_norm.item() ** norm_type
-    total_norm = total_norm ** (1.0 / norm_type)
-    
-    # 2. 计算缩放系数（加 1e-6 防止除以 0）
-    clip_coef = max_norm / (total_norm + 1e-6)
-    
-    # 3. 如果总范数超标，原位等比例缩小每个梯度
-    if clip_coef &lt; 1.0:
-        for p in params:
-            p.grad.detach().mul_(clip_coef)
-            
-    return total_norm
+class MiniCLIPLoss(nn.Module):
+    def __init__(self, init_temperature: float = 0.07):
+        super().__init__()
+        # 对应可学习的缩放因子 tau，这里固定或可学习均可，使用 log 形式保证数值稳定
+        self.logit_scale = nn.Parameter(torch.ones([]) * torch.log(torch.tensor(1.0 / init_temperature)))
 
-def run_experiment():
-    torch.manual_seed(42)
+    def forward(self, image_features: torch.Tensor, text_features: torch.Tensor):
+        # 1. L2 归一化：[B, D] -&gt; [B, D]
+        image_features = image_features / image_features.norm(dim=-1, keepdim=True)
+        text_features = text_features / text_features.norm(dim=-1, keepdim=True)
 
-    # 1. 构建一个极易梯度的简单网络（用来模拟语音特征提取器）
-    model_manual = nn.Sequential(
-        nn.Linear(16, 64),
-        nn.ReLU(),
-        nn.Linear(64, 1)
-    )
-    # 克隆一份完全相同的模型给官方函数测验
-    model_official = copy.deepcopy(model_manual)
+        # 2. 计算余弦相似度矩阵并缩放：[B, D] @ [D, B] -&gt; [B, B]
+        logit_scale = self.logit_scale.exp()
+        logits_per_image = logit_scale * (image_features @ text_features.T)
+        logits_per_text = logits_per_image.T  # 转置即可得到文本对图像的相似度
 
-    # 2. 模拟输入，并人为构造一个巨大目标，引发梯度爆炸
-    x = torch.randn(8, 16)
-    y_exploding = torch.ones(8, 1) * 10000.0  # 极大的目标值
-    criterion = nn.MSELoss()
+        # 3. 构造正样本标签：第 i 个图对应第 i 个文本，标签为 [0, 1, ..., B-1]
+        batch_size = image_features.shape[0]
+        labels = torch.arange(batch_size, device=image_features.device)
 
-    # 3. 反向传播，产生超大梯度
-    loss_manual = criterion(model_manual(x), y_exploding)
-    loss_manual.backward()
+        # 4. 对称交叉熵计算
+        loss_i = F.cross_entropy(logits_per_image, labels)
+        loss_t = F.cross_entropy(logits_per_text, labels)
+        total_loss = (loss_i + loss_t) / 2.0
 
-    loss_official = criterion(model_official(x), y_exploding)
-    loss_official.backward()
+        return total_loss, logits_per_image
 
-    # 查看未裁剪前的梯度模长
-    raw_norm = sum(p.grad.norm(2).item() ** 2 for p in model_manual.parameters()) ** 0.5
-    print(f&quot;[裁剪前] 原始梯度总范数: {raw_norm:.4f}&quot;)
-
-    # 4. 执行手写裁剪 vs 官方裁剪 (安全阈值设定为 1.0)
-    MAX_NORM = 1.0
-    manual_total_norm = manual_clip_grad_norm_(model_manual.parameters(), max_norm=MAX_NORM)
-    official_total_norm = torch.nn.utils.clip_grad_norm_(model_official.parameters(), max_norm=MAX_NORM)
-
-    # 5. 计算裁剪后的梯度总范数
-    clipped_norm = sum(p.grad.norm(2).item() ** 2 for p in model_manual.parameters()) ** 0.5
-    print(f&quot;[裁剪后] 手写计算的总范数: {manual_total_norm:.4f}&quot;)
-    print(f&quot;[裁剪后] 实际参数梯度总范数: {clipped_norm:.4f} (必须 &lt;= {MAX_NORM})&quot;)
-
-    # 6. 验证两者的梯度是否完全一致
-    max_diff = 0.0
-    for p_m, p_o in zip(model_manual.parameters(), model_official.parameters()):
-        diff = torch.max(torch.abs(p_m.grad - p_o.grad)).item()
-        if diff &gt; max_diff:
-            max_diff = diff
-
-    print(f&quot;手写版本与 PyTorch 官方 API 的最大绝对误差: {max_diff:.8e}&quot;)
-    assert max_diff &lt; 1e-6, &quot;手写裁剪与官方实现不一致！&quot;
-    print(&quot;&gt;&gt;&gt; 验证通过！裁剪逻辑与官方行为完全一致。&quot;)
-
+# ----------------- 验证与最小训练循环 -----------------
 if __name__ == &quot;__main__&quot;:
-    run_experiment()</code></pre></div>
+    torch.manual_seed(42)
+    B, D = 4, 16  # 4 个样本，特征维度 16
+
+    # 模拟编码器输出的特征（未归一化）
+    img_embeds = nn.Parameter(torch.randn(B, D))
+    txt_embeds = nn.Parameter(torch.randn(B, D))
+
+    loss_fn = MiniCLIPLoss(init_temperature=0.07)
+    optimizer = torch.optim.Adam([img_embeds, txt_embeds], lr=0.05)
+
+    print(f&quot;--- 训练前测试 ---&quot;)
+    loss_0, sim_matrix_0 = loss_fn(img_embeds, txt_embeds)
+    print(f&quot;初始 Loss: {loss_0.item():.4f} (理论随机约等于 -log(1/4)={-torch.log(torch.tensor(0.25)):.4f})&quot;)
+    print(&quot;初始相似度矩阵（前两位小数）：\n&quot;, torch.round(sim_matrix_0.detach(), decimals=2))
+
+    # 简单迭代优化 30 步，拉近正样本
+    for step in range(30):
+        optimizer.zero_grad()
+        loss, logits = loss_fn(img_embeds, txt_embeds)
+        loss.backward()
+        optimizer.step()
+
+    print(f&quot;\n--- 优化 30 步后 ---&quot;)
+    final_loss, final_sim_matrix = loss_fn(img_embeds, txt_embeds)
+    print(f&quot;最终 Loss: {final_loss.item():.4f}&quot;)
+    print(&quot;最终相似度矩阵（注意观察对角线是否占主导）：\n&quot;, torch.round(final_sim_matrix.detach(), decimals=2))
+
+    # 验收断言
+    preds = final_sim_matrix.argmax(dim=-1)
+    assert torch.equal(preds, torch.arange(B)), &quot;对齐失败：正样本未能占据对角线最高分！&quot;
+    print(&quot;\n✅ 验收通过：对角线成功取得最大相似度，图文完成初步对齐！&quot;)</code></pre></div>
   </div>
   
   <div class="kl-section">
     <div class="kl-sec-label">代码拆解与真实用法</div>
-    <div class="kl-sec-body kl-analysis"><p><strong>代码逐段拆解与张量形状</strong>： 1. `model_manual`：由输入 `[8, 16]` 到隐藏层 `[8, 64]`，再到输出 `[8, 1]`。 2. `param_norm = p.grad.detach().data.norm(2)`：求出当前层参数张量（比如形状为 `[64, 16]` 的权重）的二范数标量。 3. `total_norm += param_norm.item() <strong> 2`：全局二范数的性质是</strong>所有层元素平方和开根号**，因此必须先累加各层的平方，最后再统一开根号，不能简单把各层的范数直接加起来。 4. `p.grad.detach().mul_(clip_coef)`：必须用带下划线的原位操作（in-place），直接修改优化器下一步要读的梯度数据，节省显存开销。</p><p><strong>真实音视频工程中的调用对应</strong>： 在实际的语音识别、语音日志（如训练 PyAnnote 或 Conformer 说话人模型）训练主循环中，只需将手写部分换成官方一行即可：</p><pre class="kl-code"><code># 标准 PyTorch 训练 Step
-optimizer.zero_grad()
-loss = criterion(model(audio_mel_spectrogram), targets)
-loss.backward()
-
-# ===== 梯度裁剪守卫线 =====
-torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-# =========================
-
-optimizer.step()</code></pre><p><strong>新人最常犯的三个错误</strong>： 1. <strong>顺序写反</strong>：把 `clip_grad_norm_` 写在 `loss.backward()` 之前。此时 `p.grad` 全是 `None`，什么都没裁剪。 2. <strong>写在 step 之后</strong>：写在 `optimizer.step()` 后面。参数早就被炸飞了，裁剪已经毫无意义。 3. <strong>分层单独做缩放</strong>：把每一层的范数独立压到 1.0，而不是全局综合压到 1.0。这样破坏了“深层和浅层之间的相对更新比例”，会导致模型学偏。</p></div>
+    <div class="kl-sec-body kl-analysis"><p><strong>代码逐段解析与张量流转</strong>： 1. <strong>L2 归一化 (`norm`)</strong>： - 形状：`[B, D]` 变成 `[B, D]`。 - 目的：抹杀向量绝对模长的影响。如果不做，模长大的样本会在梯度中“霸凌”模长小的样本，导致训练崩塌。 2. <strong>矩阵乘法 (`@`)</strong>： - 形状：`[B, D] @ [D, B] -&gt; [B, B]`。 - 物理意义：第 $(i, j)$ 个值表示第 $i$ 张图和第 $j$ 个文本的夹角余弦。对角线是正对，非对角线是负对。 3. <strong>标签构造与交叉熵</strong>： - `labels = torch.arange(B)`：对于第 0 行，正例是第 0 列；对于第 1 行，正例是第 1 列。完全不需要手动维护复杂的样本对队列。 4. <strong>真实模型对照</strong>： - 这段逻辑与 OpenAI 原版开源代码 `clip/model.py` 中的 `forward` 完全对应。在工业级多模态模型中，只是把这里随机初始化的 `img_embeds` 和 `txt_embeds` 换成 ViT 和 Transformer 文本塔。</p><p><strong>新手极易踩的 3 个坑</strong>： - <strong>坑 1：漏掉温度系数</strong>。若没有 `logit_scale`，余弦值被限制在 $[-1, 1]$，经过 Softmax 之后无论正负样本概率都很平缓，梯度非常微弱，收敛极慢。 - <strong>坑 2：只算单向损失</strong>。只做 `loss_i`（图搜文）而忘了 `loss_t`（文搜图）。单向损失会导致模态空间各向异性（Anisotropy），学出的特征分布歪斜。 - <strong>坑 3：跨 GPU 训练时未聚合负样本</strong>。在多卡分布式训练时，如果不把各卡特征用 `all_gather` 收集起来算相似度，负样本数就会缩水为单卡 Batch 大小，性能会大幅下降。</p></div>
   </div>
   
   <div class="kl-section">
     <div class="kl-sec-label">再练一步</div>
-    <div class="kl-sec-body"><ul class="kl-list"><li>1. 尝试把代码中的 manual_clip_grad_norm_ 改写为按值裁剪 (clip_grad_value_)，对比两者对梯度方向产生的影响。</li><li>2. 观察如果把 y_exploding 改成微小值（如 0.01），裁剪逻辑是否还会触发缩放？</li></ul></div>
+    <div class="kl-sec-body"><ul class="kl-list"><li>请给该实现增加一个温度系数截断（Clipping），防止 logit_scale 超过 100 导致 FP16 数值下溢或溢出。</li><li>如何修改代码，把纯图文对齐改写为说话人日志中的“人脸特征-声纹特征”对齐模块？</li></ul></div>
   </div>
   <div class="kl-section">
     <div class="kl-sec-label">类比</div>
-    <div class="kl-sec-body kl-analogy">反向传播算完后，step 之前横插一刀：只要范数超了限，原地缩放不改向。</div>
+    <div class="kl-sec-body kl-analogy">这段代码的本质就是给批次内数据画一张表格：让对角线上的“原配”打高分，逼其余“路人”打低分。</div>
   </div>
   
-  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">loss.backward()：反向传播计算图并生成梯度的 PyTorch 核心方法。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">optimizer.step()：根据参数当前的 grad 属性执行一次参数更新操作。</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">in-place 操作（原位修改）：以 mul_ 为代表的内存直接复写方式，避免额外的显存分配。</span><span class="kl-related-desc"></span></div></div></div>
+  <div class="kl-related"><div class="kl-related-title">知识网络</div><div class="kl-related-grid"><div class="kl-related-item"><span class="kl-related-name">余弦相似度（Cosine Similarity）:通过向量夹角衡量语义接近度，与模长解耦</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">温度参数（Temperature Factor）:控制概率分布平滑度的超参数，影响难负样本挖掘强度</span><span class="kl-related-desc"></span></div><div class="kl-related-item"><span class="kl-related-name">In-batch 负采样:直接将当前批次内其他不配对样本视作负例的节约算力技巧</span><span class="kl-related-desc"></span></div></div></div>
 </article>
   <section class="kl-archive">
-  <h3 class="kl-archive-heading">往期记录 <span class="kl-arc-count">433 条记录</span></h3>
-  <div class="kl-archive-row"><span class="kl-arc-date">2026年11月08日</span><span class="kl-arc-title"><a href="learn-20261108.html" class="kl-arc-link">ASR 基本流水线：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">ASR</span><span class="kl-arc-chip">acoustic model</span><span class="kl-arc-chip">decoder</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月08日</span><span class="kl-arc-title"><a href="learn-20261108.html" class="kl-arc-link">ASR 基本流水线：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">ASR 基本流水线</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月07日</span><span class="kl-arc-title"><a href="learn-20261107.html" class="kl-arc-link">权重衰减：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">weight decay</span><span class="kl-arc-chip">L2 regularization</span><span class="kl-arc-chip">AdamW</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月07日</span><span class="kl-arc-title"><a href="learn-20261107.html" class="kl-arc-link">权重衰减：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">权重衰减</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月06日</span><span class="kl-arc-title"><a href="learn-20261106.html" class="kl-arc-link">InfoNCE 损失：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">InfoNCE</span><span class="kl-arc-chip">contrastive loss</span><span class="kl-arc-chip">temperature</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月06日</span><span class="kl-arc-title"><a href="learn-20261106.html" class="kl-arc-link">InfoNCE 损失：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">InfoNCE 损失</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月05日</span><span class="kl-arc-title"><a href="learn-20261105.html" class="kl-arc-link">VAD 语音活动检测：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">VAD</span><span class="kl-arc-chip">speech activity</span><span class="kl-arc-chip">segmentation</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月05日</span><span class="kl-arc-title"><a href="learn-20261105.html" class="kl-arc-link">VAD 语音活动检测：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">VAD 语音活动检测</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月05日</span><span class="kl-arc-title"><a href="learn-20261105.html" class="kl-arc-link">Adam 与 AdamW：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">Adam</span><span class="kl-arc-chip">AdamW</span><span class="kl-arc-chip">optimizer</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月05日</span><span class="kl-arc-title"><a href="learn-20261105.html" class="kl-arc-link">Adam 与 AdamW：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Adam 与 AdamW</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月04日</span><span class="kl-arc-title"><a href="learn-20261104.html" class="kl-arc-link">SGD 与动量：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">SGD</span><span class="kl-arc-chip">momentum</span><span class="kl-arc-chip">optimization</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月04日</span><span class="kl-arc-title"><a href="learn-20261104.html" class="kl-arc-link">SGD 与动量：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">SGD 与动量</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月03日</span><span class="kl-arc-title"><a href="learn-20261103.html" class="kl-arc-link">对比学习：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">contrastive learning</span><span class="kl-arc-chip">positive pair</span><span class="kl-arc-chip">negative pair</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月03日</span><span class="kl-arc-title"><a href="learn-20261103.html" class="kl-arc-link">对比学习：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">对比学习</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月02日</span><span class="kl-arc-title"><a href="learn-20261102.html" class="kl-arc-link">Log-Mel 频谱：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">log-mel spectrogram</span><span class="kl-arc-chip">dynamic range</span><span class="kl-arc-chip">audio</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月02日</span><span class="kl-arc-title"><a href="learn-20261102.html" class="kl-arc-link">Log-Mel 频谱：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Log-Mel 频谱</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月02日</span><span class="kl-arc-title"><a href="learn-20261102.html" class="kl-arc-link">学习率与调度器：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">learning rate</span><span class="kl-arc-chip">warmup</span><span class="kl-arc-chip">scheduler</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月02日</span><span class="kl-arc-title"><a href="learn-20261102.html" class="kl-arc-link">学习率与调度器：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">学习率与调度器</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月01日</span><span class="kl-arc-title"><a href="learn-20261101.html" class="kl-arc-link">BatchNorm：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">BatchNorm</span><span class="kl-arc-chip">running statistics</span><span class="kl-arc-chip">train eval</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月01日</span><span class="kl-arc-title"><a href="learn-20261101.html" class="kl-arc-link">BatchNorm：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">BatchNorm</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">Dropout 为什么有效：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">dropout</span><span class="kl-arc-chip">regularization</span><span class="kl-arc-chip">overfitting</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">Dropout 为什么有效：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Dropout 为什么有效</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">早期、晚期与中间融合：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">early fusion</span><span class="kl-arc-chip">late fusion</span><span class="kl-arc-chip">intermediate fusion</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">早期、晚期与中间融合：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">早期融合</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月30日</span><span class="kl-arc-title"><a href="learn-20261030.html" class="kl-arc-link">Mel 频率与 Mel 滤波器组：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">Mel scale</span><span class="kl-arc-chip">filterbank</span><span class="kl-arc-chip">audio feature</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月30日</span><span class="kl-arc-title"><a href="learn-20261030.html" class="kl-arc-link">Mel 频率与 Mel 滤波器组：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Mel 频率与 Mel 滤波器组</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">自动微分 Autograd：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">autograd</span><span class="kl-arc-chip">computation graph</span><span class="kl-arc-chip">backward</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">自动微分 Autograd：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">自动微分 Autograd</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">STFT 短时傅里叶变换：
+  <h3 class="kl-archive-heading">往期记录 <span class="kl-arc-count">435 条记录</span></h3>
+  <div class="kl-archive-row"><span class="kl-arc-date">2026年11月09日</span><span class="kl-arc-title"><a href="learn-20261109.html" class="kl-arc-link">梯度裁剪：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">gradient clipping</span><span class="kl-arc-chip">exploding gradient</span><span class="kl-arc-chip">norm</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月09日</span><span class="kl-arc-title"><a href="learn-20261109.html" class="kl-arc-link">梯度裁剪：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">梯度裁剪</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月08日</span><span class="kl-arc-title"><a href="learn-20261108.html" class="kl-arc-link">ASR 基本流水线：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">ASR</span><span class="kl-arc-chip">acoustic model</span><span class="kl-arc-chip">decoder</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月08日</span><span class="kl-arc-title"><a href="learn-20261108.html" class="kl-arc-link">ASR 基本流水线：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">ASR 基本流水线</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月07日</span><span class="kl-arc-title"><a href="learn-20261107.html" class="kl-arc-link">权重衰减：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">weight decay</span><span class="kl-arc-chip">L2 regularization</span><span class="kl-arc-chip">AdamW</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月07日</span><span class="kl-arc-title"><a href="learn-20261107.html" class="kl-arc-link">权重衰减：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">权重衰减</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月06日</span><span class="kl-arc-title"><a href="learn-20261106.html" class="kl-arc-link">InfoNCE 损失：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">InfoNCE</span><span class="kl-arc-chip">contrastive loss</span><span class="kl-arc-chip">temperature</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月06日</span><span class="kl-arc-title"><a href="learn-20261106.html" class="kl-arc-link">InfoNCE 损失：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">InfoNCE 损失</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月05日</span><span class="kl-arc-title"><a href="learn-20261105.html" class="kl-arc-link">VAD 语音活动检测：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">VAD</span><span class="kl-arc-chip">speech activity</span><span class="kl-arc-chip">segmentation</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月05日</span><span class="kl-arc-title"><a href="learn-20261105.html" class="kl-arc-link">VAD 语音活动检测：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">VAD 语音活动检测</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月05日</span><span class="kl-arc-title"><a href="learn-20261105.html" class="kl-arc-link">Adam 与 AdamW：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">Adam</span><span class="kl-arc-chip">AdamW</span><span class="kl-arc-chip">optimizer</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月05日</span><span class="kl-arc-title"><a href="learn-20261105.html" class="kl-arc-link">Adam 与 AdamW：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Adam 与 AdamW</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月04日</span><span class="kl-arc-title"><a href="learn-20261104.html" class="kl-arc-link">SGD 与动量：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">SGD</span><span class="kl-arc-chip">momentum</span><span class="kl-arc-chip">optimization</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月04日</span><span class="kl-arc-title"><a href="learn-20261104.html" class="kl-arc-link">SGD 与动量：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">SGD 与动量</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月03日</span><span class="kl-arc-title"><a href="learn-20261103.html" class="kl-arc-link">对比学习：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">contrastive learning</span><span class="kl-arc-chip">positive pair</span><span class="kl-arc-chip">negative pair</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月03日</span><span class="kl-arc-title"><a href="learn-20261103.html" class="kl-arc-link">对比学习：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">对比学习</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月02日</span><span class="kl-arc-title"><a href="learn-20261102.html" class="kl-arc-link">Log-Mel 频谱：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">log-mel spectrogram</span><span class="kl-arc-chip">dynamic range</span><span class="kl-arc-chip">audio</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月02日</span><span class="kl-arc-title"><a href="learn-20261102.html" class="kl-arc-link">Log-Mel 频谱：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Log-Mel 频谱</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月02日</span><span class="kl-arc-title"><a href="learn-20261102.html" class="kl-arc-link">学习率与调度器：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">learning rate</span><span class="kl-arc-chip">warmup</span><span class="kl-arc-chip">scheduler</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月02日</span><span class="kl-arc-title"><a href="learn-20261102.html" class="kl-arc-link">学习率与调度器：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">学习率与调度器</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月01日</span><span class="kl-arc-title"><a href="learn-20261101.html" class="kl-arc-link">BatchNorm：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">BatchNorm</span><span class="kl-arc-chip">running statistics</span><span class="kl-arc-chip">train eval</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年11月01日</span><span class="kl-arc-title"><a href="learn-20261101.html" class="kl-arc-link">BatchNorm：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">BatchNorm</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">Dropout 为什么有效：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">dropout</span><span class="kl-arc-chip">regularization</span><span class="kl-arc-chip">overfitting</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">Dropout 为什么有效：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Dropout 为什么有效</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">早期、晚期与中间融合：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">early fusion</span><span class="kl-arc-chip">late fusion</span><span class="kl-arc-chip">intermediate fusion</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月31日</span><span class="kl-arc-title"><a href="learn-20261031.html" class="kl-arc-link">早期、晚期与中间融合：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">早期融合</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月30日</span><span class="kl-arc-title"><a href="learn-20261030.html" class="kl-arc-link">Mel 频率与 Mel 滤波器组：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">Mel scale</span><span class="kl-arc-chip">filterbank</span><span class="kl-arc-chip">audio feature</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月30日</span><span class="kl-arc-title"><a href="learn-20261030.html" class="kl-arc-link">Mel 频率与 Mel 滤波器组：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">Mel 频率与 Mel 滤波器组</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">自动微分 Autograd：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">autograd</span><span class="kl-arc-chip">computation graph</span><span class="kl-arc-chip">backward</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">自动微分 Autograd：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">自动微分 Autograd</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">STFT 短时傅里叶变换：
 今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">STFT</span><span class="kl-arc-chip">spectrum</span><span class="kl-arc-chip">time-frequency</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">STFT 短时傅里叶变换：
 动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">STFT 短时傅里叶
 变换</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">参数初始化：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">initialization</span><span class="kl-arc-chip">Xavier</span><span class="kl-arc-chip">Kaiming</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">参数初始化：动手实现</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">practice</span><span class="kl-arc-chip">Python</span><span class="kl-arc-chip">PyTorch</span><span class="kl-arc-chip">参数初始化</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">Cross-Attention：今天真正弄懂</a></span><span class="kl-arc-meta"><span class="kl-arc-chip">foundation</span><span class="kl-arc-chip">cross-attention</span><span class="kl-arc-chip">query</span><span class="kl-arc-chip">multimodal fusion</span></span></div><div class="kl-archive-row"><span class="kl-arc-date">2026年10月29日</span><span class="kl-arc-title"><a href="learn-20261029.html" class="kl-arc-link">Cross-Attention：动手实现

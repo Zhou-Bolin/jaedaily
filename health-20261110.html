@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>健康学堂 · Jae Daily</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f5f2ec;color:#1f2933;font-family:'Noto Serif SC','Songti SC','SimSun',Georgia,serif;line-height:1.8;padding:28px 16px 56px;}
+.wrap{max-width:980px;margin:0 auto;}
+.top{border-bottom:1px solid #cdbf9f;padding-bottom:18px;margin-bottom:24px;}
+.eyebrow{font:700 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:8px;}
+h1{font-size:36px;letter-spacing:4px;color:#2b2118;line-height:1.2;}
+.sub{font:13px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;margin-top:8px;}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start;}
+.card{background:#fffefa;border:1px solid #ded3bb;border-radius:8px;box-shadow:0 2px 10px rgba(60,42,20,.06);overflow:hidden;}
+.lesson-head{padding:18px 22px;background:#fff6e6;border-bottom:1px solid #e5d7b8;}
+.kicker{font:700 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#9a5b12;letter-spacing:1px;margin-bottom:6px;}
+h2{font-size:24px;color:#2b2118;line-height:1.35;}
+.memory{margin-top:12px;display:inline-block;font:800 14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;background:#7a2f1210;border:1px solid #7a2f1230;border-radius:999px;padding:5px 12px;}
+.section{padding:16px 22px;border-bottom:1px solid #eee5d3;}
+.section:last-child{border-bottom:none;}
+.chapter{padding:20px 22px;border-bottom:1px solid #eee5d3;}
+.chapter:last-child{border-bottom:none;}
+.chapter-no{font:800 10px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#9a5b12;letter-spacing:1.2px;margin-bottom:4px;}
+.chapter h2{font-size:22px;margin-bottom:12px;}
+.theme-lead{background:#2b2118;color:#f9f3e7;padding:20px 22px;border-bottom:1px solid #4a3928;}
+.theme-lead h2{color:#fff7e8;font-size:23px;margin-bottom:9px;}
+.theme-lead p{color:#e7ded2;font-size:14px;}
+.fact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.fact{background:#f8f5ee;border-radius:6px;padding:11px 12px;}
+.fact b{display:block;font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;margin-bottom:4px;}
+.fact p{font-size:13px;line-height:1.7;}
+.takeaway{margin-top:12px;background:#fff6e6;border-left:3px solid #b7791f;padding:10px 12px;border-radius:0 6px 6px 0;font-size:14px;}
+.kind{display:inline-block;font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#fff;background:#7a2f12;border-radius:999px;padding:4px 9px;margin-bottom:8px;}
+.video-link{display:flex;gap:12px;align-items:center;background:#2b2118;color:#fff;text-decoration:none;border-radius:8px;padding:14px;margin-top:10px;}
+.video-link:hover{text-decoration:none;background:#473425;}
+.video-link .play{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#fff2;color:#fff;flex:none;}
+.video-link b{display:block;font-size:14px;}
+.video-link small{display:block;color:#e7ded2;margin-top:3px;font:11px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+.video-note{font-size:12px;margin-top:8px;color:#6b7280;}
+.video-empty{font:13px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f3f4f6;padding:12px;border-radius:6px;color:#4b5563;}
+.deep-read{background:#f8f5ee;border-radius:7px;padding:14px;margin-top:10px;}
+.deep-read p+ p{margin-top:10px;}
+.sources{padding-left:18px;}
+.sources li{font-size:12px;margin:4px 0;}
+.label{font:800 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;letter-spacing:1.2px;margin-bottom:8px;}
+p{font-size:15px;color:#374151;}
+ol{padding-left:22px;}
+li{margin:7px 0;font-size:15px;color:#374151;}
+.check{font:700 14px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#065f46;background:#ecfdf5;border-left:3px solid #059669;padding:10px 12px;border-radius:0 6px 6px 0;}
+.warn{font:12px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7c2d12;background:#fff7ed;border-left:3px solid #ea580c;padding:10px 12px;border-radius:0 6px 6px 0;}
+.side{display:flex;flex-direction:column;gap:14px;}
+.plan{padding:14px 16px;}
+.plan-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #eee5d3;}
+.plan-row:last-child{border-bottom:none;}
+.plan-row.active{background:#7a2f120c;margin:0 -8px;padding:9px 8px;border-radius:6px;}
+.plan-day{font:800 11px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;min-width:34px;}
+.plan-body strong{display:block;font:800 13px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#2b2118;}
+.plan-body span{display:block;font:12px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;}
+.note{padding:14px 16px;font:12px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#6b7280;}
+.back{display:inline-block;margin-top:22px;font:700 12px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#7a2f12;text-decoration:none;}
+@media(max-width:760px){.grid{display:block;}.side{margin-top:16px;}.fact-grid{grid-template-columns:1fr;}h1{font-size:30px;}h2{font-size:21px;}body{padding:20px 12px 44px;}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div class="eyebrow">Health Classroom · 2026年11月10日</div>
+    <h1>健康学堂</h1>
+    <div class="sub">每天 10–20 分钟：读懂一种食物、一个人体机制和一项训练技巧，再看一节不重复的视频课。</div>
+  </header>
+  <div class="grid">
+    <article class="card">
+      <section class="theme-lead">
+        <div class="chapter-no" style="color:#e8c87a">今日学习主线 · 跑步</div>
+        <h2>配速、胃肠与糖原：今天围绕跑步耐力学习</h2>
+        <p>跑步表现不只由心肺决定。糖原储备、补液、胃肠耐受、肌腱负荷和配速纪律会一起影响后半程。轻松跑、间歇跑和长跑的营养需求也不同，不能用一套固定餐单覆盖所有训练。</p>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">01 · 今日食物 · 114/134</div>
+        <h2>晨跑前小餐：香蕉、吐司或少量运动饮料离胃较快。</h2>
+        <div class="fact-grid">
+          <div class="fact"><b>里面有什么</b><p>少量易消化碳水可改善较长晨跑的供能。</p></div>
+          <div class="fact"><b>进入身体后</b><p>烹饪与组合会改变水分、消化速度和能量密度。香蕉、吐司或少量运动饮料离胃较快。</p></div>
+          <div class="fact"><b>训练日怎么吃</b><p>短轻松跑可按习惯空腹，长跑或强度课更适合补给。</p></div>
+          <div class="fact"><b>挑选与搭配</b><p>提前试验半根香蕉或一片吐司。</p></div>
+        </div>
+        <div class="takeaway"><b>别被这个误区带偏：</b>空腹晨跑并不天然燃烧更多全天体脂。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">02 · 人体知识 · 20/100</div>
+        <h2>乳酸阈</h2>
+        <div class="memory">能维持多久，比乳酸有没有更重要。</div>
+        <p style="margin-top:12px">强度升高后乳酸生成与清除逐渐失衡，呼吸和疲劳明显加速；阈值不是一道绝对开关。</p>
+        <div class="fact-grid">
+          <div class="fact"><b>和你的训练有什么关系</b><p>节奏跑训练可提高较快配速的持续能力，但频率不宜过高。</p></div>
+          <div class="fact"><b>今天观察什么</b><p>用能说短句但不能长聊的感觉识别一次受控节奏。</p></div>
+        </div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">03 · 今日训练 · 14/60</div>
+        <div class="kind">跑步</div>
+        <h2>间歇训练的快段要可重复</h2>
+        <p>第一组就全力会让后续质量崩溃；有效间歇应让动作和目标配速大致稳定。</p>
+        <div class="fact-grid">
+          <div class="fact"><b>今天这样练</b><p>尝试 6 组 1 分钟较快跑、2 分钟慢跑，最后一组仍能保持动作。</p></div>
+          <div class="fact"><b>常见错误</b><p>把间歇跑成冲刺测试，或恢复段也不肯放慢。</p></div>
+        </div>
+        <div class="warn" style="margin-top:12px">安全边界：没有跑步基础或近期疼痛时先不做高速间歇。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">04 · 今日视频课 · 不重复推荐</div>
+        <h2>看一次示范，再带着一个重点练</h2>
+        <div class="video-empty">“跑步”相关视频已经全部学完。为保证相关且不重复，今天不推荐无关课程。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">05 · 今日行动与自测 · 第 6/44 讲</div>
+        <h2>睡眠不足会让减重变困难</h2>
+        <div class="memory">睡少了，饿得真。</div>
+        <p style="margin-top:12px">睡眠不足会影响食欲激素、冲动控制和运动恢复。很多夜间饥饿，其实是疲劳。</p>
+        <ol style="margin-top:8px"><li>今晚固定一个停止进食时间，睡前 2 小时不再吃正餐。</li><li>睡前 30 分钟远离短视频和工作消息。</li><li>早晨尽量接触自然光 5 到 10 分钟。</li></ol>
+        <div class="check">睡前检查：记录入睡时间、醒来精神和夜间加餐情况。</div>
+        <div class="warn" style="margin-top:10px">长期打鼾、憋醒、白天嗜睡，需考虑睡眠呼吸问题并就医评估。</div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">06 · 串起来理解 · 深度阅读</div>
+        <h2>从知道，变成会安排</h2>
+        <div class="deep-read">
+          <p><b>放进真实训练：</b>短时间轻松跑通常不需要特殊补给；训练越长、强度越高或天气越热，碳水、液体与钠越值得提前规划。赛前餐和能量胶必须在训练中排练，临近跑步时减少油脂、纤维和陌生食物，通常比追求所谓超级食物更重要。</p>
+          <p><b>建立自己的反馈：</b>把配速、心率、主观用力、胃部感受和训练前进食放在一起记录。单看配速无法区分天气、疲劳、缺水或供能问题，也不要因为一天心率偏高就立即修改整个计划。</p>
+          <p><b>今天的连接：</b>“晨跑前小餐”解决吃什么与怎么搭配；“乳酸阈”解释身体为何这样反应；“间歇训练的快段要可重复”则把原理变成一个可练习动作。不要单独记三个结论，要观察它们在一次真实训练中如何互相影响。</p>
+        </div>
+      </section>
+      <section class="chapter">
+        <div class="chapter-no">资料来源 · 用于继续核对</div>
+        <ul class="sources"><li><a href="https://www.who.int/en/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener noreferrer">WHO 健康饮食原则</a></li><li><a href="https://ods.od.nih.gov/factsheets/list-VitaminsMinerals/" target="_blank" rel="noopener noreferrer">NIH 维生素与矿物质资料</a></li><li><a href="https://acsm.org/education-resources/pronouncements-scientific-communications/position-stands/" target="_blank" rel="noopener noreferrer">ACSM 运动医学立场文件</a></li></ul>
+        <p style="font-size:12px;color:#6b7280;margin-top:8px">正文是健康教育与训练常识，不用于诊断疾病或替代个体化医疗、营养和康复建议。</p>
+      </section>
+    </article>
+    <aside class="side">
+      <div class="card plan">
+        <div class="label">本周循环计划</div>
+        <div class="plan-row"><div class="plan-day">周一</div><div class="plan-body"><strong>久坐清零</strong><span>每小时起身两分钟。</span></div></div><div class="plan-row active"><div class="plan-day">周二</div><div class="plan-body"><strong>平衡练习</strong><span>靠近支撑完成单脚站立。</span></div></div><div class="plan-row"><div class="plan-day">周三</div><div class="plan-body"><strong>食物准备</strong><span>提前准备明天的一份蔬果和蛋白质。</span></div></div><div class="plan-row"><div class="plan-day">周四</div><div class="plan-body"><strong>轻快活动</strong><span>分三次各走 10 分钟。</span></div></div><div class="plan-row"><div class="plan-day">周五</div><div class="plan-body"><strong>注意力休息</strong><span>安排一餐完全离屏。</span></div></div><div class="plan-row"><div class="plan-day">周六</div><div class="plan-body"><strong>家务运动</strong><span>用整理、清洁或采购累计活动量。</span></div></div><div class="plan-row"><div class="plan-day">周日</div><div class="plan-body"><strong>环境整理</strong><span>清理一个影响健康习惯的障碍。</span></div></div>
+      </div>
+      <div class="card note">
+        <strong>训练最小闭环：</strong><br>
+        每周只追踪训练完成次数、睡眠、疼痛与疲劳趋势。篮球、长跑和力量训练的负荷需要一起计算。
+        <br><br><strong>视频库状态：</strong>已全部学完，等待补充新课程。</div>
+    </aside>
+  </div>
+  <a class="back" href="latest.html">← 返回简报</a>
+</main>
+</body>
+</html>
