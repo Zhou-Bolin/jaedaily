@@ -218,6 +218,12 @@ a:hover{text-decoration:underline;}
 .ai-paper-row:hover{background:var(--bg);}
 .ai-paper-icon{font-size:13px;flex-shrink:0;margin-top:1px;}
 .ai-paper-title{font-size:12px;color:var(--text);line-height:1.5;font-family:sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+.ai-sidebar .ai-paper-row{justify-content:space-between;padding:11px 13px}
+.ai-sidebar .ai-paper-title{font-size:13px;line-height:1.65;white-space:normal;overflow-wrap:anywhere}
+.ai-sidebar .ai-paper-icon{color:var(--text3)}
+.ai-sidebar-link{margin-left:auto;color:#e7c68b;font-size:11px;text-decoration:none}
+.ai-sidebar-link:hover{text-decoration:underline}
+.ai-sidebar-empty{margin:0;padding:11px 13px;color:var(--text3);font:12px/1.65 sans-serif}
 /* ══ Footer ════════════════════════════════════════════════════════ */
 .footer{background:var(--footer-bg);padding:18px 32px;}
 .footer-sources{font-size:11px;color:#6b7280;margin-bottom:8px;line-height:1.8;}
@@ -494,14 +500,25 @@ body.dark .brand-mark{mix-blend-mode:normal}
   .news-grid{display:block}.share-btn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:8px;font-size:14px}.card-expand summary{min-height:44px;font-size:12px;display:flex;align-items:center}.card-title{font-size:calc(var(--fs,14px) + 3px)}
 }
 
-.news-card.featured-story{border:0;padding:0}
-.featured-story .ep-context{max-inline-size:49rem}
+.news-card.featured-story{border:0;padding:0;gap:5px}
+.featured-story .card-meta{margin-top:2px}
+.featured-story .news-excerpt-label{margin:2px 0 0}
+.featured-story .ep-context{max-inline-size:49rem;margin:0;font-size:var(--fs,14px);line-height:1.75}
 .featured-story .read-link{font-size:12px;text-underline-offset:.22em}
 .news-card:target .card-title{color:var(--link)}
-.news-category-links{display:flex;gap:10px 18px;align-items:baseline;flex-wrap:wrap;
-  padding:10px 0 13px;border-bottom:1px solid var(--border2);font-size:13px;line-height:1.8}
-.news-category-links>span{color:var(--text3);font-size:12px}
-.news-category-links ul{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.news-category-links{margin:0 0 12px;padding:6px 0 9px;border-bottom:1px solid var(--border2);
+  font-size:13px;line-height:1.8}
+.news-category-links summary{color:var(--text3);font-size:12px;cursor:pointer;width:fit-content}
+.news-category-links summary:focus-visible{outline:2px solid var(--link);outline-offset:4px}
+.news-category-links ul{list-style:none;margin:6px 0 0;padding:0 0 0 1em;display:grid;gap:5px}
+@media(min-width:901px){
+  html{scroll-padding-top:12px}
+  .ep-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px;align-items:start}
+  .ep-grid .ep-card{padding:12px 0;margin:0}
+  .ep-grid .ep-num{font-size:20px;min-width:22px}
+  .filter-bar{position:sticky;top:0;z-index:4;background:var(--bg2);padding:10px 0}
+  .news-section{scroll-margin-top:72px}
+}
 .news-category-links a{color:var(--link);text-underline-offset:.22em}
 </style>
 <script>
@@ -564,7 +581,7 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 
 // ── 分类筛选 ──────────────────────────────────────────────────
-function filterSec(btn, sec) {
+function filterSec(btn, sec, jump) {
   document.querySelectorAll('.filter-chip').forEach(function(c) { c.classList.remove('active'); c.setAttribute('aria-pressed','false'); });
   btn.classList.add('active');
   btn.setAttribute('aria-pressed','true');
@@ -575,6 +592,10 @@ function filterSec(btn, sec) {
       s.classList.add('sec-hidden');
     }
   });
+  if (jump) {
+    var target = document.getElementById(sec === 'all' ? 'main-content' : sec);
+    if (target) target.scrollIntoView({block:'start'});
+  }
 }
 
 // Jump to the same article from the brief, category references or the index.
@@ -691,8 +712,9 @@ function shareCard(btn) {
 
     <!-- Main column -->
     <main id="main-content" tabindex="-1" class="main-col">
-      <details class="summary-box" open><summary class="summary-label">今日要点<span class="summary-toggle-hint"></span></summary><div class="summary-content"><ol class="news-brief-list"><li><a href="#card-d6ce3db7bc2f16abb209">美国官员表示，交战双方以“一定灵活性”恢复乌克兰和谈 <span aria-hidden="true">↓</span></a><span class="news-brief-source">BBC 国际</span></li><li><a href="#card-e464da6f1af129a87132">美国数据中心遭受重创、英特尔股价下跌，软银亏损 70 亿美元 <span aria-hidden="true">↓</span></a><span class="news-brief-source">CNBC</span></li><li><a href="#card-967d73ff1c0658ebd978">政府稱整個北環線項目建造成本總計862‍億　比原預算低28% <span aria-hidden="true">↓</span></a><span class="news-brief-source">RTHK 本地</span></li></ol><p class="news-attribution-note">点击标题跳到正文，原文链接附在报道下方。</p></div></details>
-      <div class="ep-section"><div class="ep-header"><span class="ep-header-title">今日选读</span><span class="ep-header-sub">摘录报道要点，保留原文出处</span></div><div class="ep-card"><div class="ep-num" aria-hidden="true">01</div><div class="ep-body"><article class="news-card featured-story" id="card-d6ce3db7bc2f16abb209" data-id="d6ce3db7bc2f16abb209" tabindex="-1" style="scroll-margin-top:80px;">
+      <div class="filter-bar" id="filter-bar" role="group" aria-label="新闻分类"><button type="button" class="filter-chip active" data-sec="all" aria-pressed="true" onclick="filterSec(this,'all',true)">全部</button><button type="button" class="filter-chip" data-sec="finance" aria-pressed="false" onclick="filterSec(this,'finance',true)">财经</button><button type="button" class="filter-chip" data-sec="tech" aria-pressed="false" onclick="filterSec(this,'tech',true)">科技</button><button type="button" class="filter-chip" data-sec="politics" aria-pressed="false" onclick="filterSec(this,'politics',true)">政治</button><button type="button" class="filter-chip" data-sec="china" aria-pressed="false" onclick="filterSec(this,'china',true)">中国</button><button type="button" class="filter-chip" data-sec="forum" aria-pressed="false" onclick="filterSec(this,'forum',true)">社区</button><button type="button" class="filter-chip" data-sec="other" aria-pressed="false" onclick="filterSec(this,'other',true)">其他</button></div>
+      
+      <div class="ep-section"><div class="ep-header"><span class="ep-header-title">今日选读</span><span class="ep-header-sub">摘录报道要点，保留原文出处</span></div><div class="ep-grid"><div class="ep-card"><div class="ep-num" aria-hidden="true">01</div><div class="ep-body"><article class="news-card featured-story" id="card-d6ce3db7bc2f16abb209" data-id="d6ce3db7bc2f16abb209" tabindex="-1" style="scroll-margin-top:80px;">
   <div class="card-title">美国官员表示，交战双方以“一定灵活性”恢复乌克兰和谈</div>
   
   <div class="card-meta">
@@ -754,11 +776,11 @@ function shareCard(btn) {
   </div>
   <p class="news-excerpt-label">CNBC · 报道摘要</p><div class="ep-context">The agency has found evidence of a potential increased risk of a rare eye condition linked to the use of GLP-1 drugs used for weight management and diabetes.</div><a href="https://www.cnbc.com/2026/11/10/fda-warning-vision-loss-glp1-wegovy-zepbound.html" class="read-link">→ 查看原文</a>
   
-</article></div></div></div>
+</article></div></div></div></div>
       
       
       <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年11月10日</div><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">综合</div><a href="https://www.ft.com/content/0b20d24a-580a-41df-a5f3-7f7dba4f552f?syn-25a6b1a6=1" class="slim-title" target="_blank" rel="noopener">FT报道：间谍丑闻过后，黄仁勋能否继续担任英伟达首席执行官？</a></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bbc.co.uk/news/articles/cqpvgvrpjvv8o?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">美国官员表示，交战双方以“一定灵活性”恢复乌克兰和谈</a></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bbc.co.uk/news/articles/cwr5y58jjp8ro?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">共和党国会议员将强制对国防部长赫格塞斯进行弹劾投票</a></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">财经</div><a href="https://www.bbc.co.uk/news/articles/c6zxjx01vyleo?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">BBC 财经报道：英伟达股价因黄与涉嫌中国间谍的恋情调查而暴跌</a></div></div><div class="slim-item"><div class="slim-num">05</div><div class="slim-body"><div class="slim-cat">政治</div><a href="https://www.bloomberg.com/news/videos/2026-11-10/france-still-attractive-despite-protests-forissier-video" class="slim-title" target="_blank" rel="noopener">尽管遭到抗议，法国“仍然有吸引力”：贸易部长</a></div></div></div>
-      <div class="filter-bar" id="filter-bar" role="group" aria-label="新闻分类"><button type="button" class="filter-chip active" data-sec="all" aria-pressed="true" onclick="filterSec(this,'all')">全部</button><button type="button" class="filter-chip" data-sec="finance" aria-pressed="false" onclick="filterSec(this,'finance')">财经</button><button type="button" class="filter-chip" data-sec="tech" aria-pressed="false" onclick="filterSec(this,'tech')">科技</button><button type="button" class="filter-chip" data-sec="politics" aria-pressed="false" onclick="filterSec(this,'politics')">政治</button><button type="button" class="filter-chip" data-sec="china" aria-pressed="false" onclick="filterSec(this,'china')">中国</button><button type="button" class="filter-chip" data-sec="forum" aria-pressed="false" onclick="filterSec(this,'forum')">社区</button><button type="button" class="filter-chip" data-sec="other" aria-pressed="false" onclick="filterSec(this,'other')">其他</button></div>
+      
       
 <section class="news-section" id="politics">
   <div class="sec-header" style="color:#8a1212;">
@@ -766,7 +788,7 @@ function shareCard(btn) {
     
     <span class="sec-count">6 条</span>
   </div>
-  <div class="news-category-links"><span>已在上方收录</span><ul><li><a href="#card-d6ce3db7bc2f16abb209">美国官员表示，交战双方以“一定灵活性”恢复乌克兰和谈 <span aria-hidden="true">↑</span></a></li></ul></div>
+  <details class="news-category-links"><summary>今日选读已收录 1 条</summary><ul><li><a href="#card-d6ce3db7bc2f16abb209">美国官员表示，交战双方以“一定灵活性”恢复乌克兰和谈 <span aria-hidden="true">↑</span></a></li></ul></details>
   <div class="news-grid"><article class="news-card" id="card-c0b4f9ba08f1491a0bff" data-id="c0b4f9ba08f1491a0bff" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">共和党国会议员将强制对国防部长赫格塞斯进行弹劾投票</div>
   
@@ -851,7 +873,7 @@ function shareCard(btn) {
     
     <span class="sec-count">6 条</span>
   </div>
-  <div class="news-category-links"><span>已在上方收录</span><ul><li><a href="#card-e464da6f1af129a87132">美国数据中心遭受重创、英特尔股价下跌，软银亏损 70 亿美元 <span aria-hidden="true">↑</span></a></li></ul></div>
+  <details class="news-category-links"><summary>今日选读已收录 1 条</summary><ul><li><a href="#card-e464da6f1af129a87132">美国数据中心遭受重创、英特尔股价下跌，软银亏损 70 亿美元 <span aria-hidden="true">↑</span></a></li></ul></details>
   <div class="news-grid"><article class="news-card" id="card-8207c17f570d38943411" data-id="8207c17f570d38943411" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">BBC 财经报道：英伟达股价因黄与涉嫌中国间谍的恋情调查而暴跌</div>
   
@@ -976,7 +998,7 @@ function shareCard(btn) {
     
     <span class="sec-count">6 条</span>
   </div>
-  <div class="news-category-links"><span>已在上方收录</span><ul><li><a href="#card-967d73ff1c0658ebd978">政府稱整個北環線項目建造成本總計862‍億　比原預算低28% <span aria-hidden="true">↑</span></a></li></ul></div>
+  <details class="news-category-links"><summary>今日选读已收录 1 条</summary><ul><li><a href="#card-967d73ff1c0658ebd978">政府稱整個北環線項目建造成本總計862‍億　比原預算低28% <span aria-hidden="true">↑</span></a></li></ul></details>
   <div class="news-grid"><article class="news-card" id="card-1134e992ef97a3de725a" data-id="1134e992ef97a3de725a" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">中国团队研究构建促进光合固碳的有机铁硫材料</div>
   
@@ -1322,15 +1344,12 @@ function shareCard(btn) {
     <!-- Sidebar (desktop only) -->
     <aside class="sidebar">
   <!-- AI 研报简报 -->
-  <div class="sidebar-block">
+  <div class="sidebar-block ai-sidebar">
   <div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">
-    <span>AI 研报</span>
-    <a href="ai-digest.html" style="font-size:10px;color:#c4a44a;
-      text-decoration:none;font-weight:600;margin-left:auto;">全部 →</a>
+    <span>论文精选</span>
+    <a href="/ai-digest.html#speech-priority" class="ai-sidebar-link">研报 →</a>
   </div>
-  <div style="padding:4px 0;">
-    <a href="https://news.ycombinator.com/item?id=50363461" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Gemini 即使对订阅用户也会在聊天记录上进行训练</span></a><a href="https://github.com/rivet-dev/rivet" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">·</span><span class="ai-paper-title">Rivet：基于 S3 的代理任务调度与扩展平台</span></a><a href="https://arxiv.org/abs/2611.06728" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">AUD</span><span class="ai-paper-title">轮次至关重要：基于轮次级信度分配推进流式视频强化学习<span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF52</span></span></a><a href="https://arxiv.org/abs/2611.06083" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">AUD</span><span class="ai-paper-title">SleuthVLM：全能视频理解是否真的需要处理音频？<span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF7</span></span></a><a href="https://arxiv.org/abs/2611.04634" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">AUD</span><span class="ai-paper-title">VeriSpoof：单一音频大模型实现深度伪造检测与验证<span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF6</span></span></a><a href="https://arxiv.org/abs/2611.06043" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:9px;font-family:sans-serif;color:#94a3b8;font-weight:600;min-width:28px;">AUD</span><span class="ai-paper-title">Confucius4-R2T2：用于实时语音转录的稳定前…<span style="font-size:9px;color:#b8940e;font-family:sans-serif;"> HF86</span></span></a>
-  </div>
+  <a href="https://arxiv.org/abs/2611.08373" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">SLA：在持续预训练与下游训练中共同注入空间对齐监督</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2611.05275" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">Route Anything：通用AI系统的模型与策略路由研究</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2610.33127" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">Beyond Visible Speakers：结合上下文与说话人注册的主动说话人检测</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a>
 </div>
   <!-- 每日学习入口 -->
   <div class="sidebar-block">
@@ -1353,7 +1372,7 @@ function shareCard(btn) {
         健康学堂
       </div>
       <div style="font-size:11px;color:#94a3b8;font-family:sans-serif;line-height:1.5;">
-        减重 · 饮食 · 运动 · 睡眠<br>
+        工位健康 · 饮食 · 运动 · 睡眠<br>
         <span style="color:#6b7280;font-size:10px;">每日行动卡 · 84 课实用知识库</span>
       </div>
     </a>
