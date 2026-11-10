@@ -133,6 +133,16 @@ a:hover{text-decoration:underline;}
   background:rgba(0,0,0,.18);}
 .mast-strip-item{white-space:nowrap;}
 .mast-strip-sep{padding:0 6px;color:rgba(232,200,122,.4);}
+.edition-coverage{padding:0 20px;color:#f5e6d6;font:12px/1.7 sans-serif}
+.edition-coverage>summary{margin:0 auto;padding:7px 0 10px;width:max-content;max-width:100%;cursor:pointer}
+.edition-coverage>summary:focus-visible{outline-color:#f5e6d6}
+.edition-coverage-status{color:var(--edition-gold,#e8c87a)}
+.edition-coverage-body{padding:10px 0 15px;border-top:1px solid rgba(255,255,255,.23)}
+.edition-coverage-body dl{margin:0;display:grid;gap:7px}
+.edition-coverage-body dl>div{display:grid;grid-template-columns:164px minmax(0,1fr);gap:8px}
+.edition-coverage-body dt{font-weight:600}
+.edition-coverage-body dd{margin:0;overflow-wrap:anywhere}
+.edition-coverage-body p{margin:0 0 8px}
 
 /* ══ Summary ═══════════════════════════════════════════════════════ */
 .summary-box{background:var(--summary-bg);border-left:4px solid var(--summary-border);
@@ -522,16 +532,6 @@ body.dark .brand-mark{mix-blend-mode:normal}
   .slim-item,.slim-item:last-child{padding:14px 16px;border:1px solid var(--border);background:var(--inset-bg)}
 }
 .news-category-links a{color:var(--link);text-underline-offset:.22em}
-.edition-coverage{padding:0 20px;color:#f5e6d6;font:12px/1.7 sans-serif}
-.edition-coverage>summary{margin:0 auto;padding:7px 0 10px;width:max-content;max-width:100%;cursor:pointer}
-.edition-coverage>summary:focus-visible{outline-color:#f5e6d6}
-.edition-coverage-status{color:var(--edition-gold,#e8c87a)}
-.edition-coverage-body{padding:10px 0 15px;border-top:1px solid rgba(255,255,255,.23)}
-.edition-coverage-body dl{margin:0;display:grid;gap:7px}
-.edition-coverage-body dl>div{display:grid;grid-template-columns:164px minmax(0,1fr);gap:8px}
-.edition-coverage-body dt{font-weight:600}
-.edition-coverage-body dd{margin:0;overflow-wrap:anywhere}
-.edition-coverage-body p{margin:0 0 8px}
 </style>
 <script>
 // ── 持久化设置（暗色模式 + 字号）──────────────────────────────
@@ -704,11 +704,11 @@ function shareCard(btn) {
       <span class="mast-strip-sep">·</span>
       <span class="mast-strip-item">星期二</span>
       <span class="mast-strip-sep">·</span>
-      <span class="mast-strip-item">本期 13 家媒体</span>
+      <span class="mast-strip-item">本期 15 家媒体</span>
       <span class="mast-strip-sep">·</span>
       <span class="mast-strip-item">AI 辅助整理</span>
     </div>
-    <details class="edition-coverage"><summary>本版发布 <time datetime="2026-11-10T19:42+08:00">北京时间 11月10日 19:42</time> <span class="edition-coverage-status">· 4 个来源待补抓</span></summary><div class="edition-coverage-body"><p>来源检查截至 11月10日 18:07</p><p>范围为本期配置的新闻 RSS 与官方栏目。</p><dl><div><dt>待补抓 · 4 个</dt><dd>Reuters、AP、虎嗅、NIH Health</dd></div><div><dt>检查成功，暂无可用条目 · 5 个</dt><dd>新华社、环球时报、中国军网、MedlinePlus、中国政府网</dd></div><div><dt>抓到可用条目 · 55 个</dt><dd>BBC 国际、BBC 财经、FT、Bloomberg、NYT 国际、NYT 财经、CNBC、The Guardian、France 24、Sky News、El País、El Mundo、Al Jazeera、Middle East Eye、Japan Times、Yonhap、SCMP、The Hindu、RT、TASS、中国新闻网、CGTN 中国、CGTN 国际、CGTN 财经、RTHK 本地、RTHK 国际、Politico EU、MIT Tech Review、The Verge、Wired、Ars Technica、TechCrunch、Defense.gov、RUSI、War on the Rocks、Game Developer、Stanford SEP、Aeon、Paris Review、Artforum、Smithsonian、科技日报、中科院科研进展、教育部工作动态、中新网社会、中新网教育、国家统计局发布、人民网高层动态、人民网国际、人民网财经、人民网军事、新华网国际、新华网科技、央视新闻中国、央视新闻国际</dd></div></dl></div></details>
+    <details class="edition-coverage"><summary>本版生成 <time datetime="2026-11-10T20:34+08:00">北京时间 11月10日 20:34</time> <span class="edition-coverage-status">· 5 个来源待补抓</span></summary><div class="edition-coverage-body"><p>来源检查截至 11月10日 20:27</p><p>范围为本期配置的新闻 RSS 与官方栏目。</p><dl><div><dt>待补抓 · 5 个</dt><dd>Reuters、AP、Middle East Eye、虎嗅、NIH Health</dd></div><div><dt>检查成功，暂无可用条目 · 5 个</dt><dd>新华社、环球时报、中国军网、MedlinePlus、中国政府网</dd></div><div><dt>抓到可用条目 · 54 个</dt><dd>BBC 国际、BBC 财经、FT、Bloomberg、NYT 国际、NYT 财经、CNBC、The Guardian、France 24、Sky News、El País、El Mundo、Al Jazeera、Japan Times、Yonhap、SCMP、The Hindu、RT、TASS、中国新闻网、CGTN 中国、CGTN 国际、CGTN 财经、RTHK 本地、RTHK 国际、Politico EU、MIT Tech Review、The Verge、Wired、Ars Technica、TechCrunch、Defense.gov、RUSI、War on the Rocks、Game Developer、Stanford SEP、Aeon、Paris Review、Artforum、Smithsonian、科技日报、中科院科研进展、教育部工作动态、中新网社会、中新网教育、国家统计局发布、人民网高层动态、人民网国际、人民网财经、人民网军事、新华网国际、新华网科技、央视新闻中国、央视新闻国际</dd></div></dl></div></details>
   </div>
 
   <div class="daily-nav-wrap"><a class="jd-skip-link" href="#main-content">跳到正文</a><nav class="brand-nav" aria-label="栏目导航"><a aria-current="page" href="../latest.html">每日简报</a><a href="../ai-digest.html">论文研报</a><a href="../learn.html">每日一课</a><a href="../advanced.html">进阶课堂</a><a href="../health.html">健康学堂</a><a href="../favorites.html">收藏</a><a href="../archive/">往期</a></nav>
@@ -727,38 +727,23 @@ function shareCard(btn) {
     <main id="main-content" tabindex="-1" class="main-col">
       <div class="filter-bar" id="filter-bar" role="group" aria-label="新闻分类"><button type="button" class="filter-chip active" data-sec="all" aria-pressed="true" onclick="filterSec(this,'all',true)">全部</button><button type="button" class="filter-chip" data-sec="finance" aria-pressed="false" onclick="filterSec(this,'finance',true)">财经</button><button type="button" class="filter-chip" data-sec="tech" aria-pressed="false" onclick="filterSec(this,'tech',true)">科技</button><button type="button" class="filter-chip" data-sec="politics" aria-pressed="false" onclick="filterSec(this,'politics',true)">政治</button><button type="button" class="filter-chip" data-sec="china" aria-pressed="false" onclick="filterSec(this,'china',true)">中国</button><button type="button" class="filter-chip" data-sec="forum" aria-pressed="false" onclick="filterSec(this,'forum',true)">社区</button><button type="button" class="filter-chip" data-sec="other" aria-pressed="false" onclick="filterSec(this,'other',true)">其他</button></div>
       
-      <div class="ep-section"><div class="ep-header"><span class="ep-header-title">今日选读</span><span class="ep-header-sub">摘录报道要点，保留原文出处</span></div><div class="ep-grid"><div class="ep-card"><div class="ep-num" aria-hidden="true">01</div><div class="ep-body"><article class="news-card featured-story" id="card-d6ce3db7bc2f16abb209" data-id="d6ce3db7bc2f16abb209" tabindex="-1" style="scroll-margin-top:80px;">
-  <div class="card-title">美国官员表示，交战双方以“一定灵活性”恢复乌克兰和谈</div>
+      <div class="ep-section"><div class="ep-header"><span class="ep-header-title">今日选读</span><span class="ep-header-sub">摘录报道要点，保留原文出处</span></div><div class="ep-grid"><div class="ep-card"><div class="ep-num" aria-hidden="true">01</div><div class="ep-body"><article class="news-card featured-story" id="card-474bc26c4b7cacd4f2ce" data-id="474bc26c4b7cacd4f2ce" tabindex="-1" style="scroll-margin-top:80px;">
+  <div class="card-title">Anthropic计划通过IPO至多筹资640亿美元</div>
   
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
-    <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多媒体报道 · 6</span>
-    
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
-    <span class="pub-time">1小时前</span>
-    <button class="share-btn" title="复制分享" data-text="美国官员表示，交战双方以“一定灵活性”恢复乌克兰和谈" data-link="https://www.bbc.co.uk/news/articles/cqpvgvrpjvv8o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:d3212160414aac1d2d3bc5a6&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国官员表示，交战双方以“一定灵活性”恢复乌克兰和谈&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqpvgvrpjvv8o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;BBC 报道，乌克兰、美国和俄罗斯均派代表赴阿联酋，这是三方自 2 月以来首次举行会谈。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:07:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  <p class="news-excerpt-label">BBC · 报道摘要 · 中文译文</p><div class="ep-context">BBC 报道，乌克兰、美国和俄罗斯均派代表赴阿联酋，这是三方自 2 月以来首次举行会谈。</div><a href="https://www.bbc.co.uk/news/articles/cqpvgvrpjvv8o?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a>
-  <details class="card-expand"><summary>延伸资料 · 7篇延伸报道</summary><div class="card-expand-body"><div class="related-row">· <span style="font-size:9px;color:#d81b2a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#d81b2a18;border-radius:999px;padding:1px 7px;">🇪🇺&thinsp;Politico EU</span><span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">×2</span> <span style="font-size:9px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;NYT 国际</span> <span style="font-size:9px;color:#003189;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#00318918;border-radius:999px;padding:1px 7px;">🇫🇷&thinsp;France 24</span> <span style="font-size:9px;color:#6b0000;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#6b000018;border-radius:999px;padding:1px 7px;">🇷🇺&thinsp;RT</span> <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">+1</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#9333ea22;color:#9333ea;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">俄罗斯</span><span style="font-size:8px;background:#2563eb22;color:#2563eb;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">欧洲</span><span style="font-size:8px;background:#6366f122;color:#6366f1;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">法国</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><ul class="news-related-links"><li><a href="https://www.politico.eu/article/ukraine-russia-peace-talks-us-demands-europe-joins-next-negotiations/?utm_source=RSS_Feed&amp;utm_medium=RSS&amp;utm_campaign=RSS_Syndication" target="_blank" rel="noopener">Politico EU：US demands a seat for Europe at Ukraine peace talks ↗</a></li><li><a href="https://www.politico.eu/article/ukraine-russia-peace-talks-us-demands-europe-joins-next-negotiations/?utm_source=RSS_Feed&amp;#038;utm_medium=RSS&amp;#038;utm_campaign=RSS_Syndication" target="_blank" rel="noopener">Politico EU：US demands a seat for Europe at Ukraine peace talks ↗</a></li><li><a href="https://www.nytimes.com/2026/11/09/world/europe/ukraine-russia-peace-talks.html" target="_blank" rel="noopener">NYT 国际：Ukraine Peace Talks Resume This Week in Abu Dhabi ↗</a></li><li><a href="https://www.france24.com/en/europe/20261110-live-ukraine-russia-and-us-to-resume-peace-talks-in-abu-dhabi" target="_blank" rel="noopener">France 24：Live: Ukraine, Russia and US resume peace talks in Abu Dhabi ↗</a></li><li><a href="https://rt-english.com/news/648619-russia-ukraine-talks-abu-dhabi/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=RSS" target="_blank" rel="noopener">RT：Russia, US and Ukraine outline priorities ahead of peace talks (VIDEO) ↗</a></li><li><a href="https://tass.com/world/2215395" target="_blank" rel="noopener">TASS：NATO’s Europe chief says Abu Dhabi talks offer chance for lasting peace ↗</a></li><li><a href="https://tass.com/pressreview/2215229" target="_blank" rel="noopener">TASS：Press review: Russia, US, Ukraine resume talks while Coalition of the Willing holds drills ↗</a></li></ul><details class="full-summary"><summary>AI 辅助摘要 · BBC 国际原文</summary><div class="full-summary-body">据BBC报道，2026年11月</div></details></div></details>
-</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">02</div><div class="ep-body"><article class="news-card featured-story" id="card-e464da6f1af129a87132" data-id="e464da6f1af129a87132" tabindex="-1" style="scroll-margin-top:80px;">
-  <div class="card-title">软银集团二季度归母净亏损约 1.12 万亿日元</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
+    <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
     <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双媒体报道 · 2</span>
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">1小时前</span>
-    <button class="share-btn" title="复制分享" data-text="软银集团二季度归母净亏损约 1.12 万亿日元" data-link="https://www.cnbc.com/2026/11/10/softbank-2q-earnings-tech-selloff.html" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:69e6c3eae1ea2a6043d9bfe4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;软银集团二季度归母净亏损约 1.12 万亿日元&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/10/softbank-2q-earnings-tech-selloff.html&quot;,&quot;one_liner&quot;:&quot;软银披露，截至 9 月 30 日的三个月归母净亏损约 1.12 万亿日元，上年同期盈利约 2.50 万亿日元。美国 AI 数据中心发电设备相关损失约 5972 亿日元。&quot;,&quot;category&quot;:&quot;CNBC&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:01:37 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">28分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="Anthropic计划通过IPO至多筹资640亿美元" data-link="https://www.ft.com/content/5654e210-4be3-4550-b975-129c9a2e7fe5?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:38e5343a8deef2f114eb2651&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Anthropic计划通过IPO至多筹资640亿美元&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/5654e210-4be3-4550-b975-129c9a2e7fe5?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;这家Claude开发商表示，其及部分投资者计划以70至78美元的价格出售8.25亿股股票。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 12:06:30 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
-  <p class="news-excerpt-label">软银业绩简报</p><div class="ep-context">软银披露，截至 9 月 30 日的三个月归母净亏损约 1.12 万亿日元，上年同期盈利约 2.50 万亿日元。美国 AI 数据中心发电设备相关损失约 5972 亿日元。</div><a href="https://group.softbank/media/Project/sbg/sbg/pdf/ir/presentations/2026/earnings-presentation_q2fy2026_01_en.pdf#page=15" class="read-link" target="_blank" rel="noopener">→ 软银业绩简报</a><a href="https://www.cnbc.com/2026/11/10/softbank-2q-earnings-tech-selloff.html" class="read-link">→ 查看原文</a>
-  <details class="card-expand"><summary>延伸资料 · 1篇延伸报道</summary><div class="card-expand-body"><div class="related-row">· <span style="font-size:9px;color:#7d0000;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7d000018;border-radius:999px;padding:1px 7px;">🇯🇵&thinsp;Japan Times</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#e11d4822;color:#e11d48;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">日本</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><ul class="news-related-links"><li><a href="https://www.japantimes.co.jp/business/2026/11/10/softbank-loss-data-center-costs/" target="_blank" rel="noopener">Japan Times：SoftBank logs $7 billion loss after U.S. data center costs swell ↗</a></li></ul><details class="full-summary"><summary>AI 辅助摘要 · CNBC原文</summary><div class="full-summary-body">据CNBC报道，日本投资巨头软银集团</div></details></div></details>
-</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">03</div><div class="ep-body"><article class="news-card featured-story" id="card-967d73ff1c0658ebd978" data-id="967d73ff1c0658ebd978" tabindex="-1" style="scroll-margin-top:80px;">
-  <div class="card-title">政府稱整個北環線項目建造成本總計862‍億　比原預算低28%</div>
+  <p class="news-excerpt-label">FT · 报道摘要 · AI 翻译</p><div class="ep-context">这家Claude开发商表示，其及部分投资者计划以70至78美元的价格出售8.25亿股股票。</div><a href="https://www.ft.com/content/5654e210-4be3-4550-b975-129c9a2e7fe5?syn-25a6b1a6=1" class="read-link">→ 查看原文</a>
+  <details class="card-expand"><summary>延伸资料 · 1篇延伸报道</summary><div class="card-expand-body"><div class="related-row">· <span style="font-size:9px;color:#0a8a00;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0a8a0018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;TechCrunch</span></div><ul class="news-related-links"><li><a href="https://techcrunch.com/2026/11/09/anthropic-reportedly-plans-to-move-forward-with-ipo-plans/" target="_blank" rel="noopener">TechCrunch：Anthropic reportedly plans to move forward with IPO plans ↗</a></li></ul></div></details>
+</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">02</div><div class="ep-body"><article class="news-card featured-story" id="card-893a9fa87c362070e41c" data-id="893a9fa87c362070e41c" tabindex="-1" style="scroll-margin-top:80px;">
+  <div class="card-title">港铁称签署北环线协议 落实主线及支线融资与建造</div>
   
   <div class="card-meta">
     
@@ -766,59 +751,14 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">30分钟前</span>
-    <button class="share-btn" title="复制分享" data-text="政府稱整個北環線項目建造成本總計862‍億　比原預算低28%" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877274-20261110.htm" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:9d5d60b80ca6ec808a21ff79&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;政府稱整個北環線項目建造成本總計862‍億　比原預算低28%&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877274-20261110.htm&quot;,&quot;one_liner&quot;:&quot;運輸及物流局表示，整個北環線項目的建造成本預算總計為862‍億港元，比預算低兩成八。\n\n行政長官會同行政會議今日批准北環線項目項目第二部分的財務安排。運輸及物流局與港鐵公司代表簽訂北環線全線項目協議，標誌北環線主線及支線全面進入建設階段，目標於2034年或之前同步開通。政府表示，在獨立審核顧問的協助下嚴謹審視港鐵公司就北環線項目第二部分提供的財務預算，核實的&quot;,&quot;category&quot;:&quot;RTHK 本地&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 17:53:51 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">1小时前</span>
+    <button class="share-btn" title="复制分享" data-text="港铁称签署北环线协议 落实主线及支线融资与建造" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877287-20261110.htm" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:879d81a355c8d0faceefb39b&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;港铁称签署北环线协议 落实主线及支线融资与建造&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877287-20261110.htm&quot;,&quot;one_liner&quot;:&quot;特区政府批准北环线第二部分财务安排，港铁签署协议启动主线新田站、支线皇岗口岸等工程及隧道段建设。&quot;,&quot;category&quot;:&quot;RTHK 本地&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 19:18:55 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
-  <p class="news-excerpt-label">RTHK 本地 · 报道摘要</p><div class="ep-context">運輸及物流局表示，整個北環線項目的建造成本預算總計為862‍億港元，比預算低兩成八。
-
-行政長官會同行政會議今日批准北環線項目項目第二部分的財務安排。運輸及物流局與港鐵公司代表簽訂北環線全線項目協議，標誌北環線主線及支線全面進入建設階段，目標於2034年或之前同步開通。政府表示，在獨立審核顧問的協助下嚴謹審視港鐵公司就北環線項目第二部分提供的財務預算，核實的項目建造成本預算約為548億元，該金額以</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877274-20261110.htm" class="read-link">→ 查看原文</a>
+  <p class="news-excerpt-label">RTHK 本地 · 报道摘要 · AI 翻译</p><div class="ep-context">特区政府批准北环线第二部分财务安排，港铁签署协议启动主线新田站、支线皇岗口岸等工程及隧道段建设。</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877287-20261110.htm" class="read-link">→ 查看原文</a>
   
-</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">04</div><div class="ep-body"><article class="news-card featured-story" id="card-b49f47f8c4b28513d3d4" data-id="b49f47f8c4b28513d3d4" tabindex="-1" style="scroll-margin-top:80px;">
-  <div class="card-title">美国 FDA 要求 GLP-1 类药物说明书提示罕见眼病的潜在风险</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">35分钟前</span>
-    <button class="share-btn" title="复制分享" data-text="美国 FDA 要求 GLP-1 类药物说明书提示罕见眼病的潜在风险" data-link="https://www.cnbc.com/2026/11/10/fda-warning-vision-loss-glp1-wegovy-zepbound.html" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e422c9bbe4af8c66400b4925&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国 FDA 要求 GLP-1 类药物说明书提示罕见眼病的潜在风险&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/10/fda-warning-vision-loss-glp1-wegovy-zepbound.html&quot;,&quot;one_liner&quot;:&quot;美国 FDA 要求在 GLP-1 受体激动剂说明书中加入罕见眼病 NAION 的潜在风险。其合并试验分析中，使用这类药物和对照组的发生率分别为每 10 万人年 6.4 例和 3.8 例。&quot;,&quot;category&quot;:&quot;CNBC&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:48:09 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  <p class="news-excerpt-label">FDA 安全通报</p><div class="ep-context">美国 FDA 要求在 GLP-1 受体激动剂说明书中加入罕见眼病 NAION 的潜在风险。其合并试验分析中，使用这类药物和对照组的发生率分别为每 10 万人年 6.4 例和 3.8 例。</div><a href="https://www.fda.gov/drugs/drug-safety-communications/fda-requires-safety-labeling-changes-glucagon-like-peptide-1-receptor-agonists-glp-1-ras-due-potential" class="read-link" target="_blank" rel="noopener">→ FDA 安全通报</a><a href="https://www.cnbc.com/2026/11/10/fda-warning-vision-loss-glp1-wegovy-zepbound.html" class="read-link">→ 查看原文</a>
-  
-</article></div></div></div></div>
-      
-      
-      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年11月10日</div><div class="slim-list"><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">政治 · BBC 国际</div><a href="https://www.bbc.co.uk/news/articles/cqpvgvrpjvv8o?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">美国官员表示，交战双方以“一定灵活性”恢复乌克兰和谈</a><p class="slim-excerpt">BBC 报道，乌克兰、美国和俄罗斯均派代表赴阿联酋，这是三方自 2 月以来首次举行会谈。</p></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">财经 · CNBC</div><a href="https://www.cnbc.com/2026/11/10/softbank-2q-earnings-tech-selloff.html" class="slim-title" target="_blank" rel="noopener">软银集团二季度归母净亏损约 1.12 万亿日元</a><p class="slim-excerpt">软银披露，截至 9 月 30 日的三个月归母净亏损约 1.12 万亿日元，上年同期盈利约 2.50 万亿日元。美国 AI 数据中心发电设备相关损失约 5972 亿日元。</p></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">中国 · RTHK 本地</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877274-20261110.htm" class="slim-title" target="_blank" rel="noopener">政府稱整個北環線項目建造成本總計862‍億　比原預算低28%</a><p class="slim-excerpt">運輸及物流局表示，整個北環線項目的建造成本預算總計為862‍億港元，比預算低兩成八。 行政長官會同行政會議今日批准北環線項目項目第二部分的財務安排。</p></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">综合 · CNBC</div><a href="https://www.cnbc.com/2026/11/10/fda-warning-vision-loss-glp1-wegovy-zepbound.html" class="slim-title" target="_blank" rel="noopener">美国 FDA 要求 GLP-1 类药物说明书提示罕见眼病的潜在风险</a><p class="slim-excerpt">美国 FDA 要求在 GLP-1 受体激动剂说明书中加入罕见眼病 NAION 的潜在风险。其合并试验分析中，使用这类药物和对照组的发生率分别为每 10 万人年 6.4 例和 3.8 例。</p></div></div></div></div>
-      
-      
-<section class="news-section" id="politics">
-  <div class="sec-header" style="color:#8a1212;">
-    <span class="sec-title">国际政治与安全</span>
-    
-    <span class="sec-count">6 条</span>
-  </div>
-  <details class="news-category-links"><summary>今日选读已收录 1 条</summary><ul><li><a href="#card-d6ce3db7bc2f16abb209">美国官员表示，交战双方以“一定灵活性”恢复乌克兰和谈 <span aria-hidden="true">↑</span></a></li></ul></details>
-  <div class="news-grid"><article class="news-card" id="card-c0b4f9ba08f1491a0bff" data-id="c0b4f9ba08f1491a0bff" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">共和党国会议员将强制对国防部长赫格塞斯进行弹劾投票</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
-    <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双媒体报道 · 2</span>
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">8小时前</span>
-    <button class="share-btn" title="复制分享" data-text="共和党国会议员将强制对国防部长赫格塞斯进行弹劾投票" data-link="https://www.bbc.co.uk/news/articles/cwr5y58jjp8ro?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:64de75add4ac8f42312beb3a&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;共和党国会议员将强制对国防部长赫格塞斯进行弹劾投票&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cwr5y58jjp8ro?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;The effort will likely fail, but Representative Thomas Massie wants to push Trump to fire Hegseth before Democrats can launch their own impeachment process next year.&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 01:38:49 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文 · 1篇延伸报道</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要</p><div class="card-desc">The effort will likely fail, but Representative Thomas Massie wants to push Trump to fire Hegseth before Democrats can launch their own impeachment process next year.</div><div class="related-row">· <span style="font-size:9px;color:#1c6ea4;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1c6ea418;border-radius:999px;padding:1px 7px;">🇪🇸&thinsp;El País</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span><span style="font-size:8px;background:#7c3aed22;color:#7c3aed;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西班牙</span></span></div><ul class="news-related-links"><li><a href="https://english.elpais.com/usa/2026-11-09/republican-lawmaker-moves-to-impeach-defense-secretary-pete-hegseth.html" target="_blank" rel="noopener">El País：Republican lawmaker moves to force vote on Pete Hegseth impeachment ↗</a></li></ul><a href="https://www.bbc.co.uk/news/articles/cwr5y58jjp8ro?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-b1df777c90642559ec22" data-id="b1df777c90642559ec22" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">尽管遭到抗议，法国“仍然有吸引力”：贸易部长</div>
+</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">03</div><div class="ep-body"><article class="news-card featured-story" id="card-6de2d439ed4f5325e206" data-id="6de2d439ed4f5325e206" tabindex="-1" style="scroll-margin-top:80px;">
+  <div class="card-title">黑石集团拟斥资5.32亿美元收购IIFL金融15.5%股份</div>
   
   <div class="card-meta">
     
@@ -826,14 +766,41 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">20分钟前</span>
-    <button class="share-btn" title="复制分享" data-text="尽管遭到抗议，法国“仍然有吸引力”：贸易部长" data-link="https://www.bloomberg.com/news/videos/2026-11-10/france-still-attractive-despite-protests-forissier-video" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:b8dc5468f6e87d00e4e1c7be&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;尽管遭到抗议，法国“仍然有吸引力”：贸易部长&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/videos/2026-11-10/france-still-attractive-despite-protests-forissier-video&quot;,&quot;one_liner&quot;:&quot;The French Trade Minister says he wants to carry on the trade relationship with the US in the spirit of the Turnberry agreement, the EU-US trade framework agreed with President Tru&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 10:03:03 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">1小时前</span>
+    <button class="share-btn" title="复制分享" data-text="黑石集团拟斥资5.32亿美元收购IIFL金融15.5%股份" data-link="https://www.bloomberg.com/news/articles/2026-11-10/blackstone-to-buy-15-5-of-iifl-finance-in-532-million-india-bet" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:4ece9c81c09f6525e80efa2a&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;黑石集团拟斥资5.32亿美元收购IIFL金融15.5%股份&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-10/blackstone-to-buy-15-5-of-iifl-finance-in-532-million-india-bet&quot;,&quot;one_liner&quot;:&quot;黑石集团将斥资约500亿卢比收购印度非银机构IIFL金融约15.57%的股份。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 11:07:10 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  <p class="news-excerpt-label">Bloomberg · 报道摘要 · AI 翻译</p><div class="ep-context">黑石集团将斥资约500亿卢比收购印度非银机构IIFL金融约15.57%的股份。</div><a href="https://www.bloomberg.com/news/articles/2026-11-10/blackstone-to-buy-15-5-of-iifl-finance-in-532-million-india-bet" class="read-link">→ 查看原文</a>
+  
+</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">04</div><div class="ep-body"><article class="news-card featured-story" id="card-a9066ba119ce3dba87ef" data-id="a9066ba119ce3dba87ef" tabindex="-1" style="scroll-margin-top:80px;">
+  <div class="card-title">美防长赫格塞思因伊朗战争涉滥权面临共和党弹劾动议</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#003189;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#00318918;border-radius:999px;padding:1px 7px;">🇫🇷&thinsp;France 24</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">1小时前</span>
+    <button class="share-btn" title="复制分享" data-text="美防长赫格塞思因伊朗战争涉滥权面临共和党弹劾动议" data-link="https://www.france24.com/en/video/20261110-us-hegseth-faces-republican-impeachment-bid-over-abuse-of-power-in-iran-war" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:d654a3d11c992be6a26c780b&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美防长赫格塞思因伊朗战争涉滥权面临共和党弹劾动议&quot;,&quot;url&quot;:&quot;https://www.france24.com/en/video/20261110-us-hegseth-faces-republican-impeachment-bid-over-abuse-of-power-in-iran-war&quot;,&quot;one_liner&quot;:&quot;一名共和党议员周一发起弹劾美国国防部长皮特·赫格塞思的动议，指控其在伊朗战争中滥用职权。&quot;,&quot;category&quot;:&quot;France 24&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 11:03:20 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  <p class="news-excerpt-label">France 24 · 报道摘要 · AI 翻译</p><div class="ep-context">一名共和党议员周一发起弹劾美国国防部长皮特·赫格塞思的动议，指控其在伊朗战争中滥用职权。</div><a href="https://www.france24.com/en/video/20261110-us-hegseth-faces-republican-impeachment-bid-over-abuse-of-power-in-iran-war" class="read-link">→ 查看原文</a>
+  
+</article></div></div></div></div>
+      
+      
+      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年11月10日</div><div class="slim-list"><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">科技 · FT</div><a href="https://www.ft.com/content/5654e210-4be3-4550-b975-129c9a2e7fe5?syn-25a6b1a6=1" class="slim-title" target="_blank" rel="noopener">Anthropic计划通过IPO至多筹资640亿美元</a><p class="slim-excerpt">这家Claude开发商表示，其及部分投资者计划以70至78美元的价格出售8.25亿股股票。</p></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">中国 · RTHK 本地</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877287-20261110.htm" class="slim-title" target="_blank" rel="noopener">港铁称签署北环线协议 落实主线及支线融资与建造</a><p class="slim-excerpt">特区政府批准北环线第二部分财务安排，港铁签署协议启动主线新田站、支线皇岗口岸等工程及隧道段建设。</p></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">综合 · Bloomberg</div><a href="https://www.bloomberg.com/news/articles/2026-11-10/blackstone-to-buy-15-5-of-iifl-finance-in-532-million-india-bet" class="slim-title" target="_blank" rel="noopener">黑石集团拟斥资5.32亿美元收购IIFL金融15.5%股份</a><p class="slim-excerpt">黑石集团将斥资约500亿卢比收购印度非银机构IIFL金融约15.57%的股份。</p></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">政治 · France 24</div><a href="https://www.france24.com/en/video/20261110-us-hegseth-faces-republican-impeachment-bid-over-abuse-of-power-in-iran-war" class="slim-title" target="_blank" rel="noopener">美防长赫格塞思因伊朗战争涉滥权面临共和党弹劾动议</a><p class="slim-excerpt">一名共和党议员周一发起弹劾美国国防部长皮特·赫格塞思的动议，指控其在伊朗战争中滥用职权。</p></div></div></div></div>
+      
+<section class="news-section" id="politics">
+  <div class="sec-header" style="color:#8a1212;">
+    <span class="sec-title">国际政治与安全</span>
+    
+    <span class="sec-count">6 条</span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要</p><div class="card-desc">The French Trade Minister says he wants to carry on the trade relationship with the US in the spirit of the Turnberry agreement, the EU-US trade framework agreed with President Trump in 2025. He also </div><a href="https://www.bloomberg.com/news/videos/2026-11-10/france-still-attractive-despite-protests-forissier-video" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-759990a2f6fa1feb0d47" data-id="759990a2f6fa1feb0d47" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">特朗普称美国“极不可能”对伊朗发动更多袭击</div>
+  <div class="news-grid"><article class="news-card" id="card-220686b96b225796a3d5" data-id="220686b96b225796a3d5" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="card-title">巴勒斯坦卫生部：以军在约旦河西岸打死一名巴勒斯坦少年</div>
   
   <div class="card-meta">
     
@@ -841,29 +808,44 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">43分钟前</span>
-    <button class="share-btn" title="复制分享" data-text="特朗普称美国“极不可能”对伊朗发动更多袭击" data-link="https://www.bbc.co.uk/news/articles/cq5yny4nl2d3o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:2f68b82d21faa9dd529e4086&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;特朗普称美国“极不可能”对伊朗发动更多袭击&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cq5yny4nl2d3o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;The president says the US is keeping \&quot;status quo\&quot; with Iran but remains “locked and loaded” should the situation change.&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:40:31 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">1小时前</span>
+    <button class="share-btn" title="复制分享" data-text="巴勒斯坦卫生部：以军在约旦河西岸打死一名巴勒斯坦少年" data-link="https://www.bbc.co.uk/news/articles/cqpvgv318yyeo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:aa0c24a4bfc709837076030d&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;巴勒斯坦卫生部：以军在约旦河西岸打死一名巴勒斯坦少年&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqpvgv318yyeo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;以色列军方称士兵向涉嫌企图在以方公路上投掷石块的人员开火。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 11:23:18 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要</p><div class="card-desc">The president says the US is keeping &quot;status quo&quot; with Iran but remains “locked and loaded” should the situation change.</div><a href="https://www.bbc.co.uk/news/articles/cq5yny4nl2d3o?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-11cd5b986843cc89b519" data-id="11cd5b986843cc89b519" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">英国防相称英俄需建新秘密沟通渠道以防误判</div>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">以色列军方称士兵向涉嫌企图在以方公路上投掷石块的人员开火。</div><a href="https://www.bbc.co.uk/news/articles/cqpvgv318yyeo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-759990a2f6fa1feb0d47" data-id="759990a2f6fa1feb0d47" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="card-title">特朗普称美国对伊朗发动更多袭击“极不可能”</div>
   
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">5小时前</span>
-    <button class="share-btn" title="复制分享" data-text="英国防相称英俄需建新秘密沟通渠道以防误判" data-link="https://www.ft.com/content/4b3272a6-5d87-426a-9e2f-5428c10e7eea?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:2e212d5cf9bb03cbb4ea80fd&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;英国防相称英俄需建新秘密沟通渠道以防误判&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/4b3272a6-5d87-426a-9e2f-5428c10e7eea?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;英国防大臣斯垂廷称英俄需建秘密渠道以防误判，并敦促布鲁塞尔勿让“欧洲制造”政策削弱北约。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 05:00:29 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">2小时前</span>
+    <button class="share-btn" title="复制分享" data-text="特朗普称美国对伊朗发动更多袭击“极不可能”" data-link="https://www.bbc.co.uk/news/articles/cq5yny4nl2d3o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:2f68b82d21faa9dd529e4086&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;特朗普称美国对伊朗发动更多袭击“极不可能”&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cq5yny4nl2d3o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;美国总统表示将维持对伊现状，但警告若局势发生变化，美方仍做好“蓄势待发”的准备。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:40:31 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">英国防大臣斯垂廷称英俄需建秘密渠道以防误判，并敦促布鲁塞尔勿让“欧洲制造”政策削弱北约。</div><a href="https://www.ft.com/content/4b3272a6-5d87-426a-9e2f-5428c10e7eea?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">美国总统表示将维持对伊现状，但警告若局势发生变化，美方仍做好“蓄势待发”的准备。</div><a href="https://www.bbc.co.uk/news/articles/cq5yny4nl2d3o?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-32a3a83f7005d7b1eb67" data-id="32a3a83f7005d7b1eb67" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="card-title">刚果民主共和国66名士兵因被指“懦弱”被判死刑</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">3小时前</span>
+    <button class="share-btn" title="复制分享" data-text="刚果民主共和国66名士兵因被指“懦弱”被判死刑" data-link="https://www.bbc.co.uk/news/articles/cmreye1q3dnjo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:27831ce6633310b0a7eea454&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;刚果民主共和国66名士兵因被指“懦弱”被判死刑&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cmreye1q3dnjo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;刚果民主共和国军队在打击反政府武装的行动中，长期受困于内部纪律混乱。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 08:39:05 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">刚果民主共和国军队在打击反政府武装的行动中，长期受困于内部纪律混乱。</div><a href="https://www.bbc.co.uk/news/articles/cmreye1q3dnjo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-9ebc53b64c82a38b74e8" data-id="9ebc53b64c82a38b74e8" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">评论：英国人并未失去对工作的热爱</div>
+  <div class="card-title">评论：英国人并非不再热爱工作</div>
   
   <div class="card-meta">
     
@@ -871,12 +853,42 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">5小时前</span>
-    <button class="share-btn" title="复制分享" data-text="评论：英国人并未失去对工作的热爱" data-link="https://www.ft.com/content/9be099de-58b1-471c-aa05-92622585ffac?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:691b20999bea3f9243b23b9f&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;评论：英国人并未失去对工作的热爱&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/9be099de-58b1-471c-aa05-92622585ffac?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;员工不愿额外付出的原因更为直接：薪酬不足。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 05:00:29 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">7小时前</span>
+    <button class="share-btn" title="复制分享" data-text="评论：英国人并非不再热爱工作" data-link="https://www.ft.com/content/9be099de-58b1-471c-aa05-92622585ffac?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:691b20999bea3f9243b23b9f&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;评论：英国人并非不再热爱工作&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/9be099de-58b1-471c-aa05-92622585ffac?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;分析指出，员工额外付出意愿降低的直接原因并非厌恶工作，而是薪资与回报不足。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 05:00:29 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">员工不愿额外付出的原因更为直接：薪酬不足。</div><a href="https://www.ft.com/content/9be099de-58b1-471c-aa05-92622585ffac?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">分析指出，员工额外付出意愿降低的直接原因并非厌恶工作，而是薪资与回报不足。</div><a href="https://www.ft.com/content/9be099de-58b1-471c-aa05-92622585ffac?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-11cd5b986843cc89b519" data-id="11cd5b986843cc89b519" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="card-title">斯特里廷呼吁建立英国与俄罗斯秘密沟通渠道</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">7小时前</span>
+    <button class="share-btn" title="复制分享" data-text="斯特里廷呼吁建立英国与俄罗斯秘密沟通渠道" data-link="https://www.ft.com/content/4b3272a6-5d87-426a-9e2f-5428c10e7eea?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:2e212d5cf9bb03cbb4ea80fd&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;斯特里廷呼吁建立英国与俄罗斯秘密沟通渠道&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/4b3272a6-5d87-426a-9e2f-5428c10e7eea?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;英国国防大臣同时敦促布鲁塞尔，勿让“欧洲制造”相关政策削弱北大西洋公约组织的作用。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 05:00:29 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">英国国防大臣同时敦促布鲁塞尔，勿让“欧洲制造”相关政策削弱北大西洋公约组织的作用。</div><a href="https://www.ft.com/content/4b3272a6-5d87-426a-9e2f-5428c10e7eea?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-485c507cf35eed851e18" data-id="485c507cf35eed851e18" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="card-title">中美能源博弈及其对账单的影响</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">12小时前</span>
+    <button class="share-btn" title="复制分享" data-text="中美能源博弈及其对账单的影响" data-link="https://www.bbc.co.uk/news/articles/cw62y2z53pg1o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:9d04f7674e5302166f0febdc&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中美能源博弈及其对账单的影响&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cw62y2z53pg1o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;中美两国间的能源竞争可能对能源价格产生重大影响，但最终结果尚不确定。&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 00:08:28 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">中美两国间的能源竞争可能对能源价格产生重大影响，但最终结果尚不确定。</div><a href="https://www.bbc.co.uk/news/articles/cw62y2z53pg1o?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
 </article></div>
 </section>
       
@@ -886,24 +898,39 @@ function shareCard(btn) {
     
     <span class="sec-count">6 条</span>
   </div>
-  <details class="news-category-links"><summary>今日选读已收录 1 条</summary><ul><li><a href="#card-e464da6f1af129a87132">软银集团二季度归母净亏损约 1.12 万亿日元 <span aria-hidden="true">↑</span></a></li></ul></details>
-  <div class="news-grid"><article class="news-card" id="card-8207c17f570d38943411" data-id="8207c17f570d38943411" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
-  <div class="card-title">BBC 财经报道：英伟达股价因黄与涉嫌中国间谍的恋情调查而暴跌</div>
+  
+  <div class="news-grid"><article class="news-card" id="card-90c8d913c2b83dd8c039" data-id="90c8d913c2b83dd8c039" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
+  <div class="card-title">安哥拉债券领跌新兴市场产油国债券</div>
   
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
-    <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双媒体报道 · 2</span>
+    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
+    
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">14小时前</span>
-    <button class="share-btn" title="复制分享" data-text="BBC 财经报道：英伟达股价因黄与涉嫌中国间谍的恋情调查而暴跌" data-link="https://www.bbc.co.uk/news/articles/c6zxjx01vyleo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:c4bc507025bdc22cd4a82cf4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;BBC 财经报道：英伟达股价因黄与涉嫌中国间谍的恋情调查而暴跌&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/c6zxjx01vyleo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 19:58:01 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">1小时前</span>
+    <button class="share-btn" title="复制分享" data-text="安哥拉债券领跌新兴市场产油国债券" data-link="https://www.bloomberg.com/news/articles/2026-11-10/angola-s-bonds-lead-retreat-among-emerging-market-oil-producers" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:74094001f0eb25de0fdd56c2&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;安哥拉债券领跌新兴市场产油国债券&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-10/angola-s-bonds-lead-retreat-among-emerging-market-oil-producers&quot;,&quot;one_liner&quot;:&quot;布伦特原油跌破90美元后，安哥拉欧洲债券领跌前沿和新兴市场产油国债券。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 11:12:17 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>原文与出处 · 2篇延伸报道</summary><div class="card-expand-body"><p class="news-attribution-note">指控与调查不等于事实认定，请参阅原媒体报道。</p><p class="news-original-title">原标题：Nvidia shares tumble over investigation into Huang&#x27;s affair with alleged Chinese spy</p><div class="related-row">· <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span> <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span></div><ul class="news-related-links"><li><a href="https://www.bbc.co.uk/news/articles/cqg7x7dpvym8o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">BBC 财经：BBC 财经报道：Trump says FBI investigating Nvidia boss&#x27;s affair with alleged Chinese spy ↗</a></li><li><a href="https://www.bbc.co.uk/news/articles/cqg7x7dpvym8o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">BBC 国际：BBC 国际报道：Trump says FBI investigating Nvidia boss&#x27;s affair with alleged Chinese spy ↗</a></li></ul><a href="https://www.bbc.co.uk/news/articles/c6zxjx01vyleo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-7631ff0ce4554e25e775" data-id="7631ff0ce4554e25e775" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
-  <div class="card-title">担忧AI牛市或终结 投资者大举涌入防御性股票</div>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">布伦特原油跌破90美元后，安哥拉欧洲债券领跌前沿和新兴市场产油国债券。</div><a href="https://www.bloomberg.com/news/articles/2026-11-10/angola-s-bonds-lead-retreat-among-emerging-market-oil-producers" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-0350ba61d7f627cf3806" data-id="0350ba61d7f627cf3806" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
+  <div class="card-title">油价与债券收益率下跌令投资者压力稍缓</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">1小时前</span>
+    <button class="share-btn" title="复制分享" data-text="油价与债券收益率下跌令投资者压力稍缓" data-link="https://www.bloomberg.com/news/newsletters/2026-11-10/falling-oil-prices-and-bond-yields-offer-investors-some-relief" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:179682990eea96d1da7d519d&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;油价与债券收益率下跌令投资者压力稍缓&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/newsletters/2026-11-10/falling-oil-prices-and-bond-yields-offer-investors-some-relief&quot;,&quot;one_liner&quot;:&quot;美伊两国展开的外交努力正推动布伦特原油价格走低。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 11:05:10 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">美伊两国展开的外交努力正推动布伦特原油价格走低。</div><a href="https://www.bloomberg.com/news/newsletters/2026-11-10/falling-oil-prices-and-bond-yields-offer-investors-some-relief" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-763b73534b9388ccb480" data-id="763b73534b9388ccb480" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
+  <div class="card-title">SpaceX创纪录IPO的指数影响</div>
   
   <div class="card-meta">
     
@@ -911,29 +938,14 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">5小时前</span>
-    <button class="share-btn" title="复制分享" data-text="担忧AI牛市或终结 投资者大举涌入防御性股票" data-link="https://www.ft.com/content/efe9653b-6802-485e-8eae-97fa2e6df770?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:35d151dee66e6c643aaa3685&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;担忧AI牛市或终结 投资者大举涌入防御性股票&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/efe9653b-6802-485e-8eae-97fa2e6df770?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;投资者担忧科技股未来收益，必需消费品和医疗保健板块表现强劲。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 05:00:11 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">2小时前</span>
+    <button class="share-btn" title="复制分享" data-text="SpaceX创纪录IPO的指数影响" data-link="https://www.ft.com/content/141176cd-79ce-4633-9def-eaee96db1762" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e207d9bc29a17c2d8239512b&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;SpaceX创纪录IPO的指数影响&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/141176cd-79ce-4633-9def-eaee96db1762&quot;,&quot;one_liner&quot;:&quot;本文重审了此次大规模IPO上市行动及其对相关指数的影响。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 10:11:22 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">投资者担忧科技股未来收益，必需消费品和医疗保健板块表现强劲。</div><a href="https://www.ft.com/content/efe9653b-6802-485e-8eae-97fa2e6df770?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-54aceed041cfde61d42f" data-id="54aceed041cfde61d42f" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
-  <div class="card-title">美联储理事沃勒支持12月加息 国际金价扩大跌幅</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">10小时前</span>
-    <button class="share-btn" title="复制分享" data-text="美联储理事沃勒支持12月加息 国际金价扩大跌幅" data-link="https://www.bloomberg.com/news/articles/2026-11-10/gold-holds-gain-above-4-100-as-lower-oil-eases-inflation-woes" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:37e115e0aaba049959129a34&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美联储理事沃勒支持12月加息 国际金价扩大跌幅&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-10/gold-holds-gain-above-4-100-as-lower-oil-eases-inflation-woes&quot;,&quot;one_liner&quot;:&quot;美联储理事克里斯托弗·沃勒公开表态支持12月继续加息后，国际黄金市场价格应声扩大跌幅。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 00:04:12 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文 · 1篇延伸报道</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">美联储理事克里斯托弗·沃勒公开表态支持12月继续加息后，国际黄金市场价格应声扩大跌幅。</div><div class="related-row">· <span style="font-size:9px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span></div><ul class="news-related-links"><li><a href="https://www.bloomberg.com/news/articles/2026-11-10/fed-s-waller-backs-december-rate-hike-says-open-to-larger-move" target="_blank" rel="noopener">Bloomberg：Fed’s Waller Backs December Rate Hike, Says Open to Larger Move ↗</a></li></ul><a href="https://www.bloomberg.com/news/articles/2026-11-10/gold-holds-gain-above-4-100-as-lower-oil-eases-inflation-woes" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">本文重审了此次大规模IPO上市行动及其对相关指数的影响。</div><a href="https://www.ft.com/content/141176cd-79ce-4633-9def-eaee96db1762" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-d4a1a3d205cf4ef9e11c" data-id="d4a1a3d205cf4ef9e11c" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
-  <div class="card-title">沃勒发出利率警告美股反弹势头暂歇：市场综述</div>
+  <div class="card-title">美联储理事沃勒支持加息 美股反弹受挫：市场综述</div>
   
   <div class="card-meta">
     
@@ -941,14 +953,14 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">12小时前</span>
-    <button class="share-btn" title="复制分享" data-text="沃勒发出利率警告美股反弹势头暂歇：市场综述" data-link="https://www.bloomberg.com/news/articles/2026-11-09/stock-market-today-dow-s-p-live-updates" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e2073281799902d1018ecbc7&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;沃勒发出利率警告美股反弹势头暂歇：市场综述&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-09/stock-market-today-dow-s-p-live-updates&quot;,&quot;one_liner&quot;:&quot;美联储理事克里斯托弗·沃勒表态支持加息后，美股强劲反弹势头受阻。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 22:16:53 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">14小时前</span>
+    <button class="share-btn" title="复制分享" data-text="美联储理事沃勒支持加息 美股反弹受挫：市场综述" data-link="https://www.bloomberg.com/news/articles/2026-11-09/stock-market-today-dow-s-p-live-updates" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e2073281799902d1018ecbc7&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美联储理事沃勒支持加息 美股反弹受挫：市场综述&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-09/stock-market-today-dow-s-p-live-updates&quot;,&quot;one_liner&quot;:&quot;美联储理事克里斯托弗·沃勒表态支持加息后，美国股市强劲反弹势头受阻。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 22:16:53 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">美联储理事克里斯托弗·沃勒表态支持加息后，美股强劲反弹势头受阻。</div><a href="https://www.bloomberg.com/news/articles/2026-11-09/stock-market-today-dow-s-p-live-updates" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">美联储理事克里斯托弗·沃勒表态支持加息后，美国股市强劲反弹势头受阻。</div><a href="https://www.bloomberg.com/news/articles/2026-11-09/stock-market-today-dow-s-p-live-updates" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-48d8419b0a1c7fc60f6d" data-id="48d8419b0a1c7fc60f6d" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
-  <div class="card-title">美国防后勤局向国家国防储备增拨20亿美元关键物资</div>
+  <div class="card-title">美国国防后勤局向国家国防储备增加20亿美元关键物资支持</div>
   
   <div class="card-meta">
     
@@ -957,11 +969,26 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span class="pub-time">11-06 19:40</span>
-    <button class="share-btn" title="复制分享" data-text="美国防后勤局向国家国防储备增拨20亿美元关键物资" data-link="https://www.war.gov/News/News-Stories/Article/Article/4643775/defense-logistics-agency-adds-2-billion-in-critical-material-support-to-nationa/" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8b0fb732c35f035308f4a142&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国防后勤局向国家国防储备增拨20亿美元关键物资&quot;,&quot;url&quot;:&quot;https://www.war.gov/News/News-Stories/Article/Article/4643775/defense-logistics-agency-adds-2-billion-in-critical-material-support-to-nationa/&quot;,&quot;one_liner&quot;:&quot;美国国防后勤局通过承诺投入资金加强国内工业产能，并支持国家安全重点优先事项。&quot;,&quot;category&quot;:&quot;Defense.gov&quot;,&quot;published&quot;:&quot;Fri, 06 Nov 2026 19:40:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <button class="share-btn" title="复制分享" data-text="美国国防后勤局向国家国防储备增加20亿美元关键物资支持" data-link="https://www.war.gov/News/News-Stories/Article/Article/4643775/defense-logistics-agency-adds-2-billion-in-critical-material-support-to-nationa/" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8b0fb732c35f035308f4a142&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国国防后勤局向国家国防储备增加20亿美元关键物资支持&quot;,&quot;url&quot;:&quot;https://www.war.gov/News/News-Stories/Article/Article/4643775/defense-logistics-agency-adds-2-billion-in-critical-material-support-to-nationa/&quot;,&quot;one_liner&quot;:&quot;美国国防后勤局通过采购承诺，增强了国内工业能力并支持国家安全重点。&quot;,&quot;category&quot;:&quot;Defense.gov&quot;,&quot;published&quot;:&quot;Fri, 06 Nov 2026 19:40:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">美国国防后勤局通过承诺投入资金加强国内工业产能，并支持国家安全重点优先事项。</div><a href="https://www.war.gov/News/News-Stories/Article/Article/4643775/defense-logistics-agency-adds-2-billion-in-critical-material-support-to-nationa/" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">美国国防后勤局通过采购承诺，增强了国内工业能力并支持国家安全重点。</div><a href="https://www.war.gov/News/News-Stories/Article/Article/4643775/defense-logistics-agency-adds-2-billion-in-critical-material-support-to-nationa/" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-8207c17f570d38943411" data-id="8207c17f570d38943411" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
+  <div class="card-title">BBC 财经报道：因黄仁勋涉嫌与中国间谍有染遭调查，英伟达股价大跌</div>
+  
+  <div class="card-meta">
+    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#8a121228;color:#8a1212;border:1px solid #8a121260;">深读</span>
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
+    <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双媒体报道 · 2</span>
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">16小时前</span>
+    <button class="share-btn" title="复制分享" data-text="BBC 财经报道：因黄仁勋涉嫌与中国间谍有染遭调查，英伟达股价大跌" data-link="https://www.bbc.co.uk/news/articles/c6zxjx01vyleo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:c4bc507025bdc22cd4a82cf4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;BBC 财经报道：因黄仁勋涉嫌与中国间谍有染遭调查，英伟达股价大跌&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/c6zxjx01vyleo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 19:58:01 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>原文与出处 · 2篇延伸报道</summary><div class="card-expand-body"><p class="news-attribution-note">指控与调查不等于事实认定，请参阅原媒体报道。</p><p class="news-original-title">原标题：Nvidia shares tumble over investigation into Huang&#x27;s affair with alleged Chinese spy</p><div class="related-row">· <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span> <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span></div><ul class="news-related-links"><li><a href="https://www.bbc.co.uk/news/articles/cqg7x7dpvym8o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">BBC 财经：BBC 财经报道：Trump says FBI investigating Nvidia boss&#x27;s affair with alleged Chinese spy ↗</a></li><li><a href="https://www.bbc.co.uk/news/articles/cqg7x7dpvym8o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">BBC 国际：BBC 国际报道：Trump says FBI investigating Nvidia boss&#x27;s affair with alleged Chinese spy ↗</a></li></ul><a href="https://www.bbc.co.uk/news/articles/c6zxjx01vyleo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
 </article></div>
 </section>
       
@@ -971,37 +998,22 @@ function shareCard(btn) {
     <a href="../ai-digest.html" style="display:inline-flex;align-items:center;border:1px solid currentColor;border-radius:2px;padding:4px 12px;font-size:10px;color:inherit;text-decoration:none;font-weight:700;letter-spacing:1px;white-space:nowrap;opacity:0.7;transition:opacity 0.15s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">AI 研报 →</a>
     <span class="sec-count">2 条</span>
   </div>
-  
-  <div class="news-grid"><article class="news-card" id="card-6b43909491b538ba524f" data-id="6b43909491b538ba524f" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
-  <div class="card-title">Al Jazeera报道：英伟达间谍丑闻引发有关向中国出口芯片的争论</div>
+  <details class="news-category-links"><summary>今日选读已收录 1 条</summary><ul><li><a href="#card-474bc26c4b7cacd4f2ce">Anthropic计划通过IPO至多筹资640亿美元 <span aria-hidden="true">↑</span></a></li></ul></details>
+  <div class="news-grid"><article class="news-card" id="card-17db165007d966bf8c73" data-id="17db165007d966bf8c73" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
+  <div class="card-title">Anthropic拟在纳斯达克IPO，定价区间定为70至78美元</div>
   
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#065f46;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#065f4618;border-radius:999px;padding:1px 7px;">🇶🇦&thinsp;Al Jazeera</span>
+    <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">41分钟前</span>
-    <button class="share-btn" title="复制分享" data-text="Al Jazeera报道：英伟达间谍丑闻引发有关向中国出口芯片的争论" data-link="https://www.aljazeera.com/economy/2026/11/10/nvidia-spy-scandal-fuels-debate-over-chip-exports-to-china?traffic_source=rss" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:c9d81694cf22662aa6002259&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Al Jazeera报道：英伟达间谍丑闻引发有关向中国出口芯片的争论&quot;,&quot;url&quot;:&quot;https://www.aljazeera.com/economy/2026/11/10/nvidia-spy-scandal-fuels-debate-over-chip-exports-to-china?traffic_source=rss&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Al Jazeera&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:42:04 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">33分钟前</span>
+    <button class="share-btn" title="复制分享" data-text="Anthropic拟在纳斯达克IPO，定价区间定为70至78美元" data-link="https://www.cnbc.com/2026/11/10/anthropic-sets-price-range-of-70-to-78-in-upcoming-ipo.html" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:7b3ccc9cc6a3af4b6b4403b0&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Anthropic拟在纳斯达克IPO，定价区间定为70至78美元&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/10/anthropic-sets-price-range-of-70-to-78-in-upcoming-ipo.html&quot;,&quot;one_liner&quot;:&quot;Anthropic的IPO预计将在埃隆·马斯克旗下SpaceX创纪录发行约五个月后进行。&quot;,&quot;category&quot;:&quot;CNBC&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 12:01:06 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>原文与出处</summary><div class="card-expand-body"><p class="news-attribution-note">指控与调查不等于事实认定，请参阅原媒体报道。</p><p class="news-original-title">原标题：Nvidia spy scandal fuels debate over chip exports to China</p><a href="https://www.aljazeera.com/economy/2026/11/10/nvidia-spy-scandal-fuels-debate-over-chip-exports-to-china?traffic_source=rss" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-99e6f46ce2091badf7b1" data-id="99e6f46ce2091badf7b1" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
-  <div class="card-title">Anthropic推出Claude Fable与Mythos 5.2模型</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#e1175e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e1175e18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;The Verge</span>
-    
-    
-    <span style="font-size:9px;color:#93c5fd;font-family:sans-serif;">持续69天</span>
-    <span class="pub-time">15小时前</span>
-    <button class="share-btn" title="复制分享" data-text="Anthropic推出Claude Fable与Mythos 5.2模型" data-link="https://www.theverge.com/ai-artificial-intelligence/1030005/anthropic-claude-fable-mythos-5-2" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ea9e2270122931419f9b2e1c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Anthropic推出Claude Fable与Mythos 5.2模型&quot;,&quot;url&quot;:&quot;https://www.theverge.com/ai-artificial-intelligence/1030005/anthropic-claude-fable-mythos-5-2&quot;,&quot;one_liner&quot;:&quot;Anthropic宣布推出两款新模型，称其旨在承担更复杂的计算任务。&quot;,&quot;category&quot;:&quot;The Verge&quot;,&quot;published&quot;:&quot;2026-11-09T14:00:00-05:00&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">Anthropic宣布推出两款新模型，称其旨在承担更复杂的计算任务。</div><a href="https://www.theverge.com/ai-artificial-intelligence/1030005/anthropic-claude-fable-mythos-5-2" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">Anthropic的IPO预计将在埃隆·马斯克旗下SpaceX创纪录发行约五个月后进行。</div><a href="https://www.cnbc.com/2026/11/10/anthropic-sets-price-range-of-70-to-78-in-upcoming-ipo.html" class="read-link">→ 查看原文</a></div></details>
 </article></div>
 </section>
       
@@ -1011,9 +1023,9 @@ function shareCard(btn) {
     
     <span class="sec-count">6 条</span>
   </div>
-  <details class="news-category-links"><summary>今日选读已收录 1 条</summary><ul><li><a href="#card-967d73ff1c0658ebd978">政府稱整個北環線項目建造成本總計862‍億　比原預算低28% <span aria-hidden="true">↑</span></a></li></ul></details>
+  
   <div class="news-grid"><article class="news-card" id="card-1134e992ef97a3de725a" data-id="1134e992ef97a3de725a" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">中国团队研究构建促进光合固碳的有机铁硫材料</div>
+  <div class="card-title">研究构建促进光合固碳的有机铁硫框架材料</div>
   
   <div class="card-meta">
     
@@ -1021,14 +1033,14 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">9小时前</span>
-    <button class="share-btn" title="复制分享" data-text="中国团队研究构建促进光合固碳的有机铁硫材料" data-link="https://www.cas.cn/syky/202611/t20261109_5123749.shtml" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8b23a2181164ae90d48171b4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中国团队研究构建促进光合固碳的有机铁硫材料&quot;,&quot;url&quot;:&quot;https://www.cas.cn/syky/202611/t20261109_5123749.shtml&quot;,&quot;one_liner&quot;:&quot;针对传统铁硫簇稳定性差、氧敏感等痛点，研究构建新型有机铁硫框架材料以促进光合固碳。&quot;,&quot;category&quot;:&quot;中科院科研进展&quot;,&quot;published&quot;:&quot;2026-11-10T00:33:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">12小时前</span>
+    <button class="share-btn" title="复制分享" data-text="研究构建促进光合固碳的有机铁硫框架材料" data-link="https://www.cas.cn/syky/202611/t20261109_5123749.shtml" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8b23a2181164ae90d48171b4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;研究构建促进光合固碳的有机铁硫框架材料&quot;,&quot;url&quot;:&quot;https://www.cas.cn/syky/202611/t20261109_5123749.shtml&quot;,&quot;one_liner&quot;:&quot;针对天然铁硫簇稳定性差的问题，研究构建新型有机材料以提升光合固碳效率。&quot;,&quot;category&quot;:&quot;中科院科研进展&quot;,&quot;published&quot;:&quot;2026-11-10T00:33:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">针对传统铁硫簇稳定性差、氧敏感等痛点，研究构建新型有机铁硫框架材料以促进光合固碳。</div><a href="https://www.cas.cn/syky/202611/t20261109_5123749.shtml" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">针对天然铁硫簇稳定性差的问题，研究构建新型有机材料以提升光合固碳效率。</div><a href="https://www.cas.cn/syky/202611/t20261109_5123749.shtml" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-9b4f53dacb83aca9b039" data-id="9b4f53dacb83aca9b039" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">何立峰同加财长商鹏飞、贸易部长西杜主持中加财金对话</div>
+  <div class="card-title">何立峰与加拿大部长共同主持第二次中加经济财金战略对话</div>
   
   <div class="card-meta">
     
@@ -1036,14 +1048,14 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">10小时前</span>
-    <button class="share-btn" title="复制分享" data-text="何立峰同加财长商鹏飞、贸易部长西杜主持中加财金对话" data-link="http://politics.people.com.cn/n1/2026/1110/c1001-40830823.html" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:bc182537d0a6093b4060ff56&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;何立峰同加财长商鹏飞、贸易部长西杜主持中加财金对话&quot;,&quot;url&quot;:&quot;http://politics.people.com.cn/n1/2026/1110/c1001-40830823.html&quot;,&quot;one_liner&quot;:&quot;何立峰与加拿大财政部长商鹏飞、国际贸易部长西杜共同主持第二次中加经济财金战略对话。&quot;,&quot;category&quot;:&quot;人民网高层动态&quot;,&quot;published&quot;:&quot;2026-11-10&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">12小时前</span>
+    <button class="share-btn" title="复制分享" data-text="何立峰与加拿大部长共同主持第二次中加经济财金战略对话" data-link="http://politics.people.com.cn/n1/2026/1110/c1001-40830823.html" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:bc182537d0a6093b4060ff56&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;何立峰与加拿大部长共同主持第二次中加经济财金战略对话&quot;,&quot;url&quot;:&quot;http://politics.people.com.cn/n1/2026/1110/c1001-40830823.html&quot;,&quot;one_liner&quot;:&quot;何立峰与加拿大财政部长商鹏飞、国际贸易部长西杜共同主持了第二次中加经济财金战略对话。&quot;,&quot;category&quot;:&quot;人民网高层动态&quot;,&quot;published&quot;:&quot;2026-11-10&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文 · 1篇延伸报道</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">何立峰与加拿大财政部长商鹏飞、国际贸易部长西杜共同主持第二次中加经济财金战略对话。</div><div class="related-row">· <span style="font-size:9px;color:#991b1b;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#991b1b18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;人民网高层动态</span></div><ul class="news-related-links"><li><a href="http://politics.people.com.cn/n1/2026/1110/c1001-40830842.html" target="_blank" rel="noopener">人民网高层动态：何立峰与加拿大财政部长商鹏飞、国际贸易部长西杜共同主持第二次中加经济财金战略对话 ↗</a></li></ul><a href="http://politics.people.com.cn/n1/2026/1110/c1001-40830823.html" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文 · 1篇延伸报道</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">何立峰与加拿大财政部长商鹏飞、国际贸易部长西杜共同主持了第二次中加经济财金战略对话。</div><div class="related-row">· <span style="font-size:9px;color:#991b1b;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#991b1b18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;人民网高层动态</span></div><ul class="news-related-links"><li><a href="http://politics.people.com.cn/n1/2026/1110/c1001-40830842.html" target="_blank" rel="noopener">人民网高层动态：何立峰与加拿大财政部长商鹏飞、国际贸易部长西杜共同主持第二次中加经济财金战略对话 ↗</a></li></ul><a href="http://politics.people.com.cn/n1/2026/1110/c1001-40830823.html" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-e8a7f236074185f3bae0" data-id="e8a7f236074185f3bae0" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">三部门部署实施服务乡村振兴高校招生专项计划</div>
+  <div class="card-title">教育部等三部门部署实施服务乡村振兴高校招生专项计划</div>
   
   <div class="card-meta">
     
@@ -1051,14 +1063,29 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">3小时前</span>
-    <button class="share-btn" title="复制分享" data-text="三部门部署实施服务乡村振兴高校招生专项计划" data-link="https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8f10724e44d9e88c4ec24258&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;三部门部署实施服务乡村振兴高校招生专项计划&quot;,&quot;url&quot;:&quot;https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html&quot;,&quot;one_liner&quot;:&quot;教育部等三部门联合发文，对实施面向农村和贫困地区的高校招生专项计划作出部署安排。&quot;,&quot;category&quot;:&quot;教育部工作动态&quot;,&quot;published&quot;:&quot;2026-11-10T07:05:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">5小时前</span>
+    <button class="share-btn" title="复制分享" data-text="教育部等三部门部署实施服务乡村振兴高校招生专项计划" data-link="https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8f10724e44d9e88c4ec24258&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;教育部等三部门部署实施服务乡村振兴高校招生专项计划&quot;,&quot;url&quot;:&quot;https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html&quot;,&quot;one_liner&quot;:&quot;教育部、公安部与农业农村部联合印发通知，部署实施服务乡村振兴高校招生专项计划。&quot;,&quot;category&quot;:&quot;教育部工作动态&quot;,&quot;published&quot;:&quot;2026-11-10T07:05:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">教育部等三部门联合发文，对实施面向农村和贫困地区的高校招生专项计划作出部署安排。</div><a href="https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-2a05929bf05ea4ded4d2" data-id="2a05929bf05ea4ded4d2" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">機電署要求海洋公園全面檢查海洋摩天塔　署方核實才能恢復運作</div>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">教育部、公安部与农业农村部联合印发通知，部署实施服务乡村振兴高校招生专项计划。</div><a href="https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-5b721a58af4d65df6cbe" data-id="5b721a58af4d65df6cbe" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="card-title">中广核浙江三澳核电项目4号机组主体工程开工</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#7f1d1d;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7f1d1d18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;科技日报</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">12小时前</span>
+    <button class="share-btn" title="复制分享" data-text="中广核浙江三澳核电项目4号机组主体工程开工" data-link="https://www.stdaily.com/web/gdxw/2026-11/10/content_611413.html" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:6aa9cc68c62d58653f59309d&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中广核浙江三澳核电项目4号机组主体工程开工&quot;,&quot;url&quot;:&quot;https://www.stdaily.com/web/gdxw/2026-11/10/content_611413.html&quot;,&quot;one_liner&quot;:&quot;11月10日，三澳核电4号机组核岛浇筑首罐混凝土，标志该项目二期进入全面建设阶段。&quot;,&quot;category&quot;:&quot;科技日报&quot;,&quot;published&quot;:&quot;2026-11-10&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">11月10日，三澳核电4号机组核岛浇筑首罐混凝土，标志该项目二期进入全面建设阶段。</div><a href="https://www.stdaily.com/web/gdxw/2026-11/10/content_611413.html" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-946c2c2a8e6f8444365e" data-id="946c2c2a8e6f8444365e" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="card-title">香港葵涌码头一男工疑驾叉车从载货台堕下受伤送医</div>
   
   <div class="card-meta">
     
@@ -1066,29 +1093,27 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">50分钟前</span>
-    <button class="share-btn" title="复制分享" data-text="機電署要求海洋公園全面檢查海洋摩天塔　署方核實才能恢復運作" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877271-20261110.htm" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8672a55987defc28eb160a2a&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;機電署要求海洋公園全面檢查海洋摩天塔　署方核實才能恢復運作&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877271-20261110.htm&quot;,&quot;one_liner&quot;:&quot;海洋公園「海洋摩天塔」昨日發生故障，機電署表示，涉事機動遊戲機過去亦曾發生停機事故，署方已要求海洋公園全面檢查有關機動遊戲機，包括檢視維修保養工作的項目，並提交事故報告，以防止同類事件再次發生。涉事機動遊戲機須經主管人員重複測試以確保安全，並在署方人員核實後，才能恢復運作。機電署會繼續密切監察「海洋摩天塔」的運作。\n\n署方回覆查詢時表示，昨日下午約2時45分&quot;,&quot;category&quot;:&quot;RTHK 本地&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 17:33:32 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">1小时前</span>
+    <button class="share-btn" title="复制分享" data-text="香港葵涌码头一男工疑驾叉车从载货台堕下受伤送医" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877285-20261110.htm" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:79ce062a524ac74bbfa0303b&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;香港葵涌码头一男工疑驾叉车从载货台堕下受伤送医&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877285-20261110.htm&quot;,&quot;one_liner&quot;:&quot;葵涌货柜码头一名约60岁男工疑驾叉车从约1.3米高载货台坠落受伤，已送玛嘉烈医院治理。&quot;,&quot;category&quot;:&quot;RTHK 本地&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 19:04:42 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要</p><div class="card-desc">海洋公園「海洋摩天塔」昨日發生故障，機電署表示，涉事機動遊戲機過去亦曾發生停機事故，署方已要求海洋公園全面檢查有關機動遊戲機，包括檢視維修保養工作的項目，並提交事故報告，以防止同類事件再次發生。涉事機動遊戲機須經主管人員重複測試以確保安全，並在署方人員核實後，才能恢復運作。機電署會繼續密切監察「海洋摩天塔」的運作。
-
-署方回覆查詢時表示，昨日下午約2時45分接獲海洋公園通報指機動遊戲機「海洋摩天塔</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877271-20261110.htm" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-46e6fe057f765e1e3ee7" data-id="46e6fe057f765e1e3ee7" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">研究揭示持续氮添加下土壤呼吸的时间变化规律</div>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">葵涌货柜码头一名约60岁男工疑驾叉车从约1.3米高载货台坠落受伤，已送玛嘉烈医院治理。</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877285-20261110.htm" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-abecbb308d834ad948af" data-id="abecbb308d834ad948af" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="card-title">中国12月起推行进口小客车上牌“一件事”等5项交管措施</div>
   
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#2c5557;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#2c555718;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;中科院科研进展</span>
+    <span style="font-size:10px;color:#7f1d1d;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7f1d1d18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;中新网社会</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">8小时前</span>
-    <button class="share-btn" title="复制分享" data-text="研究揭示持续氮添加下土壤呼吸的时间变化规律" data-link="https://www.cas.cn/syky/202611/t20261106_5123659.shtml" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:6293a5aa76c695ad3617686e&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;研究揭示持续氮添加下土壤呼吸的时间变化规律&quot;,&quot;url&quot;:&quot;https://www.cas.cn/syky/202611/t20261106_5123659.shtml&quot;,&quot;one_liner&quot;:&quot;中科院植物所整合全球数据，揭示持续氮添加对土壤呼吸及陆地碳封存调控的时间变化规律。&quot;,&quot;category&quot;:&quot;中科院科研进展&quot;,&quot;published&quot;:&quot;2026-11-10T01:47:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">昨天 00:00</span>
+    <button class="share-btn" title="复制分享" data-text="中国12月起推行进口小客车上牌“一件事”等5项交管措施" data-link="https://www.chinanews.com.cn/sh/2026/11-09/10728766.shtml" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:b37691428d7861ce8c99161b&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中国12月起推行进口小客车上牌“一件事”等5项交管措施&quot;,&quot;url&quot;:&quot;https://www.chinanews.com.cn/sh/2026/11-09/10728766.shtml&quot;,&quot;one_liner&quot;:&quot;中国公安部推出5项便利企业和群众的交管改革措施，包括进口车上牌“一件事”及试点线上“边问边办”等。&quot;,&quot;category&quot;:&quot;中新网社会&quot;,&quot;published&quot;:&quot;2026-11-09&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">中科院植物所整合全球数据，揭示持续氮添加对土壤呼吸及陆地碳封存调控的时间变化规律。</div><a href="https://www.cas.cn/syky/202611/t20261106_5123659.shtml" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">中国公安部推出5项便利企业和群众的交管改革措施，包括进口车上牌“一件事”及试点线上“边问边办”等。</div><a href="https://www.chinanews.com.cn/sh/2026/11-09/10728766.shtml" class="read-link">→ 查看原文</a></div></details>
 </article></div>
 </section>
       
@@ -1108,42 +1133,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">22小时前</span>
+    <span class="pub-time">昨天 12:19</span>
     <button class="share-btn" title="复制分享" data-text="Foldable Flight：可筛选的纸飞机折法目录" data-link="https://www.foldableflight.com" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:590ce642a5a8a979d7171ed0&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Foldable Flight：可筛选的纸飞机折法目录&quot;,&quot;url&quot;:&quot;https://www.foldableflight.com&quot;,&quot;one_liner&quot;:&quot;这是一个按折叠难度、纸张规格和机型筛选的纸飞机教程目录。入门可以从标为简单的 Arrowhead 开始，再试偏重滑翔的 Firefly 5。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 12:19:22 GMT&quot;,&quot;reading_excerpt&quot;:&quot;这是一个按折叠难度、纸张规格和机型筛选的纸飞机教程目录。入门可以从标为简单的 Arrowhead 开始，再试偏重滑翔的 Firefly 5。&quot;,&quot;reading_source&quot;:&quot;Foldable Flight 折法目录&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50424581&quot;,&quot;title_en&quot;:&quot;Foldable Flight: The Best Paper Airplanes&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">这是一个按折叠难度、纸张规格和机型筛选的纸飞机教程目录。入门可以从标为简单的 Arrowhead 开始，再试偏重滑翔的 Firefly 5。</p><p class="news-excerpt-label">依据 · Foldable Flight 折法目录</p><p class="news-excerpt-label">HN · 1025 积分 · 151 条评论</p><div class="community-source-links"><a href="https://www.foldableflight.com" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50424581" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
-</article><article class="news-card" id="card-92ba65c8669035fa59dc" data-id="92ba65c8669035fa59dc" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
-  <div class="card-title">美国邮政署提供 ZIP Code 边界数据</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">14小时前</span>
-    <button class="share-btn" title="复制分享" data-text="美国邮政署提供 ZIP Code 边界数据" data-link="https://postalpro.usps.com/zcb" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:3c86ca6a06f60e03f055bef4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国邮政署提供 ZIP Code 边界数据&quot;,&quot;url&quot;:&quot;https://postalpro.usps.com/zcb&quot;,&quot;one_liner&quot;:&quot;美国邮政署用实际投递地址绘制 ZIP Code 边界，数据按季度更新。官方页面提供 GeoJSON 样例，完整数据通过授权和订购获取。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 19:58:59 GMT&quot;,&quot;reading_excerpt&quot;:&quot;美国邮政署用实际投递地址绘制 ZIP Code 边界，数据按季度更新。官方页面提供 GeoJSON 样例，完整数据通过授权和订购获取。&quot;,&quot;reading_source&quot;:&quot;USPS PostalPro 数据说明&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50431058&quot;,&quot;title_en&quot;:&quot;USPS now offers official ZIP Code boundary polygons&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">美国邮政署用实际投递地址绘制 ZIP Code 边界，数据按季度更新。官方页面提供 GeoJSON 样例，完整数据通过授权和订购获取。</p><p class="news-excerpt-label">依据 · USPS PostalPro 数据说明</p><p class="news-excerpt-label">HN · 621 积分 · 318 条评论</p><div class="community-source-links"><a href="https://postalpro.usps.com/zcb" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50431058" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
-</article><article class="news-card" id="card-4bfd313b19b152f7c1d1" data-id="4bfd313b19b152f7c1d1" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
-  <div class="card-title">Gemini 连接应用的数据处理与人工审核引发讨论</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">15小时前</span>
-    
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a98326b09f6ff516ac36b54c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Gemini 连接应用的数据处理与人工审核引发讨论&quot;,&quot;url&quot;:&quot;https://github.com/thisisme6598/gemini_files/&quot;,&quot;one_liner&quot;:&quot;讨论关注 Gemini 接入 Gmail 和 Drive 后如何处理邮件和文件。谷歌说明 Gemini 可处理连接应用的内容，部分聊天也可能经过人工审核，公开说明未证实帖子所称的邮件和文件已被交给人工标注。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 18:24:38 GMT&quot;,&quot;reading_excerpt&quot;:&quot;讨论关注 Gemini 接入 Gmail 和 Drive 后如何处理邮件和文件。谷歌说明 Gemini 可处理连接应用的内容，部分聊天也可能经过人工审核，公开说明未证实帖子所称的邮件和文件已被交给人工标注。&quot;,&quot;reading_source&quot;:&quot;Google Gemini 应用隐私说明&quot;,&quot;discussion_url&quot;:&quot;&quot;,&quot;reading_summary_only&quot;:true}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">讨论关注 Gemini 接入 Gmail 和 Drive 后如何处理邮件和文件。谷歌说明 Gemini 可处理连接应用的内容，部分聊天也可能经过人工审核，公开说明未证实帖子所称的邮件和文件已被交给人工标注。</p><p class="news-excerpt-label">依据 · Google Gemini 应用隐私说明</p><div class="community-source-links"><a href="https://support.google.com/gemini/answer/13594961?hl=en" class="read-link" target="_blank" rel="noopener">谷歌隐私说明 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">这是一个按折叠难度、纸张规格和机型筛选的纸飞机教程目录。入门可以从标为简单的 Arrowhead 开始，再试偏重滑翔的 Firefly 5。</p><p class="news-excerpt-label">依据 · Foldable Flight 折法目录</p><p class="news-excerpt-label">HN · 1063 积分 · 151 条评论</p><div class="community-source-links"><a href="https://www.foldableflight.com" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50424581" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-299d53e9011724ceedd9" data-id="299d53e9011724ceedd9" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">Anthropic 发布 Claude Fable 5.2 与 Mythos 5.2</div>
   
@@ -1153,12 +1148,42 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">16小时前</span>
+    <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="Anthropic 发布 Claude Fable 5.2 与 Mythos 5.2" data-link="https://www.anthropic.com/claude-fable-and-mythos-5-2" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a989f1582084d0cf153c32d2&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Anthropic 发布 Claude Fable 5.2 与 Mythos 5.2&quot;,&quot;url&quot;:&quot;https://www.anthropic.com/claude-fable-and-mythos-5-2&quot;,&quot;one_liner&quot;:&quot;Anthropic 发布两款使用同一底层模型、开放范围不同的产品。据其测试，新版改善了推理、编程和视觉表现，输出速度较上一代最高提升 30%。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 18:01:10 GMT&quot;,&quot;reading_excerpt&quot;:&quot;Anthropic 发布两款使用同一底层模型、开放范围不同的产品。据其测试，新版改善了推理、编程和视觉表现，输出速度较上一代最高提升 30%。&quot;,&quot;reading_source&quot;:&quot;Anthropic 产品公告&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50429068&quot;,&quot;title_en&quot;:&quot;Claude Fable 5.2 and Mythos 5.2&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">Anthropic 发布两款使用同一底层模型、开放范围不同的产品。据其测试，新版改善了推理、编程和视觉表现，输出速度较上一代最高提升 30%。</p><p class="news-excerpt-label">依据 · Anthropic 产品公告</p><p class="news-excerpt-label">HN · 592 积分 · 803 条评论</p><div class="community-source-links"><a href="https://www.anthropic.com/claude-fable-and-mythos-5-2" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50429068" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">Anthropic 发布两款使用同一底层模型、开放范围不同的产品。据其测试，新版改善了推理、编程和视觉表现，输出速度较上一代最高提升 30%。</p><p class="news-excerpt-label">依据 · Anthropic 产品公告</p><p class="news-excerpt-label">HN · 666 积分 · 846 条评论</p><div class="community-source-links"><a href="https://www.anthropic.com/claude-fable-and-mythos-5-2" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50429068" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+</article><article class="news-card" id="card-92ba65c8669035fa59dc" data-id="92ba65c8669035fa59dc" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
+  <div class="card-title">美国邮政署提供 ZIP Code 边界数据</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">16小时前</span>
+    <button class="share-btn" title="复制分享" data-text="美国邮政署提供 ZIP Code 边界数据" data-link="https://postalpro.usps.com/zcb" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:3c86ca6a06f60e03f055bef4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国邮政署提供 ZIP Code 边界数据&quot;,&quot;url&quot;:&quot;https://postalpro.usps.com/zcb&quot;,&quot;one_liner&quot;:&quot;美国邮政署用实际投递地址绘制 ZIP Code 边界，数据按季度更新。官方页面提供 GeoJSON 样例，完整数据通过授权和订购获取。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 19:58:59 GMT&quot;,&quot;reading_excerpt&quot;:&quot;美国邮政署用实际投递地址绘制 ZIP Code 边界，数据按季度更新。官方页面提供 GeoJSON 样例，完整数据通过授权和订购获取。&quot;,&quot;reading_source&quot;:&quot;USPS PostalPro 数据说明&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50431058&quot;,&quot;title_en&quot;:&quot;USPS now offers official ZIP Code boundary polygons&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">美国邮政署用实际投递地址绘制 ZIP Code 边界，数据按季度更新。官方页面提供 GeoJSON 样例，完整数据通过授权和订购获取。</p><p class="news-excerpt-label">依据 · USPS PostalPro 数据说明</p><p class="news-excerpt-label">HN · 638 积分 · 321 条评论</p><div class="community-source-links"><a href="https://postalpro.usps.com/zcb" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50431058" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+</article><article class="news-card" id="card-4bfd313b19b152f7c1d1" data-id="4bfd313b19b152f7c1d1" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
+  <div class="card-title">Gemini 连接应用的数据处理与人工审核引发讨论</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">18小时前</span>
+    
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a98326b09f6ff516ac36b54c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Gemini 连接应用的数据处理与人工审核引发讨论&quot;,&quot;url&quot;:&quot;https://github.com/thisisme6598/gemini_files/&quot;,&quot;one_liner&quot;:&quot;讨论关注 Gemini 接入 Gmail 和 Drive 后如何处理邮件和文件。谷歌说明 Gemini 可处理连接应用的内容，部分聊天也可能经过人工审核，公开说明未证实帖子所称的邮件和文件已被交给人工标注。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 18:24:38 GMT&quot;,&quot;reading_excerpt&quot;:&quot;讨论关注 Gemini 接入 Gmail 和 Drive 后如何处理邮件和文件。谷歌说明 Gemini 可处理连接应用的内容，部分聊天也可能经过人工审核，公开说明未证实帖子所称的邮件和文件已被交给人工标注。&quot;,&quot;reading_source&quot;:&quot;Google Gemini 应用隐私说明&quot;,&quot;discussion_url&quot;:&quot;&quot;,&quot;reading_summary_only&quot;:true}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">讨论关注 Gemini 接入 Gmail 和 Drive 后如何处理邮件和文件。谷歌说明 Gemini 可处理连接应用的内容，部分聊天也可能经过人工审核，公开说明未证实帖子所称的邮件和文件已被交给人工标注。</p><p class="news-excerpt-label">依据 · Google Gemini 应用隐私说明</p><div class="community-source-links"><a href="https://support.google.com/gemini/answer/13594961?hl=en" class="read-link" target="_blank" rel="noopener">谷歌隐私说明 ↗</a></div></div></details>
 </article><article class="news-card" id="card-865ad093cdb2841379c6" data-id="865ad093cdb2841379c6" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">加拿大启用全天候实时支付系统 Real-Time Rail</div>
   
@@ -1168,12 +1193,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">18小时前</span>
+    <span class="pub-time">20小时前</span>
     <button class="share-btn" title="复制分享" data-text="加拿大启用全天候实时支付系统 Real-Time Rail" data-link="https://www.payments.ca/canada-launches-real-time-rail-bringing-247-payment-infrastructure-national-economy" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a8ac24a5fed69e7112677854&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;加拿大启用全天候实时支付系统 Real-Time Rail&quot;,&quot;url&quot;:&quot;https://www.payments.ca/canada-launches-real-time-rail-bringing-247-payment-infrastructure-national-economy&quot;,&quot;one_liner&quot;:&quot;Payments Canada 宣布启用 Real-Time Rail，接入机构可以全天候实时交换、清算和结算款项。个人和商家何时能使用相应服务，取决于各自的金融机构或支付服务商。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 16:00:45 GMT&quot;,&quot;reading_excerpt&quot;:&quot;Payments Canada 宣布启用 Real-Time Rail，接入机构可以全天候实时交换、清算和结算款项。个人和商家何时能使用相应服务，取决于各自的金融机构或支付服务商。&quot;,&quot;reading_source&quot;:&quot;Payments Canada 发布公告&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50427362&quot;,&quot;title_en&quot;:&quot;Payments Canada announces launch of Canada&#x27;s Real-Time Rail (RTR) payment system&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">Payments Canada 宣布启用 Real-Time Rail，接入机构可以全天候实时交换、清算和结算款项。个人和商家何时能使用相应服务，取决于各自的金融机构或支付服务商。</p><p class="news-excerpt-label">依据 · Payments Canada 发布公告</p><p class="news-excerpt-label">HN · 532 积分 · 286 条评论</p><div class="community-source-links"><a href="https://www.payments.ca/canada-launches-real-time-rail-bringing-247-payment-infrastructure-national-economy" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50427362" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">Payments Canada 宣布启用 Real-Time Rail，接入机构可以全天候实时交换、清算和结算款项。个人和商家何时能使用相应服务，取决于各自的金融机构或支付服务商。</p><p class="news-excerpt-label">依据 · Payments Canada 发布公告</p><p class="news-excerpt-label">HN · 538 积分 · 303 条评论</p><div class="community-source-links"><a href="https://www.payments.ca/canada-launches-real-time-rail-bringing-247-payment-infrastructure-national-economy" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50427362" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-ec5b6581f13b781f8bf6" data-id="ec5b6581f13b781f8bf6" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">e-means：用小批量更新减少聚类所需轮次</div>
   
@@ -1183,12 +1208,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">15小时前</span>
+    <span class="pub-time">17小时前</span>
     <button class="share-btn" title="复制分享" data-text="e-means：用小批量更新减少聚类所需轮次" data-link="https://e-means.github.io/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:fca505743bb9dd49a35a603b&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;e-means：用小批量更新减少聚类所需轮次&quot;,&quot;url&quot;:&quot;https://e-means.github.io/&quot;,&quot;one_liner&quot;:&quot;e-means 用小批量数据和指数移动平均更新聚类中心。作者在多组嵌入数据上报告，约 1.4 至 2.6 轮即可达到或优于 Lloyd k-means 跑 25 轮的聚类损失，实际速度取决于数据和实现。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 18:45:43 GMT&quot;,&quot;reading_excerpt&quot;:&quot;e-means 用小批量数据和指数移动平均更新聚类中心。作者在多组嵌入数据上报告，约 1.4 至 2.6 轮即可达到或优于 Lloyd k-means 跑 25 轮的聚类损失，实际速度取决于数据和实现。&quot;,&quot;reading_source&quot;:&quot;作者预印本与项目页&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50429734&quot;,&quot;title_en&quot;:&quot;E-means: Outperforming k-means in one-tenth the epochs&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">e-means 用小批量数据和指数移动平均更新聚类中心。作者在多组嵌入数据上报告，约 1.4 至 2.6 轮即可达到或优于 Lloyd k-means 跑 25 轮的聚类损失，实际速度取决于数据和实现。</p><p class="news-excerpt-label">依据 · 作者预印本与项目页</p><p class="news-excerpt-label">HN · 404 积分 · 37 条评论</p><div class="community-source-links"><a href="https://e-means.github.io/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50429734" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a><a href="https://arxiv.org/abs/2611.09501" class="read-link" target="_blank" rel="noopener">查看论文 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">e-means 用小批量数据和指数移动平均更新聚类中心。作者在多组嵌入数据上报告，约 1.4 至 2.6 轮即可达到或优于 Lloyd k-means 跑 25 轮的聚类损失，实际速度取决于数据和实现。</p><p class="news-excerpt-label">依据 · 作者预印本与项目页</p><p class="news-excerpt-label">HN · 420 积分 · 50 条评论</p><div class="community-source-links"><a href="https://e-means.github.io/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50429734" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a><a href="https://arxiv.org/abs/2611.09501" class="read-link" target="_blank" rel="noopener">查看论文 ↗</a></div></div></details>
 </article></div>
 </section>
       
@@ -1198,24 +1223,9 @@ function shareCard(btn) {
     
     <span class="sec-count">10 条</span>
   </div>
-  
-  <div class="news-grid"><article class="news-card" id="card-40a751252105fba00fe4" data-id="40a751252105fba00fe4" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">FT报道：间谍丑闻过后，黄仁勋能否继续担任英伟达首席执行官？</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
-    <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多媒体报道 · 8</span>
-    
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续3天</span>
-    <span class="pub-time">17小时前</span>
-    <button class="share-btn" title="复制分享" data-text="FT报道：间谍丑闻过后，黄仁勋能否继续担任英伟达首席执行官？" data-link="https://www.ft.com/content/0b20d24a-580a-41df-a5f3-7f7dba4f552f?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:1d3c9abe973437eb28d3433c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;FT报道：间谍丑闻过后，黄仁勋能否继续担任英伟达首席执行官？&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/0b20d24a-580a-41df-a5f3-7f7dba4f552f?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 17:02:52 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>原文与出处 · 8篇延伸报道</summary><div class="card-expand-body"><p class="news-attribution-note">指控与调查不等于事实认定，请参阅原媒体报道。</p><p class="news-original-title">原标题：Can Jensen Huang survive as Nvidia’s CEO after spy scandal?</p><div class="related-row">· <span style="font-size:9px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span> <span style="font-size:9px;color:#e1175e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e1175e18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;The Verge</span> <span style="font-size:9px;color:#1c6ea4;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1c6ea418;border-radius:999px;padding:1px 7px;">🇪🇸&thinsp;El País</span> <span style="font-size:9px;color:#0a8a00;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0a8a0018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;TechCrunch</span> <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">+4</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#6366f122;color:#6366f1;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">法国</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span><span style="font-size:8px;background:#7c3aed22;color:#7c3aed;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西班牙</span></span></div><ul class="news-related-links"><li><a href="https://www.ft.com/content/cbabf2da-2079-4b69-88e3-0ba84cf8d6fd?syn-25a6b1a6=1" target="_blank" rel="noopener">FT：FT报道：Trump says FBI is ‘looking into’ Nvidia’s Jensen Huang ↗</a></li><li><a href="https://www.theverge.com/ai-artificial-intelligence/1030422/nvidia-jensen-huang-ai-china-alice-huang" target="_blank" rel="noopener">The Verge：The Verge报道：Everything we know so far about the Nvidia spy scandal targeting CEO Jensen Huang ↗</a></li><li><a href="https://english.elpais.com/economy-and-business/2026-11-09/alice-huang-the-suspected-chinese-spy-at-the-center-of-the-nvidia-controversy.html" target="_blank" rel="noopener">El País：El País报道：Alice Huang, the suspected Chinese spy at the center of the Nvidia controversy ↗</a></li><li><a href="https://techcrunch.com/2026/11/09/a-short-seller-flagged-nvidia-ceos-ties-to-a-suspected-chinese-spy-six-months-before-the-scandal/" target="_blank" rel="noopener">TechCrunch：TechCrunch报道：A short seller flagged Nvidia CEO’s ties to a suspected Chinese spy six months before the scandal ↗</a></li><li><a href="https://www.france24.com/en/video/20261110-nvidia-shares-slide-as-board-probes-ceo-over-affair-with-alleged-chinese-spy" target="_blank" rel="noopener">France 24：France 24报道：Nvidia shares slide as board probes CEO over affair with alleged Chinese spy ↗</a></li><li><a href="https://www.cnbc.com/2026/11/10/nvidia-nvda-jensen-huang-affair-chinese-spy.html" target="_blank" rel="noopener">CNBC：CNBC报道：Nvidia stock edges higher as investors weigh potential fallout of CEO&#x27;s affair with alleged spy ↗</a></li><li><a href="https://news.sky.com/story/fbi-to-investigate-nvidia-ceo-over-affair-with-alleged-chinese-spy-trump-says-13610382" target="_blank" rel="noopener">Sky News：Sky News报道：FBI investigating Nvidia CEO over affair with alleged Chinese spy ↗</a></li><li><a href="https://www.elmundo.es/economia/empresas/2026/11/10/6af2bf08e85eceb1288b457d.html" target="_blank" rel="noopener">El Mundo：El culebrón chino de Jensen Huang, el jefe de Nvidia (que ahora investiga el FBI) ↗</a></li></ul><a href="https://www.ft.com/content/0b20d24a-580a-41df-a5f3-7f7dba4f552f?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-14161fb0e4afb108e22c" data-id="14161fb0e4afb108e22c" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">Kim Kardashian&#x27;s Skims 在遭到强烈反对后提供 148 美元的降临节日历退款</div>
+  <details class="news-category-links"><summary>今日选读已收录 1 条</summary><ul><li><a href="#card-6de2d439ed4f5325e206">黑石集团拟斥资5.32亿美元收购IIFL金融15.5%股份 <span aria-hidden="true">↑</span></a></li></ul></details>
+  <div class="news-grid"><article class="news-card" id="card-14161fb0e4afb108e22c" data-id="14161fb0e4afb108e22c" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
+  <div class="card-title">金·卡戴珊品牌Skims就148美元降临节日历引发争议致歉并退款</div>
   
   <div class="card-meta">
     
@@ -1223,44 +1233,14 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">26分钟前</span>
-    <button class="share-btn" title="复制分享" data-text="Kim Kardashian&#x27;s Skims 在遭到强烈反对后提供 148 美元的降临节日历退款" data-link="https://www.bbc.co.uk/news/articles/cqp8g8p53x6ko?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ac4a43aa846ccf44f1d0ca04&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Kim Kardashian&#x27;s Skims 在遭到强烈反对后提供 148 美元的降临节日历退款&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqp8g8p53x6ko?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;The contents of the calendar, including hair clips and keychains, have been widely criticised on social media.&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:57:49 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">2小时前</span>
+    <button class="share-btn" title="复制分享" data-text="金·卡戴珊品牌Skims就148美元降临节日历引发争议致歉并退款" data-link="https://www.bbc.co.uk/news/articles/cqp8g8p53x6ko?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ac4a43aa846ccf44f1d0ca04&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;金·卡戴珊品牌Skims就148美元降临节日历引发争议致歉并退款&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqp8g8p53x6ko?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;因日历内含的发夹和钥匙扣等产品质量引发社交媒体广泛批评，Skims宣布提供退款。&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:57:49 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要</p><div class="card-desc">The contents of the calendar, including hair clips and keychains, have been widely criticised on social media.</div><a href="https://www.bbc.co.uk/news/articles/cqp8g8p53x6ko?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-81788c0d8d4209d37caa" data-id="81788c0d8d4209d37caa" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">中国能否颠覆商业航空？阿联酋航空表示要做好准备</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">48分钟前</span>
-    <button class="share-btn" title="复制分享" data-text="中国能否颠覆商业航空？阿联酋航空表示要做好准备" data-link="https://www.bloomberg.com/news/articles/2026-11-10/can-china-upend-commercial-aviation-emirates-says-be-prepared" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:27b3b858938acd2d61aa206c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中国能否颠覆商业航空？阿联酋航空表示要做好准备&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-10/can-china-upend-commercial-aviation-emirates-says-be-prepared&quot;,&quot;one_liner&quot;:&quot;China has demonstrated that it can catch up and dominate so many industries that it’s probably only a matter of time until they do the same with the civil aviation duopoly now domi&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:35:44 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要</p><div class="card-desc">China has demonstrated that it can catch up and dominate so many industries that it’s probably only a matter of time until they do the same with the civil aviation duopoly now dominated by Airbus SE a</div><a href="https://www.bloomberg.com/news/articles/2026-11-10/can-china-upend-commercial-aviation-emirates-says-be-prepared" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-7a9c30c0fa392963a371" data-id="7a9c30c0fa392963a371" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">奥维耶多背包爆炸，一名警察死亡，另一人受伤</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">57分钟前</span>
-    <button class="share-btn" title="复制分享" data-text="奥维耶多背包爆炸，一名警察死亡，另一人受伤" data-link="https://www.bbc.co.uk/news/articles/cwm262pzezy0o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:7f52167f7e4be03d13a667c3&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;奥维耶多背包爆炸，一名警察死亡，另一人受伤&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cwm262pzezy0o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;Officers attended the scene in connection with a separate incident at a residential building in the city.&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:26:20 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要</p><div class="card-desc">Officers attended the scene in connection with a separate incident at a residential building in the city.</div><a href="https://www.bbc.co.uk/news/articles/cwm262pzezy0o?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">因日历内含的发夹和钥匙扣等产品质量引发社交媒体广泛批评，Skims宣布提供退款。</div><a href="https://www.bbc.co.uk/news/articles/cqp8g8p53x6ko?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-f0ee90a0d1d092696051" data-id="f0ee90a0d1d092696051" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">BBC 财经报道：费萨尔·伊斯兰：美国科技巨头英伟达的老板告诉我关于中国和国家安全的事情</div>
+  <div class="card-title">BBC 财经报道：费萨尔·伊斯兰：英伟达CEO向我谈及中国与国家安全</div>
   
   <div class="card-meta">
     
@@ -1268,29 +1248,14 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">1小时前</span>
-    <button class="share-btn" title="复制分享" data-text="BBC 财经报道：费萨尔·伊斯兰：美国科技巨头英伟达的老板告诉我关于中国和国家安全的事情" data-link="https://www.bbc.co.uk/news/articles/c64g1gzy2vdzo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:9d5d87a4a4770378b68b3b55&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;BBC 财经报道：费萨尔·伊斯兰：美国科技巨头英伟达的老板告诉我关于中国和国家安全的事情&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/c64g1gzy2vdzo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:23:55 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">3小时前</span>
+    <button class="share-btn" title="复制分享" data-text="BBC 财经报道：费萨尔·伊斯兰：英伟达CEO向我谈及中国与国家安全" data-link="https://www.bbc.co.uk/news/articles/c64g1gzy2vdzo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:9d5d87a4a4770378b68b3b55&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;BBC 财经报道：费萨尔·伊斯兰：英伟达CEO向我谈及中国与国家安全&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/c64g1gzy2vdzo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:23:55 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>原文与出处</summary><div class="card-expand-body"><p class="news-attribution-note">指控与调查不等于事实认定，请参阅原媒体报道。</p><p class="news-original-title">原标题：Faisal Islam: What the boss of US tech giant Nvidia told me about China and national security</p><a href="https://www.bbc.co.uk/news/articles/c64g1gzy2vdzo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-771ea68abef834df3926" data-id="771ea68abef834df3926" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">软银因数据中心减记意外损失 70 亿美元</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">1小时前</span>
-    <button class="share-btn" title="复制分享" data-text="软银因数据中心减记意外损失 70 亿美元" data-link="https://www.ft.com/content/5ceed157-0016-4822-a272-8b607911da5e?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:cbdf844d4a9592db32df5a75&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;软银因数据中心减记意外损失 70 亿美元&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/5ceed157-0016-4822-a272-8b607911da5e?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;AI-focused Japanese group blames first quarterly loss in nearly two years on ‘evolving requirements’ in US projects&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 08:33:19 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要</p><div class="card-desc">AI-focused Japanese group blames first quarterly loss in nearly two years on ‘evolving requirements’ in US projects</div><a href="https://www.ft.com/content/5ceed157-0016-4822-a272-8b607911da5e?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-552952d1a29e496abf58" data-id="552952d1a29e496abf58" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">报道称中国库存开始增加 铝价应声下跌</div>
+  <div class="card-title">受中国库存开始增加报道影响，铝价应声下跌</div>
   
   <div class="card-meta">
     
@@ -1298,29 +1263,14 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">7小时前</span>
-    <button class="share-btn" title="复制分享" data-text="报道称中国库存开始增加 铝价应声下跌" data-link="https://www.bloomberg.com/news/articles/2026-11-10/copper-extends-rebound-as-global-technology-stocks-resume-rally" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:99c38ed25fd199ce54992a72&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;报道称中国库存开始增加 铝价应声下跌&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-10/copper-extends-rebound-as-global-technology-stocks-resume-rally&quot;,&quot;one_liner&quot;:&quot;因有报道称中国库存开始扩大，伦敦铝价跟随沪铝跌势下滑。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 03:04:14 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">9小时前</span>
+    <button class="share-btn" title="复制分享" data-text="受中国库存开始增加报道影响，铝价应声下跌" data-link="https://www.bloomberg.com/news/articles/2026-11-10/copper-extends-rebound-as-global-technology-stocks-resume-rally" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:99c38ed25fd199ce54992a72&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;受中国库存开始增加报道影响，铝价应声下跌&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-10/copper-extends-rebound-as-global-technology-stocks-resume-rally&quot;,&quot;one_liner&quot;:&quot;受中国库存增加的报告及上海期货大跌影响，伦敦市场铝价随之下跌。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 03:04:14 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">因有报道称中国库存开始扩大，伦敦铝价跟随沪铝跌势下滑。</div><a href="https://www.bloomberg.com/news/articles/2026-11-10/copper-extends-rebound-as-global-technology-stocks-resume-rally" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-259c70f6db09634ddb8c" data-id="259c70f6db09634ddb8c" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">铠侠杠杆产品时隔一年后在香港上市</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">8小时前</span>
-    <button class="share-btn" title="复制分享" data-text="铠侠杠杆产品时隔一年后在香港上市" data-link="https://www.bloomberg.com/news/articles/2026-11-10/kioxia-leveraged-product-debuts-in-hk-after-one-year-hiatus" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5def6a12ef6576877e3bb7d9&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;铠侠杠杆产品时隔一年后在香港上市&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-10/kioxia-leveraged-product-debuts-in-hk-after-one-year-hiatus&quot;,&quot;one_liner&quot;:&quot;追踪铠侠控股的杠杆产品周二在香港上市，为时隔一年后首只此类单股工具。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 01:59:09 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">追踪铠侠控股的杠杆产品周二在香港上市，为时隔一年后首只此类单股工具。</div><a href="https://www.bloomberg.com/news/articles/2026-11-10/kioxia-leveraged-product-debuts-in-hk-after-one-year-hiatus" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">受中国库存增加的报告及上海期货大跌影响，伦敦市场铝价随之下跌。</div><a href="https://www.bloomberg.com/news/articles/2026-11-10/copper-extends-rebound-as-global-technology-stocks-resume-rally" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-f729623780897156a08d" data-id="f729623780897156a08d" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">“终身邮轮”奥德赛号在新加坡被扣押</div>
+  <div class="card-title">“环球游”邮轮在新加坡遭扣押</div>
   
   <div class="card-meta">
     
@@ -1328,14 +1278,14 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">8小时前</span>
-    <button class="share-btn" title="复制分享" data-text="“终身邮轮”奥德赛号在新加坡被扣押" data-link="https://www.bbc.co.uk/news/articles/cqr7y7myer53o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:cf6e8a467b708ab136ab4ae2&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;“终身邮轮”奥德赛号在新加坡被扣押&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqr7y7myer53o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;“奥德赛号”原定环球航行数年，但因运营商耗尽资金导致行程中断并在新加坡被扣。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 01:49:06 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">10小时前</span>
+    <button class="share-btn" title="复制分享" data-text="“环球游”邮轮在新加坡遭扣押" data-link="https://www.bbc.co.uk/news/articles/cqr7y7myer53o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:cf6e8a467b708ab136ab4ae2&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;“环球游”邮轮在新加坡遭扣押&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqr7y7myer53o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;“奥德赛号”原定载客进行多年环球航行，但因运营商资金耗尽，行程被迫提前结束。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 01:49:06 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">“奥德赛号”原定环球航行数年，但因运营商耗尽资金导致行程中断并在新加坡被扣。</div><a href="https://www.bbc.co.uk/news/articles/cqr7y7myer53o?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">“奥德赛号”原定载客进行多年环球航行，但因运营商资金耗尽，行程被迫提前结束。</div><a href="https://www.bbc.co.uk/news/articles/cqr7y7myer53o?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-5939dbe4b2b537998330" data-id="5939dbe4b2b537998330" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">词条：亚里士多德的心理学思想</div>
+  <div class="card-title">亚里士多德心理学</div>
   
   <div class="card-meta">
     
@@ -1343,12 +1293,72 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">9小时前</span>
-    <button class="share-btn" title="复制分享" data-text="词条：亚里士多德的心理学思想" data-link="https://plato.stanford.edu/entries/aristotle-psychology/" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:24492dd48548c17409f96800&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;词条：亚里士多德的心理学思想&quot;,&quot;url&quot;:&quot;https://plato.stanford.edu/entries/aristotle-psychology/&quot;,&quot;one_liner&quot;:&quot;克里斯托弗·希尔兹对该词条的正文、参考文献及附注内容进行了修订更新。&quot;,&quot;category&quot;:&quot;Stanford SEP&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 17:10:33 -0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">11小时前</span>
+    <button class="share-btn" title="复制分享" data-text="亚里士多德心理学" data-link="https://plato.stanford.edu/entries/aristotle-psychology/" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:24492dd48548c17409f96800&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;亚里士多德心理学&quot;,&quot;url&quot;:&quot;https://plato.stanford.edu/entries/aristotle-psychology/&quot;,&quot;one_liner&quot;:&quot;克里斯托弗·希尔兹于2026年11月9日修订的条目，涵盖正文、参考书目及附注更新。&quot;,&quot;category&quot;:&quot;Stanford SEP&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 17:10:33 -0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">克里斯托弗·希尔兹对该词条的正文、参考文献及附注内容进行了修订更新。</div><a href="https://plato.stanford.edu/entries/aristotle-psychology/" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">克里斯托弗·希尔兹于2026年11月9日修订的条目，涵盖正文、参考书目及附注更新。</div><a href="https://plato.stanford.edu/entries/aristotle-psychology/" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-61f9580fedf6a7cd1fdd" data-id="61f9580fedf6a7cd1fdd" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
+  <div class="card-title">我将Vinted告上法庭以追回钱款</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">12小时前</span>
+    <button class="share-btn" title="复制分享" data-text="我将Vinted告上法庭以追回钱款" data-link="https://www.bbc.co.uk/news/articles/cm369e3l15lwo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5f95a95890e411bc8aa028d5&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;我将Vinted告上法庭以追回钱款&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cm369e3l15lwo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;BBC采访了多名Vinted卖家，他们反映难以从在线钱包中支取资金。&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 00:27:37 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">BBC采访了多名Vinted卖家，他们反映难以从在线钱包中支取资金。</div><a href="https://www.bbc.co.uk/news/articles/cm369e3l15lwo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-5aae5f95725c5616d301" data-id="5aae5f95725c5616d301" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
+  <div class="card-title">“没有正义”：爱泼斯坦受害者讲述模特公司将其送往施暴者家中</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">12小时前</span>
+    <button class="share-btn" title="复制分享" data-text="“没有正义”：爱泼斯坦受害者讲述模特公司将其送往施暴者家中" data-link="https://www.bbc.co.uk/news/articles/cm86z6w59gggo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:6ee79d0416da88e1898e87d0&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;“没有正义”：爱泼斯坦受害者讲述模特公司将其送往施暴者家中&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cm86z6w59gggo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;一名女子声称，曾有模特经纪公司负责人将其送往该性犯罪者的佛罗里达海滩豪宅进行拍摄。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 00:14:03 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">一名女子声称，曾有模特经纪公司负责人将其送往该性犯罪者的佛罗里达海滩豪宅进行拍摄。</div><a href="https://www.bbc.co.uk/news/articles/cm86z6w59gggo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-7b0c51cc3af44e1bd400" data-id="7b0c51cc3af44e1bd400" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
+  <div class="card-title">美海军指挥官访问韩国，深化双方联合训练伙伴关系</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#334155;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#33415518;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Defense.gov</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">15小时前</span>
+    <button class="share-btn" title="复制分享" data-text="美海军指挥官访问韩国，深化双方联合训练伙伴关系" data-link="https://www.war.gov/News/News-Stories/Article/Article/4645097/navy-command-builds-on-training-partnership-during-south-korean-visit/" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:4abb06cbd0521e180389c24f&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美海军指挥官访问韩国，深化双方联合训练伙伴关系&quot;,&quot;url&quot;:&quot;https://www.war.gov/News/News-Stories/Article/Article/4645097/navy-command-builds-on-training-partnership-during-south-korean-visit/&quot;,&quot;one_liner&quot;:&quot;美海军少将格雷格·赫夫曼访韩期间会见韩方将领，并在“闲山岛”号舰上发表讲话。&quot;,&quot;category&quot;:&quot;Defense.gov&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 20:42:10 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">美海军少将格雷格·赫夫曼访韩期间会见韩方将领，并在“闲山岛”号舰上发表讲话。</div><a href="https://www.war.gov/News/News-Stories/Article/Article/4645097/navy-command-builds-on-training-partnership-during-south-korean-visit/" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-13a574373cc9f8398f8c" data-id="13a574373cc9f8398f8c" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
+  <div class="card-title">分析称针对数据中心的反弹其本质可能只是电力问题</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">16小时前</span>
+    <button class="share-btn" title="复制分享" data-text="分析称针对数据中心的反弹其本质可能只是电力问题" data-link="https://www.technologyreview.com/2026/11/09/1148194/the-backlash-about-data-centers-might-really-just-be-about-electricity/" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a0dbf5e97194380291567d53&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;分析称针对数据中心的反弹其本质可能只是电力问题&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/09/1148194/the-backlash-about-data-centers-might-really-just-be-about-electricity/&quot;,&quot;one_liner&quot;:&quot;本文原载于AI周刊《算法》。如需抢先接收此类报道，请订阅邮件通讯。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 19:35:33 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">本文原载于AI周刊《算法》。如需抢先接收此类报道，请订阅邮件通讯。</div><a href="https://www.technologyreview.com/2026/11/09/1148194/the-backlash-about-data-centers-might-really-just-be-about-electricity/" class="read-link">→ 查看原文</a></div></details>
 </article></div>
 </section>
       
@@ -1391,16 +1401,11 @@ function shareCard(btn) {
     </a>
   </div>
   <!-- 视角雷达 -->
-  <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">本期来源地区 · 按报道计数</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">31</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:16%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">5</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#9333ea;min-width:48px;white-space:nowrap;">俄罗斯</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:9%;background:#9333ea;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">西班牙</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:9%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#2563eb;min-width:48px;white-space:nowrap;">欧洲</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:6%;background:#2563eb;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#6366f1;min-width:48px;white-space:nowrap;">法国</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:6%;background:#6366f1;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#64748b;min-width:48px;white-space:nowrap;">香港</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:6%;background:#64748b;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#e11d48;min-width:48px;white-space:nowrap;">日本</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#e11d48;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#334155;min-width:48px;white-space:nowrap;">美国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#334155;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#d97706;min-width:48px;white-space:nowrap;">中东</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#d97706;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">学术</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div></div></div>
+  <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">本期来源地区 · 按报道计数</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">24</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:25%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">6</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#64748b;min-width:48px;white-space:nowrap;">香港</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:8%;background:#64748b;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#334155;min-width:48px;white-space:nowrap;">美国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:8%;background:#334155;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#6366f1;min-width:48px;white-space:nowrap;">法国</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:4%;background:#6366f1;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">学术</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:4%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div></div></div>
   <!-- 经济日历 -->
   
   <!-- 持续追踪 -->
-  <div class="sidebar-block">
-  <div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">
-    <span>持续追踪</span>
-  </div>
-  <div style="padding:4px 0;"><a href="https://www.theverge.com/ai-artificial-intelligence/1030005/anthropic-claude-fable-mythos-5-2" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:11px;color:var(--text3);font-family:sans-serif;min-width:28px;" title="首次收录距今的天数">69天</span><span class="ai-paper-title" title="The Verge · Anthropic推出Claude Fable与Mythos 5.2模型">The Verge · Anthropic推出Claude Fable与Mythos 5.2模型</span></a></div>
-</div>
+  
 </aside>
 
   </div>
@@ -1409,7 +1414,7 @@ function shareCard(btn) {
   <div class="footer">
     <div class="footer-sources">
       <strong>本期展示来源（含延伸报道）</strong>：
-      Al Jazeera · BBC 国际 · BBC 财经 · Bloomberg · CNBC · Defense.gov · El Mundo · El País · FT · France 24 · Hacker News · Japan Times · NYT 国际 · Politico EU · RT · RTHK 本地 · Sky News · Stanford SEP · TASS · TechCrunch · The Verge · 中科院科研进展 · 人民网高层动态 · 教育部工作动态
+      BBC 国际 · BBC 财经 · Bloomberg · CNBC · Defense.gov · FT · France 24 · Hacker News · MIT Tech Review · RTHK 本地 · Stanford SEP · TechCrunch · 中新网社会 · 中科院科研进展 · 人民网高层动态 · 教育部工作动态 · 科技日报
     </div>
     <div class="footer-note">
       简报 Jae Daily · AI 辅助整理 · 2026年11月10日 ·
