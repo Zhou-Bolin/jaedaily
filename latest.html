@@ -522,6 +522,16 @@ body.dark .brand-mark{mix-blend-mode:normal}
   .slim-item,.slim-item:last-child{padding:14px 16px;border:1px solid var(--border);background:var(--inset-bg)}
 }
 .news-category-links a{color:var(--link);text-underline-offset:.22em}
+.edition-coverage{padding:0 20px;color:#f5e6d6;font:12px/1.7 sans-serif}
+.edition-coverage>summary{margin:0 auto;padding:7px 0 10px;width:max-content;max-width:100%;cursor:pointer}
+.edition-coverage>summary:focus-visible{outline-color:#f5e6d6}
+.edition-coverage-status{color:var(--edition-gold,#e8c87a)}
+.edition-coverage-body{padding:10px 0 15px;border-top:1px solid rgba(255,255,255,.23)}
+.edition-coverage-body dl{margin:0;display:grid;gap:7px}
+.edition-coverage-body dl>div{display:grid;grid-template-columns:164px minmax(0,1fr);gap:8px}
+.edition-coverage-body dt{font-weight:600}
+.edition-coverage-body dd{margin:0;overflow-wrap:anywhere}
+.edition-coverage-body p{margin:0 0 8px}
 </style>
 <script>
 // ── 持久化设置（暗色模式 + 字号）──────────────────────────────
@@ -698,6 +708,7 @@ function shareCard(btn) {
       <span class="mast-strip-sep">·</span>
       <span class="mast-strip-item">AI 辅助整理</span>
     </div>
+    <details class="edition-coverage"><summary>本版发布 <time datetime="2026-11-10T19:42+08:00">北京时间 11月10日 19:42</time> <span class="edition-coverage-status">· 4 个来源待补抓</span></summary><div class="edition-coverage-body"><p>来源检查截至 11月10日 18:07</p><p>范围为本期配置的新闻 RSS 与官方栏目。</p><dl><div><dt>待补抓 · 4 个</dt><dd>Reuters、AP、虎嗅、NIH Health</dd></div><div><dt>检查成功，暂无可用条目 · 5 个</dt><dd>新华社、环球时报、中国军网、MedlinePlus、中国政府网</dd></div><div><dt>抓到可用条目 · 55 个</dt><dd>BBC 国际、BBC 财经、FT、Bloomberg、NYT 国际、NYT 财经、CNBC、The Guardian、France 24、Sky News、El País、El Mundo、Al Jazeera、Middle East Eye、Japan Times、Yonhap、SCMP、The Hindu、RT、TASS、中国新闻网、CGTN 中国、CGTN 国际、CGTN 财经、RTHK 本地、RTHK 国际、Politico EU、MIT Tech Review、The Verge、Wired、Ars Technica、TechCrunch、Defense.gov、RUSI、War on the Rocks、Game Developer、Stanford SEP、Aeon、Paris Review、Artforum、Smithsonian、科技日报、中科院科研进展、教育部工作动态、中新网社会、中新网教育、国家统计局发布、人民网高层动态、人民网国际、人民网财经、人民网军事、新华网国际、新华网科技、央视新闻中国、央视新闻国际</dd></div></dl></div></details>
   </div>
 
   <div class="daily-nav-wrap"><a class="jd-skip-link" href="#main-content">跳到正文</a><nav class="brand-nav" aria-label="栏目导航"><a aria-current="page" href="latest.html">每日简报</a><a href="ai-digest.html">论文研报</a><a href="learn.html">每日一课</a><a href="health.html">健康学堂</a><a href="favorites.html">收藏</a><a href="archive/">往期</a></nav>
