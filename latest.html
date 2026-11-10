@@ -191,6 +191,14 @@ a:hover{text-decoration:underline;}
 .card-expand[open] summary{color:var(--text2);}
 .card-expand-body{display:flex;flex-direction:column;gap:6px;padding-top:6px;
   border-top:1px solid var(--divider);margin-top:4px;}
+.community-quickread{border:1px solid var(--divider);border-radius:5px;
+  background:var(--inset-bg);padding:0 10px;margin-top:4px;}
+.community-quickread summary{padding:6px 0;margin:0;color:var(--text2);
+  font-size:12px;font-weight:650;}
+.community-quickread summary:focus-visible{outline:2px solid currentColor;outline-offset:2px;}
+.community-quickread .card-expand-body{margin-top:0;padding:8px 0 10px;}
+.community-preview-text{margin:0;color:var(--text2);font-size:14px;line-height:1.7;}
+.community-source-links{display:flex;gap:10px;flex-wrap:wrap;}
 /* 折叠摘要（深度，兼容旧版） */
 .full-summary summary{font-size:10px;color:#94a3b8;font-family:sans-serif;
   cursor:pointer;padding:4px 0 2px;list-style:none;user-select:none;}
@@ -733,7 +741,7 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">18小时前</span>
+    <span class="pub-time">19小时前</span>
     <button class="share-btn" title="复制分享" data-text="礼来减肥药Foundayo三期试验有效缓解睡眠呼吸暂停" data-link="https://www.cnbc.com/2026/11/09/eli-lilly-foundayo-sleep-apnea-trial.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:105a64f0a58af8ec34846a46&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;礼来减肥药Foundayo三期试验有效缓解睡眠呼吸暂停&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/09/eli-lilly-foundayo-sleep-apnea-trial.html&quot;,&quot;one_liner&quot;:&quot;礼来计划年底前提交该日服药申请，用于治疗中重度阻塞性睡眠呼吸暂停。&quot;,&quot;category&quot;:&quot;CNBC&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 14:30:01 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -767,7 +775,7 @@ function shareCard(btn) {
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">17小时前</span>
+    <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="Meta在全球推广Instagram人工智能年龄识别技术" data-link="https://techcrunch.com/2026/11/09/meta-expands-instagrams-ai-age-guessing-tech-globally/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:415a41d062451e33abc1be72&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Meta在全球推广Instagram人工智能年龄识别技术&quot;,&quot;url&quot;:&quot;https://techcrunch.com/2026/11/09/meta-expands-instagrams-ai-age-guessing-tech-globally/&quot;,&quot;one_liner&quot;:&quot;Meta宣布将利用AI技术在全球识别疑似青少年用户，即便对方使用成人账号。&quot;,&quot;category&quot;:&quot;TechCrunch&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 15:32:27 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1207,7 +1215,7 @@ function shareCard(btn) {
     
     
     <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 76"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">8小时前</span>
+    <span class="pub-time">9小时前</span>
     <button class="share-btn" title="复制分享" data-text="研究构建促进光合固碳的有机铁硫框架材料" data-link="https://www.cas.cn/syky/202611/t20261109_5123749.shtml" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8b23a2181164ae90d48171b4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;研究构建促进光合固碳的有机铁硫框架材料&quot;,&quot;url&quot;:&quot;https://www.cas.cn/syky/202611/t20261109_5123749.shtml&quot;,&quot;one_liner&quot;:&quot;铁和硫是地球生物地球化学循环的关键元素。在生物体内，铁硫簇作为蛋白质的结构核心，通过电子得失参与氧化还原反应，在细胞代谢与光合作用中发挥重要作用。然而，天然与人工合成的铁硫簇普遍存在稳定性差、对氧敏感等问题，限制了其实际应用。如何兼顾硫化铁矿物的结构稳定性与生物铁硫簇的电子传递特性，成为开发仿生铁硫功能材料的重要挑战。 光合作用是铁硫簇发挥电子传递功能的重要&quot;,&quot;category&quot;:&quot;中科院科研进展&quot;,&quot;published&quot;:&quot;2026-11-10T00:33:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1316,7 +1324,7 @@ function shareCard(btn) {
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
     <div class="rank-body">
       <a href="#card-a31ea4524526cb3af1a3" class="rank-title-link">
-        <div class="rank-title">Rust与WebGPU打造开源SketchUp替代品KetchUp<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+        <div class="rank-title">开源建模工具 BenchUp：在浏览器里做木工与家具设计<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
     </div>
@@ -1329,20 +1337,20 @@ function shareCard(btn) {
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
     <div class="rank-body">
       <a href="#card-5e73aa6afacd3ca62681" class="rank-title-link">
-        <div class="rank-title">全球大部分地区可解锁任意X品牌汽车<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+        <div class="rank-title">车联网安全披露：远程操作需严格校验权限<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
       <div class="rank-score" style="color:#1e293b;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://shubs.io/unlocking-any-car-from-x-brand-in-most-of-the-world/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
+      
     </div>
   </div>
   <div class="rank-row">
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
     <div class="rank-body">
       <a href="#card-317d42ced4e134bf7da7" class="rank-title-link">
-        <div class="rank-title">人工智能泡沫论难以令人信服<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+        <div class="rank-title">作者评论：为什么我还不确信 AI 行业存在泡沫<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
     </div>
@@ -1355,7 +1363,7 @@ function shareCard(btn) {
     <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
     <div class="rank-body">
       <a href="#card-8f28f8796d12dea42ab7" class="rank-title-link">
-        <div class="rank-title">Outlook.com开始拒收未配置DMARC域名的邮件<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
+        <div class="rank-title">MailRoute 观察到 Outlook.com 拒收部分缺少 DMARC 的邮件<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
       </a>
       <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#1e293b;"></div></div>
     </div>
@@ -1393,12 +1401,12 @@ function shareCard(btn) {
     
     <span class="pub-time">11-04 17:05</span>
     <button class="share-btn" title="复制分享" data-text="声明式拖拽技术" data-link="https://declarative-dragging.github.io/" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a2291431669560a7c84e16c2&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;声明式拖拽技术&quot;,&quot;url&quot;:&quot;https://declarative-dragging.github.io/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Wed, 04 Nov 2026 17:05:07 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a2291431669560a7c84e16c2&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;声明式拖拽技术&quot;,&quot;url&quot;:&quot;https://declarative-dragging.github.io/&quot;,&quot;one_liner&quot;:&quot;开发者只需声明拖动后允许进入的状态，系统便根据这些状态推导落点和动画。作者用 Dragology 实现了这一思路，项目页有代数式和卡片的交互示例。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Wed, 04 Nov 2026 17:05:07 GMT&quot;,&quot;reading_excerpt&quot;:&quot;开发者只需声明拖动后允许进入的状态，系统便根据这些状态推导落点和动画。作者用 Dragology 实现了这一思路，项目页有代数式和卡片的交互示例。&quot;,&quot;reading_source&quot;:&quot;作者项目页&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50368481&quot;,&quot;title_en&quot;:&quot;Declarative Dragging&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><a href="https://declarative-dragging.github.io/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=50368481" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">开发者只需声明拖动后允许进入的状态，系统便根据这些状态推导落点和动画。作者用 Dragology 实现了这一思路，项目页有代数式和卡片的交互示例。</p><p class="news-excerpt-label">依据 · 作者项目页</p><div class="community-source-links"><a href="https://declarative-dragging.github.io/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50368481" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-a31ea4524526cb3af1a3" data-id="a31ea4524526cb3af1a3" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
-  <div class="card-title">Rust与WebGPU打造开源SketchUp替代品KetchUp</div>
+  <div class="card-title">开源建模工具 BenchUp：在浏览器里做木工与家具设计</div>
   
   <div class="card-meta">
     
@@ -1409,13 +1417,13 @@ function shareCard(btn) {
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 41"></span>
     <span class="pub-time">昨天 22:35</span>
-    <button class="share-btn" title="复制分享" data-text="Rust与WebGPU打造开源SketchUp替代品KetchUp" data-link="https://ketchup3d.github.io/app/" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5a786529aaee4f4c8462f06f&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Rust与WebGPU打造开源SketchUp替代品KetchUp&quot;,&quot;url&quot;:&quot;https://ketchup3d.github.io/app/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 22:35:35 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <button class="share-btn" title="复制分享" data-text="开源建模工具 BenchUp：在浏览器里做木工与家具设计" data-link="https://ketchup3d.github.io/app/" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5a786529aaee4f4c8462f06f&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;开源建模工具 BenchUp：在浏览器里做木工与家具设计&quot;,&quot;url&quot;:&quot;https://ketchup3d.github.io/app/&quot;,&quot;one_liner&quot;:&quot;原链接现在展示名为 BenchUp 的开源建模工具，面向木工和家具设计。它支持推拉成形、尺寸标注和零件组织，可在浏览器或桌面运行。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 22:35:35 GMT&quot;,&quot;reading_excerpt&quot;:&quot;原链接现在展示名为 BenchUp 的开源建模工具，面向木工和家具设计。它支持推拉成形、尺寸标注和零件组织，可在浏览器或桌面运行。&quot;,&quot;reading_source&quot;:&quot;项目官网与官方仓库&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50418176&quot;,&quot;title_en&quot;:&quot;KetchUp – Open-source SketchUp alternative built with Rust and WebGPU&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><a href="https://ketchup3d.github.io/app/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=50418176" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">原链接现在展示名为 BenchUp 的开源建模工具，面向木工和家具设计。它支持推拉成形、尺寸标注和零件组织，可在浏览器或桌面运行。</p><p class="news-excerpt-label">依据 · 项目官网与官方仓库</p><div class="community-source-links"><a href="https://ketchup3d.github.io/app/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50418176" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a><a href="https://github.com/BenchUp3D/editor" class="read-link" target="_blank" rel="noopener">项目仓库 ↗</a></div></div></details>
 </article><article class="news-card" id="card-5e73aa6afacd3ca62681" data-id="5e73aa6afacd3ca62681" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
-  <div class="card-title">全球大部分地区可解锁任意X品牌汽车</div>
+  <div class="card-title">车联网安全披露：远程操作需严格校验权限</div>
   
   <div class="card-meta">
     
@@ -1426,13 +1434,13 @@ function shareCard(btn) {
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 41"></span>
     <span class="pub-time">昨天 00:10</span>
-    <button class="share-btn" title="复制分享" data-text="全球大部分地区可解锁任意X品牌汽车" data-link="https://shubs.io/unlocking-any-car-from-x-brand-in-most-of-the-world/" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5c91c386677b0bcd7cd57202&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;全球大部分地区可解锁任意X品牌汽车&quot;,&quot;url&quot;:&quot;https://shubs.io/unlocking-any-car-from-x-brand-in-most-of-the-world/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 00:10:50 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5c91c386677b0bcd7cd57202&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;车联网安全披露：远程操作需严格校验权限&quot;,&quot;url&quot;:&quot;https://shubs.io/unlocking-any-car-from-x-brand-in-most-of-the-world/&quot;,&quot;one_liner&quot;:&quot;安全研究者在获授权的测试中发现，某车企联网服务的权限隔离缺陷可能影响车辆远程指令。文章提示，账户访问权限和车辆操作授权都需要单独校验。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 00:10:50 GMT&quot;,&quot;reading_excerpt&quot;:&quot;安全研究者在获授权的测试中发现，某车企联网服务的权限隔离缺陷可能影响车辆远程指令。文章提示，账户访问权限和车辆操作授权都需要单独校验。&quot;,&quot;reading_source&quot;:&quot;研究者安全披露 · 防护要点&quot;,&quot;discussion_url&quot;:&quot;&quot;,&quot;reading_summary_only&quot;:true}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><a href="https://shubs.io/unlocking-any-car-from-x-brand-in-most-of-the-world/" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=50419215" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">安全研究者在获授权的测试中发现，某车企联网服务的权限隔离缺陷可能影响车辆远程指令。文章提示，账户访问权限和车辆操作授权都需要单独校验。</p><p class="news-excerpt-label">依据 · 研究者安全披露 · 防护要点</p></div></details>
 </article><article class="news-card" id="card-8f28f8796d12dea42ab7" data-id="8f28f8796d12dea42ab7" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
-  <div class="card-title">Outlook.com开始拒收未配置DMARC域名的邮件</div>
+  <div class="card-title">MailRoute 观察到 Outlook.com 拒收部分缺少 DMARC 的邮件</div>
   
   <div class="card-meta">
     
@@ -1443,13 +1451,13 @@ function shareCard(btn) {
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 40"></span>
     <span class="pub-time">昨天 19:20</span>
-    <button class="share-btn" title="复制分享" data-text="Outlook.com开始拒收未配置DMARC域名的邮件" data-link="https://mailroute.net/blog/outlook-rejecting-email-without-dmarc" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:7cbb1e8e79a45712035a2c95&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Outlook.com开始拒收未配置DMARC域名的邮件&quot;,&quot;url&quot;:&quot;https://mailroute.net/blog/outlook-rejecting-email-without-dmarc&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 19:20:32 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <button class="share-btn" title="复制分享" data-text="MailRoute 观察到 Outlook.com 拒收部分缺少 DMARC 的邮件" data-link="https://mailroute.net/blog/outlook-rejecting-email-without-dmarc" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:7cbb1e8e79a45712035a2c95&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;MailRoute 观察到 Outlook.com 拒收部分缺少 DMARC 的邮件&quot;,&quot;url&quot;:&quot;https://mailroute.net/blog/outlook-rejecting-email-without-dmarc&quot;,&quot;one_liner&quot;:&quot;MailRoute 根据自己的退信日志称，缺少 DMARC 记录的域名发往 Outlook.com 时，部分邮件会被拒收。文章区分了这一观察和微软公开的高发送量规则。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 19:20:32 GMT&quot;,&quot;reading_excerpt&quot;:&quot;MailRoute 根据自己的退信日志称，缺少 DMARC 记录的域名发往 Outlook.com 时，部分邮件会被拒收。文章区分了这一观察和微软公开的高发送量规则。&quot;,&quot;reading_source&quot;:&quot;MailRoute 的发送日志观察&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50416158&quot;,&quot;title_en&quot;:&quot;Outlook.com is rejecting email from domains without DMARC&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><a href="https://mailroute.net/blog/outlook-rejecting-email-without-dmarc" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=50416158" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">MailRoute 根据自己的退信日志称，缺少 DMARC 记录的域名发往 Outlook.com 时，部分邮件会被拒收。文章区分了这一观察和微软公开的高发送量规则。</p><p class="news-excerpt-label">依据 · MailRoute 的发送日志观察</p><div class="community-source-links"><a href="https://mailroute.net/blog/outlook-rejecting-email-without-dmarc" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50416158" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-317d42ced4e134bf7da7" data-id="317d42ced4e134bf7da7" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
-  <div class="card-title">人工智能泡沫论难以令人信服</div>
+  <div class="card-title">作者评论：为什么我还不确信 AI 行业存在泡沫</div>
   
   <div class="card-meta">
     
@@ -1460,11 +1468,11 @@ function shareCard(btn) {
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 41"></span>
     <span class="pub-time">昨天 23:44</span>
-    <button class="share-btn" title="复制分享" data-text="人工智能泡沫论难以令人信服" data-link="https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:3c21dbfc6436aa839a99cd09&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;人工智能泡沫论难以令人信服&quot;,&quot;url&quot;:&quot;https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 23:44:36 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <button class="share-btn" title="复制分享" data-text="作者评论：为什么我还不确信 AI 行业存在泡沫" data-link="https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:3c21dbfc6436aa839a99cd09&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;作者评论：为什么我还不确信 AI 行业存在泡沫&quot;,&quot;url&quot;:&quot;https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists&quot;,&quot;one_liner&quot;:&quot;作者质疑 AI 行业存在泡沫的判断，区分了数据中心的建设投入、持续运营支出和长期债务。文章呈现的是作者对产业支出与回报的看法。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 23:44:36 GMT&quot;,&quot;reading_excerpt&quot;:&quot;作者质疑 AI 行业存在泡沫的判断，区分了数据中心的建设投入、持续运营支出和长期债务。文章呈现的是作者对产业支出与回报的看法。&quot;,&quot;reading_source&quot;:&quot;作者评论&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50418975&quot;,&quot;title_en&quot;:&quot;I&#x27;m not convinced the AI bubble exists&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><a href="https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=50418975" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">作者质疑 AI 行业存在泡沫的判断，区分了数据中心的建设投入、持续运营支出和长期债务。文章呈现的是作者对产业支出与回报的看法。</p><p class="news-excerpt-label">依据 · 作者评论</p><div class="community-source-links"><a href="https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50418975" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-723e498760107b0462e8" data-id="723e498760107b0462e8" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">将写作作为思考工具</div>
   
@@ -1478,10 +1486,10 @@ function shareCard(btn) {
     <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 37"></span>
     <span class="pub-time">昨天 10:41</span>
     <button class="share-btn" title="复制分享" data-text="将写作作为思考工具" data-link="http://muratbuffalo.blogspot.com/2026/11/writing-as-thinking-tool.html" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:1f923716babf3c1ff15ee9cd&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;将写作作为思考工具&quot;,&quot;url&quot;:&quot;http://muratbuffalo.blogspot.com/2026/11/writing-as-thinking-tool.html&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 10:41:52 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:1f923716babf3c1ff15ee9cd&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;将写作作为思考工具&quot;,&quot;url&quot;:&quot;http://muratbuffalo.blogspot.com/2026/11/writing-as-thinking-tool.html&quot;,&quot;one_liner&quot;:&quot;作者从自己用思维导图做笔记的经历谈起：把新信息放到已有框架中，本身就是理解的过程。他借计算模型作比，说明把思考写下来能帮助处理更复杂的问题。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 10:41:52 GMT&quot;,&quot;reading_excerpt&quot;:&quot;作者从自己用思维导图做笔记的经历谈起：把新信息放到已有框架中，本身就是理解的过程。他借计算模型作比，说明把思考写下来能帮助处理更复杂的问题。&quot;,&quot;reading_source&quot;:&quot;作者博客原文&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50412067&quot;,&quot;title_en&quot;:&quot;Writing as a thinking tool&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><a href="http://muratbuffalo.blogspot.com/2026/11/writing-as-thinking-tool.html" class="read-link" style="margin-right:8px;">→ 查看原文</a><a href="https://news.ycombinator.com/item?id=50412067" class="read-link" style="color:#6b7280;border-color:#6b728040;">💬 讨论</a></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">作者从自己用思维导图做笔记的经历谈起：把新信息放到已有框架中，本身就是理解的过程。他借计算模型作比，说明把思考写下来能帮助处理更复杂的问题。</p><p class="news-excerpt-label">依据 · 作者博客原文</p><div class="community-source-links"><a href="https://muratbuffalo.blogspot.com/2026/11/writing-as-thinking-tool.html" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50412067" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article></div>
 </section>
       
