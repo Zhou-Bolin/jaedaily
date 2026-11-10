@@ -229,16 +229,20 @@ body.hc-page{margin:0;background:var(--jd-canvas);color:var(--jd-ink);font:15px/
       button.textContent=on?'★ 已收藏':'☆ 收藏';
     });
   }
-  document.querySelectorAll('.jd-save').forEach(button=>button.addEventListener('click',()=>{
+  function bind(){document.querySelectorAll('.jd-save').forEach(button=>{
+    if(button.dataset.saveBound)return;button.dataset.saveBound='1';
+    button.addEventListener('click',()=>{
     let item;try{item=JSON.parse(button.dataset.save);}catch(_){return;}
     const saved=read(), note=button.parentElement.querySelector('.jd-save-note');
     const had=Object.prototype.hasOwnProperty.call(saved,item.id);
     if(had)delete saved[item.id];else saved[item.id]=Object.assign({},item,{saved_at:new Date().toISOString()});
     try{localStorage.setItem(KEY,JSON.stringify(saved));if(note)note.textContent=had?'已取消':'已加入收藏';sync();}
     catch(_){if(note)note.textContent='暂时无法保存，请检查浏览器存储空间。';}
-  }));
+    });
+  });sync();}
+  window.JaeSaves={refresh:bind};
   window.addEventListener('storage',event=>{if(event.key===KEY)sync();});
   window.addEventListener('pageshow',sync);
-  sync();
+  bind();
 })();
 </script></body></html>
