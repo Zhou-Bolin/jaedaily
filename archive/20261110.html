@@ -42,7 +42,6 @@
   --summary-bg:#fdf8f8; --summary-border:#8a1212;
   --sidebar-bg:#f9fafb;
   --divider:#ebebeb;
-  --rank-title:#1a1d23;
   --inset-bg:#f7f7f5;
   --col-border:#e0e0e0;
   --footer-bg:#1a0c0c;
@@ -56,7 +55,6 @@ body.dark{
   --summary-bg:#1c1618; --summary-border:#8a1212;
   --sidebar-bg:#161920;
   --divider:#2a2d38;
-  --rank-title:#e8eaf0;
   --inset-bg:#1a1d24;
   --col-border:#2a2d38;
   --footer-bg:#0d0f13;
@@ -207,13 +205,9 @@ a:hover{text-decoration:underline;}
 .full-summary-body{font-size:12px;color:var(--text2);line-height:1.8;
   background:var(--inset-bg);border-left:2px solid var(--border);
   padding:8px 12px;margin-top:2px;border-radius:2px;}
-/* 移动端热度排行 */
-.mobile-heat{display:block;margin-bottom:12px;}
-
 /* ══ Sidebar widgets ═══════════════════════════════════════════════ */
 .sidebar-block{margin-bottom:18px;border:1px solid var(--border);border-radius:6px;
   overflow:hidden;}
-.heat-box{border-radius:0;}
 .heat-header{padding:8px 12px;color:#fff;font-size:10px;
   font-weight:800;letter-spacing:1.5px;font-family:sans-serif;
   display:flex;align-items:center;}
@@ -224,20 +218,6 @@ a:hover{text-decoration:underline;}
 .ai-paper-row:hover{background:var(--bg);}
 .ai-paper-icon{font-size:13px;flex-shrink:0;margin-top:1px;}
 .ai-paper-title{font-size:12px;color:var(--text);line-height:1.5;font-family:sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
-.rank-row{display:flex;align-items:center;gap:8px;padding:9px 10px;
-  border-bottom:1px solid var(--divider);}
-.rank-row:last-child{border-bottom:none;}
-.rank-medal{font-size:15px;flex-shrink:0;width:22px;text-align:center;}
-.rank-body{flex:1;min-width:0;}
-.rank-title-link{text-decoration:none;display:block;}
-.rank-title-link:hover .rank-title{color:var(--link);}
-.rank-title{font-size:12px;font-weight:700;color:var(--rank-title);margin-bottom:4px;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  transition:color 0.15s;}
-.rank-bar-bg{background:rgba(0,0,0,.08);border-radius:4px;height:4px;}
-.rank-bar-fill{height:4px;border-radius:4px;}
-.rank-score{font-size:12px;font-weight:800;text-align:right;
-  flex-shrink:0;white-space:nowrap;line-height:1.4;font-family:monospace;}
 /* ══ Footer ════════════════════════════════════════════════════════ */
 .footer{background:var(--footer-bg);padding:18px 32px;}
 .footer-sources{font-size:11px;color:#6b7280;margin-bottom:8px;line-height:1.8;}
@@ -274,7 +254,6 @@ a:hover{text-decoration:underline;}
   .card-title{font-size:15px;font-weight:700;line-height:1.55;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .card-desc{font-size:12px;line-height:1.6;}
-  .mobile-heat{display:none;}
   /* 分区标题 */
   .news-section{margin-bottom:40px;}
   .sec-title{font-size:14px;letter-spacing:0.3px;}
@@ -720,10 +699,8 @@ function shareCard(btn) {
     
     <span style="font-size:10px;color:#1d4ed8;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1d4ed818;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;CGTN 中国</span>
     
-    
     <span style="font-size:9px;color:#92400e;font-family:sans-serif;background:#fef3c7;border:1px solid #fcd34d;border-radius:2px;padding:1px 5px;font-weight:600;" title="仅单一来源报道，信息待核实">单源</span>
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 33"></span>
     <span class="pub-time">11-07 00:38</span>
     <button class="share-btn" title="复制分享" data-text="中国副总理与美国官员举行视频通话" data-link="https://news.cgtn.com/news/2026-11-07/Chinese-vice-premier-holds-video-call-with-US-officials-1RRURU3GxaM/p.html?UTM_Source=cgtn&amp;UTM_Medium=rss&amp;UTM_Campaign=China" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:b3f0fb806fa461401bf1150e&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中国副总理与美国官员举行视频通话&quot;,&quot;url&quot;:&quot;https://news.cgtn.com/news/2026-11-07/Chinese-vice-premier-holds-video-call-with-US-officials-1RRURU3GxaM/p.html?UTM_Source=cgtn&amp;UTM_Medium=rss&amp;UTM_Campaign=China&quot;,&quot;one_liner&quot;:&quot;中国国务院副总理、中美经贸中方牵头人何立峰周五与美方官员举行视频通话。&quot;,&quot;category&quot;:&quot;CGTN 中国&quot;,&quot;published&quot;:&quot;Sat, 07 Nov 2026 00:38:33 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -738,9 +715,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">19小时前</span>
     <button class="share-btn" title="复制分享" data-text="礼来减肥药Foundayo三期试验有效缓解睡眠呼吸暂停" data-link="https://www.cnbc.com/2026/11/09/eli-lilly-foundayo-sleep-apnea-trial.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:105a64f0a58af8ec34846a46&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;礼来减肥药Foundayo三期试验有效缓解睡眠呼吸暂停&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/09/eli-lilly-foundayo-sleep-apnea-trial.html&quot;,&quot;one_liner&quot;:&quot;礼来计划年底前提交该日服药申请，用于治疗中重度阻塞性睡眠呼吸暂停。&quot;,&quot;category&quot;:&quot;CNBC&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 14:30:01 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -755,9 +730,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 63"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">22小时前</span>
     <button class="share-btn" title="复制分享" data-text="美国国会复会：政府预算、海格塞斯及债务上限列入议程" data-link="https://www.cnbc.com/2026/11/09/congress-government-funding-debt-limit-elections.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:45177f6c80754f203c462384&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国国会复会：政府预算、海格塞斯及债务上限列入议程&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/09/congress-government-funding-debt-limit-elections.html&quot;,&quot;one_liner&quot;:&quot;共和党在参众两院保持多数的任期不足两个月，面临繁重的立法任务清单。&quot;,&quot;category&quot;:&quot;CNBC&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 11:00:01 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -772,9 +745,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0a8a00;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0a8a0018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;TechCrunch</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="Meta在全球推广Instagram人工智能年龄识别技术" data-link="https://techcrunch.com/2026/11/09/meta-expands-instagrams-ai-age-guessing-tech-globally/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:415a41d062451e33abc1be72&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Meta在全球推广Instagram人工智能年龄识别技术&quot;,&quot;url&quot;:&quot;https://techcrunch.com/2026/11/09/meta-expands-instagrams-ai-age-guessing-tech-globally/&quot;,&quot;one_liner&quot;:&quot;Meta宣布将利用AI技术在全球识别疑似青少年用户，即便对方使用成人账号。&quot;,&quot;category&quot;:&quot;TechCrunch&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 15:32:27 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -793,78 +764,6 @@ function shareCard(btn) {
     
     <span class="sec-count">6 条</span>
   </div>
-  <!-- mobile-only heat ranking -->
-  <div class="mobile-heat">
-    <div class="heat-box">
-  <div class="heat-header" style="background:#8a1212;">国际政治与安全</div>
-  
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
-    <div class="rank-body">
-      <a href="#card-0af3c459eb8b505bda8f" class="rank-title-link">
-        <div class="rank-title">人工智能利于气候的论点尚未成立<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#8a1212;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.technologyreview.com/2026/11/09/1148166/the-climate-case-for-ai-has-not-been-made/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
-    <div class="rank-body">
-      <a href="#card-763ee62b40acc48f9300" class="rank-title-link">
-        <div class="rank-title">RUSI报道：以色列外国资金调查并非选举舞弊证据<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:96%;background:#8a1212;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.rusi.org/explore-our-research/publications/commentary/israels-foreign-funding-inquiry-not-evidence-stolen-election" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
-    <div class="rank-body">
-      <a href="#card-0912b00646430a49e20f" class="rank-title-link">
-        <div class="rank-title">特朗普《60分钟》受访：谈及AI安全并威胁逮捕高管<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:79%;background:#8a1212;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.theverge.com/ai-artificial-intelligence/1029802/trump-60-minutes-ai" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
-    <div class="rank-body">
-      <a href="#card-d0327b830843f8ecbd53" class="rank-title-link">
-        <div class="rank-title">乌克兰“泥泞期”如何影响战役与战略考量<span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续3天</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:77%;background:#8a1212;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.rusi.org/explore-our-research/publications/commentary/why-rasputitsa-shapes-operational-and-strategic-considerations-ukraine" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
-    <div class="rank-body">
-      <a href="#card-d95100913cb8f72e8390" class="rank-title-link">
-        <div class="rank-title">美国新法案或重塑能源基础设施建设<span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续4天</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:77%;background:#8a1212;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.technologyreview.com/2026/11/05/1148062/permitting-reform/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-</div>
-  </div>
   
   <div class="news-grid"><article class="news-card" id="card-0af3c459eb8b505bda8f" data-id="0af3c459eb8b505bda8f" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">人工智能利于气候的论点尚未成立</div>
@@ -874,9 +773,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 81"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#c0392b;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#c0392b;opacity:0.6;"></span><span style="display:inline-block;width:3px;height:4px;border-radius:1px;background:#c0392b;opacity:0.35;"></span></span>
     <span class="pub-time">23小时前</span>
     <button class="share-btn" title="复制分享" data-text="人工智能利于气候的论点尚未成立" data-link="https://www.technologyreview.com/2026/11/09/1148166/the-climate-case-for-ai-has-not-been-made/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:161c4966bba84f86ee3675aa&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;人工智能利于气候的论点尚未成立&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/09/1148166/the-climate-case-for-ai-has-not-been-made/&quot;,&quot;one_liner&quot;:&quot;联合国气候大会本周在土耳其召开，相关议题或将成为核心焦点。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 10:00:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -891,9 +788,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#475569;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#47556918;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;RUSI</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 78"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">昨天 00:00</span>
     <button class="share-btn" title="复制分享" data-text="RUSI报道：以色列外国资金调查并非选举舞弊证据" data-link="https://www.rusi.org/explore-our-research/publications/commentary/israels-foreign-funding-inquiry-not-evidence-stolen-election" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:7403c7fa26a4211873194425&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;RUSI报道：以色列外国资金调查并非选举舞弊证据&quot;,&quot;url&quot;:&quot;https://www.rusi.org/explore-our-research/publications/commentary/israels-foreign-funding-inquiry-not-evidence-stolen-election&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;RUSI&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 00:00:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -908,9 +803,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#475569;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#47556918;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;RUSI</span>
     
     
-    
     <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续3天</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 63"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">11-06 00:00</span>
     <button class="share-btn" title="复制分享" data-text="乌克兰“泥泞期”如何影响战役与战略考量" data-link="https://www.rusi.org/explore-our-research/publications/commentary/why-rasputitsa-shapes-operational-and-strategic-considerations-ukraine" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:368e2ec21b8809e1214116ac&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;乌克兰“泥泞期”如何影响战役与战略考量&quot;,&quot;url&quot;:&quot;https://www.rusi.org/explore-our-research/publications/commentary/why-rasputitsa-shapes-operational-and-strategic-considerations-ukraine&quot;,&quot;one_liner&quot;:&quot;乌克兰秋季泥泞期将限制俄军机动作战，并对战场后勤补给线造成严峻压力。&quot;,&quot;category&quot;:&quot;RUSI&quot;,&quot;published&quot;:&quot;Fri, 06 Nov 2026 00:00:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -925,9 +818,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span>
     
     
-    
     <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续4天</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 63"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">11-05 10:00</span>
     <button class="share-btn" title="复制分享" data-text="美国新法案或重塑能源基础设施建设" data-link="https://www.technologyreview.com/2026/11/05/1148062/permitting-reform/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f39511c21758bca1f0750b8e&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国新法案或重塑能源基础设施建设&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/05/1148062/permitting-reform/&quot;,&quot;one_liner&quot;:&quot;美国出台新法案旨在减少审批红线，以加速全美能源基础设施建设。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Thu, 05 Nov 2026 10:00:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -942,9 +833,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#475569;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#47556918;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;RUSI</span>
     
     
-    
     <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续4天</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 63"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">11-05 00:00</span>
     <button class="share-btn" title="复制分享" data-text="谁掌大局？乌克兰国防系统深陷制度冲突" data-link="https://www.rusi.org/explore-our-research/publications/rusi-newsbrief/who-calls-shots-institutional-conflicts-ukraines-defence-sector" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:39b72eb4e3a5e9c1a336c15c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;谁掌大局？乌克兰国防系统深陷制度冲突&quot;,&quot;url&quot;:&quot;https://www.rusi.org/explore-our-research/publications/rusi-newsbrief/who-calls-shots-institutional-conflicts-ukraines-defence-sector&quot;,&quot;one_liner&quot;:&quot;乌克兰国防高层人事变动暴露出战时指挥机制缺陷，加剧了军政部门内部冲突。&quot;,&quot;category&quot;:&quot;RUSI&quot;,&quot;published&quot;:&quot;Thu, 05 Nov 2026 00:00:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -959,9 +848,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#e1175e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e1175e18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;The Verge</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">17小时前</span>
     <button class="share-btn" title="复制分享" data-text="特朗普《60分钟》受访：谈及AI安全并威胁逮捕高管" data-link="https://www.theverge.com/ai-artificial-intelligence/1029802/trump-60-minutes-ai" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5ef96bda92f480d3b9a655ee&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;特朗普《60分钟》受访：谈及AI安全并威胁逮捕高管&quot;,&quot;url&quot;:&quot;https://www.theverge.com/ai-artificial-intelligence/1029802/trump-60-minutes-ai&quot;,&quot;one_liner&quot;:&quot;特朗普在《60分钟》节目中回应AI高管对其模型安全的警告，并提及逮捕威胁。&quot;,&quot;category&quot;:&quot;The Verge&quot;,&quot;published&quot;:&quot;2026-11-09T11:00:35-05:00&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -977,39 +864,6 @@ function shareCard(btn) {
     
     <span class="sec-count">2 条</span>
   </div>
-  <!-- mobile-only heat ranking -->
-  <div class="mobile-heat">
-    <div class="heat-box">
-  <div class="heat-header" style="background:#1e293b;">全球财经市场</div>
-  
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
-    <div class="rank-body">
-      <a href="#card-bd74243bf0d892a28262" class="rank-title-link">
-        <div class="rank-title">CoreWeave遭遇厄运循环，新型云信用风险掩盖增长<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.cnbc.com/2026/11/09/coreweave-debt-credit-risk-neoclouds.html" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
-    <div class="rank-body">
-      <a href="#card-8f9b2c1b99564431dd12" class="rank-title-link">
-        <div class="rank-title">西班牙驻沪经济商务领事：期待借进博会扩大对华出口 深化西中经贸合作<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:95%;background:#1e293b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="http://world.people.com.cn/n1/2026/1109/c1002-40830695.html" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-</div>
-  </div>
   
   <div class="news-grid"><article class="news-card" id="card-bd74243bf0d892a28262" data-id="bd74243bf0d892a28262" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">CoreWeave遭遇厄运循环，新型云信用风险掩盖增长</div>
@@ -1019,9 +873,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 63"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">21小时前</span>
     <button class="share-btn" title="复制分享" data-text="CoreWeave遭遇厄运循环，新型云信用风险掩盖增长" data-link="https://www.cnbc.com/2026/11/09/coreweave-debt-credit-risk-neoclouds.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:9f92616e9991d09b4db4ea93&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;CoreWeave遭遇厄运循环，新型云信用风险掩盖增长&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/09/coreweave-debt-credit-risk-neoclouds.html&quot;,&quot;one_liner&quot;:&quot;CoreWeave与Nebius过去一月市值蒸发约50%，财报前夕信用风险加剧。&quot;,&quot;category&quot;:&quot;CNBC&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 12:00:01 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1036,9 +888,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#991b1b;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#991b1b18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;人民网国际</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 60"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">昨天 00:00</span>
     <button class="share-btn" title="复制分享" data-text="西班牙驻沪经济商务领事：期待借进博会扩大对华出口 深化西中经贸合作" data-link="http://world.people.com.cn/n1/2026/1109/c1002-40830695.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:93b11189d3e9f028d7877be9&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;西班牙驻沪经济商务领事：期待借进博会扩大对华出口 深化西中经贸合作&quot;,&quot;url&quot;:&quot;http://world.people.com.cn/n1/2026/1109/c1002-40830695.html&quot;,&quot;one_liner&quot;:&quot;西班牙驻沪经济商务领事：期待借进博会扩大对华出口 深化西中经贸合作&quot;,&quot;category&quot;:&quot;人民网国际&quot;,&quot;published&quot;:&quot;2026-11-09&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1054,39 +904,6 @@ function shareCard(btn) {
     <a href="ai-digest.html" style="display:inline-flex;align-items:center;border:1px solid currentColor;border-radius:2px;padding:4px 12px;font-size:10px;color:inherit;text-decoration:none;font-weight:700;letter-spacing:1px;white-space:nowrap;opacity:0.7;transition:opacity 0.15s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">AI 研报 →</a>
     <span class="sec-count">2 条</span>
   </div>
-  <!-- mobile-only heat ranking -->
-  <div class="mobile-heat">
-    <div class="heat-box">
-  <div class="heat-header" style="background:#1e293b;">科技与人工智能</div>
-  
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
-    <div class="rank-body">
-      <a href="#card-2369fff861d6232a3c29" class="rank-title-link">
-        <div class="rank-title">France 24报道：“离奇内幕”：英伟达涉间谍案指控已知事实汇总<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.france24.com/en/video/20261109-such-an-extraordinary-story-what-we-know-so-far-about-nvidia-spying-claims" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#1e293b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
-    <div class="rank-body">
-      <a href="#card-b452b719b44039fe9a2e" class="rank-title-link">
-        <div class="rank-title">美联邦机构称Waymo无人驾驶出租车修复软件后仍非法超车校车<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#1e293b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#1e293b;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://techcrunch.com/2026/11/09/waymo-robotaxis-kept-illegally-passing-school-buses-after-software-fix-feds-say/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-</div>
-  </div>
   
   <div class="news-grid"><article class="news-card" id="card-2369fff861d6232a3c29" data-id="2369fff861d6232a3c29" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">France 24报道：“离奇内幕”：英伟达涉间谍案指控已知事实汇总</div>
@@ -1096,10 +913,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#003189;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#00318918;border-radius:999px;padding:1px 7px;">🇫🇷&thinsp;France 24</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">17小时前</span>
+    <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="France 24报道：“离奇内幕”：英伟达涉间谍案指控已知事实汇总" data-link="https://www.france24.com/en/video/20261109-such-an-extraordinary-story-what-we-know-so-far-about-nvidia-spying-claims" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:45fab7bcde9f58f572854b6a&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;France 24报道：“离奇内幕”：英伟达涉间谍案指控已知事实汇总&quot;,&quot;url&quot;:&quot;https://www.france24.com/en/video/20261109-such-an-extraordinary-story-what-we-know-so-far-about-nvidia-spying-claims&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;France 24&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 15:54:07 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1113,9 +928,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0a8a00;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0a8a0018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;TechCrunch</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 64"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="美联邦机构称Waymo无人驾驶出租车修复软件后仍非法超车校车" data-link="https://techcrunch.com/2026/11/09/waymo-robotaxis-kept-illegally-passing-school-buses-after-software-fix-feds-say/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:545d2c28fae5fe3411b41c9d&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美联邦机构称Waymo无人驾驶出租车修复软件后仍非法超车校车&quot;,&quot;url&quot;:&quot;https://techcrunch.com/2026/11/09/waymo-robotaxis-kept-illegally-passing-school-buses-after-software-fix-feds-say/&quot;,&quot;one_liner&quot;:&quot;Waymo自动驾驶系统更新已于近一年前发布。&quot;,&quot;category&quot;:&quot;TechCrunch&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 15:24:59 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1131,78 +944,6 @@ function shareCard(btn) {
     
     <span class="sec-count">6 条</span>
   </div>
-  <!-- mobile-only heat ranking -->
-  <div class="mobile-heat">
-    <div class="heat-box">
-  <div class="heat-header" style="background:#8a1212;">国内动态</div>
-  
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
-    <div class="rank-body">
-      <a href="#card-e8a7f236074185f3bae0" class="rank-title-link">
-        <div class="rank-title">教育部、公安部、农业农村部部署实施服务乡村振兴高校招生专项计划</div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#8a1212;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
-    <div class="rank-body">
-      <a href="#card-1134e992ef97a3de725a" class="rank-title-link">
-        <div class="rank-title">研究构建促进光合固碳的有机铁硫框架材料</div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:98%;background:#8a1212;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.cas.cn/syky/202611/t20261109_5123749.shtml" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
-    <div class="rank-body">
-      <a href="#card-41e45b6becd68d643b91" class="rank-title-link">
-        <div class="rank-title">2026年10月份居民消费价格同比上涨0.7%</div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:89%;background:#8a1212;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965795.html" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
-    <div class="rank-body">
-      <a href="#card-de7ff4705d8a139f8843" class="rank-title-link">
-        <div class="rank-title">中央组织部负责人就二十一大代表选举答记者问<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:85%;background:#8a1212;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="http://politics.people.com.cn/n1/2026/1108/c1001-40829957.html" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#8a1212;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
-    <div class="rank-body">
-      <a href="#card-56aa121028b940369830" class="rank-title-link">
-        <div class="rank-title">算清减重“反弹账” 破解秋冬体重复胖难题</div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:74%;background:#8a1212;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#8a1212;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.stdaily.com/web/gdxw/2026-11/10/content_611204.html" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-</div>
-  </div>
   
   <div class="news-grid"><article class="news-card" id="card-1134e992ef97a3de725a" data-id="1134e992ef97a3de725a" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">研究构建促进光合固碳的有机铁硫框架材料</div>
@@ -1213,8 +954,6 @@ function shareCard(btn) {
     
     
     
-    
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 76"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">9小时前</span>
     <button class="share-btn" title="复制分享" data-text="研究构建促进光合固碳的有机铁硫框架材料" data-link="https://www.cas.cn/syky/202611/t20261109_5123749.shtml" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8b23a2181164ae90d48171b4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;研究构建促进光合固碳的有机铁硫框架材料&quot;,&quot;url&quot;:&quot;https://www.cas.cn/syky/202611/t20261109_5123749.shtml&quot;,&quot;one_liner&quot;:&quot;铁和硫是地球生物地球化学循环的关键元素。在生物体内，铁硫簇作为蛋白质的结构核心，通过电子得失参与氧化还原反应，在细胞代谢与光合作用中发挥重要作用。然而，天然与人工合成的铁硫簇普遍存在稳定性差、对氧敏感等问题，限制了其实际应用。如何兼顾硫化铁矿物的结构稳定性与生物铁硫簇的电子传递特性，成为开发仿生铁硫功能材料的重要挑战。 光合作用是铁硫簇发挥电子传递功能的重要&quot;,&quot;category&quot;:&quot;中科院科研进展&quot;,&quot;published&quot;:&quot;2026-11-10T00:33:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1230,8 +969,6 @@ function shareCard(btn) {
     
     
     
-    
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 77"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">2小时前</span>
     <button class="share-btn" title="复制分享" data-text="教育部、公安部、农业农村部部署实施服务乡村振兴高校招生专项计划" data-link="https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8f10724e44d9e88c4ec24258&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;教育部、公安部、农业农村部部署实施服务乡村振兴高校招生专项计划&quot;,&quot;url&quot;:&quot;https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html&quot;,&quot;one_liner&quot;:&quot;近日，教育部、公安部、农业农村部联合印发《关于实施服务乡村振兴高校招生专项计划的通知》（以下简称《通知》），对实施服务乡村振兴高校招生专项计划作出部署。 《通知》指出，2012年以来，各地和有关高校组织实施了重点高校面向农村和贫困地区招生专项计划，对于进一步拓宽农村和原贫困地区学生升学渠道、促进城乡区域入学机会公平，引导地方基础教育健康发展发挥了积极作用。为&quot;,&quot;category&quot;:&quot;教育部工作动态&quot;,&quot;published&quot;:&quot;2026-11-10T07:05:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1247,8 +984,6 @@ function shareCard(btn) {
     
     
     
-    
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 69"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">昨天 01:30</span>
     <button class="share-btn" title="复制分享" data-text="2026年10月份居民消费价格同比上涨0.7%" data-link="https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965795.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:aaa6cf65550e45187700231e&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;2026年10月份居民消费价格同比上涨0.7%&quot;,&quot;url&quot;:&quot;https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965795.html&quot;,&quot;one_liner&quot;:&quot;2026年10月份，全国居民消费价格同比上涨0.7%。其中，城市上涨0.7%，农村上涨0.7%；食品价格下降2.9%，非食品价格上涨1.5%；消费品价格上涨0.8%，服务价格上涨0.7%。1—10月平均，全国居民消费价格比上年同期上涨0.9%。 10月份，全国居民消费价格环比持平。其中，城市持平，农村下降0.1%；食品价格下降1.0%，非食品价格上涨0.2%&quot;,&quot;category&quot;:&quot;国家统计局发布&quot;,&quot;published&quot;:&quot;2026-11-09T01:30:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1263,9 +998,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#991b1b;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#991b1b18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;人民网高层动态</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 66"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">11-08 00:00</span>
     <button class="share-btn" title="复制分享" data-text="中央组织部负责人就二十一大代表选举答记者问" data-link="http://politics.people.com.cn/n1/2026/1108/c1001-40829957.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ea4b549af16c676501814631&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中央组织部负责人就二十一大代表选举答记者问&quot;,&quot;url&quot;:&quot;http://politics.people.com.cn/n1/2026/1108/c1001-40829957.html&quot;,&quot;one_liner&quot;:&quot;中央组织部负责人就党的二十一大代表选举工作的总体要求、程序及纪律回答了新华社记者提问。&quot;,&quot;category&quot;:&quot;人民网高层动态&quot;,&quot;published&quot;:&quot;2026-11-08&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1281,8 +1014,6 @@ function shareCard(btn) {
     
     
     
-    
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 57"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">9小时前</span>
     <button class="share-btn" title="复制分享" data-text="算清减重“反弹账” 破解秋冬体重复胖难题" data-link="https://www.stdaily.com/web/gdxw/2026-11/10/content_611204.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:d2a10d6229e52a746432a366&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;算清减重“反弹账” 破解秋冬体重复胖难题&quot;,&quot;url&quot;:&quot;https://www.stdaily.com/web/gdxw/2026-11/10/content_611204.html&quot;,&quot;one_liner&quot;:&quot;进入秋冬季，气温持续走低，不少历经春夏辛苦减重的人群遭遇共同难题：体重悄然回升，前期减重成果付诸东流。一边是体重管理消费市场持续火热，一边是过度节食等不当方式造成的“减重-反弹-再减重”的恶性循环。北京协和医院营养科主任医师陈伟提示，秋冬季体重反弹并非单纯意志力问题，是生理变化、不当减重方式、情绪心理等多重因素交织，算清减重背后的“反弹账”，才能实现长久的体&quot;,&quot;category&quot;:&quot;科技日报&quot;,&quot;published&quot;:&quot;2026-11-10&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1298,8 +1029,6 @@ function shareCard(btn) {
     
     
     
-    
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 57"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">9小时前</span>
     <button class="share-btn" title="复制分享" data-text="南京“零元面馆”引关注 公益善举又该如何划分边界？" data-link="https://www.chinanews.com.cn/sh/2026/11-10/10729289.shtml" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:be7357b59f326fd3fa11e530&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;南京“零元面馆”引关注 公益善举又该如何划分边界？&quot;,&quot;url&quot;:&quot;https://www.chinanews.com.cn/sh/2026/11-10/10729289.shtml&quot;,&quot;one_liner&quot;:&quot;近日，南京两家“零元面馆”走红网络，免费的素面吸引大批市民排队就餐，引发关注。“零元面馆”提供免费面条的善举，帮助了不少人，但同时也引发了一些质疑的声音。有周边商户表示，不收费的面条吸引大批人排队，影响周边客流，对此属地相关部门已经介入调查。 “零元面馆”的做法是否涉及不正当竞争？爱心面条究竟应该怎样抵达真正需要帮助的人？公益善举又该如何更好地划分边界？ 上&quot;,&quot;category&quot;:&quot;中新网社会&quot;,&quot;published&quot;:&quot;2026-11-10&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1316,52 +1045,45 @@ function shareCard(btn) {
     <span class="sec-count">6 条</span>
   </div>
   
-  
   <div class="news-grid forum-grid"><article class="news-card" id="card-0ba412e9ab6a86ecaf45" data-id="0ba412e9ab6a86ecaf45" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">声明式拖拽技术</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲680 · 85评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    
     <span class="pub-time">11-04 17:05</span>
     <button class="share-btn" title="复制分享" data-text="声明式拖拽技术" data-link="https://declarative-dragging.github.io/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a2291431669560a7c84e16c2&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;声明式拖拽技术&quot;,&quot;url&quot;:&quot;https://declarative-dragging.github.io/&quot;,&quot;one_liner&quot;:&quot;开发者只需声明拖动后允许进入的状态，系统便根据这些状态推导落点和动画。作者用 Dragology 实现了这一思路，项目页有代数式和卡片的交互示例。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Wed, 04 Nov 2026 17:05:07 GMT&quot;,&quot;reading_excerpt&quot;:&quot;开发者只需声明拖动后允许进入的状态，系统便根据这些状态推导落点和动画。作者用 Dragology 实现了这一思路，项目页有代数式和卡片的交互示例。&quot;,&quot;reading_source&quot;:&quot;作者项目页&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50368481&quot;,&quot;title_en&quot;:&quot;Declarative Dragging&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">开发者只需声明拖动后允许进入的状态，系统便根据这些状态推导落点和动画。作者用 Dragology 实现了这一思路，项目页有代数式和卡片的交互示例。</p><p class="news-excerpt-label">依据 · 作者项目页</p><div class="community-source-links"><a href="https://declarative-dragging.github.io/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50368481" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">开发者只需声明拖动后允许进入的状态，系统便根据这些状态推导落点和动画。作者用 Dragology 实现了这一思路，项目页有代数式和卡片的交互示例。</p><p class="news-excerpt-label">依据 · 作者项目页</p><p class="news-excerpt-label">HN · 680 积分 · 85 条评论</p><div class="community-source-links"><a href="https://declarative-dragging.github.io/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50368481" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-a31ea4524526cb3af1a3" data-id="a31ea4524526cb3af1a3" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">开源建模工具 BenchUp：在浏览器里做木工与家具设计</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲657 · 194评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 41"></span>
     <span class="pub-time">昨天 22:35</span>
     <button class="share-btn" title="复制分享" data-text="开源建模工具 BenchUp：在浏览器里做木工与家具设计" data-link="https://ketchup3d.github.io/app/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5a786529aaee4f4c8462f06f&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;开源建模工具 BenchUp：在浏览器里做木工与家具设计&quot;,&quot;url&quot;:&quot;https://ketchup3d.github.io/app/&quot;,&quot;one_liner&quot;:&quot;原链接现在展示名为 BenchUp 的开源建模工具，面向木工和家具设计。它支持推拉成形、尺寸标注和零件组织，可在浏览器或桌面运行。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 22:35:35 GMT&quot;,&quot;reading_excerpt&quot;:&quot;原链接现在展示名为 BenchUp 的开源建模工具，面向木工和家具设计。它支持推拉成形、尺寸标注和零件组织，可在浏览器或桌面运行。&quot;,&quot;reading_source&quot;:&quot;项目官网与官方仓库&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50418176&quot;,&quot;title_en&quot;:&quot;KetchUp – Open-source SketchUp alternative built with Rust and WebGPU&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">原链接现在展示名为 BenchUp 的开源建模工具，面向木工和家具设计。它支持推拉成形、尺寸标注和零件组织，可在浏览器或桌面运行。</p><p class="news-excerpt-label">依据 · 项目官网与官方仓库</p><div class="community-source-links"><a href="https://ketchup3d.github.io/app/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50418176" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a><a href="https://github.com/BenchUp3D/editor" class="read-link" target="_blank" rel="noopener">项目仓库 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">原链接现在展示名为 BenchUp 的开源建模工具，面向木工和家具设计。它支持推拉成形、尺寸标注和零件组织，可在浏览器或桌面运行。</p><p class="news-excerpt-label">依据 · 项目官网与官方仓库</p><p class="news-excerpt-label">HN · 657 积分 · 194 条评论</p><div class="community-source-links"><a href="https://ketchup3d.github.io/app/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50418176" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a><a href="https://github.com/BenchUp3D/editor" class="read-link" target="_blank" rel="noopener">项目仓库 ↗</a></div></div></details>
 </article><article class="news-card" id="card-5e73aa6afacd3ca62681" data-id="5e73aa6afacd3ca62681" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">车联网安全披露：远程操作需严格校验权限</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲533 · 282评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 41"></span>
     <span class="pub-time">昨天 00:10</span>
     
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5c91c386677b0bcd7cd57202&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;车联网安全披露：远程操作需严格校验权限&quot;,&quot;url&quot;:&quot;https://shubs.io/unlocking-any-car-from-x-brand-in-most-of-the-world/&quot;,&quot;one_liner&quot;:&quot;安全研究者在获授权的测试中发现，某车企联网服务的权限隔离缺陷可能影响车辆远程指令。文章提示，账户访问权限和车辆操作授权都需要单独校验。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 00:10:50 GMT&quot;,&quot;reading_excerpt&quot;:&quot;安全研究者在获授权的测试中发现，某车企联网服务的权限隔离缺陷可能影响车辆远程指令。文章提示，账户访问权限和车辆操作授权都需要单独校验。&quot;,&quot;reading_source&quot;:&quot;研究者安全披露 · 防护要点&quot;,&quot;discussion_url&quot;:&quot;&quot;,&quot;reading_summary_only&quot;:true}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1374,51 +1096,45 @@ function shareCard(btn) {
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲493 · 335评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 40"></span>
     <span class="pub-time">昨天 19:20</span>
     <button class="share-btn" title="复制分享" data-text="MailRoute 观察到 Outlook.com 拒收部分缺少 DMARC 的邮件" data-link="https://mailroute.net/blog/outlook-rejecting-email-without-dmarc" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:7cbb1e8e79a45712035a2c95&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;MailRoute 观察到 Outlook.com 拒收部分缺少 DMARC 的邮件&quot;,&quot;url&quot;:&quot;https://mailroute.net/blog/outlook-rejecting-email-without-dmarc&quot;,&quot;one_liner&quot;:&quot;MailRoute 根据自己的退信日志称，缺少 DMARC 记录的域名发往 Outlook.com 时，部分邮件会被拒收。文章区分了这一观察和微软公开的高发送量规则。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 19:20:32 GMT&quot;,&quot;reading_excerpt&quot;:&quot;MailRoute 根据自己的退信日志称，缺少 DMARC 记录的域名发往 Outlook.com 时，部分邮件会被拒收。文章区分了这一观察和微软公开的高发送量规则。&quot;,&quot;reading_source&quot;:&quot;MailRoute 的发送日志观察&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50416158&quot;,&quot;title_en&quot;:&quot;Outlook.com is rejecting email from domains without DMARC&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">MailRoute 根据自己的退信日志称，缺少 DMARC 记录的域名发往 Outlook.com 时，部分邮件会被拒收。文章区分了这一观察和微软公开的高发送量规则。</p><p class="news-excerpt-label">依据 · MailRoute 的发送日志观察</p><div class="community-source-links"><a href="https://mailroute.net/blog/outlook-rejecting-email-without-dmarc" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50416158" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">MailRoute 根据自己的退信日志称，缺少 DMARC 记录的域名发往 Outlook.com 时，部分邮件会被拒收。文章区分了这一观察和微软公开的高发送量规则。</p><p class="news-excerpt-label">依据 · MailRoute 的发送日志观察</p><p class="news-excerpt-label">HN · 493 积分 · 335 条评论</p><div class="community-source-links"><a href="https://mailroute.net/blog/outlook-rejecting-email-without-dmarc" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50416158" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-317d42ced4e134bf7da7" data-id="317d42ced4e134bf7da7" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">作者评论：为什么我还不确信 AI 行业存在泡沫</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲461 · 796评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 41"></span>
     <span class="pub-time">昨天 23:44</span>
     <button class="share-btn" title="复制分享" data-text="作者评论：为什么我还不确信 AI 行业存在泡沫" data-link="https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:3c21dbfc6436aa839a99cd09&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;作者评论：为什么我还不确信 AI 行业存在泡沫&quot;,&quot;url&quot;:&quot;https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists&quot;,&quot;one_liner&quot;:&quot;作者质疑 AI 行业存在泡沫的判断，区分了数据中心的建设投入、持续运营支出和长期债务。文章呈现的是作者对产业支出与回报的看法。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 23:44:36 GMT&quot;,&quot;reading_excerpt&quot;:&quot;作者质疑 AI 行业存在泡沫的判断，区分了数据中心的建设投入、持续运营支出和长期债务。文章呈现的是作者对产业支出与回报的看法。&quot;,&quot;reading_source&quot;:&quot;作者评论&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50418975&quot;,&quot;title_en&quot;:&quot;I&#x27;m not convinced the AI bubble exists&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">作者质疑 AI 行业存在泡沫的判断，区分了数据中心的建设投入、持续运营支出和长期债务。文章呈现的是作者对产业支出与回报的看法。</p><p class="news-excerpt-label">依据 · 作者评论</p><div class="community-source-links"><a href="https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50418975" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">作者质疑 AI 行业存在泡沫的判断，区分了数据中心的建设投入、持续运营支出和长期债务。文章呈现的是作者对产业支出与回报的看法。</p><p class="news-excerpt-label">依据 · 作者评论</p><p class="news-excerpt-label">HN · 461 积分 · 796 条评论</p><div class="community-source-links"><a href="https://matteoraso.github.io/im-not-convinced-the-ai-bubble-exists.html#im-not-convinced-the-ai-bubble-exists" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50418975" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-723e498760107b0462e8" data-id="723e498760107b0462e8" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">将写作作为思考工具</div>
   
   <div class="card-meta">
     
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    <span style="font-size:9px;font-weight:600;color:#78716c;font-family:sans-serif;white-space:nowrap;">▲441 · 108评</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#64748b;opacity:0.5;vertical-align:middle;" title="热度 37"></span>
     <span class="pub-time">昨天 10:41</span>
     <button class="share-btn" title="复制分享" data-text="将写作作为思考工具" data-link="https://muratbuffalo.blogspot.com/2026/11/writing-as-thinking-tool.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:1f923716babf3c1ff15ee9cd&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;将写作作为思考工具&quot;,&quot;url&quot;:&quot;https://muratbuffalo.blogspot.com/2026/11/writing-as-thinking-tool.html&quot;,&quot;one_liner&quot;:&quot;作者从自己用思维导图做笔记的经历谈起：把新信息放到已有框架中，本身就是理解的过程。他借计算模型作比，说明把思考写下来能帮助处理更复杂的问题。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 10:41:52 GMT&quot;,&quot;reading_excerpt&quot;:&quot;作者从自己用思维导图做笔记的经历谈起：把新信息放到已有框架中，本身就是理解的过程。他借计算模型作比，说明把思考写下来能帮助处理更复杂的问题。&quot;,&quot;reading_source&quot;:&quot;作者博客原文&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50412067&quot;,&quot;title_en&quot;:&quot;Writing as a thinking tool&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">作者从自己用思维导图做笔记的经历谈起：把新信息放到已有框架中，本身就是理解的过程。他借计算模型作比，说明把思考写下来能帮助处理更复杂的问题。</p><p class="news-excerpt-label">依据 · 作者博客原文</p><div class="community-source-links"><a href="https://muratbuffalo.blogspot.com/2026/11/writing-as-thinking-tool.html" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50412067" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">作者从自己用思维导图做笔记的经历谈起：把新信息放到已有框架中，本身就是理解的过程。他借计算模型作比，说明把思考写下来能帮助处理更复杂的问题。</p><p class="news-excerpt-label">依据 · 作者博客原文</p><p class="news-excerpt-label">HN · 441 积分 · 108 条评论</p><div class="community-source-links"><a href="https://muratbuffalo.blogspot.com/2026/11/writing-as-thinking-tool.html" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50412067" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article></div>
 </section>
       
@@ -1427,78 +1143,6 @@ function shareCard(btn) {
     <span class="sec-title">其他报道</span>
     
     <span class="sec-count">10 条</span>
-  </div>
-  <!-- mobile-only heat ranking -->
-  <div class="mobile-heat">
-    <div class="heat-box">
-  <div class="heat-header" style="background:#64748b;">其他报道</div>
-  
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
-    <div class="rank-body">
-      <a href="#card-2a8f57eb5f1aa48fff68" class="rank-title-link">
-        <div class="rank-title">特种化学品行业的AI创新应用<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#64748b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#64748b;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.technologyreview.com/2026/11/09/1147654/innovating-with-ai-in-the-special-chemicals-industry/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
-    <div class="rank-body">
-      <a href="#card-3ebb15049c9b9c4f6018" class="rank-title-link">
-        <div class="rank-title">中世纪实践理性理论<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#64748b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#64748b;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://plato.stanford.edu/entries/practical-reason-med/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
-    <div class="rank-body">
-      <a href="#card-ab17dfdf57bfc30039ff" class="rank-title-link">
-        <div class="rank-title">France 24报道：英伟达CEO因涉中国间谍案受查：黄仁勋究竟是谁？<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:97%;background:#64748b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#64748b;" title="按媒体家族计数；不表示独立核实">2<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.france24.com/en/video/20261109-nvidia-ceo-probed-over-alleged-china-spy-who-exactly-is-jensen-huang" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
-    <div class="rank-body">
-      <a href="#card-cc021c929e3f2eaff934" class="rank-title-link">
-        <div class="rank-title">以赛亚·伯林<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:96%;background:#64748b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#64748b;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://plato.stanford.edu/entries/berlin/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#64748b;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
-    <div class="rank-body">
-      <a href="#card-e01906269adb42f293c7" class="rank-title-link">
-        <div class="rank-title">基督教传统中的情感观念<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:77%;background:#64748b;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#64748b;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://plato.stanford.edu/entries/emotion-Christian-tradition/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-</div>
   </div>
   
   <div class="news-grid"><article class="news-card" id="card-2a8f57eb5f1aa48fff68" data-id="2a8f57eb5f1aa48fff68" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
@@ -1509,9 +1153,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 77"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">20小时前</span>
     <button class="share-btn" title="复制分享" data-text="特种化学品行业的AI创新应用" data-link="https://www.technologyreview.com/2026/11/09/1147654/innovating-with-ai-in-the-special-chemicals-industry/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f2fd344bf7be2cb6a6e37ae4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;特种化学品行业的AI创新应用&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/09/1147654/innovating-with-ai-in-the-special-chemicals-industry/&quot;,&quot;one_liner&quot;:&quot;随着企业加速利用AI、云计算和高级建模进行创新，特种化学品行业的研发效率有望大幅提升。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 13:00:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1526,9 +1168,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#7c3aed;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7c3aed18;border-radius:999px;padding:1px 7px;">🎓&thinsp;Stanford SEP</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 75"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">昨天 06:27</span>
     <button class="share-btn" title="复制分享" data-text="中世纪实践理性理论" data-link="https://plato.stanford.edu/entries/practical-reason-med/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:1f92bdb5b49658433db9339e&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中世纪实践理性理论&quot;,&quot;url&quot;:&quot;https://plato.stanford.edu/entries/practical-reason-med/&quot;,&quot;one_liner&quot;:&quot;该词条完成修订，更新了中世纪道德理论的正文及参考书目。&quot;,&quot;category&quot;:&quot;Stanford SEP&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 22:27:11 -0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1543,9 +1183,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#7c3aed;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7c3aed18;border-radius:999px;padding:1px 7px;">🎓&thinsp;Stanford SEP</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 74"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">昨天 03:26</span>
     <button class="share-btn" title="复制分享" data-text="以赛亚·伯林" data-link="https://plato.stanford.edu/entries/berlin/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:11e19a3374a91712bd12273c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;以赛亚·伯林&quot;,&quot;url&quot;:&quot;https://plato.stanford.edu/entries/berlin/&quot;,&quot;one_liner&quot;:&quot;词条内容已更新，修订了正文、参考书目及注释。&quot;,&quot;category&quot;:&quot;Stanford SEP&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 19:26:12 -0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1560,9 +1198,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#7c3aed;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7c3aed18;border-radius:999px;padding:1px 7px;">🎓&thinsp;Stanford SEP</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 60"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">11-07 00:40</span>
     <button class="share-btn" title="复制分享" data-text="基督教传统中的情感观念" data-link="https://plato.stanford.edu/entries/emotion-Christian-tradition/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:2d3be1a7a254376ba9c24d7f&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;基督教传统中的情感观念&quot;,&quot;url&quot;:&quot;https://plato.stanford.edu/entries/emotion-Christian-tradition/&quot;,&quot;one_liner&quot;:&quot;罗伯特·罗伯茨与亚当·佩尔瑟修订了关于基督教传统中情感哲学的词条正文及文献目录。&quot;,&quot;category&quot;:&quot;Stanford SEP&quot;,&quot;published&quot;:&quot;Fri, 06 Nov 2026 16:40:32 -0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1577,9 +1213,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span>
     
     
-    
     <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续3天</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 58"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">11-06 13:10</span>
     <button class="share-btn" title="复制分享" data-text="人形机器人操持家务与三星布局AI算力热潮" data-link="https://www.technologyreview.com/2026/11/06/1148154/the-download-humanoid-robot-cleaner-samsung-ai-chip-boom/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:4824c98720e7e767d6033de6&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;人形机器人操持家务与三星布局AI算力热潮&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/06/1148154/the-download-humanoid-robot-cleaner-samsung-ai-chip-boom/&quot;,&quot;one_liner&quot;:&quot;本期科技简报聚焦人形机器人实现家务清洁，以及三星电子针对人工智能产业繁荣展开的产业布局。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Fri, 06 Nov 2026 13:10:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1594,9 +1228,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span>
     
     
-    
     <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续3天</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 58"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">11-06 10:00</span>
     <button class="share-btn" title="复制分享" data-text="人形机器人打扫公寓展现未来生活图景" data-link="https://www.technologyreview.com/2026/11/06/1148090/i-watched-a-humanoid-robot-clean-my-apartment-it-felt-like-a-taste-of-the-future/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:1ca94b52e709b2f5558660d7&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;人形机器人打扫公寓展现未来生活图景&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/06/1148090/i-watched-a-humanoid-robot-clean-my-apartment-it-felt-like-a-taste-of-the-future/&quot;,&quot;one_liner&quot;:&quot;作者体验人形机器人居家清洁，展现出未来家庭自动化服务的发展前景。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Fri, 06 Nov 2026 10:00:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1611,9 +1243,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#475569;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#47556918;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;RUSI</span>
     
     
-    
     <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续4天</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 58"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">11-05 00:00</span>
     <button class="share-btn" title="复制分享" data-text="欧洲防务联盟亟需明确结果责任主体" data-link="https://www.rusi.org/explore-our-research/publications/commentary/europes-defence-coalitions-need-someone-own-outcome" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:af89df4606900e8d50ecc88e&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;欧洲防务联盟亟需明确结果责任主体&quot;,&quot;url&quot;:&quot;https://www.rusi.org/explore-our-research/publications/commentary/europes-defence-coalitions-need-someone-own-outcome&quot;,&quot;one_liner&quot;:&quot;欧盟力推防务能力联盟建设，但在防务能力无法兑现时的最终责任归属仍未确定。&quot;,&quot;category&quot;:&quot;RUSI&quot;,&quot;published&quot;:&quot;Thu, 05 Nov 2026 00:00:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1626,11 +1256,9 @@ function shareCard(btn) {
   <div class="card-meta">
     <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#1d4ed820;color:#1d4ed8;border:1px solid #1d4ed840;">速览</span>
     <span style="font-size:10px;color:#003189;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#00318918;border-radius:999px;padding:1px 7px;">🇫🇷&thinsp;France 24</span>
-    
     <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双媒体报道 · 2</span>
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 75"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
     <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="France 24报道：英伟达CEO因涉中国间谍案受查：黄仁勋究竟是谁？" data-link="https://www.france24.com/en/video/20261109-nvidia-ceo-probed-over-alleged-china-spy-who-exactly-is-jensen-huang" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:d5c28f6e36276d53ef8f8860&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;France 24报道：英伟达CEO因涉中国间谍案受查：黄仁勋究竟是谁？&quot;,&quot;url&quot;:&quot;https://www.france24.com/en/video/20261109-nvidia-ceo-probed-over-alleged-china-spy-who-exactly-is-jensen-huang&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;France 24&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 15:26:10 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1645,10 +1273,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#e1175e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e1175e18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;The Verge</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">17小时前</span>
+    <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="迪士尼与Adobe联手开发生成式AI工具" data-link="https://www.theverge.com/tech/1029773/disney-adobe-generative-ai-partnership" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a1d6a1e656f4ce844a1d9cb0&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;迪士尼与Adobe联手开发生成式AI工具&quot;,&quot;url&quot;:&quot;https://www.theverge.com/tech/1029773/disney-adobe-generative-ai-partnership&quot;,&quot;one_liner&quot;:&quot;华特迪士尼公司已与Adobe展开合作，共同开发生成式人工智能工具。&quot;,&quot;category&quot;:&quot;The Verge&quot;,&quot;published&quot;:&quot;2026-11-09T10:54:52-05:00&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1662,10 +1288,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
     
     
-    
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span style="display:inline-flex;gap:2px;align-items:center;" title="热度 59"><span style="display:inline-block;width:3px;height:10px;border-radius:1px;background:#b8940e;opacity:0.9;"></span><span style="display:inline-block;width:3px;height:7px;border-radius:1px;background:#b8940e;opacity:0.5;"></span></span>
-    <span class="pub-time">17小时前</span>
+    <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="CNBC报道：英伟达CEO动荡为民主党强化监管调查提供新武器" data-link="https://www.cnbc.com/2026/11/09/nvidia-jensen-huang-affair-congress-scrutiny.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e10b02bb68173f4f735bac84&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;CNBC报道：英伟达CEO动荡为民主党强化监管调查提供新武器&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/09/nvidia-jensen-huang-affair-congress-scrutiny.html&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;CNBC&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 15:49:30 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1678,117 +1302,6 @@ function shareCard(btn) {
 
     <!-- Sidebar (desktop only) -->
     <aside class="sidebar">
-  <!-- 综合热度榜 top10 -->
-  <div class="sidebar-block">
-    <div class="heat-box">
-  <div class="heat-header" style="background:#b8940e;">本期阅读索引</div>
-  
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">01</span>
-    <div class="rank-body">
-      <a href="#card-0af3c459eb8b505bda8f" class="rank-title-link">
-        <div class="rank-title">人工智能利于气候的论点尚未成立<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:100%;background:#b8940e;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.technologyreview.com/2026/11/09/1148166/the-climate-case-for-ai-has-not-been-made/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">02</span>
-    <div class="rank-body">
-      <a href="#card-763ee62b40acc48f9300" class="rank-title-link">
-        <div class="rank-title">RUSI报道：以色列外国资金调查并非选举舞弊证据<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:96%;background:#b8940e;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.rusi.org/explore-our-research/publications/commentary/israels-foreign-funding-inquiry-not-evidence-stolen-election" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">03</span>
-    <div class="rank-body">
-      <a href="#card-0912b00646430a49e20f" class="rank-title-link">
-        <div class="rank-title">特朗普《60分钟》受访：谈及AI安全并威胁逮捕高管<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:79%;background:#b8940e;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.theverge.com/ai-artificial-intelligence/1029802/trump-60-minutes-ai" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">04</span>
-    <div class="rank-body">
-      <a href="#card-2369fff861d6232a3c29" class="rank-title-link">
-        <div class="rank-title">France 24报道：“离奇内幕”：英伟达涉间谍案指控已知事实汇总<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:79%;background:#b8940e;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.france24.com/en/video/20261109-such-an-extraordinary-story-what-we-know-so-far-about-nvidia-spying-claims" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">05</span>
-    <div class="rank-body">
-      <a href="#card-b452b719b44039fe9a2e" class="rank-title-link">
-        <div class="rank-title">美联邦机构称Waymo无人驾驶出租车修复软件后仍非法超车校车<span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:79%;background:#b8940e;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://techcrunch.com/2026/11/09/waymo-robotaxis-kept-illegally-passing-school-buses-after-software-fix-feds-say/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">06</span>
-    <div class="rank-body">
-      <a href="#card-d0327b830843f8ecbd53" class="rank-title-link">
-        <div class="rank-title">乌克兰“泥泞期”如何影响战役与战略考量<span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续3天</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:77%;background:#b8940e;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.rusi.org/explore-our-research/publications/commentary/why-rasputitsa-shapes-operational-and-strategic-considerations-ukraine" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">07</span>
-    <div class="rank-body">
-      <a href="#card-d95100913cb8f72e8390" class="rank-title-link">
-        <div class="rank-title">美国新法案或重塑能源基础设施建设<span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续4天</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:77%;background:#b8940e;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.technologyreview.com/2026/11/05/1148062/permitting-reform/" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-  <div class="rank-row">
-    <span style="font-size:10px;font-weight:900;color:#b8940e;font-family:monospace;opacity:0.8;min-width:14px;text-align:right;">08</span>
-    <div class="rank-body">
-      <a href="#card-517a72454e0869c68339" class="rank-title-link">
-        <div class="rank-title">谁掌大局？乌克兰国防系统深陷制度冲突<span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续4天</span></div>
-      </a>
-      <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:77%;background:#b8940e;"></div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:44px;">
-      <div class="rank-score" style="color:#b8940e;" title="按媒体家族计数；不表示独立核实">1<span style="color:var(--text3);font-size:11px;">家媒体</span></div>
-      <a href="https://www.rusi.org/explore-our-research/publications/rusi-newsbrief/who-calls-shots-institutional-conflicts-ukraines-defence-sector" target="_blank" rel="noopener" style="font-size:9px;color:#94a3b8;text-decoration:none;white-space:nowrap;">↗</a>
-    </div>
-  </div>
-</div>
-  </div>
   <!-- AI 研报简报 -->
   <div class="sidebar-block">
   <div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">
