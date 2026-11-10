@@ -164,7 +164,7 @@ body{background:var(--jd-canvas);color:var(--jd-ink);font-family:-apple-system,B
     <a href="#lesson-core">01 理解 · 6 分钟</a>
     <a href="#lesson-exercise">02 小练习 · 6 分钟</a>
     <a href="#lesson-review">03 自测 · 2 分钟</a>
-  </nav><p class="kl-session-note">时间按理解、动手与回忆估算；后方选读不计入。练习默认已有 Python 环境。</p>
+  </nav><p class="kl-session-note">时间按理解、动手与回忆估算；后方选读不计入。练习默认已有 Python 环境。</p><p class="kl-session-note">复习课程 · 原课程日期：2026年11月11日</p>
 </section><article class="kl-card" id="lesson-core">
   <div class="kl-card-top"><span class="kl-type-badge">01 · 理解</span><span class="kl-num">约 6 分钟</span><h2 class="kl-title">把核心讲清楚</h2></div>
   <div class="kl-section kl-core"><div class="kl-sec-body"><p>语音增强的核心目标非常纯粹：你录了一段音频，里面有人说话，但背景里有风扇嗡嗡声或键盘敲击声。语音增强要做的，就是把背景噪声削掉，把干净的人声还原出来。</p><p>在绝大多数基础场景中，我们把带噪语音看作加法： y(t) = s(t) + n(t) 其中 y(t) 是录音设备收到的带噪信号，s(t) 是我们要保留的干净语音，n(t) 是加性噪声（比如空调声）。语音增强算法的输入是 y(t)，输出是估计出来的语音 s^(t)，目标是让 s^(t) 无限逼近 s(t)。</p><p>怎么衡量增强的效果？最直观的物理指标是信噪比（SNR, Signal-to-Noise Ratio）： SNR = 10 * log10( P_signal / P_noise ) 这里的 P 代表信号的平均功率（能量）。如果信号能量和噪声能量完全一样大，P_signal / P_noise = 1，此时 SNR 就是 0 dB；如果语音能量是噪声的 100 倍，SNR 就是 20 dB。数值越大，声音听起来越清晰。</p><p>举个最小例子： 你在录音里说了一句“你好”，语音段的平均平方幅值（功率）是 0.1。背景一直有轻微底噪，噪声功率是 0.001。 带噪音频的 SNR 是 10 * log10(0.1 / 0.001) = 20 dB。 如果开启了一个理想增强算法，把残留噪声的功率压低到了 0.00001，而语音没有受损，此时输出的 SNR 就变成了 40 dB，背景噪声明显减弱。</p><p>它的适用边界非常明确：基础语音增强假定目标人声只有一个，如果录音里是两个人在同时争吵抢话，从混合声音中拆出两路独立人声不属于基础增强，而属于“语音分离”。</p></div><p class="kl-citation-links">本课给出的出处：<a href="#lesson-source-1" aria-label="查看出处 1">[1]</a> <a href="#lesson-source-2" aria-label="查看出处 2">[2]</a></p></div>
