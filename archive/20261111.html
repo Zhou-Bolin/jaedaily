@@ -508,6 +508,66 @@ body.dark .brand-mark{mix-blend-mode:normal}
   .news-grid{display:block}.share-btn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:8px;font-size:14px}.card-expand summary{min-height:44px;font-size:12px;display:flex;align-items:center}.card-title{font-size:calc(var(--fs,14px) + 3px)}
 }
 
+/* jd-desktop-layout */
+@media(min-width:901px){
+  html:root{scroll-padding-top:74px}
+  .page-wrap>.brand-nav,.hc-wrap>.brand-nav,.ac-wrap>.brand-nav{
+    position:sticky;top:0;z-index:90;background:var(--jd-paper);
+    box-shadow:0 1px 0 var(--jd-line);margin-bottom:16px;
+  }
+  .brand-nav a{padding-block:11px;min-height:44px}
+  .brand-nav .jd-context-link{margin-left:auto;color:var(--jd-wine);font-weight:600}
+  .page-wrap .kl-header,.hc-wrap .hc-header{padding:18px 26px}
+  .page-wrap .kl-header .brand-mark,.hc-wrap .hc-header .brand-mark{width:54px;height:54px}
+  .page-wrap .kl-header-brand,.hc-wrap .hc-header-brand{gap:15px}
+  .page-wrap .kl-header-left h1,.hc-wrap .hc-header h1{font-size:28px}
+}
+
+@media(min-width:901px){
+  .page-wrap .mast-body{padding:18px 40px 14px;gap:18px}
+  .page-wrap .mast-body>.brand-mark{width:58px;height:58px}
+  .page-wrap .mast-cn{font-size:36px;letter-spacing:8px}
+  .page-wrap .mast-en{margin-top:6px}
+  .page-wrap .date-widget{top:23px}
+  .page-wrap .mast-strip{padding:6px 40px}
+  .page-wrap .edition-coverage>summary{padding-block:7px}
+  .page-wrap .daily-nav-wrap{position:sticky;top:0;z-index:100;background:var(--jd-paper);min-height:46px}
+  .daily-nav-wrap .brand-nav{position:static;box-shadow:none}
+  .page-wrap .main-col{padding-top:22px}
+  .page-wrap .news-card{padding:17px 0}
+}
+
+
+.reading-route .heat-header{display:flex;justify-content:space-between;align-items:center}
+.rr-edition{font:11px/1.5 ui-monospace,monospace;opacity:.8}
+.rr-body{padding:11px 13px 10px}
+.rr-budgets{display:flex;gap:5px}
+.rr-budgets button{flex:1;border:1px solid var(--jd-line);background:var(--jd-paper);color:var(--jd-muted);padding:5px 3px;cursor:pointer;font:12px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;border-radius:2px}
+.rr-budgets button[aria-pressed=true]{background:var(--jd-wine-soft);border-color:var(--jd-wine);color:var(--jd-wine)}
+.rr-estimate{font-size:12px;color:var(--jd-muted);margin:8px 0 3px}
+.rr-tasks{list-style:none;padding:0;margin:0;counter-reset:route-step}
+.rr-tasks li{position:relative;border-bottom:1px solid var(--jd-line);padding:9px 0 10px 23px;counter-increment:route-step}
+.rr-tasks li::before{content:counter(route-step,decimal-leading-zero);position:absolute;left:0;top:9px;font:11px/1.7 ui-monospace,monospace;color:var(--jd-wine)}
+.rr-task-meta{font-size:10px;color:var(--jd-muted);line-height:1.6;margin-bottom:4px}
+.rr-task-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
+.rr-task-top .rr-task-meta{margin:0 0 3px}
+.rr-task-link{display:block;font-size:13px;line-height:1.65;color:var(--jd-ink);text-decoration:none;overflow-wrap:anywhere}
+.rr-task-link:hover{color:var(--jd-wine);text-decoration:underline;text-underline-offset:3px}
+.rr-done{flex:none;font:11px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;padding:1px 5px;border:1px solid var(--jd-line);border-radius:2px;background:var(--jd-paper);color:var(--jd-muted);cursor:pointer}
+.rr-done[aria-pressed=true]{color:var(--jd-wine);border-color:var(--jd-gold-line);background:var(--jd-wine-soft)}
+.rr-tasks li[data-complete=true]::before{content:"✓";font-size:13px}
+.rr-tasks li[data-complete=true] .rr-task-link{color:var(--jd-muted)}
+.rr-progress{font-size:12px;line-height:1.6;margin:9px 0 0;color:var(--jd-wine);font-variant-numeric:tabular-nums}
+.rr-progress[data-finished=true]{padding:7px 9px;border-left:2px solid var(--jd-wine);background:var(--jd-wine-soft)}
+.rr-note,.rr-status{font-size:11px;line-height:1.7;color:var(--jd-muted);margin:7px 0 0}
+.rr-status:empty,.rr-progress:empty{display:none}
+.rr-previous{display:inline-block;margin-top:8px;font-size:12px;color:var(--jd-wine);text-underline-offset:3px}
+.reading-route [hidden]{display:none!important}
+@media(prefers-reduced-motion:no-preference){
+  .rr-progress[data-finished=true]{animation:rr-finish .45s ease-out}
+  @keyframes rr-finish{from{opacity:.3;transform:translateY(3px)}to{opacity:1;transform:none}}
+}
+
 .news-card.featured-story{border:0;padding:0;gap:5px}
 .featured-story .card-meta{margin-top:2px}
 .featured-story .news-excerpt-label{margin:2px 0 0}
@@ -542,66 +602,7 @@ body.dark .brand-mark{mix-blend-mode:normal}
   document.documentElement.style.setProperty('--fs', fs + 'px');
 })();
 </script>
-<style id="jd-desktop-layout">
-/* jd-desktop-layout */
-@media(min-width:901px){
-  html:root{scroll-padding-top:74px}
-  .page-wrap>.brand-nav,.hc-wrap>.brand-nav,.ac-wrap>.brand-nav{
-    position:sticky;top:0;z-index:90;background:var(--jd-paper);
-    box-shadow:0 1px 0 var(--jd-line);margin-bottom:16px;
-  }
-  .brand-nav a{padding-block:11px;min-height:44px}
-  .brand-nav .jd-context-link{margin-left:auto;color:var(--jd-wine);font-weight:600}
-  .page-wrap .kl-header,.hc-wrap .hc-header{padding:18px 26px}
-  .page-wrap .kl-header .brand-mark,.hc-wrap .hc-header .brand-mark{width:54px;height:54px}
-  .page-wrap .kl-header-brand,.hc-wrap .hc-header-brand{gap:15px}
-  .page-wrap .kl-header-left h1,.hc-wrap .hc-header h1{font-size:28px}
-}
-
-@media(min-width:901px){
-  .page-wrap .mast-body{padding:18px 40px 14px;gap:18px}
-  .page-wrap .mast-body>.brand-mark{width:58px;height:58px}
-  .page-wrap .mast-cn{font-size:36px;letter-spacing:8px}
-  .page-wrap .mast-en{margin-top:6px}
-  .page-wrap .date-widget{top:23px}
-  .page-wrap .mast-strip{padding:6px 40px}
-  .page-wrap .edition-coverage>summary{padding-block:7px}
-  .page-wrap .daily-nav-wrap{position:sticky;top:0;z-index:100;background:var(--jd-paper);min-height:46px}
-  .daily-nav-wrap .brand-nav{position:static;box-shadow:none}
-  .page-wrap .main-col{padding-top:22px}
-  .page-wrap .news-card{padding:17px 0}
-}
-</style><style id="reading-route-style">
-.reading-route .heat-header{display:flex;justify-content:space-between;align-items:center}
-.rr-edition{font:11px/1.5 ui-monospace,monospace;opacity:.8}
-.rr-body{padding:11px 13px 10px}
-.rr-budgets{display:flex;gap:5px}
-.rr-budgets button{flex:1;border:1px solid var(--jd-line);background:var(--jd-paper);color:var(--jd-muted);padding:5px 3px;cursor:pointer;font:12px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;border-radius:2px}
-.rr-budgets button[aria-pressed=true]{background:var(--jd-wine-soft);border-color:var(--jd-wine);color:var(--jd-wine)}
-.rr-estimate{font-size:12px;color:var(--jd-muted);margin:8px 0 3px}
-.rr-tasks{list-style:none;padding:0;margin:0;counter-reset:route-step}
-.rr-tasks li{position:relative;border-bottom:1px solid var(--jd-line);padding:9px 0 10px 23px;counter-increment:route-step}
-.rr-tasks li::before{content:counter(route-step,decimal-leading-zero);position:absolute;left:0;top:9px;font:11px/1.7 ui-monospace,monospace;color:var(--jd-wine)}
-.rr-task-meta{font-size:10px;color:var(--jd-muted);line-height:1.6;margin-bottom:4px}
-.rr-task-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
-.rr-task-top .rr-task-meta{margin:0 0 3px}
-.rr-task-link{display:block;font-size:13px;line-height:1.65;color:var(--jd-ink);text-decoration:none;overflow-wrap:anywhere}
-.rr-task-link:hover{color:var(--jd-wine);text-decoration:underline;text-underline-offset:3px}
-.rr-done{flex:none;font:11px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;padding:1px 5px;border:1px solid var(--jd-line);border-radius:2px;background:var(--jd-paper);color:var(--jd-muted);cursor:pointer}
-.rr-done[aria-pressed=true]{color:var(--jd-wine);border-color:var(--jd-gold-line);background:var(--jd-wine-soft)}
-.rr-tasks li[data-complete=true]::before{content:"✓";font-size:13px}
-.rr-tasks li[data-complete=true] .rr-task-link{color:var(--jd-muted)}
-.rr-progress{font-size:12px;line-height:1.6;margin:9px 0 0;color:var(--jd-wine);font-variant-numeric:tabular-nums}
-.rr-progress[data-finished=true]{padding:7px 9px;border-left:2px solid var(--jd-wine);background:var(--jd-wine-soft)}
-.rr-note,.rr-status{font-size:11px;line-height:1.7;color:var(--jd-muted);margin:7px 0 0}
-.rr-status:empty,.rr-progress:empty{display:none}
-.rr-previous{display:inline-block;margin-top:8px;font-size:12px;color:var(--jd-wine);text-underline-offset:3px}
-.reading-route [hidden]{display:none!important}
-@media(prefers-reduced-motion:no-preference){
-  .rr-progress[data-finished=true]{animation:rr-finish .45s ease-out}
-  @keyframes rr-finish{from{opacity:.3;transform:translateY(3px)}to{opacity:1;transform:none}}
-}
-</style></head>
+</head>
 <body class="theme-wed">
 <script>
 // 应用暗色（避免闪白）
@@ -767,8 +768,8 @@ function shareCard(btn) {
       <span class="mast-strip-sep">·</span>
       <span class="mast-strip-item">AI 辅助整理</span>
     </div>
-    <details class="edition-coverage"><summary>本版生成 <time datetime="2026-11-11T07:33+08:00">北京时间 11月11日 07:33</time> <span class="edition-coverage-status">· 14 个来源待补抓</span></summary><div class="edition-coverage-body"><p>来源检查截至 11月11日 07:26 · 沿用已有结果 50 个来源</p><p>范围为本期配置的新闻 RSS 与官方栏目。</p><dl><div><dt>待补抓 · 14 个</dt><dd>Reuters、AP、FT（上次成功 11月10日 20:27）、Al Jazeera（上次成功 11月10日 20:27）、Middle East Eye、The Hindu（上次成功 11月10日 20:27）、虎嗅、RTHK 本地（上次成功 11月10日 20:27）、RTHK 国际（上次成功 11月10日 20:27）、Politico EU（上次成功 11月10日 20:27）、Defense.gov（上次成功 11月10日 20:27）、War on the Rocks（上次成功 11月10日 20:27）、Game Developer（上次成功 11月10日 20:27）、NIH Health</dd></div><div><dt>检查成功，暂无可用条目 · 5 个</dt><dd>新华社、环球时报、中国军网、MedlinePlus、中国政府网</dd></div><div><dt>抓到可用条目 · 45 个</dt><dd>BBC 国际、BBC 财经、Bloomberg、NYT 国际、NYT 财经、CNBC、The Guardian、France 24、Sky News、El País、El Mundo、Japan Times、Yonhap、SCMP、RT、TASS、中国新闻网、CGTN 中国、CGTN 国际、CGTN 财经、MIT Tech Review、The Verge、Wired、Ars Technica、TechCrunch、RUSI、Stanford SEP、Aeon、Paris Review、Artforum、Smithsonian、科技日报、中科院科研进展、教育部工作动态、中新网社会、中新网教育、国家统计局发布、人民网高层动态、人民网国际、人民网财经、人民网军事、新华网国际、新华网科技、央视新闻中国、央视新闻国际</dd></div></dl></div></details>
-  </div>
+    
+  <details class="edition-coverage"><summary>本版生成 <time datetime="2026-11-11T07:33+08:00">北京时间 11月11日 07:33</time> <span class="edition-coverage-status">· 14 个来源待补抓</span></summary><div class="edition-coverage-body"><p>来源检查截至 11月11日 07:26 · 沿用已有结果 50 个来源</p><p>范围为本期配置的新闻 RSS 与官方栏目。</p><dl><div><dt>待补抓 · 14 个</dt><dd>Reuters、AP、FT（上次成功 11月10日 20:27）、Al Jazeera（上次成功 11月10日 20:27）、Middle East Eye、The Hindu（上次成功 11月10日 20:27）、虎嗅、RTHK 本地（上次成功 11月10日 20:27）、RTHK 国际（上次成功 11月10日 20:27）、Politico EU（上次成功 11月10日 20:27）、Defense.gov（上次成功 11月10日 20:27）、War on the Rocks（上次成功 11月10日 20:27）、Game Developer（上次成功 11月10日 20:27）、NIH Health</dd></div><div><dt>检查成功，暂无可用条目 · 5 个</dt><dd>新华社、环球时报、中国军网、MedlinePlus、中国政府网</dd></div><div><dt>抓到可用条目 · 45 个</dt><dd>BBC 国际、BBC 财经、Bloomberg、NYT 国际、NYT 财经、CNBC、The Guardian、France 24、Sky News、El País、El Mundo、Japan Times、Yonhap、SCMP、RT、TASS、中国新闻网、CGTN 中国、CGTN 国际、CGTN 财经、MIT Tech Review、The Verge、Wired、Ars Technica、TechCrunch、RUSI、Stanford SEP、Aeon、Paris Review、Artforum、Smithsonian、科技日报、中科院科研进展、教育部工作动态、中新网社会、中新网教育、国家统计局发布、人民网高层动态、人民网国际、人民网财经、人民网军事、新华网国际、新华网科技、央视新闻中国、央视新闻国际</dd></div></dl></div></details></div>
 
   <div class="daily-nav-wrap"><a class="jd-skip-link" href="#main-content">跳到正文</a><nav class="brand-nav" aria-label="栏目导航"><a aria-current="page" href="../latest.html">每日简报</a><a href="../ai-digest.html">论文研报</a><a href="../learn.html">每日一课</a><a href="../advanced.html">进阶课堂</a><a href="../health.html">健康学堂</a><a href="../favorites.html">收藏</a><a href="../archive/">往期</a></nav>
     <div class="toolbar" role="group" aria-label="阅读设置">
@@ -794,8 +795,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#1c6ea4;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1c6ea418;border-radius:999px;padding:1px 7px;">🇪🇸&thinsp;El País</span>
     <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多媒体报道 · 3</span>
     
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
-    <span class="pub-time">12小时前</span>
+    
+    <span class="pub-time">16小时前</span>
     <button class="share-btn" title="复制分享" data-text="美国加州否决对该州亿万富翁征收财富税的提案" data-link="https://english.elpais.com/usa/2026-11-10/california-rejects-proposal-to-tax-the-wealth-of-states-billionaires.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:2ecdb7d5c57b0c34008aa2d7&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国加州否决对该州亿万富翁征收财富税的提案&quot;,&quot;url&quot;:&quot;https://english.elpais.com/usa/2026-11-10/california-rejects-proposal-to-tax-the-wealth-of-states-billionaires.html&quot;,&quot;one_liner&quot;:&quot;该提案旨在要求净资产超过10亿美元的个人缴纳相当于其财富5%的一次性税费。&quot;,&quot;category&quot;:&quot;El País&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 11:06:22 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -809,8 +810,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
     
     
-    <span style="font-size:9px;color:#93c5fd;font-family:sans-serif;">持续84天</span>
-    <span class="pub-time">6小时前</span>
+    
+    <span class="pub-time">10小时前</span>
     <button class="share-btn" title="复制分享" data-text="受通胀数据及沃勒评论影响，10年期美债收益率重回5%并推高加息预期" data-link="https://www.cnbc.com/2026/11/10/us-bonds-treasurys-yields.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a31294895446cafcb5a59e51&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;受通胀数据及沃勒评论影响，10年期美债收益率重回5%并推高加息预期&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/10/us-bonds-treasurys-yields.html&quot;,&quot;one_liner&quot;:&quot;在CPI报告表现高于预期后，美债收益率随之走高。&quot;,&quot;category&quot;:&quot;CNBC&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:44:11 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -824,8 +825,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#e1175e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e1175e18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;The Verge</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">7小时前</span>
+    
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="谷歌发布具备智能体“群体”功能的 Gemini 4 Carbon 模型" data-link="https://www.theverge.com/ai-artificial-intelligence/1030787/google-gemini-4-carbon-public-rollout" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8658a0744e2cda3c83edc739&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;谷歌发布具备智能体“群体”功能的 Gemini 4 Carbon 模型&quot;,&quot;url&quot;:&quot;https://www.theverge.com/ai-artificial-intelligence/1030787/google-gemini-4-carbon-public-rollout&quot;,&quot;one_liner&quot;:&quot;谷歌在向特定群体发布后，现向公众全面开放其最新的 Gemini 4 Carbon 人工智能模型。&quot;,&quot;category&quot;:&quot;The Verge&quot;,&quot;published&quot;:&quot;2026-11-10T11:00:00-05:00&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -839,8 +840,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span>
     
     
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
-    <span class="pub-time">7小时前</span>
+    
+    <span class="pub-time">12小时前</span>
     <button class="share-btn" title="复制分享" data-text="消息人士称 Anthropic 定价区间为70至78美元，计划11月19日上市" data-link="https://www.cnbc.com/2026/11/10/anthropic-sets-price-range-of-70-to-78-in-upcoming-ipo.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:7b3ccc9cc6a3af4b6b4403b0&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;消息人士称 Anthropic 定价区间为70至78美元，计划11月19日上市&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/10/anthropic-sets-price-range-of-70-to-78-in-upcoming-ipo.html&quot;,&quot;one_liner&quot;:&quot;在埃隆·马斯克旗下 SpaceX 创纪录上市约五个月后，Anthropic 预计将进行首次公开募股。&quot;,&quot;category&quot;:&quot;CNBC&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 15:42:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -849,7 +850,7 @@ function shareCard(btn) {
 </article></div></div></div></div>
       
       
-      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年11月11日</div><div class="slim-list"><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">综合 · El País</div><a href="https://english.elpais.com/usa/2026-11-10/california-rejects-proposal-to-tax-the-wealth-of-states-billionaires.html" class="slim-title" target="_blank" rel="noopener">美国加州否决对该州亿万富翁征收财富税的提案</a><p class="slim-excerpt">该提案旨在要求净资产超过10亿美元的个人缴纳相当于其财富5%的一次性税费。</p></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">财经 · CNBC</div><a href="https://www.cnbc.com/2026/11/10/us-bonds-treasurys-yields.html" class="slim-title" target="_blank" rel="noopener">受通胀数据及沃勒评论影响，10年期美债收益率重回5%并推高加息预期</a><p class="slim-excerpt">在CPI报告表现高于预期后，美债收益率随之走高。</p></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">科技 · The Verge</div><a href="https://www.theverge.com/ai-artificial-intelligence/1030787/google-gemini-4-carbon-public-rollout" class="slim-title" target="_blank" rel="noopener">谷歌发布具备智能体“群体”功能的 Gemini 4 Carbon 模型</a><p class="slim-excerpt">谷歌在向特定群体发布后，现向公众全面开放其最新的 Gemini 4 Carbon 人工智能模型。</p></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">科技 · CNBC</div><a href="https://www.cnbc.com/2026/11/10/anthropic-sets-price-range-of-70-to-78-in-upcoming-ipo.html" class="slim-title" target="_blank" rel="noopener">消息人士称 Anthropic 定价区间为70至78美元，计划11月19日上市</a><p class="slim-excerpt">在埃隆·马斯克旗下 SpaceX 创纪录上市约五个月后，Anthropic 预计将进行首次公开募股。</p></div></div></div></div>
+      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年11月11日</div><div class="slim-list"><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">综合 · El País</div><a href="https://english.elpais.com/usa/2026-11-10/california-rejects-proposal-to-tax-the-wealth-of-states-billionaires.html" class="slim-title" target="_blank" rel="noopener">美国加州否决对该州亿万富翁征收财富税的提案</a><p class="slim-excerpt">该提案旨在要求净资产超过10亿美元的个人缴纳相当于其财富5%的一次性税费。</p></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">财经 · CNBC</div><a href="https://www.cnbc.com/2026/11/10/us-bonds-treasurys-yields.html" class="slim-title" target="_blank" rel="noopener">受通胀数据及沃勒评论影响，10年期美债收益率重回5%并推高加息预期</a><p class="slim-excerpt">在CPI报告表现高于预期后，美债收益率随之走高。</p></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">政治 · The Verge</div><a href="https://www.theverge.com/ai-artificial-intelligence/1030787/google-gemini-4-carbon-public-rollout" class="slim-title" target="_blank" rel="noopener">谷歌发布具备智能体“群体”功能的 Gemini 4 Carbon 模型</a><p class="slim-excerpt">谷歌在向特定群体发布后，现向公众全面开放其最新的 Gemini 4 Carbon 人工智能模型。</p></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">科技 · CNBC</div><a href="https://www.cnbc.com/2026/11/10/anthropic-sets-price-range-of-70-to-78-in-upcoming-ipo.html" class="slim-title" target="_blank" rel="noopener">消息人士称 Anthropic 定价区间为70至78美元，计划11月19日上市</a><p class="slim-excerpt">在埃隆·马斯克旗下 SpaceX 创纪录上市约五个月后，Anthropic 预计将进行首次公开募股。</p></div></div></div></div>
       
 <section class="news-section" id="politics">
   <div class="sec-header" style="color:#8a1212;">
@@ -866,8 +867,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
     <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双媒体报道 · 2</span>
     
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
-    <span class="pub-time">15小时前</span>
+    
+    <span class="pub-time">19小时前</span>
     <button class="share-btn" title="复制分享" data-text="BBC 财经报道：特朗普称FBI正调查英伟达老板与涉嫌中国间谍的绯闻" data-link="https://www.bbc.co.uk/news/articles/cqg7x7dpvym8o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:4a9293f6fb1874436e243f46&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;BBC 财经报道：特朗普称FBI正调查英伟达老板与涉嫌中国间谍的绯闻&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqg7x7dpvym8o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 08:23:21 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -881,28 +882,13 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="洛根称美联储至少还需加息两次" data-link="https://www.bloomberg.com/news/videos/2026-11-10/fed-needs-to-raise-rates-two-more-times-logan-says-video" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:554b1d7c94ae78839b52ddee&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;洛根称美联储至少还需加息两次&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/videos/2026-11-10/fed-needs-to-raise-rates-two-more-times-logan-says-video&quot;,&quot;one_liner&quot;:&quot;洛根表示，鉴于当前前景，美联储委员会（FOMC）显然仍需再实施至少两次25个基点的加息。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:36:43 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">洛根表示，鉴于当前前景，美联储委员会（FOMC）显然仍需再实施至少两次25个基点的加息。</div><a href="https://www.bloomberg.com/news/videos/2026-11-10/fed-needs-to-raise-rates-two-more-times-logan-says-video" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-28a1de37786bd50d0608" data-id="28a1de37786bd50d0608" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">雄鹿队总裁探讨如何围绕字母哥以外的阵容建设</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
-    <button class="share-btn" title="复制分享" data-text="雄鹿队总裁探讨如何围绕字母哥以外的阵容建设" data-link="https://www.bloomberg.com/news/videos/2026-11-10/bucks-president-on-building-beyond-giannis-video" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ed67176ef93c447dbd4fabc4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;雄鹿队总裁探讨如何围绕字母哥以外的阵容建设&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/videos/2026-11-10/bucks-president-on-building-beyond-giannis-video&quot;,&quot;one_liner&quot;:&quot;密尔沃基雄鹿队如何在失去超级巨星后保持竞争力？球队总裁乔什·格莱辛在彭博Open Interest节目中进行了讨论。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:34:48 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">密尔沃基雄鹿队如何在失去超级巨星后保持竞争力？球队总裁乔什·格莱辛在彭博Open Interest节目中进行了讨论。</div><a href="https://www.bloomberg.com/news/videos/2026-11-10/bucks-president-on-building-beyond-giannis-video" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-130a58ca9c791cc5cd65" data-id="130a58ca9c791cc5cd65" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">以色列新一届议会宣誓就职，各党派领导人角逐组阁权</div>
   
@@ -911,8 +897,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
     
     
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
-    <span class="pub-time">7小时前</span>
+    
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="以色列新一届议会宣誓就职，各党派领导人角逐组阁权" data-link="https://www.bbc.co.uk/news/articles/crd939lpzjp9o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:79d2d8b7c1cd87ddbaaf828c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;以色列新一届议会宣誓就职，各党派领导人角逐组阁权&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/crd939lpzjp9o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;本雅明·内塔尼亚胡的主要政治对手加迪·艾森科特获得优先组阁权，力图推翻现任总理。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 15:51:09 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -926,8 +912,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">8小时前</span>
+    
+    <span class="pub-time">13小时前</span>
     <button class="share-btn" title="复制分享" data-text="美国称乌克兰和平谈判首日“非常富有成效”" data-link="https://www.bbc.co.uk/news/articles/cqpvgvrpjvv8o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:d3212160414aac1d2d3bc5a6&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国称乌克兰和平谈判首日“非常富有成效”&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqpvgvrpjvv8o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;基辅、华盛顿和莫斯科代表团在阿联酋举行了自2月以来的首次三方会谈。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 14:36:57 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -941,13 +927,28 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">9小时前</span>
+    
+    <span class="pub-time">13小时前</span>
     <button class="share-btn" title="复制分享" data-text="伊朗否认法国关于其参与超市冷柜黑客攻击的指控" data-link="https://www.bbc.co.uk/news/articles/cmg474vk6dyqo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:afdc6ec15c3be9fd1f75ee00&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;伊朗否认法国关于其参与超市冷柜黑客攻击的指控&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cmg474vk6dyqo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;上月，数百家超市的冷藏和冷冻设备温度升高，导致大量冷鲜及冷冻食品变质。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 13:45:13 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">上月，数百家超市的冷藏和冷冻设备温度升高，导致大量冷鲜及冷冻食品变质。</div><a href="https://www.bbc.co.uk/news/articles/cmg474vk6dyqo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-485c507cf35eed851e18" data-id="485c507cf35eed851e18" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="card-title">中美能源博弈及其对账单的影响</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
+    
+    
+    
+    <span class="pub-time">昨天 00:08</span>
+    <button class="share-btn" title="复制分享" data-text="中美能源博弈及其对账单的影响" data-link="https://www.bbc.co.uk/news/articles/cw62y2z53pg1o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:9d04f7674e5302166f0febdc&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中美能源博弈及其对账单的影响&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cw62y2z53pg1o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;中美两国间的能源竞争可能对能源价格产生重大影响，但最终结果尚不确定。&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 00:08:28 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">中美两国间的能源竞争可能对能源价格产生重大影响，但最终结果尚不确定。</div><a href="https://www.bbc.co.uk/news/articles/cw62y2z53pg1o?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
 </article></div>
 </section>
       
@@ -958,7 +959,22 @@ function shareCard(btn) {
     <span class="sec-count">6 条</span>
   </div>
   <details class="news-category-links"><summary>今日选读已收录 1 条</summary><ul><li><a href="#card-8c678f254929ca7a7799">受通胀数据及沃勒评论影响，10年期美债收益率重回5%并推高加息预期 <span aria-hidden="true">↑</span></a></li></ul></details>
-  <div class="news-grid"><article class="news-card" id="card-c2a24e626483e3bd8248" data-id="c2a24e626483e3bd8248" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
+  <div class="news-grid"><article class="news-card" id="card-28a1de37786bd50d0608" data-id="28a1de37786bd50d0608" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
+  <div class="card-title">雄鹿总裁谈球星之外的球队建设</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
+    
+    
+    
+    <span class="pub-time">11小时前</span>
+    <button class="share-btn" title="复制分享" data-text="雄鹿总裁谈球星之外的球队建设" data-link="https://www.bloomberg.com/news/videos/2026-11-10/bucks-president-on-building-beyond-giannis-video" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ed67176ef93c447dbd4fabc4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;雄鹿总裁谈球星之外的球队建设&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/videos/2026-11-10/bucks-president-on-building-beyond-giannis-video&quot;,&quot;one_liner&quot;:&quot;雄鹿队如何在球星之外保持吸引力？球队总裁乔什·格莱辛谈球队未来建设及体育球队估值上涨。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:34:48 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">雄鹿队如何在球星之外保持吸引力？球队总裁乔什·格莱辛谈球队未来建设及体育球队估值上涨。</div><a href="https://www.bloomberg.com/news/videos/2026-11-10/bucks-president-on-building-beyond-giannis-video" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-c2a24e626483e3bd8248" data-id="c2a24e626483e3bd8248" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">对冲基金要求美国证券交易委员会和商品期货交易委员会放缓推进全天候交易</div>
   
   <div class="card-meta">
@@ -966,8 +982,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="对冲基金要求美国证券交易委员会和商品期货交易委员会放缓推进全天候交易" data-link="https://www.bloomberg.com/news/articles/2026-11-10/hedge-funds-ask-sec-cftc-to-go-slow-in-push-to-24-7-trading" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:c49c67d9a36f07c601746105&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;对冲基金要求美国证券交易委员会和商品期货交易委员会放缓推进全天候交易&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-10/hedge-funds-ask-sec-cftc-to-go-slow-in-push-to-24-7-trading&quot;,&quot;one_liner&quot;:&quot;管理基金协会建议，特朗普政府在推动全天候交易进程时应保持审慎。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:34:10 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -981,8 +997,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
     
     
-    <span style="font-size:9px;color:#93c5fd;font-family:sans-serif;">持续27天</span>
-    <span class="pub-time">8小时前</span>
+    
+    <span class="pub-time">12小时前</span>
     <button class="share-btn" title="复制分享" data-text="美国10月通胀高于预期，物价上涨原因分析" data-link="https://www.bbc.co.uk/news/articles/cwy8lx3pg4k2o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:96faa508b0e30813b50f2c74&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国10月通胀高于预期，物价上涨原因分析&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cwy8lx3pg4k2o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;受住房、食品和能源成本上涨推动，美国10月物价环比上涨0.4%。&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 14:45:46 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -996,28 +1012,13 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">10小时前</span>
+    
+    <span class="pub-time">14小时前</span>
     <button class="share-btn" title="复制分享" data-text="强劲通胀报告引发加息呼吁，美股下滑" data-link="https://www.bloomberg.com/news/articles/2026-11-10/us-stock-futures-trade-mixed-with-focus-on-cpi-anthropic-ipo" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ea0914239e05f6baedba665c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;强劲通胀报告引发加息呼吁，美股下滑&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-10/us-stock-futures-trade-mixed-with-focus-on-cpi-anthropic-ipo&quot;,&quot;one_liner&quot;:&quot;受强于预期的通胀数据影响，美联储官员呼吁加息，美股周二扩大跌幅。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 12:55:52 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">受强于预期的通胀数据影响，美联储官员呼吁加息，美股周二扩大跌幅。</div><a href="https://www.bloomberg.com/news/articles/2026-11-10/us-stock-futures-trade-mixed-with-focus-on-cpi-anthropic-ipo" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-54aceed041cfde61d42f" data-id="54aceed041cfde61d42f" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
-  <div class="card-title">美国通胀超预期且美联储官员表态，金价受加息预期影响下跌</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">23小时前</span>
-    <button class="share-btn" title="复制分享" data-text="美国通胀超预期且美联储官员表态，金价受加息预期影响下跌" data-link="https://www.bloomberg.com/news/articles/2026-11-10/gold-holds-gain-above-4-100-as-lower-oil-eases-inflation-woes" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:37e115e0aaba049959129a34&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国通胀超预期且美联储官员表态，金价受加息预期影响下跌&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-10/gold-holds-gain-above-4-100-as-lower-oil-eases-inflation-woes&quot;,&quot;one_liner&quot;:&quot;由于美国通胀数据高于预期，加之美联储官员的言论强化了市场对加息的押注，金价跌幅扩大。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 00:04:12 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">由于美国通胀数据高于预期，加之美联储官员的言论强化了市场对加息的押注，金价跌幅扩大。</div><a href="https://www.bloomberg.com/news/articles/2026-11-10/gold-holds-gain-above-4-100-as-lower-oil-eases-inflation-woes" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-04251d3ef9c6b9bfce21" data-id="04251d3ef9c6b9bfce21" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">高通胀持续对美联储施加加息压力</div>
   
@@ -1026,8 +1027,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;NYT 财经</span>
     
     
-    <span style="font-size:9px;color:#93c5fd;font-family:sans-serif;">持续60天</span>
-    <span class="pub-time">6小时前</span>
+    
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="高通胀持续对美联储施加加息压力" data-link="https://www.nytimes.com/2026/11/10/business/economy/inflation-economy-cpi.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:827f2fa8a0cbfde5e4f3c8f9&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;高通胀持续对美联储施加加息压力&quot;,&quot;url&quot;:&quot;https://www.nytimes.com/2026/11/10/business/economy/inflation-economy-cpi.html&quot;,&quot;one_liner&quot;:&quot;10月份消费者价格指数（CPI）显示价格压力范围扩大，引发了对美联储的担忧。&quot;,&quot;category&quot;:&quot;NYT 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:42:21 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1051,8 +1052,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
     <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双媒体报道 · 2</span>
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">8小时前</span>
+    
+    <span class="pub-time">12小时前</span>
     <button class="share-btn" title="复制分享" data-text="Anthropic上市估值预计低于预期的1.3万亿美元" data-link="https://www.bbc.co.uk/news/articles/crpdgd723x2zo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:c67f8109386fc65fb9706b09&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Anthropic上市估值预计低于预期的1.3万亿美元&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/crpdgd723x2zo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;这家开发Claude聊天机器人的AI公司拟将其发行价定在70美元至78美元之间。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 14:46:50 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1076,8 +1077,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#2c5557;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#2c555718;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;中科院科研进展</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">23小时前</span>
+    
+    <span class="pub-time">昨天 00:33</span>
     <button class="share-btn" title="复制分享" data-text="研究构建促进光合固碳的有机铁硫框架材料" data-link="https://www.cas.cn/syky/202611/t20261109_5123749.shtml" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8b23a2181164ae90d48171b4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;研究构建促进光合固碳的有机铁硫框架材料&quot;,&quot;url&quot;:&quot;https://www.cas.cn/syky/202611/t20261109_5123749.shtml&quot;,&quot;one_liner&quot;:&quot;针对天然铁硫簇稳定性差的问题，研究构建新型有机材料以提升光合固碳效率。&quot;,&quot;category&quot;:&quot;中科院科研进展&quot;,&quot;published&quot;:&quot;2026-11-10T00:33:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1091,8 +1092,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#991b1b;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#991b1b18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;人民网高层动态</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">23小时前</span>
+    
+    <span class="pub-time">昨天 00:00</span>
     <button class="share-btn" title="复制分享" data-text="何立峰与加拿大部长共同主持第二次中加经济财金战略对话" data-link="http://politics.people.com.cn/n1/2026/1110/c1001-40830823.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:bc182537d0a6093b4060ff56&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;何立峰与加拿大部长共同主持第二次中加经济财金战略对话&quot;,&quot;url&quot;:&quot;http://politics.people.com.cn/n1/2026/1110/c1001-40830823.html&quot;,&quot;one_liner&quot;:&quot;何立峰与加拿大财政部长商鹏飞、国际贸易部长西杜共同主持了第二次中加经济财金战略对话。&quot;,&quot;category&quot;:&quot;人民网高层动态&quot;,&quot;published&quot;:&quot;2026-11-10&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1106,8 +1107,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#7b3d2b;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7b3d2b18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;教育部工作动态</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">16小时前</span>
+    
+    <span class="pub-time">20小时前</span>
     <button class="share-btn" title="复制分享" data-text="教育部等三部门部署实施服务乡村振兴高校招生专项计划" data-link="https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8f10724e44d9e88c4ec24258&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;教育部等三部门部署实施服务乡村振兴高校招生专项计划&quot;,&quot;url&quot;:&quot;https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html&quot;,&quot;one_liner&quot;:&quot;教育部、公安部与农业农村部联合印发通知，部署实施服务乡村振兴高校招生专项计划。&quot;,&quot;category&quot;:&quot;教育部工作动态&quot;,&quot;published&quot;:&quot;2026-11-10T07:05:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1121,8 +1122,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#7f1d1d;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7f1d1d18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;科技日报</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">23小时前</span>
+    
+    <span class="pub-time">昨天 00:00</span>
     <button class="share-btn" title="复制分享" data-text="中广核浙江三澳核电项目4号机组主体工程开工" data-link="https://www.stdaily.com/web/gdxw/2026-11/10/content_611413.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:6aa9cc68c62d58653f59309d&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中广核浙江三澳核电项目4号机组主体工程开工&quot;,&quot;url&quot;:&quot;https://www.stdaily.com/web/gdxw/2026-11/10/content_611413.html&quot;,&quot;one_liner&quot;:&quot;11月10日，三澳核电4号机组核岛浇筑首罐混凝土，标志该项目二期进入全面建设阶段。&quot;,&quot;category&quot;:&quot;科技日报&quot;,&quot;published&quot;:&quot;2026-11-10&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1136,8 +1137,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#2c5557;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#2c555718;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;中科院科研进展</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">21小时前</span>
+    
+    <span class="pub-time">昨天 01:47</span>
     <button class="share-btn" title="复制分享" data-text="研究揭示持续氮添加下土壤呼吸的时间变化规律" data-link="https://www.cas.cn/syky/202611/t20261106_5123659.shtml" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:6293a5aa76c695ad3617686e&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;研究揭示持续氮添加下土壤呼吸的时间变化规律&quot;,&quot;url&quot;:&quot;https://www.cas.cn/syky/202611/t20261106_5123659.shtml&quot;,&quot;one_liner&quot;:&quot;中国科学院植物研究所整合全球数据，探究氮沉降作为重要驱动因子，如何影响作为碳通量核心的土壤呼吸。&quot;,&quot;category&quot;:&quot;中科院科研进展&quot;,&quot;published&quot;:&quot;2026-11-10T01:47:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1151,8 +1152,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#7b3d2b;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7b3d2b18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;国家统计局发布</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">昨天 01:30</span>
+    
+    <span class="pub-time">11-09 01:30</span>
     <button class="share-btn" title="复制分享" data-text="2026年10月工业生产者出厂价格同比上涨5.7%" data-link="https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965794.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:7c0e35a3eee519ffe8ae38ca&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;2026年10月工业生产者出厂价格同比上涨5.7%&quot;,&quot;url&quot;:&quot;https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965794.html&quot;,&quot;one_liner&quot;:&quot;10月全国工业生产者出厂价格同比涨5.7%，环比涨0.7%；购进价格同比涨7.9%。前10月平均出厂价格涨2.7%。&quot;,&quot;category&quot;:&quot;国家统计局发布&quot;,&quot;published&quot;:&quot;2026-11-09T01:30:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1176,8 +1177,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">8小时前</span>
+    
+    <span class="pub-time">12小时前</span>
     <button class="share-btn" title="复制分享" data-text="智能家居设备应当支持无网络离线运行" data-link="https://docodethatmatters.com/home-automation-overnight-success/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ad37f01e7042126508e00f2c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;智能家居设备应当支持无网络离线运行&quot;,&quot;url&quot;:&quot;https://docodethatmatters.com/home-automation-overnight-success/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 15:25:20 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50441707&quot;,&quot;title_en&quot;:&quot;Smart home devices should work without the internet&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1191,8 +1192,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text=".name域名进入存量维护期" data-link="https://neil.fraser.name/news/2026/11/10/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:cd5db2ceb26272766f7cd4f7&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;.name域名进入存量维护期&quot;,&quot;url&quot;:&quot;https://neil.fraser.name/news/2026/11/10/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:37:44 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50442736&quot;,&quot;title_en&quot;:&quot;.name Grandfathered&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1206,13 +1207,13 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">11小时前</span>
+    
+    <span class="pub-time">15小时前</span>
     <button class="share-btn" title="复制分享" data-text="AlphaProof 代码" data-link="https://deepmind.google/blog/introducing-alphaproof-code/" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f321c904268bcef29356d2d1&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;AlphaProof 代码&quot;,&quot;url&quot;:&quot;https://deepmind.google/blog/introducing-alphaproof-code/&quot;,&quot;one_liner&quot;:&quot;Pushmeet Kohli 与 Swarat Chaudhuri：Google DeepMind 的研究人员如何构建了一个全新的智能体框架，对 Signal 加密协议的代码进行了形式化验证——这长期以来被视为一项宏大的……&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 12:11:12 GMT&quot;,&quot;reading_excerpt&quot;:&quot;Pushmeet Kohli 与 Swarat Chaudhuri：Google DeepMind 的研究人员如何构建了一个全新的智能体框架，对 Signal 加密协议的代码进行了形式化验证——这长期以来被视为一项宏大的……&quot;,&quot;reading_source&quot;:&quot;公开原文 · 中文摘译&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50439193&quot;,&quot;title_en&quot;:&quot;AlphaProof Code&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f321c904268bcef29356d2d1&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;AlphaProof 代码&quot;,&quot;url&quot;:&quot;https://deepmind.google/blog/introducing-alphaproof-code/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 12:11:12 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50439193&quot;,&quot;title_en&quot;:&quot;AlphaProof Code&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">Pushmeet Kohli 与 Swarat Chaudhuri：Google DeepMind 的研究人员如何构建了一个全新的智能体框架，对 Signal 加密协议的代码进行了形式化验证——这长期以来被视为一项宏大的……</p><p class="news-excerpt-label">依据 · 公开原文 · 中文摘译</p><p class="news-excerpt-label">HN · 552 积分 · 173 条评论</p><div class="community-source-links"><a href="https://deepmind.google/blog/introducing-alphaproof-code/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50439193" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 552 积分 · 173 条评论</p><div class="community-source-links"><a href="https://deepmind.google/blog/introducing-alphaproof-code/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50439193" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-1eda7dcd703bb1221c0e" data-id="1eda7dcd703bb1221c0e" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">Blender 5.3发布，支持高斯泼溅渲染</div>
   
@@ -1221,8 +1222,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">7小时前</span>
+    
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="Blender 5.3发布，支持高斯泼溅渲染" data-link="https://www.blender.org/download/releases/5-3/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e1d675fcada1f4831474bcf9&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Blender 5.3发布，支持高斯泼溅渲染&quot;,&quot;url&quot;:&quot;https://www.blender.org/download/releases/5-3/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:15:43 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50442426&quot;,&quot;title_en&quot;:&quot;Blender 5.3 released with Gaussian Splat support&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1236,8 +1237,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">13小时前</span>
+    
+    <span class="pub-time">17小时前</span>
     <button class="share-btn" title="复制分享" data-text="观点：使用AI辅助开发或导致代码库变得脆弱" data-link="https://evanxmerz.com/post/ai-usage-generates-a-fragile-codebase/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:1a0c6447ab6c6af53def6a09&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;观点：使用AI辅助开发或导致代码库变得脆弱&quot;,&quot;url&quot;:&quot;https://evanxmerz.com/post/ai-usage-generates-a-fragile-codebase/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 10:25:58 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50438318&quot;,&quot;title_en&quot;:&quot;AI usage generates a fragile codebase&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1251,8 +1252,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    
+    <span class="pub-time">10小时前</span>
     <button class="share-btn" title="复制分享" data-text="云开发平台Val Town宣布正逐步关停服务" data-link="https://blog.val.town/winding-down" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:86eadbab0d2e1b36bae6e12e&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;云开发平台Val Town宣布正逐步关停服务&quot;,&quot;url&quot;:&quot;https://blog.val.town/winding-down&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 17:31:14 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50443427&quot;,&quot;title_en&quot;:&quot;Val Town is winding down&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1276,8 +1277,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#1e40af;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#1e40af18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;Bloomberg</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="预计部分华尔街员工奖金将增长30%" data-link="https://www.bloomberg.com/news/videos/2026-11-10/wall-street-bonuses-expected-to-rise-by-30-for-some-video" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e5e290f055d1b5f00b3ff241&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;预计部分华尔街员工奖金将增长30%&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/videos/2026-11-10/wall-street-bonuses-expected-to-rise-by-30-for-some-video&quot;,&quot;one_liner&quot;:&quot;预计今年华尔街奖金将增加。Johnson Associates的克里斯·康纳斯在彭博Open Interest节目中对此进行了解析。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:39:38 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1291,8 +1292,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">7小时前</span>
+    
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="法国警方称已针对穆罕默德·法耶德案展开逮捕行动" data-link="https://www.bbc.co.uk/news/articles/ck1wvwyrd4ywo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:119606f9f2d23278fac83294&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;法国警方称已针对穆罕默德·法耶德案展开逮捕行动&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/ck1wvwyrd4ywo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;巴黎丽兹酒店等属于法耶德家族的物业已遭警方搜查。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:19:48 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1306,8 +1307,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
     
     
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
-    <span class="pub-time">8小时前</span>
+    
+    <span class="pub-time">12小时前</span>
     <button class="share-btn" title="复制分享" data-text="“做好准备”运动启动后，罐头食品与瓶装水销量激增" data-link="https://www.bbc.co.uk/news/articles/cqev3vl4ek33o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:d1b26a44517374ef6901d0bd&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;“做好准备”运动启动后，罐头食品与瓶装水销量激增&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqev3vl4ek33o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;政府呼吁家庭为紧急情况做好准备后，洗手液等必需品销量大增。&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 15:10:20 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1321,8 +1322,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">10小时前</span>
+    
+    <span class="pub-time">14小时前</span>
     <button class="share-btn" title="复制分享" data-text="金属提取工艺的演变" data-link="https://www.technologyreview.com/2026/11/10/1147726/evolving-metal-extraction-processes/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:383fec097ec1fefd9cdc834a&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;金属提取工艺的演变&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/10/1147726/evolving-metal-extraction-processes/&quot;,&quot;one_liner&quot;:&quot;金属工业曾经历多次转型时刻：如贝塞麦转炉炼钢法、闪速熔炼和电弧炉等。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 13:00:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1336,8 +1337,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
     
     
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
-    <span class="pub-time">13小时前</span>
+    
+    <span class="pub-time">17小时前</span>
     <button class="share-btn" title="复制分享" data-text="金·卡戴珊品牌Skims就148美元降临节日历引发争议致歉并退款" data-link="https://www.bbc.co.uk/news/articles/cqp8g8p53x6ko?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ac4a43aa846ccf44f1d0ca04&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;金·卡戴珊品牌Skims就148美元降临节日历引发争议致歉并退款&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqp8g8p53x6ko?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;因日历内含的发夹和钥匙扣等产品质量引发社交媒体广泛批评，Skims宣布提供退款。&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:57:49 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1351,8 +1352,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 财经</span>
     
     
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
-    <span class="pub-time">14小时前</span>
+    
+    <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="BBC 财经报道：费萨尔·伊斯兰：英伟达CEO向我谈及中国与国家安全" data-link="https://www.bbc.co.uk/news/articles/c64g1gzy2vdzo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:9d5d87a4a4770378b68b3b55&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;BBC 财经报道：费萨尔·伊斯兰：英伟达CEO向我谈及中国与国家安全&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/c64g1gzy2vdzo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 09:23:55 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1366,8 +1367,8 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#7c3aed;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7c3aed18;border-radius:999px;padding:1px 7px;">🎓&thinsp;Stanford SEP</span>
     
     
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">22小时前</span>
+    
+    <span class="pub-time">昨天 01:10</span>
     <button class="share-btn" title="复制分享" data-text="亚里士多德心理学" data-link="https://plato.stanford.edu/entries/aristotle-psychology/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:24492dd48548c17409f96800&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;亚里士多德心理学&quot;,&quot;url&quot;:&quot;https://plato.stanford.edu/entries/aristotle-psychology/&quot;,&quot;one_liner&quot;:&quot;克里斯托弗·希尔兹于2026年11月9日修订的条目，涵盖正文、参考书目及附注更新。&quot;,&quot;category&quot;:&quot;Stanford SEP&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 17:10:33 -0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1381,7 +1382,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span>
     
     
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
+    
     <span class="pub-time">昨天 19:35</span>
     <button class="share-btn" title="复制分享" data-text="分析称针对数据中心的反弹其本质可能只是电力问题" data-link="https://www.technologyreview.com/2026/11/09/1148194/the-backlash-about-data-centers-might-really-just-be-about-electricity/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a0dbf5e97194380291567d53&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;分析称针对数据中心的反弹其本质可能只是电力问题&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/09/1148194/the-backlash-about-data-centers-might-really-just-be-about-electricity/&quot;,&quot;one_liner&quot;:&quot;本文原载于AI周刊《算法》。如需抢先接收此类报道，请订阅邮件通讯。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 19:35:33 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1396,7 +1397,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span>
     
     
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
+    
     <span class="pub-time">昨天 13:00</span>
     <button class="share-btn" title="复制分享" data-text="特种化学品行业的人工智能创新实践" data-link="https://www.technologyreview.com/2026/11/09/1147654/innovating-with-ai-in-the-special-chemicals-industry/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f2fd344bf7be2cb6a6e37ae4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;特种化学品行业的人工智能创新实践&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/09/1147654/innovating-with-ai-in-the-special-chemicals-industry/&quot;,&quot;one_liner&quot;:&quot;企业正寻求利用人工智能、云计算和先进建模技术加速创新，相关议题备受关注。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 13:00:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1411,7 +1412,7 @@ function shareCard(btn) {
     <span style="font-size:10px;color:#7c3aed;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7c3aed18;border-radius:999px;padding:1px 7px;">🎓&thinsp;Stanford SEP</span>
     
     
-    <span style="font-size:9px;color:#94a3b8;font-family:sans-serif;">持续1天</span>
+    
     <span class="pub-time">昨天 06:27</span>
     <button class="share-btn" title="复制分享" data-text="中世纪实践理性理论" data-link="https://plato.stanford.edu/entries/practical-reason-med/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:1f92bdb5b49658433db9339e&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中世纪实践理性理论&quot;,&quot;url&quot;:&quot;https://plato.stanford.edu/entries/practical-reason-med/&quot;,&quot;one_liner&quot;:&quot;安东尼·塞拉诺于2026年11月8日修订该条目，更新了正文及参考文献，探讨中世纪道德理论。&quot;,&quot;category&quot;:&quot;Stanford SEP&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 22:27:11 -0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
@@ -1424,7 +1425,8 @@ function shareCard(btn) {
     </main>
 
     <!-- Sidebar (desktop only) -->
-    <aside class="sidebar"><section class="sidebar-block reading-route" id="reading-route" tabindex="-1" aria-labelledby="reading-route-title">
+    <aside class="sidebar">
+  <section class="sidebar-block reading-route" id="reading-route" tabindex="-1" aria-labelledby="reading-route-title">
 <div class="heat-header"><span id="reading-route-title">今日阅读路线</span><span class="rr-edition">11.11</span></div>
 <div class="rr-body"><div class="rr-budgets" role="group" aria-label="今天的阅读时间"><button type="button" data-budget="10" aria-pressed="false">10 分钟</button><button type="button" data-budget="20" aria-pressed="true">20 分钟</button><button type="button" data-budget="30" aria-pressed="false">30 分钟</button></div>
 <p class="rr-estimate" id="rr-estimate">这条路线约 18 分钟</p>
@@ -1432,7 +1434,7 @@ function shareCard(btn) {
 <p class="rr-progress" id="rr-progress" aria-live="polite"></p>
 <p class="rr-status" id="rr-status" role="status"></p>
 <a id="rr-previous" class="rr-previous" hidden></a>
-<p class="rr-note">时间为估算。进度由你勾选，近 14 天记录保存在此浏览器。</p>
+<p class="rr-note">时间为估算。进度由你勾选，最近 14 期路线记录保存在此浏览器。</p>
 </div></section>
   <!-- AI 研报简报 -->
   <div class="sidebar-block ai-sidebar">
@@ -1447,12 +1449,7 @@ function shareCard(btn) {
   <!-- 经济日历 -->
   
   <!-- 持续追踪 -->
-  <div class="sidebar-block">
-  <div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">
-    <span>持续追踪</span>
-  </div>
-  <div style="padding:4px 0;"><a href="https://www.cnbc.com/2026/11/10/us-bonds-treasurys-yields.html" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:11px;color:var(--text3);font-family:sans-serif;min-width:28px;" title="首次收录距今的天数">84天</span><span class="ai-paper-title" title="CNBC · 受通胀数据及沃勒评论影响，10年期美债收益率重回5%并推高加息预期">CNBC · 受通胀数据及沃勒评论影响，10年期美债收益率重回5%并推高加息预期</span></a><a href="https://www.nytimes.com/2026/11/10/business/economy/inflation-economy-cpi.html" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:11px;color:var(--text3);font-family:sans-serif;min-width:28px;" title="首次收录距今的天数">60天</span><span class="ai-paper-title" title="NYT 财经 · 高通胀持续对美联储施加加息压力">NYT 财经 · 高通胀持续对美联储施加加息压力</span></a><a href="https://www.bbc.co.uk/news/articles/cwy8lx3pg4k2o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-icon" style="font-size:11px;color:var(--text3);font-family:sans-serif;min-width:28px;" title="首次收录距今的天数">27天</span><span class="ai-paper-title" title="BBC 财经 · 美国10月通胀高于预期，物价上涨原因分析">BBC 财经 · 美国10月通胀高于预期，物价上涨原因分析</span></a></div>
-</div>
+  
 </aside>
 
   </div>
@@ -1466,7 +1463,7 @@ function shareCard(btn) {
     <div class="footer-note">
       简报 Jae Daily · AI 辅助整理 · 2026年11月11日 ·
       <span>内容请以原始来源为准</span>
-      <div class="quality-note">新闻筛选：本地评分 + AI 精筛边界条目 (80 条复核)</div>
+      <div class="quality-note">新闻筛选：本地评分兜底 · 阈值 58</div>
     </div>
   </div>
 
@@ -1502,8 +1499,7 @@ function shareCard(btn) {
   window.addEventListener('pageshow',sync);
   bind();
 })();
-</script>
-<script id="reading-route-data" type="application/json">{"edition":"2026-11-11","tasks":[{"id":"news:0165e1d1d937d9895b38","title":"美国加州否决对该州亿万富翁征收财富税的提案","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261111.html#card-0165e1d1d937d9895b38"},{"id":"paper:paper-2611-08264","title":"SplatAnything：面向任意场景前馈3DGS的高斯间距归一化","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261111-e7bf925228e5.html#paper-2611-08264"},{"id":"learn:20261111:d91b096e9386","title":"语音增强基础","kind":"learn","label":"基础课完整主线","minutes":13,"url":"/learn-20261111.html#lesson-core"},{"id":"health:20261111:health-cold-no-antibiotics","title":"感冒：别把抗生素当标配","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261111.html#health-today"}],"routes":[{"budget":10,"ids":["news:0165e1d1d937d9895b38","paper:paper-2611-08264","health:20261111:health-cold-no-antibiotics"]},{"budget":20,"ids":["news:0165e1d1d937d9895b38","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]},{"budget":30,"ids":["news:0165e1d1d937d9895b38","paper:paper-2611-08264","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]}]}</script><script>
+</script><script id="reading-route-data" type="application/json">{"edition":"2026-11-11","tasks":[{"id":"news:0165e1d1d937d9895b38","title":"美国加州否决对该州亿万富翁征收财富税的提案","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261111.html#card-0165e1d1d937d9895b38"},{"id":"paper:paper-2611-08264:52ffed71b6b0","title":"SplatAnything：面向任意场景前馈3DGS的高斯间距归一化","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261111-52ffed71b6b0.html#paper-2611-08264"},{"id":"learn:20261111:d91b096e9386","title":"语音增强基础","kind":"learn","label":"基础课完整主线","minutes":13,"url":"/learn-20261111.html#lesson-core"},{"id":"health:20261111:health-cold-no-antibiotics","title":"感冒：别把抗生素当标配","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261111.html#health-today"}],"routes":[{"budget":10,"ids":["news:0165e1d1d937d9895b38","paper:paper-2611-08264:52ffed71b6b0","health:20261111:health-cold-no-antibiotics"]},{"budget":20,"ids":["news:0165e1d1d937d9895b38","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]},{"budget":30,"ids":["news:0165e1d1d937d9895b38","paper:paper-2611-08264:52ffed71b6b0","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]}]}</script><script>
 (() => {
   const panel = document.getElementById('reading-route');
   const source = document.getElementById('reading-route-data');
@@ -1517,6 +1513,7 @@ function shareCard(btn) {
   const progress = document.getElementById('rr-progress');
   const status = document.getElementById('rr-status');
   const previous = document.getElementById('rr-previous');
+  function makeReadingRouteStore() {
   const KEY = 'jd_reading_route_v1';
   const validId = value => typeof value === 'string' && /^[A-Za-z0-9:_.-]{1,180}$/.test(value);
   const validDate = value => typeof value === 'string' && /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value) &&
@@ -1537,6 +1534,18 @@ function shareCard(btn) {
     try { return cleanPlans(JSON.parse(localStorage.getItem(KEY) || 'null')); }
     catch (_) { return {}; }
   }
+  function write(plans) {
+    const clean = cleanPlans({schema: 1, plans});
+    const retained = Object.fromEntries(Object.entries(clean).sort(([a], [b]) => b.localeCompare(a)).slice(0, 14));
+    localStorage.setItem(KEY, JSON.stringify({schema: 1, plans: retained}));
+    return retained;
+  }
+  return {read, write, validId, validDate};
+}
+
+  const KEY = 'jd_reading_route_v1';
+  const store = makeReadingRouteStore();
+  const read = () => store.read();
   let plans = read();
   let memoryOnly = false;
   const defaultBudget = config.routes.some(route => route.budget === 20) ? 20 : config.routes[0].budget;
@@ -1552,10 +1561,9 @@ function shareCard(btn) {
   function selectedRoute() { return config.routes.find(route => route.budget === budget); }
   function persist() {
     plans[config.edition] = {budget, done: [...done], requiredIds: [...selectedRoute().ids]};
-    plans = Object.fromEntries(Object.entries(plans).sort(([a], [b]) => b.localeCompare(a)).slice(0, 14));
     try {
-      localStorage.setItem(KEY, JSON.stringify({schema: 1, plans}));
-      memoryOnly = false;
+      plans = store.write(plans);
+      memoryOnly = !plans[config.edition];
     } catch (_) { memoryOnly = true; }
     changedManifest = false;
   }
@@ -1593,6 +1601,18 @@ function shareCard(btn) {
       top.append(button);
       const link = node('a', 'rr-task-link', task.title);
       link.href = task.url;
+      link.addEventListener('click', () => {
+        try {
+          const observed = store.read()[config.edition];
+          sessionStorage.setItem('jd_reading_route_intent_v1', JSON.stringify({
+            schema: 1, edition: config.edition, budget,
+            observedPlan: observed ? {budget: observed.budget, requiredIds: [...observed.requiredIds]} : null,
+            requiredIds: [...selectedRoute().ids],
+            task: {id: task.id, title: task.title, label: task.label, url: task.url},
+            returnUrl: '/archive/' + config.edition.replaceAll('-', '') + '.html#reading-route'
+          }));
+        } catch (_) { /* Reading remains available when session storage is blocked. */ }
+      });
       row.append(top, link);
       list.append(row);
     });
@@ -1631,5 +1651,6 @@ function shareCard(btn) {
   restore();
   render();
 })();
-</script></body>
+</script>
+</body>
 </html>
