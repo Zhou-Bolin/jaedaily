@@ -246,7 +246,7 @@ body.has-reading-context{padding-bottom:145px}
     return {excerpt:'',source:''};
   }
   function appendArticleReading(card,item,preview){
-    if(preview.excerpt&&/[\u3400-\u9fff]/.test(preview.excerpt)){
+    if(preview.excerpt&&preview.excerpt!==shortText(item.article_review_summary,600)&&/[\u3400-\u9fff]/.test(preview.excerpt)){
       const fold=node('details','saved-preview');
       fold.append(node('summary','','已保存的中文速读'),node('p','',preview.excerpt),
         node('p','saved-preview-source',preview.source+' · 摘要'));
@@ -260,6 +260,21 @@ body.has-reading-context{padding-bottom:145px}
     const link=node('a','saved-reader-link','阅读或保存中文版 ↗');
     link.href=READER_ORIGIN+'/#'+encodeURIComponent(JSON.stringify(request));
     link.target='_blank';link.rel='noopener noreferrer';card.append(link);
+  }
+  function appendArticleReview(card,item){
+    const summary=shortText(item.article_review_summary,600), value=shortText(item.article_review_value,600), caveat=shortText(item.article_review_caveat,600);
+    if(!summary&&!value&&!caveat)return;
+    const fold=node('details','saved-preview saved-article-review'), held=item.article_review_verdict==='hold';
+    fold.append(node('summary','',held?'收藏时的 AI 初审 · 建议暂缓':'收藏时的 AI 初审'));
+    if(summary)fold.append(node('p','','主要内容：'+summary));
+    if(value)fold.append(node('p','',(held?'暂缓理由：':'选读理由：')+value));
+    if(caveat)fold.append(node('p','','局限与范围：'+caveat));
+    fold.append(node('p','saved-preview-source',shortText(item.article_review_scope,400)||'AI初审；基于有界正文节选，未经独立事实核验。'));
+    const source=safeUrl(item.article_review_source_url);
+    if(source&&/^https?:\/\//i.test(source)&&source===safeUrl(item.url)){
+      const link=node('a','','初审对应原文 ↗');link.href=source;link.target='_blank';link.rel='noopener noreferrer';fold.append(link);
+    }
+    card.append(fold);
   }
   const validContentVersion = value => typeof value==='string' && /^[a-f0-9]{12,64}$/.test(value);
   function paperUpdate(id, readingUrl){
@@ -308,7 +323,7 @@ body.has-reading-context{padding-bottom:145px}
     const all=Object.entries(read()).filter(([,v])=>v&&typeof v==='object'&&!Array.isArray(v));
     const terms=query.value.normalize('NFKC').trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
     const matches=all.filter(([,p])=>{
-      const text=[p.title_zh,p.title_en,p.one_liner,p.reading_excerpt,p.topic,p.category].join(' ').normalize('NFKC').toLocaleLowerCase();
+      const text=[p.title_zh,p.title_en,p.one_liner,p.reading_excerpt,p.article_review_summary,p.article_review_value,p.article_review_caveat,p.article_review_scope,p.topic,p.category].join(' ').normalize('NFKC').toLocaleLowerCase();
       return (kind==='all'||type(p)===kind)&&terms.every(term=>text.includes(term));
     });
     matches.sort((a,b)=>String(b[1].saved_at||'').localeCompare(String(a[1].saved_at||'')));
@@ -328,7 +343,7 @@ body.has-reading-context{padding-bottom:145px}
       const preview=contentType==='article'?readingPreview(p):null;
       if(p.one_liner&&!summaryOnly(p)&&!(preview&&/[\u3400-\u9fff]/.test(preview.excerpt)))card.append(node('p','saved-desc',String(p.one_liner)));
       else if(p.title_en&&p.title_en!==p.title_zh)card.append(node('p','saved-desc',String(p.title_en)));
-      if(preview)appendArticleReading(card,p,preview);
+      if(preview){appendArticleReview(card,p);appendArticleReading(card,p,preview);}
       if(readingUrl){
         const actions=node('div','saved-paper-actions'), review=node('a','saved-paper-review','回看当期解读');
         review.href=readingUrl;actions.append(review);
@@ -373,6 +388,10 @@ body.has-reading-context{padding-bottom:145px}
             if(source)value.reading_source=source;
             if(discussion)value.discussion_url=discussion;
             if(item.reading_summary_only===true)value.reading_summary_only=true;
+            ['summary','value','caveat','scope'].forEach(key=>{const text=shortText(item['article_review_'+key],key==='scope'?400:600);if(text)value['article_review_'+key]=text;});
+            if(['read','hold'].includes(item.article_review_verdict))value.article_review_verdict=item.article_review_verdict;
+            const reviewSource=safeUrl(item.article_review_source_url);
+            if(reviewSource&&reviewSource.length<=4096&&/^https?:\/\//i.test(reviewSource)&&reviewSource===safeUrl(item.url))value.article_review_source_url=reviewSource;
           }
           if(type(value)==='paper'){
             const readingUrl=paperReadingUrl(item.reading_url,id);
