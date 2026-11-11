@@ -602,37 +602,6 @@ body.dark .brand-mark{mix-blend-mode:normal}
   document.documentElement.style.setProperty('--fs', fs + 'px');
 })();
 </script>
-<style id="reading-route-style">
-.reading-route .heat-header{display:flex;justify-content:space-between;align-items:center}
-.rr-edition{font:11px/1.5 ui-monospace,monospace;opacity:.8}
-.rr-body{padding:11px 13px 10px}
-.rr-budgets{display:flex;gap:5px}
-.rr-budgets button{flex:1;border:1px solid var(--jd-line);background:var(--jd-paper);color:var(--jd-muted);padding:5px 3px;cursor:pointer;font:12px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;border-radius:2px}
-.rr-budgets button[aria-pressed=true]{background:var(--jd-wine-soft);border-color:var(--jd-wine);color:var(--jd-wine)}
-.rr-estimate{font-size:12px;color:var(--jd-muted);margin:8px 0 3px}
-.rr-tasks{list-style:none;padding:0;margin:0;counter-reset:route-step}
-.rr-tasks li{position:relative;border-bottom:1px solid var(--jd-line);padding:9px 0 10px 23px;counter-increment:route-step}
-.rr-tasks li::before{content:counter(route-step,decimal-leading-zero);position:absolute;left:0;top:9px;font:11px/1.7 ui-monospace,monospace;color:var(--jd-wine)}
-.rr-task-meta{font-size:10px;color:var(--jd-muted);line-height:1.6;margin-bottom:4px}
-.rr-task-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
-.rr-task-top .rr-task-meta{margin:0 0 3px}
-.rr-task-link{display:block;font-size:13px;line-height:1.65;color:var(--jd-ink);text-decoration:none;overflow-wrap:anywhere}
-.rr-task-link:hover{color:var(--jd-wine);text-decoration:underline;text-underline-offset:3px}
-.rr-done{flex:none;font:11px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;padding:1px 5px;border:1px solid var(--jd-line);border-radius:2px;background:var(--jd-paper);color:var(--jd-muted);cursor:pointer}
-.rr-done[aria-pressed=true]{color:var(--jd-wine);border-color:var(--jd-gold-line);background:var(--jd-wine-soft)}
-.rr-tasks li[data-complete=true]::before{content:"✓";font-size:13px}
-.rr-tasks li[data-complete=true] .rr-task-link{color:var(--jd-muted)}
-.rr-progress{font-size:12px;line-height:1.6;margin:9px 0 0;color:var(--jd-wine);font-variant-numeric:tabular-nums}
-.rr-progress[data-finished=true]{padding:7px 9px;border-left:2px solid var(--jd-wine);background:var(--jd-wine-soft)}
-.rr-note,.rr-status{font-size:11px;line-height:1.7;color:var(--jd-muted);margin:7px 0 0}
-.rr-status:empty,.rr-progress:empty{display:none}
-.rr-previous{display:inline-block;margin-top:8px;font-size:12px;color:var(--jd-wine);text-underline-offset:3px}
-.reading-route [hidden]{display:none!important}
-@media(prefers-reduced-motion:no-preference){
-  .rr-progress[data-finished=true]{animation:rr-finish .45s ease-out}
-  @keyframes rr-finish{from{opacity:.3;transform:translateY(3px)}to{opacity:1;transform:none}}
-}
-</style>
 </head>
 <body class="theme-wed">
 <script>
@@ -799,7 +768,7 @@ function shareCard(btn) {
       <span class="mast-strip-sep">·</span>
       <span class="mast-strip-item">AI 辅助整理</span>
     </div>
-    <details class="edition-coverage"><summary>本版生成 <time datetime="2026-11-11T14:06+08:00">北京时间 11月11日 14:06</time> <span class="edition-coverage-status">· 4 个来源待补抓</span></summary><div class="edition-coverage-body"><p>来源检查截至 11月11日 13:49 · 沿用已有结果 50 个来源 · 本次补抓成功 10 个来源</p><p>范围为本期配置的新闻 RSS 与官方栏目。</p><dl><div><dt>待补抓 · 4 个</dt><dd>Reuters、AP、虎嗅、NIH Health</dd></div><div><dt>检查成功，暂无可用条目 · 5 个</dt><dd>新华社、环球时报、中国军网、MedlinePlus、中国政府网</dd></div><div><dt>抓到可用条目 · 55 个</dt><dd>BBC 国际、BBC 财经、FT、Bloomberg、NYT 国际、NYT 财经、CNBC、The Guardian、France 24、Sky News、El País、El Mundo、Al Jazeera、Middle East Eye、Japan Times、Yonhap、SCMP、The Hindu、RT、TASS、中国新闻网、CGTN 中国、CGTN 国际、CGTN 财经、RTHK 本地、RTHK 国际、Politico EU、MIT Tech Review、The Verge、Wired、Ars Technica、TechCrunch、Defense.gov、RUSI、War on the Rocks、Game Developer、Stanford SEP、Aeon、Paris Review、Artforum、Smithsonian、科技日报、中科院科研进展、教育部工作动态、中新网社会、中新网教育、国家统计局发布、人民网高层动态、人民网国际、人民网财经、人民网军事、新华网国际、新华网科技、央视新闻中国、央视新闻国际</dd></div></dl></div></details>
+    <details class="edition-coverage"><summary>本版生成 <time datetime="2026-11-11T20:18+08:00">北京时间 11月11日 20:18</time> <span class="edition-coverage-status">· 4 个来源待补抓</span></summary><div class="edition-coverage-body"><p>来源检查截至 11月11日 20:11 · 沿用已有结果 60 个来源</p><p>范围为本期配置的新闻 RSS 与官方栏目。</p><dl><div><dt>待补抓 · 4 个</dt><dd>Reuters、AP、虎嗅、NIH Health</dd></div><div><dt>检查成功，暂无可用条目 · 5 个</dt><dd>新华社、环球时报、中国军网、MedlinePlus、中国政府网</dd></div><div><dt>抓到可用条目 · 55 个</dt><dd>BBC 国际、BBC 财经、FT、Bloomberg、NYT 国际、NYT 财经、CNBC、The Guardian、France 24、Sky News、El País、El Mundo、Al Jazeera、Middle East Eye、Japan Times、Yonhap、SCMP、The Hindu、RT、TASS、中国新闻网、CGTN 中国、CGTN 国际、CGTN 财经、RTHK 本地、RTHK 国际、Politico EU、MIT Tech Review、The Verge、Wired、Ars Technica、TechCrunch、Defense.gov、RUSI、War on the Rocks、Game Developer、Stanford SEP、Aeon、Paris Review、Artforum、Smithsonian、科技日报、中科院科研进展、教育部工作动态、中新网社会、中新网教育、国家统计局发布、人民网高层动态、人民网国际、人民网财经、人民网军事、新华网国际、新华网科技、央视新闻中国、央视新闻国际</dd></div></dl></div></details>
   </div>
 
   <div class="daily-nav-wrap"><a class="jd-skip-link" href="#main-content">跳到正文</a><nav class="brand-nav" aria-label="栏目导航"><a aria-current="page" href="latest.html">每日简报</a><a href="ai-digest.html">论文研报</a><a href="learn.html">每日一课</a><a href="advanced.html">进阶课堂</a><a href="health.html">健康学堂</a><a href="favorites.html">收藏</a><a href="archive/">往期</a></nav>
@@ -818,36 +787,36 @@ function shareCard(btn) {
     <main id="main-content" tabindex="-1" class="main-col">
       <div class="filter-bar" id="filter-bar" role="group" aria-label="新闻分类"><button type="button" class="filter-chip active" data-sec="all" aria-pressed="true" onclick="filterSec(this,'all',true)">全部</button><button type="button" class="filter-chip" data-sec="finance" aria-pressed="false" onclick="filterSec(this,'finance',true)">财经</button><button type="button" class="filter-chip" data-sec="tech" aria-pressed="false" onclick="filterSec(this,'tech',true)">科技</button><button type="button" class="filter-chip" data-sec="politics" aria-pressed="false" onclick="filterSec(this,'politics',true)">政治</button><button type="button" class="filter-chip" data-sec="china" aria-pressed="false" onclick="filterSec(this,'china',true)">中国</button><button type="button" class="filter-chip" data-sec="forum" aria-pressed="false" onclick="filterSec(this,'forum',true)">社区</button><button type="button" class="filter-chip" data-sec="other" aria-pressed="false" onclick="filterSec(this,'other',true)">其他</button></div>
       
-      <div class="ep-section"><div class="ep-header"><span class="ep-header-title">今日选读</span><span class="ep-header-sub">摘录报道要点，保留原文出处</span></div><div class="ep-grid"><div class="ep-card"><div class="ep-num" aria-hidden="true">01</div><div class="ep-body"><article class="news-card featured-story" id="card-16841831ef955c4fdd4e" data-id="16841831ef955c4fdd4e" tabindex="-1" style="scroll-margin-top:80px;">
-  <div class="card-title">中国在加拿大成功发行40亿元人民币绿色主权债券</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#0f766e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f766e18;border-radius:999px;padding:1px 7px;">🇭🇰&thinsp;RTHK 国际</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">8小时前</span>
-    <button class="share-btn" title="复制分享" data-text="中国在加拿大成功发行40亿元人民币绿色主权债券" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877326-20261111.htm" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:0437b3e9aef70dec62d487df&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中国在加拿大成功发行40亿元人民币绿色主权债券&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877326-20261111.htm&quot;,&quot;one_liner&quot;:&quot;财政部在加成功发行40亿元人民币绿色主权债券，3年期和5年期各20亿元，利率分别为1.4%和1.5%。 认购总额达540.4亿元，超额认购13.5倍。&quot;,&quot;category&quot;:&quot;RTHK 国际&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 05:24:22 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  <p class="news-excerpt-label">RTHK 国际 · 报道摘要 · AI 翻译</p><div class="ep-context">财政部在加成功发行40亿元人民币绿色主权债券，3年期和5年期各20亿元，利率分别为1.4%和1.5%。 认购总额达540.4亿元，超额认购13.5倍。</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877326-20261111.htm" class="read-link">→ 查看原文</a>
-  
-</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">02</div><div class="ep-body"><article class="news-card featured-story" id="card-3444ac2c837214252663" data-id="3444ac2c837214252663" tabindex="-1" style="scroll-margin-top:80px;">
+      <div class="ep-section"><div class="ep-header"><span class="ep-header-title">今日选读</span><span class="ep-header-sub">摘录报道要点，保留原文出处</span></div><div class="ep-grid"><div class="ep-card"><div class="ep-num" aria-hidden="true">01</div><div class="ep-body"><article class="news-card featured-story" id="card-3444ac2c837214252663" data-id="3444ac2c837214252663" tabindex="-1" style="scroll-margin-top:80px;">
   <div class="card-title">Anthropic上市首秀估值或达1.3万亿美元，低于预期</div>
   
   <div class="card-meta">
-    <span style="font-size:10px;font-family:sans-serif;font-weight:700;border-radius:3px;padding:1px 7px;letter-spacing:0.3px;background:#8a121228;color:#8a1212;border:1px solid #8a121260;">深读</span>
+    
     <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
     <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多媒体报道 · 3</span>
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">15小时前</span>
+    <span class="pub-time">21小时前</span>
     <button class="share-btn" title="复制分享" data-text="Anthropic上市首秀估值或达1.3万亿美元，低于预期" data-link="https://www.bbc.co.uk/news/articles/crpdgd723x2zo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:c67f8109386fc65fb9706b09&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Anthropic上市首秀估值或达1.3万亿美元，低于预期&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/crpdgd723x2zo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;开发Claude聊天机器人的AI公司Anthropic，计划以每股70至78美元的价格发售股票。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 14:46:50 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   <p class="news-excerpt-label">BBC 国际 · 报道摘要 · AI 翻译</p><div class="ep-context">开发Claude聊天机器人的AI公司Anthropic，计划以每股70至78美元的价格发售股票。</div><a href="https://www.bbc.co.uk/news/articles/crpdgd723x2zo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a>
   <details class="card-expand"><summary>延伸资料 · 2篇延伸报道</summary><div class="card-expand-body"><div class="related-row">· <span style="font-size:9px;color:#e1175e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e1175e18;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;The Verge</span> <span style="font-size:9px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;NYT 财经</span></div><ul class="news-related-links"><li><a href="https://www.theverge.com/ai-artificial-intelligence/1030703/anthropic-ipo-1-4-trillion" target="_blank" rel="noopener">The Verge：Anthropic targets $1.4 trillion IPO ↗</a></li><li><a href="https://www.nytimes.com/2026/11/10/technology/anthropic-ipo-valuation-share-price.html" target="_blank" rel="noopener">NYT 财经：Anthropic Targets Valuation of Up to $1.4 Trillion for Blockbuster I.P.O. ↗</a></li></ul></div></details>
+</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">02</div><div class="ep-body"><article class="news-card featured-story" id="card-e2b2f8a7e847108c0db8" data-id="e2b2f8a7e847108c0db8" tabindex="-1" style="scroll-margin-top:80px;">
+  <div class="card-title">马来西亚前总理纳吉布·拉扎克获释转为居家软禁</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;NYT 国际</span>
+    <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双媒体报道 · 2</span>
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">21小时前</span>
+    <button class="share-btn" title="复制分享" data-text="马来西亚前总理纳吉布·拉扎克获释转为居家软禁" data-link="https://www.nytimes.com/2026/11/10/world/asia/malaysia-najib-razak-1mdb-house-arrest.html" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:aae0becf0045f44c09f1e370&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;马来西亚前总理纳吉布·拉扎克获释转为居家软禁&quot;,&quot;url&quot;:&quot;https://www.nytimes.com/2026/11/10/world/asia/malaysia-najib-razak-1mdb-house-arrest.html&quot;,&quot;one_liner&quot;:&quot;因卷入数百亿美元一马公司丑闻而落马的马来西亚前总理纳吉布·拉扎克已出狱，将在其豪宅中服完剩余刑期。&quot;,&quot;category&quot;:&quot;NYT 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 14:22:53 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  <p class="news-excerpt-label">NYT 国际 · 报道摘要 · AI 翻译</p><div class="ep-context">因卷入数百亿美元一马公司丑闻而落马的马来西亚前总理纳吉布·拉扎克已出狱，将在其豪宅中服完剩余刑期。</div><a href="https://www.nytimes.com/2026/11/10/world/asia/malaysia-najib-razak-1mdb-house-arrest.html" class="read-link">→ 查看原文</a>
+  <details class="card-expand"><summary>延伸资料 · 1篇延伸报道</summary><div class="card-expand-body"><div class="related-row">· <span style="font-size:9px;color:#065f46;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#065f4618;border-radius:999px;padding:1px 7px;">🇶🇦&thinsp;Al Jazeera</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><ul class="news-related-links"><li><a href="https://www.aljazeera.com/video/newsfeed/2026/11/11/malaysias-ex-pm-transferred-to-house-arrest-for-1mdb-graft-sentence?traffic_source=rss" target="_blank" rel="noopener">Al Jazeera：Malaysia’s ex-PM transferred to house arrest for 1MDB graft sentence ↗</a></li></ul></div></details>
 </article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">03</div><div class="ep-body"><article class="news-card featured-story" id="card-86a597cb27bf322a6dcc" data-id="86a597cb27bf322a6dcc" tabindex="-1" style="scroll-margin-top:80px;">
   <div class="card-title">美国众议院成功阻挠针对赫格塞思弹劾案</div>
   
@@ -857,31 +826,31 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">12小时前</span>
     <button class="share-btn" title="复制分享" data-text="美国众议院成功阻挠针对赫格塞思弹劾案" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877338-20261111.htm" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:30464557e297fdeabd9b0f53&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国众议院成功阻挠针对赫格塞思弹劾案&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877338-20261111.htm&quot;,&quot;one_liner&quot;:&quot;共和党籍众议员发起对防长赫格塞思的弹劾动议，众议院以211对204票将其移交司法委员会审议以拖延推进。 赫格塞思批此举是针对特朗普的政治秀及宣泄个人不满。&quot;,&quot;category&quot;:&quot;RTHK 国际&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 07:51:03 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   <p class="news-excerpt-label">RTHK 国际 · 报道摘要 · AI 翻译</p><div class="ep-context">共和党籍众议员发起对防长赫格塞思的弹劾动议，众议院以211对204票将其移交司法委员会审议以拖延推进。 赫格塞思批此举是针对特朗普的政治秀及宣泄个人不满。</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877338-20261111.htm" class="read-link">→ 查看原文</a>
   
-</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">04</div><div class="ep-body"><article class="news-card featured-story" id="card-e2b2f8a7e847108c0db8" data-id="e2b2f8a7e847108c0db8" tabindex="-1" style="scroll-margin-top:80px;">
-  <div class="card-title">马来西亚前总理纳吉布·拉扎克获释转为居家软禁</div>
+</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">04</div><div class="ep-body"><article class="news-card featured-story" id="card-16841831ef955c4fdd4e" data-id="16841831ef955c4fdd4e" tabindex="-1" style="scroll-margin-top:80px;">
+  <div class="card-title">中国在加拿大成功发行40亿元人民币绿色主权债券</div>
   
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;NYT 国际</span>
-    <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#d97706;font-weight:600;">双媒体报道 · 2</span>
+    <span style="font-size:10px;color:#0f766e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f766e18;border-radius:999px;padding:1px 7px;">🇭🇰&thinsp;RTHK 国际</span>
+    
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">15小时前</span>
-    <button class="share-btn" title="复制分享" data-text="马来西亚前总理纳吉布·拉扎克获释转为居家软禁" data-link="https://www.nytimes.com/2026/11/10/world/asia/malaysia-najib-razak-1mdb-house-arrest.html" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:aae0becf0045f44c09f1e370&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;马来西亚前总理纳吉布·拉扎克获释转为居家软禁&quot;,&quot;url&quot;:&quot;https://www.nytimes.com/2026/11/10/world/asia/malaysia-najib-razak-1mdb-house-arrest.html&quot;,&quot;one_liner&quot;:&quot;因卷入数百亿美元一马公司丑闻而落马的马来西亚前总理纳吉布·拉扎克已出狱，将在其豪宅中服完剩余刑期。&quot;,&quot;category&quot;:&quot;NYT 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 14:22:53 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">14小时前</span>
+    <button class="share-btn" title="复制分享" data-text="中国在加拿大成功发行40亿元人民币绿色主权债券" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877326-20261111.htm" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:0437b3e9aef70dec62d487df&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中国在加拿大成功发行40亿元人民币绿色主权债券&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877326-20261111.htm&quot;,&quot;one_liner&quot;:&quot;财政部在加成功发行40亿元人民币绿色主权债券，3年期和5年期各20亿元，利率分别为1.4%和1.5%。 认购总额达540.4亿元，超额认购13.5倍。&quot;,&quot;category&quot;:&quot;RTHK 国际&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 05:24:22 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
-  <p class="news-excerpt-label">NYT 国际 · 报道摘要 · AI 翻译</p><div class="ep-context">因卷入数百亿美元一马公司丑闻而落马的马来西亚前总理纳吉布·拉扎克已出狱，将在其豪宅中服完剩余刑期。</div><a href="https://www.nytimes.com/2026/11/10/world/asia/malaysia-najib-razak-1mdb-house-arrest.html" class="read-link">→ 查看原文</a>
-  <details class="card-expand"><summary>延伸资料 · 1篇延伸报道</summary><div class="card-expand-body"><div class="related-row">· <span style="font-size:9px;color:#065f46;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#065f4618;border-radius:999px;padding:1px 7px;">🇶🇦&thinsp;Al Jazeera</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><ul class="news-related-links"><li><a href="https://www.aljazeera.com/video/newsfeed/2026/11/11/malaysias-ex-pm-transferred-to-house-arrest-for-1mdb-graft-sentence?traffic_source=rss" target="_blank" rel="noopener">Al Jazeera：Malaysia’s ex-PM transferred to house arrest for 1MDB graft sentence ↗</a></li></ul></div></details>
+  <p class="news-excerpt-label">RTHK 国际 · 报道摘要 · AI 翻译</p><div class="ep-context">财政部在加成功发行40亿元人民币绿色主权债券，3年期和5年期各20亿元，利率分别为1.4%和1.5%。 认购总额达540.4亿元，超额认购13.5倍。</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877326-20261111.htm" class="read-link">→ 查看原文</a>
+  
 </article></div></div></div></div>
       
       
-      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年11月11日</div><div class="slim-list"><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">财经 · RTHK 国际</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877326-20261111.htm" class="slim-title" target="_blank" rel="noopener">中国在加拿大成功发行40亿元人民币绿色主权债券</a><p class="slim-excerpt">财政部在加成功发行40亿元人民币绿色主权债券，3年期和5年期各20亿元，利率分别为1.4%和1.5%。 认购总额达540.4亿元，超额认购13.5倍。</p></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">科技 · BBC 国际</div><a href="https://www.bbc.co.uk/news/articles/crpdgd723x2zo?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">Anthropic上市首秀估值或达1.3万亿美元，低于预期</a><p class="slim-excerpt">开发Claude聊天机器人的AI公司Anthropic，计划以每股70至78美元的价格发售股票。</p></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">政治 · RTHK 国际</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877338-20261111.htm" class="slim-title" target="_blank" rel="noopener">美国众议院成功阻挠针对赫格塞思弹劾案</a><p class="slim-excerpt">共和党籍众议员发起对防长赫格塞思的弹劾动议，众议院以211对204票将其移交司法委员会审议以拖延推进。 赫格塞思批此举是针对特朗普的政治秀及宣泄个人不满。</p></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">政治 · NYT 国际</div><a href="https://www.nytimes.com/2026/11/10/world/asia/malaysia-najib-razak-1mdb-house-arrest.html" class="slim-title" target="_blank" rel="noopener">马来西亚前总理纳吉布·拉扎克获释转为居家软禁</a><p class="slim-excerpt">因卷入数百亿美元一马公司丑闻而落马的马来西亚前总理纳吉布·拉扎克已出狱，将在其豪宅中服完剩余刑期。</p></div></div></div></div>
+      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年11月11日</div><div class="slim-list"><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">科技 · BBC 国际</div><a href="https://www.bbc.co.uk/news/articles/crpdgd723x2zo?at_medium=RSS&amp;at_campaign=rss" class="slim-title" target="_blank" rel="noopener">Anthropic上市首秀估值或达1.3万亿美元，低于预期</a><p class="slim-excerpt">开发Claude聊天机器人的AI公司Anthropic，计划以每股70至78美元的价格发售股票。</p></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">政治 · NYT 国际</div><a href="https://www.nytimes.com/2026/11/10/world/asia/malaysia-najib-razak-1mdb-house-arrest.html" class="slim-title" target="_blank" rel="noopener">马来西亚前总理纳吉布·拉扎克获释转为居家软禁</a><p class="slim-excerpt">因卷入数百亿美元一马公司丑闻而落马的马来西亚前总理纳吉布·拉扎克已出狱，将在其豪宅中服完剩余刑期。</p></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">政治 · RTHK 国际</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877338-20261111.htm" class="slim-title" target="_blank" rel="noopener">美国众议院成功阻挠针对赫格塞思弹劾案</a><p class="slim-excerpt">共和党籍众议员发起对防长赫格塞思的弹劾动议，众议院以211对204票将其移交司法委员会审议以拖延推进。 赫格塞思批此举是针对特朗普的政治秀及宣泄个人不满。</p></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">财经 · RTHK 国际</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877326-20261111.htm" class="slim-title" target="_blank" rel="noopener">中国在加拿大成功发行40亿元人民币绿色主权债券</a><p class="slim-excerpt">财政部在加成功发行40亿元人民币绿色主权债券，3年期和5年期各20亿元，利率分别为1.4%和1.5%。 认购总额达540.4亿元，超额认购13.5倍。</p></div></div></div></div>
       
 <section class="news-section" id="politics">
   <div class="sec-header" style="color:#8a1212;">
@@ -899,7 +868,7 @@ function shareCard(btn) {
     <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多媒体报道 · 3</span>
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">21小时前</span>
+    <span class="pub-time">11-10 16:23</span>
     <button class="share-btn" title="复制分享" data-text="BBC 财经报道：特朗普称FBI正调查英伟达CEO与涉嫌中国间谍的绯闻" data-link="https://www.bbc.co.uk/news/articles/cqg7x7dpvym8o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:4a9293f6fb1874436e243f46&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;BBC 财经报道：特朗普称FBI正调查英伟达CEO与涉嫌中国间谍的绯闻&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqg7x7dpvym8o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 08:23:21 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -914,7 +883,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">1小时前</span>
+    <span class="pub-time">7小时前</span>
     <button class="share-btn" title="复制分享" data-text="乌克兰的自由必须得到捍卫" data-link="https://www.ft.com/content/64131ac1-a9bb-429b-b937-183a08f72bc6?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ecfde5114141327382e32a2d&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;乌克兰的自由必须得到捍卫&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/64131ac1-a9bb-429b-b937-183a08f72bc6?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;各地选举表明，在专制与民主的博弈冲突中，取得胜利至关重要。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 05:00:31 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -929,7 +898,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">1小时前</span>
+    <span class="pub-time">7小时前</span>
     <button class="share-btn" title="复制分享" data-text="法国就远程导弹核风险向德国施压" data-link="https://www.ft.com/content/7f61b561-bcbd-4900-afd7-553ff76d6217?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:839547e95f5a9c2eddfc5f1e&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;法国就远程导弹核风险向德国施压&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/7f61b561-bcbd-4900-afd7-553ff76d6217?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;巴黎要求柏林澄清何时会对俄罗斯使用“纵深精确打击”，以避免引发核报复。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 05:00:12 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -944,7 +913,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">12小时前</span>
     <button class="share-btn" title="复制分享" data-text="美众议院阻挠针对国防部长赫格塞思的弹劾案" data-link="https://www.ft.com/content/38100c3c-af0d-440b-8350-823c5e8c80d9?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:a397a471eeeeaa7efb9532ff&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美众议院阻挠针对国防部长赫格塞思的弹劾案&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/38100c3c-af0d-440b-8350-823c5e8c80d9?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;美国国会试图因伊朗战争指挥问题罢免现任国防部长赫格塞思的努力在首个关卡即告失败。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 00:01:42 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -959,7 +928,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">14小时前</span>
+    <span class="pub-time">20小时前</span>
     <button class="share-btn" title="复制分享" data-text="以色列新议会宣誓就职 各方竞相组建政府" data-link="https://www.bbc.co.uk/news/articles/crd939lpzjp9o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:79d2d8b7c1cd87ddbaaf828c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;以色列新议会宣誓就职 各方竞相组建政府&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/crd939lpzjp9o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;本雅明·内塔尼亚胡的主要政治对手加迪·埃森科特获得了率先组建新政府并罢免现任总理的机会。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 15:51:09 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -974,7 +943,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">15小时前</span>
+    <span class="pub-time">21小时前</span>
     <button class="share-btn" title="复制分享" data-text="美方称乌克兰和平谈判首日“富有成效”" data-link="https://www.bbc.co.uk/news/articles/cqpvgvrpjvv8o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:d3212160414aac1d2d3bc5a6&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美方称乌克兰和平谈判首日“富有成效”&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cqpvgvrpjvv8o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;来自基辅、华盛顿和莫斯科的代表团齐聚阿拉伯联合酋长国，举行今年2月以来的首次三方会谈。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 14:36:57 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -999,7 +968,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">1小时前</span>
+    <span class="pub-time">7小时前</span>
     <button class="share-btn" title="复制分享" data-text="基金动荡之际，Arini创始人拟4千万英镑购伦敦豪宅" data-link="https://www.ft.com/content/1c44cb5e-68ff-4396-a906-0bb6161e02d6?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f8b470668e9db5da6bb95712&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;基金动荡之际，Arini创始人拟4千万英镑购伦敦豪宅&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/1c44cb5e-68ff-4396-a906-0bb6161e02d6?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;对冲基金Arini创始人哈姆扎·莱姆苏格接近从哈维·尼克斯前老板潘迪生手中购入贝尔格莱维亚联排别墅，价值4000万英镑&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 05:00:21 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1014,7 +983,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">1小时前</span>
+    <span class="pub-time">7小时前</span>
     <button class="share-btn" title="复制分享" data-text="为独立的美国司法体系喝彩" data-link="https://www.ft.com/content/f368fe65-1a9e-425a-a4ac-2ab000e85249?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:830a780e79814ad250344b19&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;为独立的美国司法体系喝彩&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/f368fe65-1a9e-425a-a4ac-2ab000e85249?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;维护选举诚信的有力裁决，为和平且具决定性的中期选举投票铺平了道路。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 05:00:12 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1029,7 +998,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">1小时前</span>
+    <span class="pub-time">7小时前</span>
     <button class="share-btn" title="复制分享" data-text="揭秘肯·格里芬斥资50亿美元接管迈阿密内幕" data-link="https://www.ft.com/content/592a8b23-6095-42ba-bff6-2ec3b61ede65?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:fe2d6f33a4fed2253e34681d&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;揭秘肯·格里芬斥资50亿美元接管迈阿密内幕&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/592a8b23-6095-42ba-bff6-2ec3b61ede65?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;这位亿万富翁希望塑造其理想城市，并发现自己的影响力在佛罗里达州得到进一步扩大。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 05:00:02 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1044,7 +1013,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">13小时前</span>
+    <span class="pub-time">19小时前</span>
     <button class="share-btn" title="复制分享" data-text="部分华尔街从业者年终奖金预计将增加30%" data-link="https://www.bloomberg.com/news/videos/2026-11-10/wall-street-bonuses-expected-to-rise-by-30-for-some-video" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e5e290f055d1b5f00b3ff241&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;部分华尔街从业者年终奖金预计将增加30%&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/videos/2026-11-10/wall-street-bonuses-expected-to-rise-by-30-for-some-video&quot;,&quot;one_liner&quot;:&quot;今年华尔街年终奖预计回升，薪酬咨询机构专家指出，强劲的业务表现与AI带来的效率提升或将推动部分岗位奖金大幅走高。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:39:38 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1059,7 +1028,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">13小时前</span>
+    <span class="pub-time">19小时前</span>
     <button class="share-btn" title="复制分享" data-text="达拉斯联储行长洛根称美联储需至少再加息两次" data-link="https://www.bloomberg.com/news/videos/2026-11-10/fed-needs-to-raise-rates-two-more-times-logan-says-video" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:554b1d7c94ae78839b52ddee&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;达拉斯联储行长洛根称美联储需至少再加息两次&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/videos/2026-11-10/fed-needs-to-raise-rates-two-more-times-logan-says-video&quot;,&quot;one_liner&quot;:&quot;达拉斯联邦储备银行行长洛丽·洛根表示，鉴于当前前景，联邦公开市场委员会（FOMC）显然仍需至少再加息两次，每次加息25个基点。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:36:43 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1074,7 +1043,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">13小时前</span>
+    <span class="pub-time">19小时前</span>
     <button class="share-btn" title="复制分享" data-text="密尔沃基雄鹿队总裁谈超越对单一球星依赖的球队建设" data-link="https://www.bloomberg.com/news/videos/2026-11-10/bucks-president-on-building-beyond-giannis-video" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ed67176ef93c447dbd4fabc4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;密尔沃基雄鹿队总裁谈超越对单一球星依赖的球队建设&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/videos/2026-11-10/bucks-president-on-building-beyond-giannis-video&quot;,&quot;one_liner&quot;:&quot;密尔沃基雄鹿队能否在超级球星之外保持吸引力？ 总裁乔希·格莱辛做客彭博节目，探讨面向未来的建设、运动队估值上涨及机构投资等议题。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:34:48 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1144,7 +1113,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">14小时前</span>
+    <span class="pub-time">20小时前</span>
     <button class="share-btn" title="复制分享" data-text="谷歌发布Gemini 4 Carbon，新增智能体群功能" data-link="https://www.theverge.com/ai-artificial-intelligence/1030787/google-gemini-4-carbon-public-rollout" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8658a0744e2cda3c83edc739&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;谷歌发布Gemini 4 Carbon，新增智能体群功能&quot;,&quot;url&quot;:&quot;https://www.theverge.com/ai-artificial-intelligence/1030787/google-gemini-4-carbon-public-rollout&quot;,&quot;one_liner&quot;:&quot;谷歌在两周前向部分“网络安全维护人员”开放后，正面向公众推出最新AI模型Gemini 4 Carbon，并声称其为最强模型。&quot;,&quot;category&quot;:&quot;The Verge&quot;,&quot;published&quot;:&quot;2026-11-10T11:00:00-05:00&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1159,7 +1128,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">14小时前</span>
+    <span class="pub-time">20小时前</span>
     <button class="share-btn" title="复制分享" data-text="谷歌推出两款专用芯片以拓宽AI硬件阵容" data-link="https://techcrunch.com/2026/11/10/google-broadens-its-ai-hardware-portfolio-with-two-new-specialized-chips/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:4ea7969a421c523902f6b1f6&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;谷歌推出两款专用芯片以拓宽AI硬件阵容&quot;,&quot;url&quot;:&quot;https://techcrunch.com/2026/11/10/google-broadens-its-ai-hardware-portfolio-with-two-new-specialized-chips/&quot;,&quot;one_liner&quot;:&quot;谷歌新款张量处理单元（TPU）拓宽了其芯片产品组合，适用于机密模型训练和更大内存容量等更多应用场景。&quot;,&quot;category&quot;:&quot;TechCrunch&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 15:54:08 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1214,7 +1183,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">23小时前</span>
+    <span class="pub-time">11-10 15:05</span>
     <button class="share-btn" title="复制分享" data-text="教育部等三部门部署实施服务乡村振兴高校招生专项" data-link="https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:8f10724e44d9e88c4ec24258&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;教育部等三部门部署实施服务乡村振兴高校招生专项&quot;,&quot;url&quot;:&quot;https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202611/t20261109_1457659.html&quot;,&quot;one_liner&quot;:&quot;教育部、公安部、农业农村部印发通知，部署自2030年起将现行专项调整为服务乡村振兴高校招生专项计划，建立分层帮扶机制。&quot;,&quot;category&quot;:&quot;教育部工作动态&quot;,&quot;published&quot;:&quot;2026-11-10T07:05:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1229,7 +1198,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">48分钟前</span>
+    <span class="pub-time">7小时前</span>
     <button class="share-btn" title="复制分享" data-text="港房委会拟讨论新生儿家庭白表居屋按揭成数升至95%" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877378-20261111.htm" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:b47be829fc9d9b8cb9ba8258&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;港房委会拟讨论新生儿家庭白表居屋按揭成数升至95%&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877378-20261111.htm&quot;,&quot;one_liner&quot;:&quot;香港房委会将讨论把有新生婴儿白表家庭最高按揭成数由90%提升至95%，并探讨将2022至2025年推售的3.5万个资助单位转让限制由15年缩至10年。&quot;,&quot;category&quot;:&quot;RTHK 本地&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 13:18:14 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1244,7 +1213,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">1小时前</span>
+    <span class="pub-time">7小时前</span>
     <button class="share-btn" title="复制分享" data-text="罗淑佩：改革艺团资助制度 引入与票房和艺术水平等挂钩拨款机制" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877375-20261111.htm" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:dd2cf682565d0252d658a5a0&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;罗淑佩：改革艺团资助制度 引入与票房和艺术水平等挂钩拨款机制&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877375-20261111.htm&quot;,&quot;one_liner&quot;:&quot;香港特区文化体育及旅游局局长罗淑佩表示将改革艺团资助制度，维持整体水平同时引入与表现和艺术水平挂钩的机制，设5年过渡期，拟于2027/28年度起推行。&quot;,&quot;category&quot;:&quot;RTHK 本地&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 12:56:49 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1284,12 +1253,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">14小时前</span>
+    <span class="pub-time">20小时前</span>
     <button class="share-btn" title="复制分享" data-text="智能家居设备应在断网状态下也能运行" data-link="https://docodethatmatters.com/home-automation-overnight-success/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ad37f01e7042126508e00f2c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;智能家居设备应在断网状态下也能运行&quot;,&quot;url&quot;:&quot;https://docodethatmatters.com/home-automation-overnight-success/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 15:25:20 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50441707&quot;,&quot;title_en&quot;:&quot;Smart home devices should work without the internet&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 811 积分 · 293 条评论</p><div class="community-source-links"><a href="https://docodethatmatters.com/home-automation-overnight-success/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50441707" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 1011 积分 · 361 条评论</p><div class="community-source-links"><a href="https://docodethatmatters.com/home-automation-overnight-success/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50441707" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-aad9447a2be469df8cb3" data-id="aad9447a2be469df8cb3" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">.name域名获得“祖父条款”豁免保护</div>
   
@@ -1299,12 +1268,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">13小时前</span>
+    <span class="pub-time">19小时前</span>
     <button class="share-btn" title="复制分享" data-text=".name域名获得“祖父条款”豁免保护" data-link="https://neil.fraser.name/news/2026/11/10/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:cd5db2ceb26272766f7cd4f7&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;.name域名获得“祖父条款”豁免保护&quot;,&quot;url&quot;:&quot;https://neil.fraser.name/news/2026/11/10/&quot;,&quot;one_liner&quot;:&quot;此前报道：.name域名终止——HN讨论链接——2026年9月（547条评论）。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:37:44 GMT&quot;,&quot;reading_excerpt&quot;:&quot;此前报道：.name域名终止——HN讨论链接——2026年9月（547条评论）。&quot;,&quot;reading_source&quot;:&quot;来源摘要 · 中文译文&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50442736&quot;,&quot;title_en&quot;:&quot;.name Grandfathered&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">此前报道：.name域名终止——HN讨论链接——2026年9月（547条评论）。</p><p class="news-excerpt-label">依据 · 来源摘要 · 中文译文</p><p class="news-excerpt-label">HN · 751 积分 · 169 条评论</p><div class="community-source-links"><a href="https://neil.fraser.name/news/2026/11/10/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50442736" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">此前报道：.name域名终止——HN讨论链接——2026年9月（547条评论）。</p><p class="news-excerpt-label">依据 · 来源摘要 · 中文译文</p><p class="news-excerpt-label">HN · 869 积分 · 189 条评论</p><div class="community-source-links"><a href="https://neil.fraser.name/news/2026/11/10/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50442736" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-9811119c3cdb72ed1aad" data-id="9811119c3cdb72ed1aad" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">AlphaProof代码</div>
   
@@ -1314,12 +1283,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">17小时前</span>
+    <span class="pub-time">11-10 20:11</span>
     <button class="share-btn" title="复制分享" data-text="AlphaProof代码" data-link="https://deepmind.google/blog/introducing-alphaproof-code/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f321c904268bcef29356d2d1&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;AlphaProof代码&quot;,&quot;url&quot;:&quot;https://deepmind.google/blog/introducing-alphaproof-code/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 12:11:12 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50439193&quot;,&quot;title_en&quot;:&quot;AlphaProof Code&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>摘要与出处</summary><div class="card-expand-body"><p class="community-preview-text">Pushmeet Kohli and Swarat Chaudhuri How Google DeepMind researchers built a new agentic framework that formally verified the code of Signal’s cryptographic protocol — long considered to be a grand…</p><p class="news-excerpt-label">依据 · 公开原文 · 摘录</p><p class="news-excerpt-label">HN · 605 积分 · 179 条评论</p><div class="community-source-links"><a href="https://deepmind.google/blog/introducing-alphaproof-code/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50439193" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 649 积分 · 186 条评论</p><div class="community-source-links"><a href="https://deepmind.google/blog/introducing-alphaproof-code/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50439193" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-db2c8004f510fe5dc4a5" data-id="db2c8004f510fe5dc4a5" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">使用AI会导致代码库脆弱</div>
   
@@ -1329,12 +1298,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">19小时前</span>
+    <span class="pub-time">11-10 18:25</span>
     <button class="share-btn" title="复制分享" data-text="使用AI会导致代码库脆弱" data-link="https://evanxmerz.com/post/ai-usage-generates-a-fragile-codebase/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:1a0c6447ab6c6af53def6a09&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;使用AI会导致代码库脆弱&quot;,&quot;url&quot;:&quot;https://evanxmerz.com/post/ai-usage-generates-a-fragile-codebase/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 10:25:58 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50438318&quot;,&quot;title_en&quot;:&quot;AI usage generates a fragile codebase&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 457 积分 · 450 条评论</p><div class="community-source-links"><a href="https://evanxmerz.com/post/ai-usage-generates-a-fragile-codebase/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50438318" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 583 积分 · 544 条评论</p><div class="community-source-links"><a href="https://evanxmerz.com/post/ai-usage-generates-a-fragile-codebase/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50438318" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-2b014ec4dffdb646dc30" data-id="2b014ec4dffdb646dc30" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">赛恩品牌回归并计划在美国销售微型轻卡</div>
   
@@ -1344,14 +1313,14 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">10小时前</span>
+    <span class="pub-time">16小时前</span>
     <button class="share-btn" title="复制分享" data-text="赛恩品牌回归并计划在美国销售微型轻卡" data-link="https://www.theautopian.com/scion-is-back-and-its-going-to-sell-a-freaking-kei-truck-in-america/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:3cead47eb0018323c3674fad&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;赛恩品牌回归并计划在美国销售微型轻卡&quot;,&quot;url&quot;:&quot;https://www.theautopian.com/scion-is-back-and-its-going-to-sell-a-freaking-kei-truck-in-america/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 19:50:46 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50445401&quot;,&quot;title_en&quot;:&quot;Scion is back and is going to sell a kei truck in America&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 411 积分 · 284 条评论</p><div class="community-source-links"><a href="https://www.theautopian.com/scion-is-back-and-its-going-to-sell-a-freaking-kei-truck-in-america/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50445401" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
-</article><article class="news-card" id="card-bdc5b9d9614434b07286" data-id="bdc5b9d9614434b07286" tabindex="-1" style="border-left:3px solid #1e293b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
-  <div class="card-title">追踪Anthropic发现的安全漏洞</div>
+  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 492 积分 · 318 条评论</p><div class="community-source-links"><a href="https://www.theautopian.com/scion-is-back-and-its-going-to-sell-a-freaking-kei-truck-in-america/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50445401" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+</article><article class="news-card" id="card-576b56a236d43b2b6b3a" data-id="576b56a236d43b2b6b3a" tabindex="-1" style="border-left:3px solid #1e293b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
+  <div class="card-title">星链Mini 2</div>
   
   <div class="card-meta">
     
@@ -1359,12 +1328,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">7小时前</span>
-    <button class="share-btn" title="复制分享" data-text="追踪Anthropic发现的安全漏洞" data-link="https://www.vulncheck.com/blog/anthropic-glasswing-november-update" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:2b1a51c62db6caf6b7980237&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;追踪Anthropic发现的安全漏洞&quot;,&quot;url&quot;:&quot;https://www.vulncheck.com/blog/anthropic-glasswing-november-update&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 22:17:56 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50447074&quot;,&quot;title_en&quot;:&quot;Tracking Anthropic-discovered vulnerabilities&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">17小时前</span>
+    <button class="share-btn" title="复制分享" data-text="星链Mini 2" data-link="https://starlink.com/mini-2" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:96e2dd8c2efc74b81343b918&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;星链Mini 2&quot;,&quot;url&quot;:&quot;https://starlink.com/mini-2&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 18:22:32 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50444129&quot;,&quot;title_en&quot;:&quot;Starlink Mini 2&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 364 积分 · 166 条评论</p><div class="community-source-links"><a href="https://www.vulncheck.com/blog/anthropic-glasswing-november-update" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50447074" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 438 积分 · 466 条评论</p><div class="community-source-links"><a href="https://starlink.com/mini-2" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50444129" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article></div>
 </section>
       
@@ -1384,7 +1353,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">10小时前</span>
+    <span class="pub-time">16小时前</span>
     <button class="share-btn" title="复制分享" data-text="尼米兹号航母组织新老海军飞行员开展训练" data-link="https://www.war.gov/News/News-Stories/Article/Article/4646092/uss-nimitz-trains-new-returning-naval-aviators/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:34633fa10d409fefddabc76c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;尼米兹号航母组织新老海军飞行员开展训练&quot;,&quot;url&quot;:&quot;https://www.war.gov/News/News-Stories/Article/Article/4646092/uss-nimitz-trains-new-returning-naval-aviators/&quot;,&quot;one_liner&quot;:&quot;尼米兹号航空母舰完成了其在东海岸的首次海上训练任务，为新老海军飞行员进行航母资质认证提供支持。&quot;,&quot;category&quot;:&quot;Defense.gov&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 19:40:06 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1399,7 +1368,7 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">11小时前</span>
+    <span class="pub-time">17小时前</span>
     <button class="share-btn" title="复制分享" data-text="赫格塞斯与波兰对等官员宣布有意加强军事合作" data-link="https://www.war.gov/News/News-Stories/Article/Article/4646088/hegseth-polish-counterpart-announce-intent-to-boost-military-cooperation/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:529382ba888973578de17a97&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;赫格塞斯与波兰对等官员宣布有意加强军事合作&quot;,&quot;url&quot;:&quot;https://www.war.gov/News/News-Stories/Article/Article/4646088/hegseth-polish-counterpart-announce-intent-to-boost-military-cooperation/&quot;,&quot;one_liner&quot;:&quot;美国战争部长皮特·赫格塞斯在五角大楼的双边会晤中，接待了波兰副总理兼国防部长瓦迪斯瓦夫·科西尼亚克-卡梅什。&quot;,&quot;category&quot;:&quot;Defense.gov&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 18:47:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
@@ -1414,27 +1383,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">13小时前</span>
+    <span class="pub-time">19小时前</span>
     <button class="share-btn" title="复制分享" data-text="赫格塞斯：因政策分歧弹劾会向对手发出错误信号" data-link="https://www.war.gov/News/News-Stories/Article/Article/4645996/hegseth-impeachment-over-policy-disagreement-sends-wrong-signal-to-adversaries/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:fda898b35653da2f4e402a73&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;赫格塞斯：因政策分歧弹劾会向对手发出错误信号&quot;,&quot;url&quot;:&quot;https://www.war.gov/News/News-Stories/Article/Article/4645996/hegseth-impeachment-over-policy-disagreement-sends-wrong-signal-to-adversaries/&quot;,&quot;one_liner&quot;:&quot;面临弹劾威胁的美国战争部长皮特·赫格塞斯在五角大楼简报会上，详细列举了其任内成功开展的一系列军事行动。&quot;,&quot;category&quot;:&quot;Defense.gov&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:52:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">面临弹劾威胁的美国战争部长皮特·赫格塞斯在五角大楼简报会上，详细列举了其任内成功开展的一系列军事行动。</div><a href="https://www.war.gov/News/News-Stories/Article/Article/4645996/hegseth-impeachment-over-policy-disagreement-sends-wrong-signal-to-adversaries/" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-76ef251298d50b85ea0b" data-id="76ef251298d50b85ea0b" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">法国警方称：穆罕默德·法耶兹案调查已逮捕相关人员</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">13小时前</span>
-    <button class="share-btn" title="复制分享" data-text="法国警方称：穆罕默德·法耶兹案调查已逮捕相关人员" data-link="https://www.bbc.co.uk/news/articles/ck1wvwyrd4ywo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:119606f9f2d23278fac83294&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;法国警方称：穆罕默德·法耶兹案调查已逮捕相关人员&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/ck1wvwyrd4ywo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;警方搜查的相关物业中包括仍由法耶兹家族拥有的巴黎丽兹酒店。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 16:19:48 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">警方搜查的相关物业中包括仍由法耶兹家族拥有的巴黎丽兹酒店。</div><a href="https://www.bbc.co.uk/news/articles/ck1wvwyrd4ywo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-84ccb6df04d6a7c71c7d" data-id="84ccb6df04d6a7c71c7d" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">The Download：佩洛西继任者瞄准AI，数据中心面临电荒</div>
   
@@ -1444,27 +1398,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">16小时前</span>
+    <span class="pub-time">23小时前</span>
     <button class="share-btn" title="复制分享" data-text="The Download：佩洛西继任者瞄准AI，数据中心面临电荒" data-link="https://www.technologyreview.com/2026/11/10/1148150/the-download-pelosi-successor-ai-regulation-data-center-backlash/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:4c3c56a1a61aaf31d560fbc1&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;The Download：佩洛西继任者瞄准AI，数据中心面临电荒&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/10/1148150/the-download-pelosi-successor-ai-regulation-data-center-backlash/&quot;,&quot;one_liner&quot;:&quot;这是今日的《The Download》工作日科技通讯。 南希·佩洛西的继任者正准备对人工智能实施监管。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 13:10:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">这是今日的《The Download》工作日科技通讯。 南希·佩洛西的继任者正准备对人工智能实施监管。</div><a href="https://www.technologyreview.com/2026/11/10/1148150/the-download-pelosi-successor-ai-regulation-data-center-backlash/" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-b33760002967b7cf1703" data-id="b33760002967b7cf1703" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
-  <div class="card-title">金属提取工艺的演进</div>
-  
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">17小时前</span>
-    <button class="share-btn" title="复制分享" data-text="金属提取工艺的演进" data-link="https://www.technologyreview.com/2026/11/10/1147726/evolving-metal-extraction-processes/" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:383fec097ec1fefd9cdc834a&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;金属提取工艺的演进&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/10/1147726/evolving-metal-extraction-processes/&quot;,&quot;one_liner&quot;:&quot;金属工业经历过变革时刻：贝塞麦转炉炼钢法、闪速熔炼、电弧炉和现代连铸都改变了可能性。 然而……&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 13:00:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">金属工业经历过变革时刻：贝塞麦转炉炼钢法、闪速熔炼、电弧炉和现代连铸都改变了可能性。 然而……</div><a href="https://www.technologyreview.com/2026/11/10/1147726/evolving-metal-extraction-processes/" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-5939dbe4b2b537998330" data-id="5939dbe4b2b537998330" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">亚里士多德的心理学思想</div>
   
@@ -1525,6 +1464,36 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">该词条由安东尼·塞拉诺于2026年11月8日修订。 中世纪道德推理理论起源于圣奥古斯丁的道德神学及理性传统。</div><a href="https://plato.stanford.edu/entries/practical-reason-med/" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-cc021c929e3f2eaff934" data-id="cc021c929e3f2eaff934" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
+  <div class="card-title">以赛亚·伯林</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#7c3aed;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#7c3aed18;border-radius:999px;padding:1px 7px;">🎓&thinsp;Stanford SEP</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">11-09 11:26</span>
+    <button class="share-btn" title="复制分享" data-text="以赛亚·伯林" data-link="https://plato.stanford.edu/entries/berlin/" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:11e19a3374a91712bd12273c&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;以赛亚·伯林&quot;,&quot;url&quot;:&quot;https://plato.stanford.edu/entries/berlin/&quot;,&quot;one_liner&quot;:&quot;该词条由乔舒亚·L·切尔尼斯和亨利·哈迪于2026年11月8日修订。 以赛亚·伯林（1909—1997年）是入籍英国的哲学家与历史学家。&quot;,&quot;category&quot;:&quot;Stanford SEP&quot;,&quot;published&quot;:&quot;Sun, 08 Nov 2026 19:26:12 -0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">该词条由乔舒亚·L·切尔尼斯和亨利·哈迪于2026年11月8日修订。 以赛亚·伯林（1909—1997年）是入籍英国的哲学家与历史学家。</div><a href="https://plato.stanford.edu/entries/berlin/" class="read-link">→ 查看原文</a></div></details>
+</article><article class="news-card" id="card-763ee62b40acc48f9300" data-id="763ee62b40acc48f9300" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
+  <div class="card-title">以色列外国资金调查并非选举被窃证据</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#475569;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#47556918;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;RUSI</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">11-09 08:00</span>
+    <button class="share-btn" title="复制分享" data-text="以色列外国资金调查并非选举被窃证据" data-link="https://www.rusi.org/explore-our-research/publications/commentary/israels-foreign-funding-inquiry-not-evidence-stolen-election" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:7403c7fa26a4211873194425&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;以色列外国资金调查并非选举被窃证据&quot;,&quot;url&quot;:&quot;https://www.rusi.org/explore-our-research/publications/commentary/israels-foreign-funding-inquiry-not-evidence-stolen-election&quot;,&quot;one_liner&quot;:&quot;现任领导人似乎正利用一项国家安全外国资金调查，以抹黑阿拉伯党派持有的19个席位，并可能意在干扰新政府的组建。&quot;,&quot;category&quot;:&quot;RUSI&quot;,&quot;published&quot;:&quot;Mon, 09 Nov 2026 00:00:00 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">作者观点摘要 · AI 翻译</p><div class="card-desc">现任领导人似乎正利用一项国家安全外国资金调查，以抹黑阿拉伯党派持有的19个席位，并可能意在干扰新政府的组建。</div><a href="https://www.rusi.org/explore-our-research/publications/commentary/israels-foreign-funding-inquiry-not-evidence-stolen-election" class="read-link">→ 查看原文</a></div></details>
 </article></div>
 </section>
       
@@ -1536,22 +1505,22 @@ function shareCard(btn) {
 <div class="heat-header"><span id="reading-route-title">今日阅读路线</span><span class="rr-edition">11.11</span></div>
 <div class="rr-body"><div class="rr-budgets" role="group" aria-label="今天的阅读时间"><button type="button" data-budget="10" aria-pressed="false">10 分钟</button><button type="button" data-budget="20" aria-pressed="true">20 分钟</button><button type="button" data-budget="30" aria-pressed="false">30 分钟</button></div>
 <p class="rr-estimate" id="rr-estimate">这条路线约 18 分钟</p>
-<ol class="rr-tasks" id="rr-tasks"><li><div class="rr-task-meta">报道摘要 · 约 2 分钟</div><a class="rr-task-link" href="/archive/20261111.html#card-16841831ef955c4fdd4e">中国在加拿大成功发行40亿元人民币绿色主权债券</a></li><li><div class="rr-task-meta">基础课完整主线 · 约 13 分钟</div><a class="rr-task-link" href="/learn-20261111.html#lesson-core">语音增强基础</a></li><li><div class="rr-task-meta">健康要点 · 约 3 分钟</div><a class="rr-task-link" href="/health-20261111.html#health-today">感冒：别把抗生素当标配</a></li></ol>
+<ol class="rr-tasks" id="rr-tasks"><li><div class="rr-task-meta">报道摘要 · 约 2 分钟</div><a class="rr-task-link" href="/archive/20261111.html#card-3444ac2c837214252663">Anthropic上市首秀估值或达1.3万亿美元，低于预期</a></li><li><div class="rr-task-meta">基础课完整主线 · 约 13 分钟</div><a class="rr-task-link" href="/learn-20261111.html#lesson-core">语音增强基础</a></li><li><div class="rr-task-meta">健康要点 · 约 3 分钟</div><a class="rr-task-link" href="/health-20261111.html#health-today">感冒：别把抗生素当标配</a></li></ol>
 <p class="rr-progress" id="rr-progress" aria-live="polite"></p>
 <p class="rr-status" id="rr-status" role="status"></p>
 <a id="rr-previous" class="rr-previous" hidden></a>
 <p class="rr-note">时间为估算。进度由你勾选，最近 14 期路线记录保存在此浏览器。</p>
 </div></section>
   <!-- AI 研报简报 -->
-<div class="sidebar-block ai-sidebar">
+  <div class="sidebar-block ai-sidebar">
   <div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">
     <span>论文精选</span>
     <a href="/ai-digest.html#speech-priority" class="ai-sidebar-link">研报 →</a>
   </div>
-  <a href="https://arxiv.org/abs/2611.08373" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">SLA：在持续预训练与下游训练中共同注入空间对齐监督</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2611.06083" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">SleuthVLM：全能视频理解真的需要视频内音频吗？</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2610.33127" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">Beyond Visible Speakers：结合上下文与说话人注册的主动说话人检测</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a>
+  <p class="ai-sidebar-empty">本期简报暂无已审读精选。</p>
 </div>
   <!-- 视角雷达 -->
-  <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">本期来源地区 · 按报道计数</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">28</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:17%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">5</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#64748b;min-width:48px;white-space:nowrap;">香港</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:14%;background:#64748b;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">4</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#334155;min-width:48px;white-space:nowrap;">美国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:10%;background:#334155;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">学术</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#d97706;min-width:48px;white-space:nowrap;">中东</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#d97706;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#475569;min-width:48px;white-space:nowrap;">英国智库</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#475569;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div></div></div>
+  <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">本期来源地区 · 按报道计数</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">26</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:19%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">5</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#64748b;min-width:48px;white-space:nowrap;">香港</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:15%;background:#64748b;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">4</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#334155;min-width:48px;white-space:nowrap;">美国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:11%;background:#334155;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">学术</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:11%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#475569;min-width:48px;white-space:nowrap;">英国智库</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#475569;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#d97706;min-width:48px;white-space:nowrap;">中东</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#d97706;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div></div></div>
   <!-- 经济日历 -->
   
   <!-- 持续追踪 -->
@@ -1605,7 +1574,7 @@ function shareCard(btn) {
   window.addEventListener('pageshow',sync);
   bind();
 })();
-</script><script id="reading-route-data" type="application/json">{"edition":"2026-11-11","tasks":[{"id":"news:16841831ef955c4fdd4e","title":"中国在加拿大成功发行40亿元人民币绿色主权债券","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261111.html#card-16841831ef955c4fdd4e"},{"id":"paper:paper-2611-08373:content-97930e9f30e4","title":"SLA：在持续预训练与下游训练中共同注入空间对齐监督","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261111-7423ab7bf53f.html#paper-2611-08373"},{"id":"learn:20261111:d91b096e9386","title":"语音增强基础","kind":"learn","label":"基础课完整主线","minutes":13,"url":"/learn-20261111.html#lesson-core"},{"id":"health:20261111:health-cold-no-antibiotics","title":"感冒：别把抗生素当标配","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261111.html#health-today"}],"routes":[{"budget":10,"ids":["news:16841831ef955c4fdd4e","paper:paper-2611-08373:content-97930e9f30e4","health:20261111:health-cold-no-antibiotics"]},{"budget":20,"ids":["news:16841831ef955c4fdd4e","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]},{"budget":30,"ids":["news:16841831ef955c4fdd4e","paper:paper-2611-08373:content-97930e9f30e4","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]}]}</script><script>
+</script><script id="reading-route-data" type="application/json">{"edition":"2026-11-11","tasks":[{"id":"news:3444ac2c837214252663","title":"Anthropic上市首秀估值或达1.3万亿美元，低于预期","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261111.html#card-3444ac2c837214252663"},{"id":"paper:paper-2611-08373:content-97930e9f30e4","title":"SLA：在持续预训练与下游训练中共同注入空间对齐监督","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261111-7423ab7bf53f.html#paper-2611-08373"},{"id":"learn:20261111:d91b096e9386","title":"语音增强基础","kind":"learn","label":"基础课完整主线","minutes":13,"url":"/learn-20261111.html#lesson-core"},{"id":"health:20261111:health-cold-no-antibiotics","title":"感冒：别把抗生素当标配","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261111.html#health-today"}],"routes":[{"budget":10,"ids":["news:3444ac2c837214252663","paper:paper-2611-08373:content-97930e9f30e4","health:20261111:health-cold-no-antibiotics"]},{"budget":20,"ids":["news:3444ac2c837214252663","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]},{"budget":30,"ids":["news:3444ac2c837214252663","paper:paper-2611-08373:content-97930e9f30e4","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]}]}</script><script>
 (() => {
   const panel = document.getElementById('reading-route');
   const source = document.getElementById('reading-route-data');
