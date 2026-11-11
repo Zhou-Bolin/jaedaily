@@ -1472,7 +1472,8 @@ body{margin:0;background:var(--jd-canvas);color:var(--jd-ink);font:15px/1.74 -ap
     const hash = window.location.hash;
     const fragment = hash.startsWith('#lesson-') ? document.getElementById(hash.slice(1)) : null;
     const requested = articles.indexOf(fragment?.closest('.ac-lesson'));
-    const index = requested >= 0 ? requested : hash ? (activeIndex ?? current) : current;
+    // Advancing the recommendation must not replace a chapter being read.
+    const index = requested >= 0 ? requested : (activeIndex ?? current);
     const target = articles[index];
     const chapterChanged = activeIndex !== index;
     activeIndex = index;
