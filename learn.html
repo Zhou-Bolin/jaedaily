@@ -344,7 +344,7 @@ function makeReadingRouteStore() {
     Object.entries(value.plans).forEach(([day, plan]) => {
       if (!validDate(day) || !plan || typeof plan !== 'object') return;
       if (![10, 20, 30].includes(plan.budget) || !Array.isArray(plan.done) || !Array.isArray(plan.requiredIds)) return;
-      if (plan.done.length > 12 || plan.requiredIds.length > 6 || !plan.requiredIds.length) return;
+      if (plan.done.length > 64 || plan.requiredIds.length > 6 || !plan.requiredIds.length) return;
       if (![...plan.done, ...plan.requiredIds].every(validId)) return;
       clean[day] = {budget: plan.budget, done: [...new Set(plan.done)], requiredIds: [...new Set(plan.requiredIds)]};
     });
@@ -355,7 +355,18 @@ function makeReadingRouteStore() {
     catch (_) { return {}; }
   }
   function write(plans) {
-    const clean = cleanPlans({schema: 1, plans});
+    // Keep current required completions, then the most recently completed
+    // revisions. Never discard an entire plan when one new revision is added.
+    const bounded = Object.fromEntries(Object.entries(plans).map(([day, plan]) => {
+      if (!plan || !Array.isArray(plan.done) || !Array.isArray(plan.requiredIds)) return [day, plan];
+      const done = [...new Set(plan.done)], required = new Set(plan.requiredIds);
+      const pinned = done.filter(id => required.has(id));
+      const recent = done.filter(id => !required.has(id)).slice(-Math.max(0, 64 - pinned.length));
+      const retained = new Set([...pinned, ...recent]);
+      return [day, {...plan, done: done.filter(id => retained.has(id))}];
+    }));
+    const clean = cleanPlans({schema: 1, plans: bounded});
+    if (Object.keys(clean).length !== Object.keys(plans).length) throw Error('Invalid reading plan');
     const retained = Object.fromEntries(Object.entries(clean).sort(([a], [b]) => b.localeCompare(a)).slice(0, 14));
     localStorage.setItem(KEY, JSON.stringify({schema: 1, plans: retained}));
     return retained;
@@ -429,7 +440,8 @@ function makeReadingRouteStore() {
   }
   if (!title || text(title.textContent) !== intent.task.title) return;
   function canMigrate(plan) {
-    return Boolean(plan && intent.observedPlan && plan.budget === intent.budget &&
+    return Boolean(plan && !plan.requiredIds.includes(intent.task.id) &&
+      intent.observedPlan && plan.budget === intent.budget &&
       plan.budget === intent.observedPlan.budget && sameIds(plan.requiredIds, intent.observedPlan.requiredIds));
   }
   const includesTask = plan => !plan || plan.requiredIds.includes(intent.task.id) || canMigrate(plan);
