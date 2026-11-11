@@ -569,7 +569,32 @@ body{background:var(--jd-paper);color:var(--jd-ink);line-height:1.85}
   .stat-item{gap:5px}.stat-val{font-size:22px}.stat-lbl{white-space:nowrap}
 }
 </style>
-</head>
+<style id="jd-desktop-layout">
+/* jd-desktop-layout */
+@media(min-width:901px){
+  html:root{scroll-padding-top:74px}
+  .page-wrap>.brand-nav,.hc-wrap>.brand-nav,.ac-wrap>.brand-nav{
+    position:sticky;top:0;z-index:90;background:var(--jd-paper);
+    box-shadow:0 1px 0 var(--jd-line);margin-bottom:16px;
+  }
+  .brand-nav a{padding-block:11px;min-height:44px}
+  .brand-nav .jd-context-link{margin-left:auto;color:var(--jd-wine);font-weight:600}
+  .page-wrap .kl-header,.hc-wrap .hc-header{padding:18px 26px}
+  .page-wrap .kl-header .brand-mark,.hc-wrap .hc-header .brand-mark{width:54px;height:54px}
+  .page-wrap .kl-header-brand,.hc-wrap .hc-header-brand{gap:15px}
+  .page-wrap .kl-header-left h1,.hc-wrap .hc-header h1{font-size:28px}
+}
+
+@media(min-width:901px){
+  html:root{scroll-padding-top:112px}
+  body>.topbar{position:sticky;top:0;z-index:110;min-height:44px}
+  .topbar>.brand-nav{position:static;box-shadow:none;background:transparent}
+  body>.cat-nav{top:44px;z-index:100;background:var(--jd-paper)}
+  .content .speech-priority{margin-bottom:24px}
+  .content .speech-priority-head{padding:13px 19px}
+  .content .research-pick h3{text-wrap:balance}
+}
+</style></head>
 <body>
 
 <!-- 顶部导航 -->
