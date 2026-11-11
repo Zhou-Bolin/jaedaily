@@ -571,6 +571,36 @@ body.dark .brand-mark{mix-blend-mode:normal}
   .page-wrap .main-col{padding-top:22px}
   .page-wrap .news-card{padding:17px 0}
 }
+</style><style id="reading-route-style">
+.reading-route .heat-header{display:flex;justify-content:space-between;align-items:center}
+.rr-edition{font:11px/1.5 ui-monospace,monospace;opacity:.8}
+.rr-body{padding:11px 13px 10px}
+.rr-budgets{display:flex;gap:5px}
+.rr-budgets button{flex:1;border:1px solid var(--jd-line);background:var(--jd-paper);color:var(--jd-muted);padding:5px 3px;cursor:pointer;font:12px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;border-radius:2px}
+.rr-budgets button[aria-pressed=true]{background:var(--jd-wine-soft);border-color:var(--jd-wine);color:var(--jd-wine)}
+.rr-estimate{font-size:12px;color:var(--jd-muted);margin:8px 0 3px}
+.rr-tasks{list-style:none;padding:0;margin:0;counter-reset:route-step}
+.rr-tasks li{position:relative;border-bottom:1px solid var(--jd-line);padding:9px 0 10px 23px;counter-increment:route-step}
+.rr-tasks li::before{content:counter(route-step,decimal-leading-zero);position:absolute;left:0;top:9px;font:11px/1.7 ui-monospace,monospace;color:var(--jd-wine)}
+.rr-task-meta{font-size:10px;color:var(--jd-muted);line-height:1.6;margin-bottom:4px}
+.rr-task-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
+.rr-task-top .rr-task-meta{margin:0 0 3px}
+.rr-task-link{display:block;font-size:13px;line-height:1.65;color:var(--jd-ink);text-decoration:none;overflow-wrap:anywhere}
+.rr-task-link:hover{color:var(--jd-wine);text-decoration:underline;text-underline-offset:3px}
+.rr-done{flex:none;font:11px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;padding:1px 5px;border:1px solid var(--jd-line);border-radius:2px;background:var(--jd-paper);color:var(--jd-muted);cursor:pointer}
+.rr-done[aria-pressed=true]{color:var(--jd-wine);border-color:var(--jd-gold-line);background:var(--jd-wine-soft)}
+.rr-tasks li[data-complete=true]::before{content:"✓";font-size:13px}
+.rr-tasks li[data-complete=true] .rr-task-link{color:var(--jd-muted)}
+.rr-progress{font-size:12px;line-height:1.6;margin:9px 0 0;color:var(--jd-wine);font-variant-numeric:tabular-nums}
+.rr-progress[data-finished=true]{padding:7px 9px;border-left:2px solid var(--jd-wine);background:var(--jd-wine-soft)}
+.rr-note,.rr-status{font-size:11px;line-height:1.7;color:var(--jd-muted);margin:7px 0 0}
+.rr-status:empty,.rr-progress:empty{display:none}
+.rr-previous{display:inline-block;margin-top:8px;font-size:12px;color:var(--jd-wine);text-underline-offset:3px}
+.reading-route [hidden]{display:none!important}
+@media(prefers-reduced-motion:no-preference){
+  .rr-progress[data-finished=true]{animation:rr-finish .45s ease-out}
+  @keyframes rr-finish{from{opacity:.3;transform:translateY(3px)}to{opacity:1;transform:none}}
+}
 </style></head>
 <body class="theme-wed">
 <script>
@@ -1394,7 +1424,16 @@ function shareCard(btn) {
     </main>
 
     <!-- Sidebar (desktop only) -->
-    <aside class="sidebar">
+    <aside class="sidebar"><section class="sidebar-block reading-route" id="reading-route" tabindex="-1" aria-labelledby="reading-route-title">
+<div class="heat-header"><span id="reading-route-title">今日阅读路线</span><span class="rr-edition">11.11</span></div>
+<div class="rr-body"><div class="rr-budgets" role="group" aria-label="今天的阅读时间"><button type="button" data-budget="10" aria-pressed="false">10 分钟</button><button type="button" data-budget="20" aria-pressed="true">20 分钟</button><button type="button" data-budget="30" aria-pressed="false">30 分钟</button></div>
+<p class="rr-estimate" id="rr-estimate">这条路线约 18 分钟</p>
+<ol class="rr-tasks" id="rr-tasks"><li><div class="rr-task-meta">报道摘要 · 约 2 分钟</div><a class="rr-task-link" href="/archive/20261111.html#card-0165e1d1d937d9895b38">美国加州否决对该州亿万富翁征收财富税的提案</a></li><li><div class="rr-task-meta">基础课完整主线 · 约 13 分钟</div><a class="rr-task-link" href="/learn-20261111.html#lesson-core">语音增强基础</a></li><li><div class="rr-task-meta">健康要点 · 约 3 分钟</div><a class="rr-task-link" href="/health-20261111.html#health-today">感冒：别把抗生素当标配</a></li></ol>
+<p class="rr-progress" id="rr-progress" aria-live="polite"></p>
+<p class="rr-status" id="rr-status" role="status"></p>
+<a id="rr-previous" class="rr-previous" hidden></a>
+<p class="rr-note">时间为估算。进度由你勾选，近 14 天记录保存在此浏览器。</p>
+</div></section>
   <!-- AI 研报简报 -->
   <div class="sidebar-block ai-sidebar">
   <div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">
@@ -1403,32 +1442,6 @@ function shareCard(btn) {
   </div>
   <a href="https://arxiv.org/abs/2611.08264" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">SplatAnything：面向任意场景前馈3DGS的高斯间距归一化</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2611.08373" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">SLA：在持续预训练与下游训练中共同注入空间对齐监督</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2611.05275" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">Route Anything：通用AI系统的模型与策略路由研究</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a>
 </div>
-  <!-- 每日学习入口 -->
-  <div class="sidebar-block">
-    <div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">
-      每日学习
-    </div>
-    <a href="../learn.html" style="display:block;padding:9px 14px;text-decoration:none;border-bottom:1px solid var(--divider);">
-      <div style="font-size:10px;font-weight:700;font-family:sans-serif;
-                  color:#b8940e;letter-spacing:0.8px;margin-bottom:4px;">
-        AI 每日一课
-      </div>
-      <div style="font-size:11px;color:#94a3b8;font-family:sans-serif;line-height:1.5;">
-        每日一则<br>
-        <span style="color:#6b7280;font-size:10px;">理解 · 小练习 · 自测，约 10–20 分钟</span>
-      </div>
-    </a>
-    <a href="../health.html" style="display:block;padding:9px 14px;text-decoration:none;">
-      <div style="font-size:10px;font-weight:700;font-family:sans-serif;
-                  color:#7a2f12;letter-spacing:0.8px;margin-bottom:4px;">
-        健康学堂
-      </div>
-      <div style="font-size:11px;color:#94a3b8;font-family:sans-serif;line-height:1.5;">
-        工位健康 · 饮食 · 运动 · 睡眠<br>
-        <span style="color:#6b7280;font-size:10px;">每日行动卡 · 84 课实用知识库</span>
-      </div>
-    </a>
-  </div>
   <!-- 视角雷达 -->
   <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">本期来源地区 · 按报道计数</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">26</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:26%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">7</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">学术</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">西班牙</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#9333ea;min-width:48px;white-space:nowrap;">俄罗斯</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#9333ea;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div></div></div>
   <!-- 经济日历 -->
@@ -1490,5 +1503,133 @@ function shareCard(btn) {
   bind();
 })();
 </script>
-</body>
+<script id="reading-route-data" type="application/json">{"edition":"2026-11-11","tasks":[{"id":"news:0165e1d1d937d9895b38","title":"美国加州否决对该州亿万富翁征收财富税的提案","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261111.html#card-0165e1d1d937d9895b38"},{"id":"paper:paper-2611-08264","title":"SplatAnything：面向任意场景前馈3DGS的高斯间距归一化","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261111-e7bf925228e5.html#paper-2611-08264"},{"id":"learn:20261111:d91b096e9386","title":"语音增强基础","kind":"learn","label":"基础课完整主线","minutes":13,"url":"/learn-20261111.html#lesson-core"},{"id":"health:20261111:health-cold-no-antibiotics","title":"感冒：别把抗生素当标配","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261111.html#health-today"}],"routes":[{"budget":10,"ids":["news:0165e1d1d937d9895b38","paper:paper-2611-08264","health:20261111:health-cold-no-antibiotics"]},{"budget":20,"ids":["news:0165e1d1d937d9895b38","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]},{"budget":30,"ids":["news:0165e1d1d937d9895b38","paper:paper-2611-08264","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]}]}</script><script>
+(() => {
+  const panel = document.getElementById('reading-route');
+  const source = document.getElementById('reading-route-data');
+  if (!panel || !source) return;
+  const config = JSON.parse(source.textContent);
+  const tasks = new Map(config.tasks.map(task => [task.id, task]));
+  const taskIds = new Set(tasks.keys());
+  const choices = [...panel.querySelectorAll('[data-budget]')];
+  const list = document.getElementById('rr-tasks');
+  const estimate = document.getElementById('rr-estimate');
+  const progress = document.getElementById('rr-progress');
+  const status = document.getElementById('rr-status');
+  const previous = document.getElementById('rr-previous');
+  const KEY = 'jd_reading_route_v1';
+  const validId = value => typeof value === 'string' && /^[A-Za-z0-9:_.-]{1,180}$/.test(value);
+  const validDate = value => typeof value === 'string' && /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value) &&
+    !Number.isNaN(Date.parse(value + 'T00:00:00Z')) && new Date(value + 'T00:00:00Z').toISOString().slice(0, 10) === value;
+  function cleanPlans(value) {
+    const clean = {};
+    if (!value || value.schema !== 1 || !value.plans || typeof value.plans !== 'object') return clean;
+    Object.entries(value.plans).forEach(([day, plan]) => {
+      if (!validDate(day) || !plan || typeof plan !== 'object') return;
+      if (![10, 20, 30].includes(plan.budget) || !Array.isArray(plan.done) || !Array.isArray(plan.requiredIds)) return;
+      if (plan.done.length > 12 || plan.requiredIds.length > 6 || !plan.requiredIds.length) return;
+      if (![...plan.done, ...plan.requiredIds].every(validId)) return;
+      clean[day] = {budget: plan.budget, done: [...new Set(plan.done)], requiredIds: [...new Set(plan.requiredIds)]};
+    });
+    return clean;
+  }
+  function read() {
+    try { return cleanPlans(JSON.parse(localStorage.getItem(KEY) || 'null')); }
+    catch (_) { return {}; }
+  }
+  let plans = read();
+  let memoryOnly = false;
+  const defaultBudget = config.routes.some(route => route.budget === 20) ? 20 : config.routes[0].budget;
+  let budget = defaultBudget;
+  let done = new Set();
+  let changedManifest = false;
+  function restore() {
+    const current = plans[config.edition];
+    budget = current && config.routes.some(route => route.budget === current.budget) ? current.budget : defaultBudget;
+    done = new Set((current?.done || []).filter(id => taskIds.has(id)));
+    changedManifest = Boolean(current?.requiredIds.some(id => !taskIds.has(id)));
+  }
+  function selectedRoute() { return config.routes.find(route => route.budget === budget); }
+  function persist() {
+    plans[config.edition] = {budget, done: [...done], requiredIds: [...selectedRoute().ids]};
+    plans = Object.fromEntries(Object.entries(plans).sort(([a], [b]) => b.localeCompare(a)).slice(0, 14));
+    try {
+      localStorage.setItem(KEY, JSON.stringify({schema: 1, plans}));
+      memoryOnly = false;
+    } catch (_) { memoryOnly = true; }
+    changedManifest = false;
+  }
+  function node(tag, className, text) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+  }
+  function render(focusId) {
+    const route = selectedRoute();
+    const selected = route.ids.map(id => tasks.get(id));
+    choices.forEach(choice => choice.setAttribute('aria-pressed', String(Number(choice.dataset.budget) === budget)));
+    list.replaceChildren();
+    let focusButton;
+    let completed = 0;
+    let remaining = 0;
+    selected.forEach(task => {
+      const on = done.has(task.id);
+      if (on) completed++; else remaining += task.minutes;
+      const row = node('li');
+      row.dataset.complete = String(on);
+      const top = node('div', 'rr-task-top');
+      top.append(node('span', 'rr-task-meta', task.label + ' · 约 ' + task.minutes + ' 分钟'));
+      const button = node('button', 'rr-done', on ? '已读 ✓' : '读完了');
+      button.type = 'button';
+      if (task.id === focusId) focusButton = button;
+      button.setAttribute('aria-pressed', String(on));
+      button.setAttribute('aria-label', (on ? '取消读完标记：' : '标记读完：') + task.title);
+      button.addEventListener('click', () => {
+        if (done.has(task.id)) done.delete(task.id); else done.add(task.id);
+        persist();
+        render(task.id);
+      });
+      top.append(button);
+      const link = node('a', 'rr-task-link', task.title);
+      link.href = task.url;
+      row.append(top, link);
+      list.append(row);
+    });
+    const total = selected.reduce((sum, task) => sum + task.minutes, 0);
+    estimate.textContent = '这条路线约 ' + total + ' 分钟';
+    const finished = completed === selected.length;
+    progress.dataset.finished = String(finished);
+    progress.textContent = finished ? '今天读到这里 · 这条路线已读完' :
+      '已读 ' + completed + '/' + selected.length + ' · 剩余约 ' + remaining + ' 分钟';
+    status.textContent = memoryOnly ? '进度只在本页内保留，离开后可能丢失。' :
+      changedManifest ? '本期内容有更新，进度已按当前路线对齐。' : '';
+    const unfinished = Object.keys(plans).sort().reverse().find(day =>
+      day < config.edition && plans[day].requiredIds.some(id => !plans[day].done.includes(id)));
+    previous.hidden = !unfinished;
+    if (unfinished) {
+      previous.textContent = '继续 ' + unfinished.slice(5).replace('-', '月') + '日的未完路线 ↗';
+      previous.href = '/archive/' + unfinished.replaceAll('-', '') + '.html#reading-route';
+    } else previous.removeAttribute('href');
+    focusButton?.focus({preventScroll: true});
+  }
+  choices.forEach(choice => choice.addEventListener('click', () => {
+    budget = Number(choice.dataset.budget);
+    persist();
+    render();
+  }));
+  window.addEventListener('storage', event => {
+    if (event.key !== KEY || memoryOnly) return;
+    plans = read();
+    restore();
+    render();
+  });
+  window.addEventListener('pageshow', () => {
+    if (!memoryOnly) { plans = read(); restore(); }
+    render();
+  });
+  restore();
+  render();
+})();
+</script></body>
 </html>
