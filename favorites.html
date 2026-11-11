@@ -208,7 +208,8 @@ body.has-reading-context{padding-bottom:145px}
   const KEY='jd_favorites', grid=document.getElementById('saved-grid'), query=document.getElementById('saved-query'), empty=document.getElementById('saved-empty'), status=document.getElementById('saved-status');
   const READER_ORIGIN="http://127.0.0.1:8776";
   const ARXIV_ID=/^(\d{4})\.(\d{4,5})(?:v\d+)?$/;
-  let kind='all', reviewUpdates=null, updateRequestStarted=false;
+  const REVIEW_UPDATE_TTL=5*60*1000, REVIEW_UPDATE_RETRY=30*1000;
+  let kind='all', reviewUpdates=null, updateRequestInFlight=false, updateFreshUntil=0, updateRetryAfter=0, hasSavedPaperReview=false;
   function read(){try{const x=JSON.parse(localStorage.getItem(KEY)||'{}');return x&&typeof x==='object'&&!Array.isArray(x)?x:{};}catch(_){return {};}}
   function type(item){return /course$/.test(item.kind||'')?'course':item.kind==='article'?'article':'paper';}
   function courseLabel(item){
@@ -275,26 +276,32 @@ body.has-reading-context{padding-bottom:145px}
     const scientificChange=old.content_version!==current.content_version;
     const reviewChange=current.review_limited===true&&old.review_limited===false;
     if(!scientificChange&&!reviewChange)return null;
-    return {url:latest,limited:current.review_limited===true};
+    return {url:latest,reviewChanged:reviewChange};
   }
   function appendPaperUpdate(card,id,readingUrl){
     const update=paperUpdate(id,readingUrl);if(!update)return;
     const note=node('aside','saved-review-update');
-    note.append(node('strong','',update.limited?'审核依据有修正':'解读有更新'));
-    note.append(node('p','',update.limited?'当前审核提示结果证据不足，可查看修正后的解读。':'解读内容已有调整，可对照新版本阅读。'));
+    note.append(node('strong','',update.reviewChanged?'审核依据有修正':'解读有更新'));
+    note.append(node('p','',update.reviewChanged?'当前审核提示结果证据不足，可查看修正后的解读。':'解读内容已有调整，可对照新版本阅读。'));
     const link=node('a','','看更新解读 ↗');link.href=update.url;
     note.append(link);card.append(note);
   }
-  async function loadReviewUpdates(){
-    if(updateRequestStarted||typeof fetch!=='function')return;
-    updateRequestStarted=true;
+  async function loadReviewUpdates(retry=false){
+    const now=Date.now();
+    if(!hasSavedPaperReview||updateRequestInFlight||typeof fetch!=='function'||now<updateFreshUntil||(!retry&&now<updateRetryAfter))return;
+    updateRequestInFlight=true;
+    let refreshed=false;
     try{
       const response=await fetch('/research/review-updates.json',{cache:'no-store'});
       if(!response.ok)return;
       const value=await response.json();
       if(!value||value.schema!==1||!value.papers||typeof value.papers!=='object'||Array.isArray(value.papers))return;
-      reviewUpdates=value;render();
+      reviewUpdates=value;updateFreshUntil=Date.now()+REVIEW_UPDATE_TTL;updateRetryAfter=0;refreshed=true;render();
     }catch(_){ /* The saved original remains usable offline or without an index. */ }
+    finally{
+      updateRequestInFlight=false;
+      if(!refreshed)updateRetryAfter=Date.now()+REVIEW_UPDATE_RETRY;
+    }
   }
   function savedDate(value){const date=new Date(value);return Number.isNaN(date.getTime())?'':date.toLocaleDateString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit'});}
   function render(){
@@ -334,7 +341,8 @@ body.has-reading-context{padding-bottom:145px}
       remove.addEventListener('click',()=>{const saved=read();delete saved[key];try{localStorage.setItem(KEY,JSON.stringify(saved));render();}catch(_){status.textContent='暂时无法更新收藏。';}});
       footer.append(remove);card.append(footer);grid.append(card);
     });
-    if(all.some(([key,item])=>type(item)==='paper'&&paperReadingUrl(item.reading_url,String(item.id||key))))loadReviewUpdates();
+    hasSavedPaperReview=all.some(([key,item])=>type(item)==='paper'&&paperReadingUrl(item.reading_url,String(item.id||key)));
+    loadReviewUpdates();
   }
   const exportButton=document.getElementById('saved-export'), importButton=document.getElementById('saved-import'), fileInput=document.getElementById('saved-import-file'), backupStatus=document.getElementById('saved-backup-status');
   let pendingImport=null, importGeneration=0;
@@ -388,6 +396,10 @@ body.has-reading-context{padding-bottom:145px}
   }
   query.addEventListener('input',render);
   document.querySelectorAll('.saved-filter').forEach(button=>button.addEventListener('click',()=>{kind=button.dataset.kind;document.querySelectorAll('.saved-filter').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));render();}));
-  window.addEventListener('storage',event=>{if(event.key===KEY)render();});window.addEventListener('pageshow',render);render();
+  window.addEventListener('storage',event=>{if(event.key===KEY)render();});
+  window.addEventListener('pageshow',()=>{render();loadReviewUpdates(true);});
+  window.addEventListener('online',()=>loadReviewUpdates(true));
+  if(typeof document.addEventListener==='function')document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){render();loadReviewUpdates(true);}});
+  render();
 })();
 </script></body></html>
