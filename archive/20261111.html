@@ -602,6 +602,37 @@ body.dark .brand-mark{mix-blend-mode:normal}
   document.documentElement.style.setProperty('--fs', fs + 'px');
 })();
 </script>
+<style id="reading-route-style">
+.reading-route .heat-header{display:flex;justify-content:space-between;align-items:center}
+.rr-edition{font:11px/1.5 ui-monospace,monospace;opacity:.8}
+.rr-body{padding:11px 13px 10px}
+.rr-budgets{display:flex;gap:5px}
+.rr-budgets button{flex:1;border:1px solid var(--jd-line);background:var(--jd-paper);color:var(--jd-muted);padding:5px 3px;cursor:pointer;font:12px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;border-radius:2px}
+.rr-budgets button[aria-pressed=true]{background:var(--jd-wine-soft);border-color:var(--jd-wine);color:var(--jd-wine)}
+.rr-estimate{font-size:12px;color:var(--jd-muted);margin:8px 0 3px}
+.rr-tasks{list-style:none;padding:0;margin:0;counter-reset:route-step}
+.rr-tasks li{position:relative;border-bottom:1px solid var(--jd-line);padding:9px 0 10px 23px;counter-increment:route-step}
+.rr-tasks li::before{content:counter(route-step,decimal-leading-zero);position:absolute;left:0;top:9px;font:11px/1.7 ui-monospace,monospace;color:var(--jd-wine)}
+.rr-task-meta{font-size:10px;color:var(--jd-muted);line-height:1.6;margin-bottom:4px}
+.rr-task-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
+.rr-task-top .rr-task-meta{margin:0 0 3px}
+.rr-task-link{display:block;font-size:13px;line-height:1.65;color:var(--jd-ink);text-decoration:none;overflow-wrap:anywhere}
+.rr-task-link:hover{color:var(--jd-wine);text-decoration:underline;text-underline-offset:3px}
+.rr-done{flex:none;font:11px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;padding:1px 5px;border:1px solid var(--jd-line);border-radius:2px;background:var(--jd-paper);color:var(--jd-muted);cursor:pointer}
+.rr-done[aria-pressed=true]{color:var(--jd-wine);border-color:var(--jd-gold-line);background:var(--jd-wine-soft)}
+.rr-tasks li[data-complete=true]::before{content:"✓";font-size:13px}
+.rr-tasks li[data-complete=true] .rr-task-link{color:var(--jd-muted)}
+.rr-progress{font-size:12px;line-height:1.6;margin:9px 0 0;color:var(--jd-wine);font-variant-numeric:tabular-nums}
+.rr-progress[data-finished=true]{padding:7px 9px;border-left:2px solid var(--jd-wine);background:var(--jd-wine-soft)}
+.rr-note,.rr-status{font-size:11px;line-height:1.7;color:var(--jd-muted);margin:7px 0 0}
+.rr-status:empty,.rr-progress:empty{display:none}
+.rr-previous{display:inline-block;margin-top:8px;font-size:12px;color:var(--jd-wine);text-underline-offset:3px}
+.reading-route [hidden]{display:none!important}
+@media(prefers-reduced-motion:no-preference){
+  .rr-progress[data-finished=true]{animation:rr-finish .45s ease-out}
+  @keyframes rr-finish{from{opacity:.3;transform:translateY(3px)}to{opacity:1;transform:none}}
+}
+</style>
 </head>
 <body class="theme-wed">
 <script>
@@ -1437,12 +1468,12 @@ function shareCard(btn) {
 <p class="rr-note">时间为估算。进度由你勾选，最近 14 期路线记录保存在此浏览器。</p>
 </div></section>
   <!-- AI 研报简报 -->
-  <div class="sidebar-block ai-sidebar">
+<div class="sidebar-block ai-sidebar">
   <div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">
     <span>论文精选</span>
     <a href="/ai-digest.html#speech-priority" class="ai-sidebar-link">研报 →</a>
   </div>
-  <a href="https://arxiv.org/abs/2611.08264" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">SplatAnything：面向任意场景前馈3DGS的高斯间距归一化</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2611.08373" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">SLA：在持续预训练与下游训练中共同注入空间对齐监督</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2611.05275" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">Route Anything：通用AI系统的模型与策略路由研究</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a>
+  <a href="https://arxiv.org/abs/2611.08373" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">SLA：在持续预训练与下游训练中共同注入空间对齐监督</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2611.05275" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">Route Anything：通用AI系统的模型与策略路由研究</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2610.33127" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">Beyond Visible Speakers：结合上下文与说话人注册的主动说话人检测</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a>
 </div>
   <!-- 视角雷达 -->
   <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">本期来源地区 · 按报道计数</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">23</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:30%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">7</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">学术</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:13%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">西班牙</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:4%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#9333ea;min-width:48px;white-space:nowrap;">俄罗斯</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:4%;background:#9333ea;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div></div></div>
@@ -1499,7 +1530,7 @@ function shareCard(btn) {
   window.addEventListener('pageshow',sync);
   bind();
 })();
-</script><script id="reading-route-data" type="application/json">{"edition":"2026-11-11","tasks":[{"id":"news:0165e1d1d937d9895b38","title":"美国加州否决对该州亿万富翁征收财富税的提案","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261111.html#card-0165e1d1d937d9895b38"},{"id":"paper:paper-2611-08264:f860c2012eca","title":"SplatAnything：面向任意场景前馈3DGS的高斯间距归一化","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261111-f860c2012eca.html#paper-2611-08264"},{"id":"learn:20261111:d91b096e9386","title":"语音增强基础","kind":"learn","label":"基础课完整主线","minutes":13,"url":"/learn-20261111.html#lesson-core"},{"id":"health:20261111:health-cold-no-antibiotics","title":"感冒：别把抗生素当标配","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261111.html#health-today"}],"routes":[{"budget":10,"ids":["news:0165e1d1d937d9895b38","paper:paper-2611-08264:f860c2012eca","health:20261111:health-cold-no-antibiotics"]},{"budget":20,"ids":["news:0165e1d1d937d9895b38","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]},{"budget":30,"ids":["news:0165e1d1d937d9895b38","paper:paper-2611-08264:f860c2012eca","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]}]}</script><script>
+</script><script id="reading-route-data" type="application/json">{"edition":"2026-11-11","tasks":[{"id":"news:0165e1d1d937d9895b38","title":"美国加州否决对该州亿万富翁征收财富税的提案","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261111.html#card-0165e1d1d937d9895b38"},{"id":"paper:paper-2611-08373:content-97930e9f30e4","title":"SLA：在持续预训练与下游训练中共同注入空间对齐监督","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261111-2daa83a0547a.html#paper-2611-08373"},{"id":"learn:20261111:d91b096e9386","title":"语音增强基础","kind":"learn","label":"基础课完整主线","minutes":13,"url":"/learn-20261111.html#lesson-core"},{"id":"health:20261111:health-cold-no-antibiotics","title":"感冒：别把抗生素当标配","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261111.html#health-today"}],"routes":[{"budget":10,"ids":["news:0165e1d1d937d9895b38","paper:paper-2611-08373:content-97930e9f30e4","health:20261111:health-cold-no-antibiotics"]},{"budget":20,"ids":["news:0165e1d1d937d9895b38","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]},{"budget":30,"ids":["news:0165e1d1d937d9895b38","paper:paper-2611-08373:content-97930e9f30e4","learn:20261111:d91b096e9386","health:20261111:health-cold-no-antibiotics"]}]}</script><script>
 (() => {
   const panel = document.getElementById('reading-route');
   const source = document.getElementById('reading-route-data');

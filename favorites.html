@@ -159,6 +159,20 @@ body.hc-page{margin:0;background:var(--jd-canvas);color:var(--jd-ink);font:16px/
   .hc-wrap .hc-today .hc-more{margin-top:12px}
 }
 
+.rr-context{position:fixed;right:22px;bottom:18px;z-index:80;box-sizing:border-box;width:320px;max-width:calc(100vw - 44px);padding:12px 14px;background:var(--jd-paper);border:1px solid var(--jd-gold-line);border-top:2px solid var(--jd-wine);border-radius:3px;box-shadow:0 4px 24px rgba(40,32,29,.09);color:var(--jd-ink)}
+.rr-context-meta{margin:0 0 4px;font-size:10px;line-height:1.5;letter-spacing:.03em;color:var(--jd-muted)}
+.rr-context-title{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;margin:0 0 9px;font-size:13px;line-height:1.65;font-weight:500;overflow-wrap:anywhere}
+.rr-context-actions{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.rr-context-return{flex:none;color:var(--jd-muted);font-size:11px;line-height:1.6;text-underline-offset:3px}
+.rr-context-return:hover{color:var(--jd-wine)}
+.rr-context-complete{border:1px solid var(--jd-gold-line);border-radius:2px;background:var(--jd-wine-soft);color:var(--jd-wine);font:11px/1.6 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;padding:4px 8px;cursor:pointer}
+.rr-context-complete:hover{border-color:var(--jd-wine)}
+.rr-context :focus-visible{outline:2px solid var(--jd-wine);outline-offset:3px}
+.rr-context-status{margin:7px 0 0;font-size:11px;line-height:1.6;color:var(--jd-muted)}
+.rr-context-status:empty,.rr-context [hidden]{display:none!important}
+body.has-reading-context{padding-bottom:145px}
+@media print{.rr-context{display:none!important}body.has-reading-context{padding-bottom:0}}
+
 *{box-sizing:border-box}h1,h2,p{margin:0}.saved-intro{padding:26px 0 20px;color:var(--jd-body);font-size:16px}.saved-intro p{font-size:13px;color:var(--jd-muted);margin-top:7px}
 .saved-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:8px 0 24px}.saved-controls input{min-height:46px;min-width:0;flex:1;background:var(--jd-paper);border:1px solid var(--jd-line);padding:10px 12px;color:var(--jd-ink);font:inherit}.saved-filters{display:flex;gap:8px;flex-wrap:wrap}.saved-filter{font:inherit;min-height:44px;padding:8px 14px;border:1px solid var(--jd-line);background:var(--jd-paper);color:var(--jd-body);cursor:pointer;border-radius:2px}.saved-filter[aria-pressed=true]{background:var(--jd-wine);color:var(--jd-paper);border-color:var(--jd-wine)}
 .saved-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.saved-card{background:var(--jd-paper);border:1px solid var(--jd-line);padding:22px 24px;min-width:0}.saved-card h2{font:500 21px/1.7 'Songti SC','STSong',Georgia,serif;margin:9px 0 12px}.saved-card a{color:var(--jd-ink);text-decoration:none;overflow-wrap:anywhere}.saved-card a:hover{color:var(--jd-wine);text-decoration:underline}.saved-meta{color:var(--jd-gold);font-size:12px;letter-spacing:.04em}.saved-desc{font-size:15px;line-height:1.9;color:var(--jd-body)}.saved-footer{display:flex;justify-content:space-between;gap:12px;align-items:center;border-top:1px solid var(--jd-line);margin-top:18px;padding-top:10px;font-size:11px;color:var(--jd-muted)}.saved-remove{min-height:44px;border:0;background:transparent;color:var(--jd-muted);cursor:pointer;font:inherit;padding:8px 0 8px 12px}.saved-status{font-size:13px;color:var(--jd-muted);margin-bottom:18px}.saved-empty{padding:38px 26px;background:var(--jd-paper);border:1px solid var(--jd-line);color:var(--jd-body);line-height:2}.saved-empty a{color:var(--jd-wine)}
@@ -261,7 +275,7 @@ body.hc-page{margin:0;background:var(--jd-canvas);color:var(--jd-ink);font:16px/
     }
     matches.forEach(([key,p])=>{
       const card=node('article','saved-card'), contentType=type(p), label=contentType==='course'?courseLabel(p):contentType==='article'?'文章':'论文';
-      card.append(node('p','saved-meta',[label,p.topic||p.category].filter(Boolean).join(' · ')));
+      card.append(node('p','saved-meta',[...new Set([label,p.topic||p.category].filter(Boolean))].join(' · ')));
       const id=String(p.id||key), url=safeUrl(p.url)||(contentType==='paper'&&ARXIV_ID.test(id)?'https://arxiv.org/abs/'+id:'');
       const linkUrl=summaryOnly(p)?'':url;
       const readingUrl=contentType==='paper'?paperReadingUrl(p.reading_url,id):'';
