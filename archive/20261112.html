@@ -9,7 +9,7 @@
   style-src 'unsafe-inline' https://fonts.googleapis.com;
   font-src https://fonts.gstatic.com;
   img-src 'self' data: https:;
-  connect-src 'none';
+  connect-src 'self';
   frame-src 'none';
   object-src 'none';
   base-uri 'self';
@@ -602,6 +602,37 @@ body.dark .brand-mark{mix-blend-mode:normal}
   document.documentElement.style.setProperty('--fs', fs + 'px');
 })();
 </script>
+<style id="reading-route-style">
+.reading-route .heat-header{display:flex;justify-content:space-between;align-items:center}
+.rr-edition{font:11px/1.5 ui-monospace,monospace;opacity:.8}
+.rr-body{padding:11px 13px 10px}
+.rr-budgets{display:flex;gap:5px}
+.rr-budgets button{flex:1;border:1px solid var(--jd-line);background:var(--jd-paper);color:var(--jd-muted);padding:5px 3px;cursor:pointer;font:12px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;border-radius:2px}
+.rr-budgets button[aria-pressed=true]{background:var(--jd-wine-soft);border-color:var(--jd-wine);color:var(--jd-wine)}
+.rr-estimate{font-size:12px;color:var(--jd-muted);margin:8px 0 3px}
+.rr-tasks{list-style:none;padding:0;margin:0;counter-reset:route-step}
+.rr-tasks li{position:relative;border-bottom:1px solid var(--jd-line);padding:9px 0 10px 23px;counter-increment:route-step}
+.rr-tasks li::before{content:counter(route-step,decimal-leading-zero);position:absolute;left:0;top:9px;font:11px/1.7 ui-monospace,monospace;color:var(--jd-wine)}
+.rr-task-meta{font-size:10px;color:var(--jd-muted);line-height:1.6;margin-bottom:4px}
+.rr-task-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
+.rr-task-top .rr-task-meta{margin:0 0 3px}
+.rr-task-link{display:block;font-size:13px;line-height:1.65;color:var(--jd-ink);text-decoration:none;overflow-wrap:anywhere}
+.rr-task-link:hover{color:var(--jd-wine);text-decoration:underline;text-underline-offset:3px}
+.rr-done{flex:none;font:11px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;padding:1px 5px;border:1px solid var(--jd-line);border-radius:2px;background:var(--jd-paper);color:var(--jd-muted);cursor:pointer}
+.rr-done[aria-pressed=true]{color:var(--jd-wine);border-color:var(--jd-gold-line);background:var(--jd-wine-soft)}
+.rr-tasks li[data-complete=true]::before{content:"✓";font-size:13px}
+.rr-tasks li[data-complete=true] .rr-task-link{color:var(--jd-muted)}
+.rr-progress{font-size:12px;line-height:1.6;margin:9px 0 0;color:var(--jd-wine);font-variant-numeric:tabular-nums}
+.rr-progress[data-finished=true]{padding:7px 9px;border-left:2px solid var(--jd-wine);background:var(--jd-wine-soft)}
+.rr-note,.rr-status{font-size:11px;line-height:1.7;color:var(--jd-muted);margin:7px 0 0}
+.rr-status:empty,.rr-progress:empty{display:none}
+.rr-previous{display:inline-block;margin-top:8px;font-size:12px;color:var(--jd-wine);text-underline-offset:3px}
+.reading-route [hidden]{display:none!important}
+@media(prefers-reduced-motion:no-preference){
+  .rr-progress[data-finished=true]{animation:rr-finish .45s ease-out}
+  @keyframes rr-finish{from{opacity:.3;transform:translateY(3px)}to{opacity:1;transform:none}}
+}
+</style>
 </head>
 <body class="theme-thu">
 <script>
@@ -771,7 +802,7 @@ function shareCard(btn) {
     <details class="edition-coverage"><summary>本版生成 <time datetime="2026-11-12T17:09+08:00">北京时间 11月12日 17:09</time> <span class="edition-coverage-status">· 4 个来源待补抓</span></summary><div class="edition-coverage-body"><p>来源检查截至 11月12日 16:59 · 沿用已有结果 60 个来源</p><p>范围为本期配置的新闻 RSS 与官方栏目。</p><dl><div><dt>待补抓 · 4 个</dt><dd>Reuters、AP、虎嗅、NIH Health</dd></div><div><dt>检查成功，暂无可用条目 · 5 个</dt><dd>新华社、环球时报、中国军网、MedlinePlus、中国政府网</dd></div><div><dt>抓到可用条目 · 55 个</dt><dd>BBC 国际、BBC 财经、FT、Bloomberg、NYT 国际、NYT 财经、CNBC、The Guardian、France 24、Sky News、El País、El Mundo、Al Jazeera、Middle East Eye、Japan Times、Yonhap、SCMP、The Hindu、RT、TASS、中国新闻网、CGTN 中国、CGTN 国际、CGTN 财经、RTHK 本地、RTHK 国际、Politico EU、MIT Tech Review、The Verge、Wired、Ars Technica、TechCrunch、Defense.gov、RUSI、War on the Rocks、Game Developer、Stanford SEP、Aeon、Paris Review、Artforum、Smithsonian、科技日报、中科院科研进展、教育部工作动态、中新网社会、中新网教育、国家统计局发布、人民网高层动态、人民网国际、人民网财经、人民网军事、新华网国际、新华网科技、央视新闻中国、央视新闻国际</dd></div></dl></div></details>
   </div>
 
-  <div class="daily-nav-wrap"><a class="jd-skip-link" href="#main-content">跳到正文</a><nav class="brand-nav" aria-label="栏目导航"><a aria-current="page" href="../latest.html">每日简报</a><a href="../ai-digest.html">论文研报</a><a href="../learn.html">每日一课</a><a href="../advanced.html">进阶课堂</a><a href="../health.html">健康学堂</a><a href="../favorites.html">收藏</a><a href="../archive/">往期</a></nav>
+  <div class="daily-nav-wrap"><a class="jd-skip-link" href="#main-content">跳到正文</a><nav class="brand-nav" aria-label="栏目导航"><a aria-current="page" href="../latest.html">每日简报</a><a href="../ai-digest.html">论文研报</a><a href="../learn.html">每日一课</a><a href="../advanced.html">进阶课堂</a><a href="../health.html">健康学堂</a><a href="../favorites.html">收藏</a><a href="../archive/">往期</a><a href="/topics.html">专题串读</a></nav>
     <div class="toolbar" role="group" aria-label="阅读设置">
       <button type="button" class="tb-btn" id="btn-slim" aria-label="切换速览" aria-pressed="false">速览</button>
       <button type="button" class="tb-btn" id="btn-dark" aria-label="切换暗色模式" aria-pressed="false">暗色</button>
@@ -1574,7 +1605,7 @@ function shareCard(btn) {
   window.addEventListener('pageshow',sync);
   bind();
 })();
-</script><script id="reading-route-data" type="application/json">{"edition":"2026-11-12","tasks":[{"id":"news:e6f4420616b02b9a3c6f","title":"台湾将派宏碁创办人施振荣出席深圳APEC并呼吁“对等”","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261112.html#card-e6f4420616b02b9a3c6f"},{"id":"paper:paper-2611-08373:content-97930e9f30e4","title":"SLA：在持续预训练与下游训练中共同注入空间对齐监督","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261112-99bae79d1a4e.html#paper-2611-08373"},{"id":"learn:20261112:34fe15a2e277","title":"数据并行 DDP","kind":"learn","label":"基础课完整主线","minutes":15,"url":"/learn-20261112.html#lesson-core"},{"id":"health:20261112:health-break-sitting","title":"久坐：把走动绑到工作节点","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261112.html#health-today"}],"routes":[{"budget":10,"ids":["news:e6f4420616b02b9a3c6f","paper:paper-2611-08373:content-97930e9f30e4","health:20261112:health-break-sitting"]},{"budget":20,"ids":["news:e6f4420616b02b9a3c6f","learn:20261112:34fe15a2e277","health:20261112:health-break-sitting"]},{"budget":30,"ids":["news:e6f4420616b02b9a3c6f","paper:paper-2611-08373:content-97930e9f30e4","learn:20261112:34fe15a2e277","health:20261112:health-break-sitting"]}]}</script><script>
+</script><script id="reading-route-data" type="application/json">{"edition":"2026-11-12","tasks":[{"id":"news:e6f4420616b02b9a3c6f","title":"台湾将派宏碁创办人施振荣出席深圳APEC并呼吁“对等”","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261112.html#card-e6f4420616b02b9a3c6f"},{"id":"paper:paper-2611-08373:content-97930e9f30e4","title":"SLA：在持续预训练与下游训练中共同注入空间对齐监督","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261112-42f988f4eb73.html#paper-2611-08373"},{"id":"learn:20261112:34fe15a2e277","title":"数据并行 DDP","kind":"learn","label":"基础课完整主线","minutes":15,"url":"/learn-20261112.html#lesson-core"},{"id":"health:20261112:health-break-sitting","title":"久坐：把走动绑到工作节点","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261112.html#health-today"}],"routes":[{"budget":10,"ids":["news:e6f4420616b02b9a3c6f","paper:paper-2611-08373:content-97930e9f30e4","health:20261112:health-break-sitting"]},{"budget":20,"ids":["news:e6f4420616b02b9a3c6f","learn:20261112:34fe15a2e277","health:20261112:health-break-sitting"]},{"budget":30,"ids":["news:e6f4420616b02b9a3c6f","paper:paper-2611-08373:content-97930e9f30e4","learn:20261112:34fe15a2e277","health:20261112:health-break-sitting"]}]}</script><script>
 (() => {
   const panel = document.getElementById('reading-route');
   const source = document.getElementById('reading-route-data');
@@ -1752,5 +1783,24 @@ function shareCard(btn) {
   render();
 })();
 </script>
+<style id="newspaper-connection-style">.edition-thread{margin:7px 0 0;font:11px/1.8 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;color:var(--jd-muted,#777)}.edition-thread summary{cursor:pointer;color:inherit}.edition-thread ul{margin:7px 0;padding-left:16px}.edition-thread li{margin:5px 0}.edition-thread a{color:inherit;text-underline-offset:.2em}.edition-thread time{margin-right:7px;font-size:10px}.edition-thread .connection-topic{color:var(--jd-wine,#793f3f)}</style>
+<script id="newspaper-connections">(()=>{
+const buttons=[...document.querySelectorAll('[data-save]')];if(!buttons.length)return;
+const canonical=value=>{if(typeof value!=='string'||!/^https?:\/\/[^/]/i.test(value))return '';try{const u=new URL(value);if(!['https:','http:'].includes(u.protocol)||u.username||u.password||u.port)return '';const pairs=[...u.searchParams.entries()].filter(([k])=>!k.toLowerCase().startsWith('utm_')&&!['fbclid','gclid'].includes(k.toLowerCase()));pairs.sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:a[1]<b[1]?-1:a[1]>b[1]?1:0);u.search='';pairs.forEach(([k,v])=>u.searchParams.append(k,v));if(['#top','#content','#article'].includes(u.hash.toLowerCase()))u.hash='';return u.href}catch{return ''}};
+const internal=value=>typeof value==='string'&&/^\/(?:archive\/\d{8}\.html#card-[A-Za-z0-9_-]+|research-editions\/\d{8}-[a-f0-9]{12}\.html#[A-Za-z0-9_-]+|topics\.html#[A-Za-z0-9_-]+)$/.test(value);
+const paper=value=>{const direct=String(value||'').match(/^(\d{4}\.\d{4,5})(?:v\d+)?$/);if(direct)return direct[1];const source=canonical(value);if(!source)return '';const u=new URL(source);if(!['arxiv.org','www.arxiv.org','export.arxiv.org'].includes(u.hostname))return '';const m=u.pathname.match(/^\/(?:abs|pdf|html)\/(\d{4}\.\d{4,5})(?:v\d+)?(?:\.pdf)?\/?$/);return m?m[1]:''};
+const titleDate=document.title.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);const day=titleDate?titleDate[1]+'-'+titleDate[2].padStart(2,'0')+'-'+titleDate[3].padStart(2,'0'):'';
+fetch('/connections/index.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{
+if(!data||data.schema!==1||!Array.isArray(data.items))return;
+const byURL=new Map(),byPaper=new Map(),byAlias=new Map();data.items.forEach(r=>{if(!r||typeof r!=='object')return;const u=canonical(r.canonical_source_url);if(u){if(!byURL.has(u))byURL.set(u,[]);byURL.get(u).push(r)}if(r.kind==='paper'){const id=paper(r.canonical_source_url);if(id)byPaper.set(id,r)}(r.aliases||[]).forEach(a=>{if(!byAlias.has(a))byAlias.set(a,[]);byAlias.get(a).push(r)})});
+const seen=new Set();buttons.forEach(button=>{let item;try{item=JSON.parse(button.dataset.save)}catch{return}if(!item||item.kind==='course')return;const url=canonical(item.url);if(item.url&&!url)return;const declared=paper(item.id),sourcePaper=paper(url);if(item.kind==='paper'&&url&&(!sourcePaper||(declared&&declared!==sourcePaper)))return;const matches=url?(byURL.get(url)||[]):(byAlias.get(item.id)||[]);let row=item.kind==='paper'?byPaper.get(sourcePaper||declared):matches.length===1?matches[0]:null;if(!row)return;
+const card=button.closest('.news-card,.paper-card,article.research-pick');if(!card||seen.has(card)||card.querySelector('.edition-thread'))return;seen.add(card);
+const prior=(row.occurrences||[]).filter(o=>o&&internal(o.url)&&o.date<day).slice(0,2),related=(row.related||[]).filter(r=>r&&r.id!==row.id&&internal(r.url)).slice(0,2),topics=(row.topics||[]).filter(t=>t&&internal(t.url)).slice(0,1);if(!prior.length&&!related.length&&!topics.length)return;
+const fold=document.createElement('details'),summary=document.createElement('summary'),list=document.createElement('ul');fold.className='edition-thread';summary.textContent=prior.length?'前期刊载 · '+prior[0].date+((related.length||topics.length)?' / 同题继续读':''):'同题继续读';fold.append(summary,list);
+const line=(label,url,text)=>{const li=document.createElement('li'),a=document.createElement('a');a.href=url;a.textContent=label+' · '+text;li.append(a);list.append(li)};
+prior.forEach(o=>line('前期刊载',o.url,o.date+(o.section_only?' · 回到栏目':'')));related.forEach(r=>line(r.relation_label==='共同出处'?'共同出处':'同题报道',r.url,r.date+' '+r.title));topics.forEach(t=>line('专题串读',t.url,t.title));card.append(fold);
+});
+}).catch(()=>{});
+})();</script>
 </body>
 </html>
