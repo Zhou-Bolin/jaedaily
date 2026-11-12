@@ -602,37 +602,6 @@ body.dark .brand-mark{mix-blend-mode:normal}
   document.documentElement.style.setProperty('--fs', fs + 'px');
 })();
 </script>
-<style id="reading-route-style">
-.reading-route .heat-header{display:flex;justify-content:space-between;align-items:center}
-.rr-edition{font:11px/1.5 ui-monospace,monospace;opacity:.8}
-.rr-body{padding:11px 13px 10px}
-.rr-budgets{display:flex;gap:5px}
-.rr-budgets button{flex:1;border:1px solid var(--jd-line);background:var(--jd-paper);color:var(--jd-muted);padding:5px 3px;cursor:pointer;font:12px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;border-radius:2px}
-.rr-budgets button[aria-pressed=true]{background:var(--jd-wine-soft);border-color:var(--jd-wine);color:var(--jd-wine)}
-.rr-estimate{font-size:12px;color:var(--jd-muted);margin:8px 0 3px}
-.rr-tasks{list-style:none;padding:0;margin:0;counter-reset:route-step}
-.rr-tasks li{position:relative;border-bottom:1px solid var(--jd-line);padding:9px 0 10px 23px;counter-increment:route-step}
-.rr-tasks li::before{content:counter(route-step,decimal-leading-zero);position:absolute;left:0;top:9px;font:11px/1.7 ui-monospace,monospace;color:var(--jd-wine)}
-.rr-task-meta{font-size:10px;color:var(--jd-muted);line-height:1.6;margin-bottom:4px}
-.rr-task-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
-.rr-task-top .rr-task-meta{margin:0 0 3px}
-.rr-task-link{display:block;font-size:13px;line-height:1.65;color:var(--jd-ink);text-decoration:none;overflow-wrap:anywhere}
-.rr-task-link:hover{color:var(--jd-wine);text-decoration:underline;text-underline-offset:3px}
-.rr-done{flex:none;font:11px/1.5 -apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;padding:1px 5px;border:1px solid var(--jd-line);border-radius:2px;background:var(--jd-paper);color:var(--jd-muted);cursor:pointer}
-.rr-done[aria-pressed=true]{color:var(--jd-wine);border-color:var(--jd-gold-line);background:var(--jd-wine-soft)}
-.rr-tasks li[data-complete=true]::before{content:"✓";font-size:13px}
-.rr-tasks li[data-complete=true] .rr-task-link{color:var(--jd-muted)}
-.rr-progress{font-size:12px;line-height:1.6;margin:9px 0 0;color:var(--jd-wine);font-variant-numeric:tabular-nums}
-.rr-progress[data-finished=true]{padding:7px 9px;border-left:2px solid var(--jd-wine);background:var(--jd-wine-soft)}
-.rr-note,.rr-status{font-size:11px;line-height:1.7;color:var(--jd-muted);margin:7px 0 0}
-.rr-status:empty,.rr-progress:empty{display:none}
-.rr-previous{display:inline-block;margin-top:8px;font-size:12px;color:var(--jd-wine);text-underline-offset:3px}
-.reading-route [hidden]{display:none!important}
-@media(prefers-reduced-motion:no-preference){
-  .rr-progress[data-finished=true]{animation:rr-finish .45s ease-out}
-  @keyframes rr-finish{from{opacity:.3;transform:translateY(3px)}to{opacity:1;transform:none}}
-}
-</style>
 </head>
 <body class="theme-thu">
 <script>
@@ -703,9 +672,14 @@ function filterSec(btn, sec, jump) {
 
 // Jump to the same article from the brief, category references or the index.
 function revealNewsCard(fragment) {
-  if (!/^#card-[a-f0-9]{20}$/.test(fragment)) return;
+  if (!/^#card-[a-f0-9]{20}(?:-source-[a-f0-9]{20})?$/.test(fragment)) return;
   var card = document.getElementById(fragment.slice(1));
   if (!card) return;
+  var parent = card.parentElement;
+  while (parent) {
+    if (parent.tagName === 'DETAILS') parent.open = true;
+    parent = parent.parentElement;
+  }
   var hiddenSection = card.closest('.news-section.sec-hidden');
   if (hiddenSection) {
     var filter = document.querySelector('.filter-chip[data-sec="' + hiddenSection.id + '"]');
@@ -799,10 +773,10 @@ function shareCard(btn) {
       <span class="mast-strip-sep">·</span>
       <span class="mast-strip-item">AI 辅助整理</span>
     </div>
-    <details class="edition-coverage"><summary>本版生成 <time datetime="2026-11-12T17:09+08:00">北京时间 11月12日 17:09</time> <span class="edition-coverage-status">· 4 个来源待补抓</span></summary><div class="edition-coverage-body"><p>来源检查截至 11月12日 16:59 · 沿用已有结果 60 个来源</p><p>范围为本期配置的新闻 RSS 与官方栏目。</p><dl><div><dt>待补抓 · 4 个</dt><dd>Reuters、AP、虎嗅、NIH Health</dd></div><div><dt>检查成功，暂无可用条目 · 5 个</dt><dd>新华社、环球时报、中国军网、MedlinePlus、中国政府网</dd></div><div><dt>抓到可用条目 · 55 个</dt><dd>BBC 国际、BBC 财经、FT、Bloomberg、NYT 国际、NYT 财经、CNBC、The Guardian、France 24、Sky News、El País、El Mundo、Al Jazeera、Middle East Eye、Japan Times、Yonhap、SCMP、The Hindu、RT、TASS、中国新闻网、CGTN 中国、CGTN 国际、CGTN 财经、RTHK 本地、RTHK 国际、Politico EU、MIT Tech Review、The Verge、Wired、Ars Technica、TechCrunch、Defense.gov、RUSI、War on the Rocks、Game Developer、Stanford SEP、Aeon、Paris Review、Artforum、Smithsonian、科技日报、中科院科研进展、教育部工作动态、中新网社会、中新网教育、国家统计局发布、人民网高层动态、人民网国际、人民网财经、人民网军事、新华网国际、新华网科技、央视新闻中国、央视新闻国际</dd></div></dl></div></details>
+    <details class="edition-coverage"><summary>本版生成 <time datetime="2026-11-12T21:18+08:00">北京时间 11月12日 21:18</time> <span class="edition-coverage-status">· 4 个来源待补抓</span></summary><div class="edition-coverage-body"><p>来源检查截至 11月12日 21:12 · 沿用已有结果 60 个来源</p><p>范围为本期配置的新闻 RSS 与官方栏目。</p><dl><div><dt>待补抓 · 4 个</dt><dd>Reuters、AP、虎嗅、NIH Health</dd></div><div><dt>检查成功，暂无可用条目 · 5 个</dt><dd>新华社、环球时报、中国军网、MedlinePlus、中国政府网</dd></div><div><dt>抓到可用条目 · 55 个</dt><dd>BBC 国际、BBC 财经、FT、Bloomberg、NYT 国际、NYT 财经、CNBC、The Guardian、France 24、Sky News、El País、El Mundo、Al Jazeera、Middle East Eye、Japan Times、Yonhap、SCMP、The Hindu、RT、TASS、中国新闻网、CGTN 中国、CGTN 国际、CGTN 财经、RTHK 本地、RTHK 国际、Politico EU、MIT Tech Review、The Verge、Wired、Ars Technica、TechCrunch、Defense.gov、RUSI、War on the Rocks、Game Developer、Stanford SEP、Aeon、Paris Review、Artforum、Smithsonian、科技日报、中科院科研进展、教育部工作动态、中新网社会、中新网教育、国家统计局发布、人民网高层动态、人民网国际、人民网财经、人民网军事、新华网国际、新华网科技、央视新闻中国、央视新闻国际</dd></div></dl></div></details>
   </div>
 
-  <div class="daily-nav-wrap"><a class="jd-skip-link" href="#main-content">跳到正文</a><nav class="brand-nav" aria-label="栏目导航"><a aria-current="page" href="latest.html">每日简报</a><a href="ai-digest.html">论文研报</a><a href="learn.html">每日一课</a><a href="advanced.html">进阶课堂</a><a href="health.html">健康学堂</a><a href="favorites.html">收藏</a><a href="archive/">往期</a><a href="/topics.html">专题串读</a></nav>
+  <div class="daily-nav-wrap"><a class="jd-skip-link" href="#main-content">跳到正文</a><nav class="brand-nav" aria-label="栏目导航"><a aria-current="page" href="latest.html">每日简报</a><a href="ai-digest.html">论文研报</a><a href="learn.html">每日一课</a><a href="advanced.html">进阶课堂</a><a href="health.html">健康学堂</a><a href="favorites.html">收藏</a><a href="topics.html">专题串读</a><a href="archive/">往期</a></nav>
     <div class="toolbar" role="group" aria-label="阅读设置">
       <button type="button" class="tb-btn" id="btn-slim" aria-label="切换速览" aria-pressed="false">速览</button>
       <button type="button" class="tb-btn" id="btn-dark" aria-label="切换暗色模式" aria-pressed="false">暗色</button>
@@ -827,11 +801,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">10小时前</span>
     <button class="share-btn" title="复制分享" data-text="台湾将派宏碁创办人施振荣出席深圳APEC并呼吁“对等”" data-link="https://www.scmp.com/news/china/politics/article/3374140/taiwan-send-acer-founder-stan-shih-shenzhen-apec-calls-equal-footing" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:28a8e3566eafc368346153e8&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;台湾将派宏碁创办人施振荣出席深圳APEC并呼吁“对等”&quot;,&quot;url&quot;:&quot;https://www.scmp.com/news/china/politics/article/3374140/taiwan-send-acer-founder-stan-shih-shenzhen-apec-calls-equal-footing&quot;,&quot;one_liner&quot;:&quot;台湾下周将派电脑巨头宏碁创始人施振荣出席深圳APEC领导人峰会，并敦促北京确保其代表团受到“尊严”对待。&quot;,&quot;category&quot;:&quot;SCMP&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 02:53:34 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   <p class="news-excerpt-label">SCMP · 报道摘要 · AI 翻译</p><div class="ep-context">台湾下周将派电脑巨头宏碁创始人施振荣出席深圳APEC领导人峰会，并敦促北京确保其代表团受到“尊严”对待。</div><a href="https://www.scmp.com/news/china/politics/article/3374140/taiwan-send-acer-founder-stan-shih-shenzhen-apec-calls-equal-footing" class="read-link">→ 查看原文</a>
+  
   
 </article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">02</div><div class="ep-body"><article class="news-card featured-story" id="card-617b2a3fc64919a2e2ac" data-id="617b2a3fc64919a2e2ac" tabindex="-1" style="scroll-margin-top:80px;">
   <div class="card-title">随着股市持续上涨，印度重返全球五大股票市场之列</div>
@@ -842,11 +817,12 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">10小时前</span>
     <button class="share-btn" title="复制分享" data-text="随着股市持续上涨，印度重返全球五大股票市场之列" data-link="https://www.bloomberg.com/news/newsletters/2026-11-12/india-reclaims-spot-among-world-s-five-biggest-stock-markets-as-rally-extends" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:58484733c7890261d85de7c6&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;随着股市持续上涨，印度重返全球五大股票市场之列&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/newsletters/2026-11-12/india-reclaims-spot-among-world-s-five-biggest-stock-markets-as-rally-extends&quot;,&quot;one_liner&quot;:&quot;其市值攀升至5.4万亿美元，超越台湾。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 02:30:33 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   <p class="news-excerpt-label">Bloomberg · 报道摘要 · AI 翻译</p><div class="ep-context">其市值攀升至5.4万亿美元，超越台湾。</div><a href="https://www.bloomberg.com/news/newsletters/2026-11-12/india-reclaims-spot-among-world-s-five-biggest-stock-markets-as-rally-extends" class="read-link">→ 查看原文</a>
+  
   
 </article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">03</div><div class="ep-body"><article class="news-card featured-story" id="card-3484796aae34d34c354b" data-id="3484796aae34d34c354b" tabindex="-1" style="scroll-margin-top:80px;">
   <div class="card-title">印度尼西亚副总统因学历争议辞职</div>
@@ -857,31 +833,49 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">10小时前</span>
     <button class="share-btn" title="复制分享" data-text="印度尼西亚副总统因学历争议辞职" data-link="https://www.aljazeera.com/video/newsfeed/2026/11/12/indonesian-vp-resigns-over-education-qualification-row?traffic_source=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:4c43836cc07753ce8c93d492&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;印度尼西亚副总统因学历争议辞职&quot;,&quot;url&quot;:&quot;https://www.aljazeera.com/video/newsfeed/2026/11/12/indonesian-vp-resigns-over-education-qualification-row?traffic_source=rss&quot;,&quot;one_liner&quot;:&quot;印度尼西亚副总统吉布兰·拉卡布明·拉卡因其学历资格引发的争议宣布辞职。&quot;,&quot;category&quot;:&quot;Al Jazeera&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 02:22:48 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   <p class="news-excerpt-label">Al Jazeera · 报道摘要 · AI 翻译</p><div class="ep-context">印度尼西亚副总统吉布兰·拉卡布明·拉卡因其学历资格引发的争议宣布辞职。</div><a href="https://www.aljazeera.com/video/newsfeed/2026/11/12/indonesian-vp-resigns-over-education-qualification-row?traffic_source=rss" class="read-link">→ 查看原文</a>
   
-</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">04</div><div class="ep-body"><article class="news-card featured-story" id="card-7407d21f6e4db38fbb33" data-id="7407d21f6e4db38fbb33" tabindex="-1" style="scroll-margin-top:80px;">
-  <div class="card-title">美联航禁止人工智能代理预订机票</div>
+  
+</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">04</div><div class="ep-body"><article class="news-card featured-story" id="card-9409597f8da658f8f123" data-id="9409597f8da658f8f123" tabindex="-1" style="scroll-margin-top:80px;">
+  <div class="card-title">北京举行大会纪念孙中山诞辰160周年 习近平发表讲话</div>
   
   <div class="card-meta">
     
-    <span style="font-size:10px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;NYT 财经</span>
+    <span style="font-size:10px;color:#0f766e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f766e18;border-radius:999px;padding:1px 7px;">🇭🇰&thinsp;RTHK 本地</span>
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">9小时前</span>
-    <button class="share-btn" title="复制分享" data-text="美联航禁止人工智能代理预订机票" data-link="https://www.nytimes.com/2026/11/11/business/united-airlines-ai-agents-booking-flights.html" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e9145615edb184eb8f9d4579&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美联航禁止人工智能代理预订机票&quot;,&quot;url&quot;:&quot;https://www.nytimes.com/2026/11/11/business/united-airlines-ai-agents-booking-flights.html&quot;,&quot;one_liner&quot;:&quot;该航司表示，为保护客户信息并遵守监管规定，正禁止数字助手登录账户及管理预订。&quot;,&quot;category&quot;:&quot;NYT 财经&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 23:15:31 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+    <span class="pub-time">10小时前</span>
+    <button class="share-btn" title="复制分享" data-text="北京举行大会纪念孙中山诞辰160周年 习近平发表讲话" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877495-20261112.htm" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:dab0a453f45107007464291a&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;北京举行大会纪念孙中山诞辰160周年 习近平发表讲话&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877495-20261112.htm&quot;,&quot;one_liner&quot;:&quot;纪念孙中山诞辰160周年大会在京举行。 据央视报道，习近平出席并发表重要讲话，李强、赵乐际、王沪宁、蔡奇、丁薛祥、李希出席。&quot;,&quot;category&quot;:&quot;RTHK 本地&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 10:21:16 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
-  <p class="news-excerpt-label">NYT 财经 · 报道摘要 · AI 翻译</p><div class="ep-context">该航司表示，为保护客户信息并遵守监管规定，正禁止数字助手登录账户及管理预订。</div><a href="https://www.nytimes.com/2026/11/11/business/united-airlines-ai-agents-booking-flights.html" class="read-link">→ 查看原文</a>
+  <p class="news-excerpt-label">RTHK 本地 · 报道摘要 · AI 翻译</p><div class="ep-context">纪念孙中山诞辰160周年大会在京举行。 据央视报道，习近平出席并发表重要讲话，李强、赵乐际、王沪宁、蔡奇、丁薛祥、李希出席。</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877495-20261112.htm" class="read-link">→ 查看原文</a>
+  
+  
+</article></div></div><div class="ep-card"><div class="ep-num" aria-hidden="true">05</div><div class="ep-body"><article class="news-card featured-story" id="card-cfe095d194e0e3a275f2" data-id="cfe095d194e0e3a275f2" tabindex="-1" style="scroll-margin-top:80px;">
+  <div class="card-title">报道称董事会拟讨论黄仁勋去留，英伟达股价暴跌</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#065f46;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#065f4618;border-radius:999px;padding:1px 7px;">🇶🇦&thinsp;Al Jazeera</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">12小时前</span>
+    <button class="share-btn" title="复制分享" data-text="报道称董事会拟讨论黄仁勋去留，英伟达股价暴跌" data-link="https://www.aljazeera.com/economy/2026/11/12/nvidia-shares-plunge-amid-reports-board-to-discuss-ceo-huangs-future?traffic_source=rss" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:03907bc0457aba9c6b6e3970&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;报道称董事会拟讨论黄仁勋去留，英伟达股价暴跌&quot;,&quot;url&quot;:&quot;https://www.aljazeera.com/economy/2026/11/12/nvidia-shares-plunge-amid-reports-board-to-discuss-ceo-huangs-future?traffic_source=rss&quot;,&quot;one_liner&quot;:&quot;对联合创始人职位变动的猜测导致该芯片巨头股价大跌逾8%。&quot;,&quot;category&quot;:&quot;Al Jazeera&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 00:43:26 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  <p class="news-excerpt-label">Al Jazeera · 报道摘要 · AI 翻译</p><div class="ep-context">对联合创始人职位变动的猜测导致该芯片巨头股价大跌逾8%。</div><a href="https://www.aljazeera.com/economy/2026/11/12/nvidia-shares-plunge-amid-reports-board-to-discuss-ceo-huangs-future?traffic_source=rss" class="read-link">→ 查看原文</a>
+  
   
 </article></div></div></div></div>
       
       
-      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年11月12日</div><div class="slim-list"><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">政治 · SCMP</div><a href="https://www.scmp.com/news/china/politics/article/3374140/taiwan-send-acer-founder-stan-shih-shenzhen-apec-calls-equal-footing" class="slim-title" target="_blank" rel="noopener">台湾将派宏碁创办人施振荣出席深圳APEC并呼吁“对等”</a><p class="slim-excerpt">台湾下周将派电脑巨头宏碁创始人施振荣出席深圳APEC领导人峰会，并敦促北京确保其代表团受到“尊严”对待。</p></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">财经 · Bloomberg</div><a href="https://www.bloomberg.com/news/newsletters/2026-11-12/india-reclaims-spot-among-world-s-five-biggest-stock-markets-as-rally-extends" class="slim-title" target="_blank" rel="noopener">随着股市持续上涨，印度重返全球五大股票市场之列</a><p class="slim-excerpt">其市值攀升至5.4万亿美元，超越台湾。</p></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">政治 · Al Jazeera</div><a href="https://www.aljazeera.com/video/newsfeed/2026/11/12/indonesian-vp-resigns-over-education-qualification-row?traffic_source=rss" class="slim-title" target="_blank" rel="noopener">印度尼西亚副总统因学历争议辞职</a><p class="slim-excerpt">印度尼西亚副总统吉布兰·拉卡布明·拉卡因其学历资格引发的争议宣布辞职。</p></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">财经 · NYT 财经</div><a href="https://www.nytimes.com/2026/11/11/business/united-airlines-ai-agents-booking-flights.html" class="slim-title" target="_blank" rel="noopener">美联航禁止人工智能代理预订机票</a><p class="slim-excerpt">该航司表示，为保护客户信息并遵守监管规定，正禁止数字助手登录账户及管理预订。</p></div></div></div></div>
+      <div class="slim-view" id="slim-view"><div class="slim-header">30 秒速览 · 2026年11月12日</div><div class="slim-list"><div class="slim-item"><div class="slim-num">01</div><div class="slim-body"><div class="slim-cat">政治 · SCMP</div><a href="https://www.scmp.com/news/china/politics/article/3374140/taiwan-send-acer-founder-stan-shih-shenzhen-apec-calls-equal-footing" class="slim-title" target="_blank" rel="noopener">台湾将派宏碁创办人施振荣出席深圳APEC并呼吁“对等”</a><p class="slim-excerpt">台湾下周将派电脑巨头宏碁创始人施振荣出席深圳APEC领导人峰会，并敦促北京确保其代表团受到“尊严”对待。</p></div></div><div class="slim-item"><div class="slim-num">02</div><div class="slim-body"><div class="slim-cat">财经 · Bloomberg</div><a href="https://www.bloomberg.com/news/newsletters/2026-11-12/india-reclaims-spot-among-world-s-five-biggest-stock-markets-as-rally-extends" class="slim-title" target="_blank" rel="noopener">随着股市持续上涨，印度重返全球五大股票市场之列</a><p class="slim-excerpt">其市值攀升至5.4万亿美元，超越台湾。</p></div></div><div class="slim-item"><div class="slim-num">03</div><div class="slim-body"><div class="slim-cat">政治 · Al Jazeera</div><a href="https://www.aljazeera.com/video/newsfeed/2026/11/12/indonesian-vp-resigns-over-education-qualification-row?traffic_source=rss" class="slim-title" target="_blank" rel="noopener">印度尼西亚副总统因学历争议辞职</a><p class="slim-excerpt">印度尼西亚副总统吉布兰·拉卡布明·拉卡因其学历资格引发的争议宣布辞职。</p></div></div><div class="slim-item"><div class="slim-num">04</div><div class="slim-body"><div class="slim-cat">中国 · RTHK 本地</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877495-20261112.htm" class="slim-title" target="_blank" rel="noopener">北京举行大会纪念孙中山诞辰160周年 习近平发表讲话</a><p class="slim-excerpt">纪念孙中山诞辰160周年大会在京举行。 据央视报道，习近平出席并发表重要讲话，李强、赵乐际、王沪宁、蔡奇、丁薛祥、李希出席。</p></div></div><div class="slim-item"><div class="slim-num">05</div><div class="slim-body"><div class="slim-cat">综合 · Al Jazeera</div><a href="https://www.aljazeera.com/economy/2026/11/12/nvidia-shares-plunge-amid-reports-board-to-discuss-ceo-huangs-future?traffic_source=rss" class="slim-title" target="_blank" rel="noopener">报道称董事会拟讨论黄仁勋去留，英伟达股价暴跌</a><p class="slim-excerpt">对联合创始人职位变动的猜测导致该芯片巨头股价大跌逾8%。</p></div></div></div></div>
       
 <section class="news-section" id="politics">
   <div class="sec-header" style="color:#8a1212;">
@@ -890,7 +884,23 @@ function shareCard(btn) {
     <span class="sec-count">6 条</span>
   </div>
   
-  <div class="news-grid"><article class="news-card" id="card-4f4178d61048c03c82d5" data-id="4f4178d61048c03c82d5" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="news-grid"><article class="news-card" id="card-0a6e33146a5e0013f404" data-id="0a6e33146a5e0013f404" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
+  <div class="card-title">斯科特·科隆赢得密西西比州具历史意义的参议员选举</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#cc5500;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#cc550018;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;FT</span>
+    <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多媒体报道 · 3</span>
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">12小时前</span>
+    <button class="share-btn" title="复制分享" data-text="斯科特·科隆赢得密西西比州具历史意义的参议员选举" data-link="https://www.ft.com/content/ed93bd25-3ae4-4845-ac2e-ccb6e9c741e6?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f440693e18ebffee337372f5&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;斯科特·科隆赢得密西西比州具历史意义的参议员选举&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/ed93bd25-3ae4-4845-ac2e-ccb6e9c741e6?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;这位民主党人成为自重建时代以来首位代表该州的非裔人士。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 00:24:56 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文 · 2篇延伸报道</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">这位民主党人成为自重建时代以来首位代表该州的非裔人士。</div><div class="related-row">· <span style="font-size:9px;color:#b91c1c;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#b91c1c18;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;BBC 国际</span> <span style="font-size:9px;color:#0f4880;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f488018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;CNBC</span></div><ul class="news-related-links"><li class="news-related-report" id="card-0a6e33146a5e0013f404-source-8a327b023a7432031116" data-published-item="{&quot;id&quot;:&quot;article:6b0875495d9978f4cce3b8cd&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cw7vppyr80eeo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;title_zh&quot;:&quot;Democrat Scott Colom seals historic win in Mississippi Senate race&quot;,&quot;title_en&quot;:&quot;&quot;,&quot;source&quot;:&quot;BBC 国际&quot;,&quot;one_liner&quot;:&quot;Colom is the first black person from the southern state elected to the US Senate in over 140 years.&quot;}"><a class="read-link" href="https://www.bbc.co.uk/news/articles/cw7vppyr80eeo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">BBC 国际：<span class="related-report-title">Democrat Scott Colom seals historic win in Mississippi Senate race</span> ↗</a></li><li class="news-related-report" id="card-0a6e33146a5e0013f404-source-be78ac0dcca713c51112" data-published-item="{&quot;id&quot;:&quot;article:4239ed5faa4196861b817b5d&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;url&quot;:&quot;https://www.cnbc.com/2026/11/10/mississippi-senate-scott-colom-hyde-smith.html&quot;,&quot;title_zh&quot;:&quot;Mississippi Senate: Scott Colom leads Hyde-Smith by more than 3,000 votes&quot;,&quot;title_en&quot;:&quot;&quot;,&quot;source&quot;:&quot;CNBC&quot;,&quot;one_liner&quot;:&quot;Tuesday was the deadline for provisional ballots to be resolved in Mississippi, and the deadline for the receipt of mail-in absentee ballots.&quot;}"><a class="read-link" href="https://www.cnbc.com/2026/11/10/mississippi-senate-scott-colom-hyde-smith.html" target="_blank" rel="noopener">CNBC：<span class="related-report-title">Mississippi Senate: Scott Colom leads Hyde-Smith by more than 3,000 votes</span> ↗</a></li></ul><a href="https://www.ft.com/content/ed93bd25-3ae4-4845-ac2e-ccb6e9c741e6?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
+  
+</article><article class="news-card" id="card-4f4178d61048c03c82d5" data-id="4f4178d61048c03c82d5" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">11月12日最新原油市场动态与分析</div>
   
   <div class="card-meta">
@@ -899,12 +909,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">10小时前</span>
+    <span class="pub-time">14小时前</span>
     <button class="share-btn" title="复制分享" data-text="11月12日最新原油市场动态与分析" data-link="https://www.bloomberg.com/news/articles/2026-11-11/latest-oil-market-news-and-analysis-for-nov-12" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:496edad85ac42d5dcefc0127&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;11月12日最新原油市场动态与分析&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-11/latest-oil-market-news-and-analysis-for-nov-12&quot;,&quot;one_liner&quot;:&quot;因中东产量上升且美伊对抗保持缓和，油价跌向两个月低点。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 23:04:06 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">因中东产量上升且美伊对抗保持缓和，油价跌向两个月低点。</div><a href="https://www.bloomberg.com/news/articles/2026-11-11/latest-oil-market-news-and-analysis-for-nov-12" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-2c1350c352a934258ef6" data-id="2c1350c352a934258ef6" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">FT报道：美民主党誓言揭露特朗普执政期“绝对滚滚而来的腐败”</div>
   
@@ -914,12 +925,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">12小时前</span>
+    <span class="pub-time">16小时前</span>
     <button class="share-btn" title="复制分享" data-text="FT报道：美民主党誓言揭露特朗普执政期“绝对滚滚而来的腐败”" data-link="https://www.ft.com/content/3d3fcb94-143d-446c-8b09-b1f830ca97e9?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:326997166ed5b9b0d205c87d&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;FT报道：美民主党誓言揭露特朗普执政期“绝对滚滚而来的腐败”&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/3d3fcb94-143d-446c-8b09-b1f830ca97e9?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 21:01:55 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>原文与出处</summary><div class="card-expand-body"><p class="news-attribution-note">指控与调查不等于事实认定，请参阅原媒体报道。</p><p class="news-original-title">原标题：Democrats pledge to expose ‘absolute avalanche of corruption’ under Trump</p><a href="https://www.ft.com/content/3d3fcb94-143d-446c-8b09-b1f830ca97e9?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-83c49dc96cc4820aa615" data-id="83c49dc96cc4820aa615" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">希利称财政部正讨论为英国家庭提供的“最坏情况”能源支持</div>
   
@@ -929,12 +941,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">14小时前</span>
+    <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="希利称财政部正讨论为英国家庭提供的“最坏情况”能源支持" data-link="https://www.ft.com/content/22798c90-e999-4564-924a-4f04343cac3d?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5ce2b8582da0dc94e3a2bbbf&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;希利称财政部正讨论为英国家庭提供的“最坏情况”能源支持&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/22798c90-e999-4564-924a-4f04343cac3d?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;英国财政大臣正为能源危机加剧做准备，并称结束伊朗战争将是对英国经济的最大提振。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 18:47:25 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">英国财政大臣正为能源危机加剧做准备，并称结束伊朗战争将是对英国经济的最大提振。</div><a href="https://www.ft.com/content/22798c90-e999-4564-924a-4f04343cac3d?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-21c6053b89ee12d7ec9c" data-id="21c6053b89ee12d7ec9c" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">俄乌会谈转向战后安全，但未取得突破</div>
   
@@ -944,12 +957,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">15小时前</span>
+    <span class="pub-time">19小时前</span>
     <button class="share-btn" title="复制分享" data-text="俄乌会谈转向战后安全，但未取得突破" data-link="https://www.bbc.co.uk/news/articles/ck792we7zrz4o?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:7dfc53730f00e86aeeb4dc5f&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;俄乌会谈转向战后安全，但未取得突破&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/ck792we7zrz4o?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;在阿布扎比举行的会谈聚焦欧洲安全框架，美方特使定于周四分别会见普京与泽连斯基。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 18:04:58 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">在阿布扎比举行的会谈聚焦欧洲安全框架，美方特使定于周四分别会见普京与泽连斯基。</div><a href="https://www.bbc.co.uk/news/articles/ck792we7zrz4o?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-5b100db5be6a25ee8748" data-id="5b100db5be6a25ee8748" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">执政联盟现裂痕迹象，印度尼西亚副总统辞职</div>
   
@@ -959,27 +973,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">16小时前</span>
+    <span class="pub-time">20小时前</span>
     <button class="share-btn" title="复制分享" data-text="执政联盟现裂痕迹象，印度尼西亚副总统辞职" data-link="https://www.bbc.co.uk/news/articles/cmvgxgz87qqro?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e636ac149ba8b88439129136&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;执政联盟现裂痕迹象，印度尼西亚副总统辞职&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cmvgxgz87qqro?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;该消息正值普拉博沃面临动荡局势之际，他与前任佐科·维多多的分歧日益加深。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 16:38:07 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">该消息正值普拉博沃面临动荡局势之际，他与前任佐科·维多多的分歧日益加深。</div><a href="https://www.bbc.co.uk/news/articles/cmvgxgz87qqro?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-b5916f462d9a3c5ba150" data-id="b5916f462d9a3c5ba150" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">王毅同古巴特使兼外长罗德里格斯举行会谈</div>
   
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#991b1b;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#991b1b18;border-radius:999px;padding:1px 7px;">🇨🇳&thinsp;人民网高层动态</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">11-11 08:00</span>
-    <button class="share-btn" title="复制分享" data-text="王毅同古巴特使兼外长罗德里格斯举行会谈" data-link="http://politics.people.com.cn/n1/2026/1111/c1001-40832120.html" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:069170e93e9e752623cee018&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;王毅同古巴特使兼外长罗德里格斯举行会谈&quot;,&quot;url&quot;:&quot;http://politics.people.com.cn/n1/2026/1111/c1001-40832120.html&quot;,&quot;one_liner&quot;:&quot;中共中央政治局委员、外交部长王毅在北京同古巴党和政府特使、古共中央政治局委员、外交部长罗德里格斯举行会谈。&quot;,&quot;category&quot;:&quot;人民网高层动态&quot;,&quot;published&quot;:&quot;2026-11-11&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">中共中央政治局委员、外交部长王毅在北京同古巴党和政府特使、古共中央政治局委员、外交部长罗德里格斯举行会谈。</div><a href="http://politics.people.com.cn/n1/2026/1111/c1001-40832120.html" class="read-link">→ 查看原文</a></div></details>
 </article></div>
 </section>
       
@@ -999,12 +999,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">10小时前</span>
     <button class="share-btn" title="复制分享" data-text="台湾拟设主权财富基金，力争年底前提出法案" data-link="https://www.bloomberg.com/news/articles/2026-11-12/taiwan-drafts-plans-for-wealth-fund-aims-for-bill-by-year-end" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:41d11e61b904a936490da859&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;台湾拟设主权财富基金，力争年底前提出法案&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-12/taiwan-drafts-plans-for-wealth-fund-aims-for-bill-by-year-end&quot;,&quot;one_liner&quot;:&quot;台湾正起草立法以设立初始资本约300亿新台币（约合9.12亿美元）的新主权财富基金，推进战略投资计划。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 02:40:18 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">台湾正起草立法以设立初始资本约300亿新台币（约合9.12亿美元）的新主权财富基金，推进战略投资计划。</div><a href="https://www.bloomberg.com/news/articles/2026-11-12/taiwan-drafts-plans-for-wealth-fund-aims-for-bill-by-year-end" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-6ddf6d1f2ccc2e21d3a5" data-id="6ddf6d1f2ccc2e21d3a5" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">首席未来官：雪佛龙的埃米尔·博纳｜耐心支撑前行</div>
   
@@ -1014,12 +1015,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">10小时前</span>
     <button class="share-btn" title="复制分享" data-text="首席未来官：雪佛龙的埃米尔·博纳｜耐心支撑前行" data-link="https://www.bloomberg.com/news/videos/2026-11-12/chief-future-officer-eimear-bonner-chevron-video" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:86d7a886341d2e1c93b3e27f&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;首席未来官：雪佛龙的埃米尔·博纳｜耐心支撑前行&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/videos/2026-11-12/chief-future-officer-eimear-bonner-chevron-video&quot;,&quot;one_liner&quot;:&quot;首席财务官在制定企业战略以应对未来挑战中扮演关键角色。 本期节目介绍了雪佛龙首席财务官埃米尔·博纳。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 02:36:30 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">首席财务官在制定企业战略以应对未来挑战中扮演关键角色。 本期节目介绍了雪佛龙首席财务官埃米尔·博纳。</div><a href="https://www.bloomberg.com/news/videos/2026-11-12/chief-future-officer-eimear-bonner-chevron-video" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-44bb6e36b3770d221947" data-id="44bb6e36b3770d221947" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">紧急谈判仍在继续，庞德兰获更多时间敲定挽救协议</div>
   
@@ -1029,12 +1031,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">8小时前</span>
+    <span class="pub-time">12小时前</span>
     <button class="share-btn" title="复制分享" data-text="紧急谈判仍在继续，庞德兰获更多时间敲定挽救协议" data-link="https://www.bbc.co.uk/news/articles/c3702jjkez4ko?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:763502d052f076c55adbc372&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;紧急谈判仍在继续，庞德兰获更多时间敲定挽救协议&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/c3702jjkez4ko?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;英国广播公司获悉，正濒临破产托管的折扣连锁店庞德兰将获得更多时间寻找买家。&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 00:49:05 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">英国广播公司获悉，正濒临破产托管的折扣连锁店庞德兰将获得更多时间寻找买家。</div><a href="https://www.bbc.co.uk/news/articles/c3702jjkez4ko?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-c0a3e4495913de6befb2" data-id="c0a3e4495913de6befb2" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">印度能否清除德里的致命雾霾？</div>
   
@@ -1044,12 +1047,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">9小时前</span>
+    <span class="pub-time">13小时前</span>
     <button class="share-btn" title="复制分享" data-text="印度能否清除德里的致命雾霾？" data-link="https://www.ft.com/content/e58eec04-845b-4330-8d01-69b0313a60c1?syn-25a6b1a6=1" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:41a055570d2c81b76b15e833&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;印度能否清除德里的致命雾霾？&quot;,&quot;url&quot;:&quot;https://www.ft.com/content/e58eec04-845b-4330-8d01-69b0313a60c1?syn-25a6b1a6=1&quot;,&quot;one_liner&quot;:&quot;当地居民质问，一个能将航天器送上月球的国家，为何无法防止首都民众遭受劣质空气窒息之苦。&quot;,&quot;category&quot;:&quot;FT&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 00:08:12 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">当地居民质问，一个能将航天器送上月球的国家，为何无法防止首都民众遭受劣质空气窒息之苦。</div><a href="https://www.ft.com/content/e58eec04-845b-4330-8d01-69b0313a60c1?syn-25a6b1a6=1" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-726325adcc19d14e0e9d" data-id="726325adcc19d14e0e9d" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">从巴黎到华盛顿：写字楼为何被改造成公寓？</div>
   
@@ -1059,12 +1063,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">9小时前</span>
+    <span class="pub-time">13小时前</span>
     <button class="share-btn" title="复制分享" data-text="从巴黎到华盛顿：写字楼为何被改造成公寓？" data-link="https://www.bbc.co.uk/news/articles/cm89ze7qepvyo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:bef7280a8cf3e953a05b69a3&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;从巴黎到华盛顿：写字楼为何被改造成公寓？&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/cm89ze7qepvyo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;低入住率的写字楼正在被改建为公寓住宅。&quot;,&quot;category&quot;:&quot;BBC 财经&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 00:05:40 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">低入住率的写字楼正在被改建为公寓住宅。</div><a href="https://www.bbc.co.uk/news/articles/cm89ze7qepvyo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  
 </article></div>
 </section>
       
@@ -1084,12 +1089,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">10小时前</span>
     <button class="share-btn" title="复制分享" data-text="因押注业务增长，英伟达动荡推动AMD与博通股价上涨" data-link="https://www.bloomberg.com/news/articles/2026-11-12/nvidia-turmoil-lifts-amd-broadcom-on-bets-for-business-gains" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:2c0b1c35072e91ffad462dcf&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;因押注业务增长，英伟达动荡推动AMD与博通股价上涨&quot;,&quot;url&quot;:&quot;https://www.bloomberg.com/news/articles/2026-11-12/nvidia-turmoil-lifts-amd-broadcom-on-bets-for-business-gains&quot;,&quot;one_liner&quot;:&quot;英伟达管理层动荡提振潜在受益者，超威半导体、博通及Alphabet盘后上涨，市场押注它们可能从该芯片商处赢得业务。&quot;,&quot;category&quot;:&quot;Bloomberg&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 02:56:15 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">英伟达管理层动荡提振潜在受益者，超威半导体、博通及Alphabet盘后上涨，市场押注它们可能从该芯片商处赢得业务。</div><a href="https://www.bloomberg.com/news/articles/2026-11-12/nvidia-turmoil-lifts-amd-broadcom-on-bets-for-business-gains" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-49208648e0bb34976bb2" data-id="49208648e0bb34976bb2" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">《下载》技术周刊：空泛的AI气候主张与英伟达调查</div>
   
@@ -1105,6 +1111,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">本期科技简报包含观点评论，指出AI助力气候应对的论点尚未确立，并跟进英伟达相关调查。</div><a href="https://www.technologyreview.com/2026/11/09/1148176/the-download-empty-ai-climate-claims-and-an-nvidia-investigation/" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-2a8f57eb5f1aa48fff68" data-id="2a8f57eb5f1aa48fff68" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">利用人工智能驱动特种化学品行业创新</div>
   
@@ -1120,6 +1127,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">随着企业寻求利用AI、云计算和先进建模加速研发，主要挑战在于如何将新技术与可靠数据及专业科学认知有效连接。</div><a href="https://www.technologyreview.com/2026/11/09/1147654/innovating-with-ai-in-the-special-chemicals-industry/" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-0af3c459eb8b505bda8f" data-id="0af3c459eb8b505bda8f" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">人工智能有利于气候变化的论证尚未成立</div>
   
@@ -1135,21 +1143,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">各国本周在土耳其安塔利亚出席联合国气候变化大会，人工智能可能成为核心议题，东道国已呼吁各国探讨相关问题。</div><a href="https://www.technologyreview.com/2026/11/09/1148166/the-climate-case-for-ai-has-not-been-made/" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-0ec37e1fb49fb260caa1" data-id="0ec37e1fb49fb260caa1" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
-  <div class="card-title">报道称OpenAI季度营收首次突破100亿美元</div>
   
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#0a8a00;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0a8a0018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;TechCrunch</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">16小时前</span>
-    <button class="share-btn" title="复制分享" data-text="报道称OpenAI季度营收首次突破100亿美元" data-link="https://techcrunch.com/2026/11/11/openais-quarterly-revenue-reportedly-crosses-10b-for-the-first-time/" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f31248890af40385bfab1b68&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;报道称OpenAI季度营收首次突破100亿美元&quot;,&quot;url&quot;:&quot;https://techcrunch.com/2026/11/11/openais-quarterly-revenue-reportedly-crosses-10b-for-the-first-time/&quot;,&quot;one_liner&quot;:&quot;100亿美元的销售额意味着较该公司第二季度录得的67亿美元营收大幅增长了近50%。&quot;,&quot;category&quot;:&quot;TechCrunch&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 16:14:44 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">100亿美元的销售额意味着较该公司第二季度录得的67亿美元营收大幅增长了近50%。</div><a href="https://techcrunch.com/2026/11/11/openais-quarterly-revenue-reportedly-crosses-10b-for-the-first-time/" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-6fe632083098a4811d41" data-id="6fe632083098a4811d41" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
   <div class="card-title">Plurai旨在通过辅助自动驾驶汽车上路的方法来优化AI代理表现</div>
   
@@ -1159,12 +1153,29 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">19小时前</span>
+    <span class="pub-time">23小时前</span>
     <button class="share-btn" title="复制分享" data-text="Plurai旨在通过辅助自动驾驶汽车上路的方法来优化AI代理表现" data-link="https://techcrunch.com/2026/11/11/plurai-wants-to-help-ai-agents-work-better-using-the-same-approach-that-helped-get-self-driving-cars-to-roads/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:274edf310d65fc26118a3caa&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Plurai旨在通过辅助自动驾驶汽车上路的方法来优化AI代理表现&quot;,&quot;url&quot;:&quot;https://techcrunch.com/2026/11/11/plurai-wants-to-help-ai-agents-work-better-using-the-same-approach-that-helped-get-self-driving-cars-to-roads/&quot;,&quot;one_liner&quot;:&quot;就像训练自动驾驶汽车的端到端模型一样，AI代理也是在不可预测环境中运行的概率系统。&quot;,&quot;category&quot;:&quot;TechCrunch&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 14:00:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">就像训练自动驾驶汽车的端到端模型一样，AI代理也是在不可预测环境中运行的概率系统。</div><a href="https://techcrunch.com/2026/11/11/plurai-wants-to-help-ai-agents-work-better-using-the-same-approach-that-helped-get-self-driving-cars-to-roads/" class="read-link">→ 查看原文</a></div></details>
+  
+</article><article class="news-card" id="card-a18345157c91ace4141f" data-id="a18345157c91ace4141f" tabindex="-1" style="border-left:3px solid #1e293b;scroll-margin-top:80px;">
+  <div class="card-title">Anthropic的IPO与人工智能圈子化商业模式</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#111111;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#11111118;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;NYT 财经</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">23小时前</span>
+    <button class="share-btn" title="复制分享" data-text="Anthropic的IPO与人工智能圈子化商业模式" data-link="https://www.nytimes.com/2026/11/11/business/dealbook/anthropic-ipo-nvidia.html" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f78f50b6f8bb8ff9a29489cb&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;Anthropic的IPO与人工智能圈子化商业模式&quot;,&quot;url&quot;:&quot;https://www.nytimes.com/2026/11/11/business/dealbook/anthropic-ipo-nvidia.html&quot;,&quot;one_liner&quot;:&quot;这家人工智能巨头即将上市，其部分最大投资者同时也是其最重要的商业合作伙伴。&quot;,&quot;category&quot;:&quot;NYT 财经&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 13:40:36 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">这家人工智能巨头即将上市，其部分最大投资者同时也是其最重要的商业合作伙伴。</div><a href="https://www.nytimes.com/2026/11/11/business/dealbook/anthropic-ipo-nvidia.html" class="read-link">→ 查看原文</a></div></details>
+  
 </article></div>
 </section>
       
@@ -1174,7 +1185,7 @@ function shareCard(btn) {
     
     <span class="sec-count">6 条</span>
   </div>
-  
+  <details class="news-category-links"><summary>今日选读已收录 1 条</summary><ul><li><a href="#card-9409597f8da658f8f123">北京举行大会纪念孙中山诞辰160周年 习近平发表讲话 <span aria-hidden="true">↑</span></a></li></ul></details>
   <div class="news-grid"><article class="news-card" id="card-9e09377087bcc7c3f14b" data-id="9e09377087bcc7c3f14b" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">中国—白俄罗斯大学联盟第四次全体大会举行</div>
   
@@ -1184,12 +1195,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">21小时前</span>
+    <span class="pub-time">11-11 19:54</span>
     <button class="share-btn" title="复制分享" data-text="中国—白俄罗斯大学联盟第四次全体大会举行" data-link="https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/moe_1485/202611/t20261111_1457950.html" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:df5fc0c7348a406935eb62c9&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;中国—白俄罗斯大学联盟第四次全体大会举行&quot;,&quot;url&quot;:&quot;https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/moe_1485/202611/t20261111_1457950.html&quot;,&quot;one_liner&quot;:&quot;11月11日，中国—白俄罗斯大学联盟第四次全体大会在上海举行。 教育部部长怀进鹏、白俄罗斯教育部部长伊万涅茨致辞。 双方高校就人才培养、联合科研达成多项共识。&quot;,&quot;category&quot;:&quot;教育部工作动态&quot;,&quot;published&quot;:&quot;2026-11-11T11:54:00Z&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">11月11日，中国—白俄罗斯大学联盟第四次全体大会在上海举行。 教育部部长怀进鹏、白俄罗斯教育部部长伊万涅茨致辞。 双方高校就人才培养、联合科研达成多项共识。</div><a href="https://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/moe_1485/202611/t20261111_1457950.html" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-1a591529420b041dc183" data-id="1a591529420b041dc183" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">可注射水凝胶内镜微创修复胃肠瘘研究获进展</div>
   
@@ -1205,6 +1217,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">中国科学院过程工程研究所受蛞蝓黏液启发，研发出热响应型水凝胶密封剂，实现胃肠瘘内镜下注射与原位封堵，并在巴马猪活体模型中验证了修复效果。</div><a href="https://www.cas.cn/syky/202611/t20261109_5123747.shtml" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-8a58cc4669b8b61eddae" data-id="8a58cc4669b8b61eddae" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">2026年10月份工业生产者出厂价格同比上涨5.7% 环比上涨0.7%</div>
   
@@ -1220,21 +1233,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">2026年10月，全国工业生产者出厂价格同比上涨5.7%，环比上涨0.7%； 购进价格同比上涨7.9%。 1—10月平均出厂价格同比上涨2.7%。</div><a href="https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965794.html" class="read-link">→ 查看原文</a></div></details>
-</article><article class="news-card" id="card-9409597f8da658f8f123" data-id="9409597f8da658f8f123" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
-  <div class="card-title">北京举行大会纪念孙中山诞辰160周年 习近平发表讲话</div>
   
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#0f766e;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0f766e18;border-radius:999px;padding:1px 7px;">🇭🇰&thinsp;RTHK 本地</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
-    <button class="share-btn" title="复制分享" data-text="北京举行大会纪念孙中山诞辰160周年 习近平发表讲话" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877495-20261112.htm" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:dab0a453f45107007464291a&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;北京举行大会纪念孙中山诞辰160周年 习近平发表讲话&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877495-20261112.htm&quot;,&quot;one_liner&quot;:&quot;纪念孙中山诞辰160周年大会在京举行。 据央视报道，习近平出席并发表重要讲话，李强、赵乐际、王沪宁、蔡奇、丁薛祥、李希出席。&quot;,&quot;category&quot;:&quot;RTHK 本地&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 10:21:16 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">纪念孙中山诞辰160周年大会在京举行。 据央视报道，习近平出席并发表重要讲话，李强、赵乐际、王沪宁、蔡奇、丁薛祥、李希出席。</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877495-20261112.htm" class="read-link">→ 查看原文</a></div></details>
 </article><article class="news-card" id="card-ce3dc64e971f893d46dd" data-id="ce3dc64e971f893d46dd" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">香港廉署起诉启德医院分包商工头 涉受贿约7.5万元</div>
   
@@ -1244,12 +1243,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">11小时前</span>
     <button class="share-btn" title="复制分享" data-text="香港廉署起诉启德医院分包商工头 涉受贿约7.5万元" data-link="https://news.rthk.hk/rthk/ch/component/k2/1877493-20261112.htm" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e8f00cf5e66b2b59675751d4&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;香港廉署起诉启德医院分包商工头 涉受贿约7.5万元&quot;,&quot;url&quot;:&quot;https://news.rthk.hk/rthk/ch/component/k2/1877493-20261112.htm&quot;,&quot;one_liner&quot;:&quot;香港廉署起诉启德医院项目一分包商工头，指其涉嫌向5名电工索贿受贿共75100港元以协助获聘，控其10项代理人接受利益罪。&quot;,&quot;category&quot;:&quot;RTHK 本地&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 10:13:48 +0800&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">香港廉署起诉启德医院项目一分包商工头，指其涉嫌向5名电工索贿受贿共75100港元以协助获聘，控其10项代理人接受利益罪。</div><a href="https://news.rthk.hk/rthk/ch/component/k2/1877493-20261112.htm" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-2d32bb2b740fbd1f18ba" data-id="2d32bb2b740fbd1f18ba" tabindex="-1" style="border-left:3px solid #8a1212;scroll-margin-top:80px;">
   <div class="card-title">人社部推出第三批131场秋季专场就业服务活动</div>
   
@@ -1265,6 +1265,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">人社部秋招专场推出第三批131场就业服务活动，包含87场专场招聘会、3场巡回招聘、32场直播带岗和9场宣讲指导，面向生物医药、新能源等重点行业展开。</div><a href="https://www.chinanews.com.cn/edu/2026/11-11/10730394.shtml" class="read-link">→ 查看原文</a></div></details>
+  
 </article></div>
 </section>
       
@@ -1289,7 +1290,8 @@ function shareCard(btn) {
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:e24137ce86d7c7f1b2ae5df8&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;蒂姆·彼得斯逝世&quot;,&quot;url&quot;:&quot;https://discuss.python.org/t/in-memoriam-tim-peters-1952-2026/110028&quot;,&quot;one_liner&quot;:&quot;据Reddit论坛Python板块消息，著名程序员蒂姆·彼得斯（Tim Peters）逝世。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 07:03:17 GMT&quot;,&quot;reading_excerpt&quot;:&quot;据Reddit论坛Python板块消息，著名程序员蒂姆·彼得斯（Tim Peters）逝世。&quot;,&quot;reading_source&quot;:&quot;Hacker News 条目正文 · 摘录&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50450488&quot;,&quot;title_en&quot;:&quot;Tim Peters has died&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">据Reddit论坛Python板块消息，著名程序员蒂姆·彼得斯（Tim Peters）逝世。</p><p class="news-excerpt-label">依据 · Hacker News 条目正文 · 摘录</p><p class="news-excerpt-label">HN · 1154 积分 · 129 条评论</p><div class="community-source-links"><a href="https://discuss.python.org/t/in-memoriam-tim-peters-1952-2026/110028" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50450488" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">据Reddit论坛Python板块消息，著名程序员蒂姆·彼得斯（Tim Peters）逝世。</p><p class="news-excerpt-label">依据 · Hacker News 条目正文 · 摘录</p><p class="news-excerpt-label">HN · 1279 积分 · 144 条评论</p><div class="community-source-links"><a href="https://discuss.python.org/t/in-memoriam-tim-peters-1952-2026/110028" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50450488" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  
 </article><article class="news-card" id="card-d16851fcfbfe53a70350" data-id="d16851fcfbfe53a70350" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">我的AI智能体发现了一处未标注的玛雅遗址？</div>
   
@@ -1299,12 +1301,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">21小时前</span>
+    <span class="pub-time">11-11 20:05</span>
     <button class="share-btn" title="复制分享" data-text="我的AI智能体发现了一处未标注的玛雅遗址？" data-link="https://pietromiotti.com/latest/maya-site" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:c8dde4086f9ad8bc8df04dac&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;我的AI智能体发现了一处未标注的玛雅遗址？&quot;,&quot;url&quot;:&quot;https://pietromiotti.com/latest/maya-site&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 12:05:22 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50452455&quot;,&quot;title_en&quot;:&quot;My AI agents found an unmapped Maya site?&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 981 积分 · 358 条评论</p><div class="community-source-links"><a href="https://pietromiotti.com/latest/maya-site" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50452455" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 1009 积分 · 369 条评论</p><div class="community-source-links"><a href="https://pietromiotti.com/latest/maya-site" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50452455" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  
 </article><article class="news-card" id="card-ec513d46400722455215" data-id="ec513d46400722455215" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">亚马逊云科技推出AWS模拟器</div>
   
@@ -1314,27 +1317,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">14小时前</span>
+    <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="亚马逊云科技推出AWS模拟器" data-link="https://github.com/aws/aws-emulator" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:78b8986836f7bb24ddaa17fd&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;亚马逊云科技推出AWS模拟器&quot;,&quot;url&quot;:&quot;https://github.com/aws/aws-emulator&quot;,&quot;one_liner&quot;:&quot;亚马逊云科技发布关于自主AI智能体技术及AWS模拟器的相关技术说明。&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 18:21:38 GMT&quot;,&quot;reading_excerpt&quot;:&quot;亚马逊云科技发布关于自主AI智能体技术及AWS模拟器的相关技术说明。&quot;,&quot;reading_source&quot;:&quot;来源摘要 · 中文译文&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50456631&quot;,&quot;title_en&quot;:&quot;AWS emulator&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">亚马逊云科技发布关于自主AI智能体技术及AWS模拟器的相关技术说明。</p><p class="news-excerpt-label">依据 · 来源摘要 · 中文译文</p><p class="news-excerpt-label">HN · 828 积分 · 232 条评论</p><div class="community-source-links"><a href="https://github.com/aws/aws-emulator" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50456631" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
-</article><article class="news-card" id="card-6e4c62a72521eadccfdb" data-id="6e4c62a72521eadccfdb" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
-  <div class="card-title">美国联合航空禁止AI智能体代旅客预订航班</div>
+  <details class="card-expand community-quickread"><summary>中文速读</summary><div class="card-expand-body"><p class="community-preview-text">亚马逊云科技发布关于自主AI智能体技术及AWS模拟器的相关技术说明。</p><p class="news-excerpt-label">依据 · 来源摘要 · 中文译文</p><p class="news-excerpt-label">HN · 884 积分 · 247 条评论</p><div class="community-source-links"><a href="https://github.com/aws/aws-emulator" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50456631" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
   
-  <div class="card-meta">
-    
-    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
-    
-    
-    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">11小时前</span>
-    <button class="share-btn" title="复制分享" data-text="美国联合航空禁止AI智能体代旅客预订航班" data-link="https://www.cbsnews.com/news/united-airlines-bans-ai-agents-booking-flights/" onclick="shareCard(this)">🔗</button>
-    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:5518ef5f75c82c68c0270750&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;美国联合航空禁止AI智能体代旅客预订航班&quot;,&quot;url&quot;:&quot;https://www.cbsnews.com/news/united-airlines-bans-ai-agents-booking-flights/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 21:24:35 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50458900&quot;,&quot;title_en&quot;:&quot;United Airlines bans AI agents from booking flights on behalf of travelers&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
-  </div>
-  
-  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 543 积分 · 529 条评论</p><div class="community-source-links"><a href="https://www.cbsnews.com/news/united-airlines-bans-ai-agents-booking-flights/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50458900" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
 </article><article class="news-card" id="card-ed7daccdb0d30ec7cbed" data-id="ed7daccdb0d30ec7cbed" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">虚假烟雾警报险些淹没简街资本在纽约市唯一的数据中心</div>
   
@@ -1344,12 +1333,29 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">16小时前</span>
+    <span class="pub-time">20小时前</span>
     <button class="share-btn" title="复制分享" data-text="虚假烟雾警报险些淹没简街资本在纽约市唯一的数据中心" data-link="https://michael.bacarella.com/2026/11/10/false-smoke-alarm-jane-street-datacenter/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:1d87023686021195eef835e1&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;虚假烟雾警报险些淹没简街资本在纽约市唯一的数据中心&quot;,&quot;url&quot;:&quot;https://michael.bacarella.com/2026/11/10/false-smoke-alarm-jane-street-datacenter/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 16:38:44 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50455394&quot;,&quot;title_en&quot;:&quot;A false smoke alarm almost drowned Jane Street&#x27;s only NYC datacenter&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 483 积分 · 236 条评论</p><div class="community-source-links"><a href="https://michael.bacarella.com/2026/11/10/false-smoke-alarm-jane-street-datacenter/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50455394" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 518 积分 · 248 条评论</p><div class="community-source-links"><a href="https://michael.bacarella.com/2026/11/10/false-smoke-alarm-jane-street-datacenter/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50455394" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  
+</article><article class="news-card" id="card-4c4d538bdf3ee46e7675" data-id="4c4d538bdf3ee46e7675" tabindex="-1" style="border-left:3px solid #64748b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
+  <div class="card-title">93%的油漆喷溅是有效的Perl程序（2019）</div>
+  
+  <div class="card-meta">
+    
+    <span style="font-size:10px;color:#e8682a;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#e8682a18;border-radius:999px;padding:1px 7px;">💬&thinsp;Hacker News</span>
+    
+    
+    <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
+    <span class="pub-time">14小时前</span>
+    <button class="share-btn" title="复制分享" data-text="93%的油漆喷溅是有效的Perl程序（2019）" data-link="https://www.mcmillen.dev/sigbovik/" onclick="shareCard(this)">🔗</button>
+    <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f447363cc2876499242a000f&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;93%的油漆喷溅是有效的Perl程序（2019）&quot;,&quot;url&quot;:&quot;https://www.mcmillen.dev/sigbovik/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 22:34:23 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50459745&quot;,&quot;title_en&quot;:&quot;93% of paint splatters are valid Perl programs (2019)&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
+  </div>
+  
+  <details class="card-expand community-quickread"><summary>查看出处</summary><div class="card-expand-body"><p class="news-attribution-note">暂未取得可核对的摘要，先保留标题与出处。</p><p class="news-excerpt-label">HN · 484 积分 · 60 条评论</p><div class="community-source-links"><a href="https://www.mcmillen.dev/sigbovik/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50459745" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  
 </article><article class="news-card" id="card-5918552392cdab5c7d8c" data-id="5918552392cdab5c7d8c" tabindex="-1" style="border-left:3px solid #1e293b;border-right:1px solid #c8bfb040;scroll-margin-top:80px;">
   <div class="card-title">谷歌发布Gemini Decisions API</div>
   
@@ -1359,12 +1365,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">14小时前</span>
+    <span class="pub-time">18小时前</span>
     <button class="share-btn" title="复制分享" data-text="谷歌发布Gemini Decisions API" data-link="https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:c06fca3b9549fb95708df0f2&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;谷歌发布Gemini Decisions API&quot;,&quot;url&quot;:&quot;https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/&quot;,&quot;one_liner&quot;:&quot;&quot;,&quot;category&quot;:&quot;Hacker News&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 18:32:42 GMT&quot;,&quot;reading_excerpt&quot;:&quot;&quot;,&quot;reading_source&quot;:&quot;&quot;,&quot;discussion_url&quot;:&quot;https://news.ycombinator.com/item?id=50456791&quot;,&quot;title_en&quot;:&quot;Gemini Decisions API&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand community-quickread"><summary>摘要与出处</summary><div class="card-expand-body"><p class="community-preview-text">Nov 11, 2026 Introducing the Gemini Decisions API, powered by our new Gemini Decision 1 model.</p><p class="news-excerpt-label">依据 · 公开原文 · 摘录</p><p class="news-excerpt-label">HN · 417 积分 · 125 条评论</p><div class="community-source-links"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50456791" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  <details class="card-expand community-quickread"><summary>摘要与出处</summary><div class="card-expand-body"><p class="community-preview-text">Nov 11, 2026 Introducing the Gemini Decisions API, powered by our new Gemini Decision 1 model.</p><p class="news-excerpt-label">依据 · 公开原文 · 摘录</p><p class="news-excerpt-label">HN · 468 积分 · 143 条评论</p><div class="community-source-links"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/" class="read-link" target="_blank" rel="noopener">查看原文 ↗</a><a href="https://news.ycombinator.com/item?id=50456791" class="read-link" target="_blank" rel="noopener">查看讨论 ↗</a></div></div></details>
+  
 </article></div>
 </section>
       
@@ -1384,12 +1391,13 @@ function shareCard(btn) {
     <span title="按媒体家族计数；多篇报道不等于独立核实" style="font-size:9px;font-family:sans-serif;color:#15803d;font-weight:600;">多媒体报道 · 3</span>
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">18小时前</span>
+    <span class="pub-time">22小时前</span>
     <button class="share-btn" title="复制分享" data-text="阿根廷一名74岁绑架犯从阳台索降逃脱软禁" data-link="https://www.bbc.co.uk/news/articles/c933gn6710lyo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:f6f2c356227b45bce379bfb2&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;阿根廷一名74岁绑架犯从阳台索降逃脱软禁&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/c933gn6710lyo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;马克思主义游击组织“红色旅”前成员莱昂纳多·贝尔图拉齐原定即将被引渡回母国意大利。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Wed, 11 Nov 2026 14:56:11 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文 · 2篇延伸报道</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">马克思主义游击组织“红色旅”前成员莱昂纳多·贝尔图拉齐原定即将被引渡回母国意大利。</div><div class="related-row">· <span style="font-size:9px;color:#065f46;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#065f4618;border-radius:999px;padding:1px 7px;">🇶🇦&thinsp;Al Jazeera</span> <span style="font-size:9px;color:#005689;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#00568918;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;The Guardian</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><ul class="news-related-links"><li><a href="https://www.aljazeera.com/news/2026/11/12/former-italian-red-brigades-member-escapes-house-arrest-in-argentina?traffic_source=rss" target="_blank" rel="noopener">Al Jazeera：Former Italian Red Brigades member escapes house arrest in Argentina ↗</a></li><li><a href="https://www.theguardian.com/world/2026/nov/11/red-brigades-leonardo-bertulazzi-escapes-house-arrest-argentina" target="_blank" rel="noopener">The Guardian：Ex-member of radical Marxist group scales balcony, escapes house arrest in Argentina ↗</a></li></ul><a href="https://www.bbc.co.uk/news/articles/c933gn6710lyo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文 · 2篇延伸报道</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">马克思主义游击组织“红色旅”前成员莱昂纳多·贝尔图拉齐原定即将被引渡回母国意大利。</div><div class="related-row">· <span style="font-size:9px;color:#065f46;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#065f4618;border-radius:999px;padding:1px 7px;">🇶🇦&thinsp;Al Jazeera</span> <span style="font-size:9px;color:#005689;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#00568918;border-radius:999px;padding:1px 7px;">🇬🇧&thinsp;The Guardian</span><span style="display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;"><span style="font-size:8px;background:#d9770622;color:#d97706;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">中东</span><span style="font-size:8px;background:#1d4ed822;color:#1d4ed8;border-radius:2px;padding:1px 5px;font-family:sans-serif;font-weight:600;white-space:nowrap;">西方</span></span></div><ul class="news-related-links"><li class="news-related-report" id="card-4ee92572ffb1cfa5ac8d-source-2eb74b80327dc1c77538" data-published-item="{&quot;id&quot;:&quot;article:c8aaf669d64415167e63be3a&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;url&quot;:&quot;https://www.aljazeera.com/news/2026/11/12/former-italian-red-brigades-member-escapes-house-arrest-in-argentina?traffic_source=rss&quot;,&quot;title_zh&quot;:&quot;Former Italian Red Brigades member escapes house arrest in Argentina&quot;,&quot;title_en&quot;:&quot;&quot;,&quot;source&quot;:&quot;Al Jazeera&quot;,&quot;one_liner&quot;:&quot;Bertulazzi used a rope and harness to climb down from a fifth-floor apartment and evade authorities in Argentina.&quot;}"><a class="read-link" href="https://www.aljazeera.com/news/2026/11/12/former-italian-red-brigades-member-escapes-house-arrest-in-argentina?traffic_source=rss" target="_blank" rel="noopener">Al Jazeera：<span class="related-report-title">Former Italian Red Brigades member escapes house arrest in Argentina</span> ↗</a></li><li class="news-related-report" id="card-4ee92572ffb1cfa5ac8d-source-10ee40cfc3427c8b207f" data-published-item="{&quot;id&quot;:&quot;article:7ba0cb86cd02fda00475d090&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;url&quot;:&quot;https://www.theguardian.com/world/2026/nov/11/red-brigades-leonardo-bertulazzi-escapes-house-arrest-argentina&quot;,&quot;title_zh&quot;:&quot;Ex-member of radical Marxist group scales balcony, escapes house arrest in Argentina&quot;,&quot;title_en&quot;:&quot;&quot;,&quot;source&quot;:&quot;The Guardian&quot;,&quot;one_liner&quot;:&quot;Leonardo Bertulazzi, 74, awaiting extradition to Italy, reportedly used harness to flee custodyA 74-year-old former member of Italy’s radical Marxist group the Red Brigades has escaped from house arre&quot;}"><a class="read-link" href="https://www.theguardian.com/world/2026/nov/11/red-brigades-leonardo-bertulazzi-escapes-house-arrest-argentina" target="_blank" rel="noopener">The Guardian：<span class="related-report-title">Ex-member of radical Marxist group scales balcony, escapes house arrest in Argentina</span> ↗</a></li></ul><a href="https://www.bbc.co.uk/news/articles/c933gn6710lyo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-23ea5fc79c90e95d0180" data-id="23ea5fc79c90e95d0180" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">澳大利亚少年在丛林失踪六天后获救</div>
   
@@ -1399,12 +1407,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">10小时前</span>
     <button class="share-btn" title="复制分享" data-text="澳大利亚少年在丛林失踪六天后获救" data-link="https://www.bbc.co.uk/news/articles/ckvg25zmppglo?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:831fcebeb3f81a493d039708&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;澳大利亚少年在丛林失踪六天后获救&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/articles/ckvg25zmppglo?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;少年母亲打趣称他将被“终身禁足”，以后“再也不准离开家门”。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 02:40:18 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">少年母亲打趣称他将被“终身禁足”，以后“再也不准离开家门”。</div><a href="https://www.bbc.co.uk/news/articles/ckvg25zmppglo?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-4ab92adf825d87908c1f" data-id="4ab92adf825d87908c1f" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">纽约一建筑倒塌导致1人死亡，12人受伤</div>
   
@@ -1414,12 +1423,13 @@ function shareCard(btn) {
     
     
     <span style="font-size:9px;font-weight:700;color:#059669;letter-spacing:0.5px;font-family:sans-serif;">NEW</span>
-    <span class="pub-time">6小时前</span>
+    <span class="pub-time">10小时前</span>
     <button class="share-btn" title="复制分享" data-text="纽约一建筑倒塌导致1人死亡，12人受伤" data-link="https://www.bbc.co.uk/news/videos/c60rkwjj7x7go?at_medium=RSS&amp;at_campaign=rss" onclick="shareCard(this)">🔗</button>
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:ba0f48ae267121daa5066875&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;纽约一建筑倒塌导致1人死亡，12人受伤&quot;,&quot;url&quot;:&quot;https://www.bbc.co.uk/news/videos/c60rkwjj7x7go?at_medium=RSS&amp;at_campaign=rss&quot;,&quot;one_liner&quot;:&quot;救援人员正在布鲁克林搜寻可能被困在三层建筑废墟下的人员。&quot;,&quot;category&quot;:&quot;BBC 国际&quot;,&quot;published&quot;:&quot;Thu, 12 Nov 2026 02:33:12 GMT&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">救援人员正在布鲁克林搜寻可能被困在三层建筑废墟下的人员。</div><a href="https://www.bbc.co.uk/news/videos/c60rkwjj7x7go?at_medium=RSS&amp;at_campaign=rss" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-a4d10bfd966705dcd828" data-id="a4d10bfd966705dcd828" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">尼米兹号航母组织新老海军飞行员开展训练</div>
   
@@ -1435,6 +1445,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">尼米兹号航空母舰完成了其在东海岸的首次海上训练任务，为新老海军飞行员进行航母资质认证提供支持。</div><a href="https://www.war.gov/News/News-Stories/Article/Article/4646092/uss-nimitz-trains-new-returning-naval-aviators/" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-c27fc01df0e024084e81" data-id="c27fc01df0e024084e81" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">赫格塞斯与波兰对等官员宣布有意加强军事合作</div>
   
@@ -1450,6 +1461,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">美国战争部长皮特·赫格塞斯在五角大楼的双边会晤中，接待了波兰副总理兼国防部长瓦迪斯瓦夫·科西尼亚克-卡梅什。</div><a href="https://www.war.gov/News/News-Stories/Article/Article/4646088/hegseth-polish-counterpart-announce-intent-to-boost-military-cooperation/" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-31b25fb5509c1fd82966" data-id="31b25fb5509c1fd82966" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">赫格塞斯：因政策分歧弹劾会向对手发出错误信号</div>
   
@@ -1465,6 +1477,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">面临弹劾威胁的美国战争部长皮特·赫格塞斯在五角大楼简报会上，详细列举了其任内成功开展的一系列军事行动。</div><a href="https://www.war.gov/News/News-Stories/Article/Article/4645996/hegseth-impeachment-over-policy-disagreement-sends-wrong-signal-to-adversaries/" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-84ccb6df04d6a7c71c7d" data-id="84ccb6df04d6a7c71c7d" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">The Download：佩洛西继任者瞄准AI，数据中心面临电荒</div>
   
@@ -1479,7 +1492,8 @@ function shareCard(btn) {
     <span class="jd-save-wrap"><button type="button" class="jd-save" aria-pressed="false" data-save="{&quot;id&quot;:&quot;article:4c3c56a1a61aaf31d560fbc1&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;title_zh&quot;:&quot;The Download：佩洛西继任者瞄准AI，数据中心面临电荒&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/10/1148150/the-download-pelosi-successor-ai-regulation-data-center-backlash/&quot;,&quot;one_liner&quot;:&quot;这是今日的《The Download》工作日科技通讯。 南希·佩洛西的继任者正准备对人工智能实施监管。&quot;,&quot;category&quot;:&quot;MIT Tech Review&quot;,&quot;published&quot;:&quot;Tue, 10 Nov 2026 13:10:00 +0000&quot;}"><span aria-hidden="true">☆</span> 收藏</button><span class="jd-save-note" aria-live="polite"></span></span>
   </div>
   
-  <details class="card-expand"><summary>摘要与原文 · 1篇延伸报道</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">这是今日的《The Download》工作日科技通讯。 南希·佩洛西的继任者正准备对人工智能实施监管。</div><div class="related-row">· <span style="font-size:9px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span></div><ul class="news-related-links"><li><a href="https://www.technologyreview.com/2026/11/11/1148424/the-download-preserving-minds-open-ai-risks/" target="_blank" rel="noopener">MIT Tech Review：The Download: preserving minds and weighing open AI risks ↗</a></li></ul><a href="https://www.technologyreview.com/2026/11/10/1148150/the-download-pelosi-successor-ai-regulation-data-center-backlash/" class="read-link">→ 查看原文</a></div></details>
+  <details class="card-expand"><summary>摘要与原文 · 1篇延伸报道</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">这是今日的《The Download》工作日科技通讯。 南希·佩洛西的继任者正准备对人工智能实施监管。</div><div class="related-row">· <span style="font-size:9px;color:#0d6830;font-family:sans-serif;font-weight:600;white-space:nowrap;letter-spacing:0.2px;background:#0d683018;border-radius:999px;padding:1px 7px;">🇺🇸&thinsp;MIT Tech Review</span></div><ul class="news-related-links"><li class="news-related-report" id="card-84ccb6df04d6a7c71c7d-source-6b1b7c9e39fa81ec79d5" data-published-item="{&quot;id&quot;:&quot;article:2b5f528d3b67d19cafdc5dd1&quot;,&quot;kind&quot;:&quot;article&quot;,&quot;url&quot;:&quot;https://www.technologyreview.com/2026/11/11/1148424/the-download-preserving-minds-open-ai-risks/&quot;,&quot;title_zh&quot;:&quot;The Download: preserving minds and weighing open AI risks&quot;,&quot;title_en&quot;:&quot;&quot;,&quot;source&quot;:&quot;MIT Tech Review&quot;,&quot;one_liner&quot;:&quot;This is today&amp;#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&amp;#8217;s going on in the world of technology. Six wild ideas for perpetuating your mind As we ag&quot;}"><a class="read-link" href="https://www.technologyreview.com/2026/11/11/1148424/the-download-preserving-minds-open-ai-risks/" target="_blank" rel="noopener">MIT Tech Review：<span class="related-report-title">The Download: preserving minds and weighing open AI risks</span> ↗</a></li></ul><a href="https://www.technologyreview.com/2026/11/10/1148150/the-download-pelosi-successor-ai-regulation-data-center-backlash/" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-5939dbe4b2b537998330" data-id="5939dbe4b2b537998330" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">亚里士多德的心理学思想</div>
   
@@ -1495,6 +1509,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">该词条由克里斯托弗·希尔兹完成修订，主要更新了正文与参考文献等内容，系统梳理了亚里士多德关于灵魂与心智的核心哲学观点。</div><a href="https://plato.stanford.edu/entries/aristotle-psychology/" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-141d4372944a752e9b49" data-id="141d4372944a752e9b49" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">为何向乌克兰提供“第5条式保障”几乎毫无意义</div>
   
@@ -1510,6 +1525,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">作者观点摘要 · AI 翻译</p><div class="card-desc">乌克兰应放弃该想法，转而专注于争取伙伴国承诺对其武装部队实施长期的结构化支持项目。</div><a href="https://www.rusi.org/explore-our-research/publications/commentary/why-article-5-style-guarantee-ukraine-makes-little-sense" class="read-link">→ 查看原文</a></div></details>
+  
 </article><article class="news-card" id="card-7a912339f3f48a49043e" data-id="7a912339f3f48a49043e" tabindex="-1" style="border-left:3px solid #64748b;scroll-margin-top:80px;">
   <div class="card-title">双刃剑：人工智能在网络安全攻防中的应用</div>
   
@@ -1525,6 +1541,7 @@ function shareCard(btn) {
   </div>
   
   <details class="card-expand"><summary>摘要与原文</summary><div class="card-expand-body"><p class="news-excerpt-label">报道摘要 · AI 翻译</p><div class="card-desc">本文探讨了网络攻击者与防御安全团队如何利用人工智能工具。</div><a href="https://www.rusi.org/news-and-comment/video-commentary/double-edged-sword-ai-cybersecurity-offense-and-defence" class="read-link">→ 查看原文</a></div></details>
+  
 </article></div>
 </section>
       
@@ -1551,7 +1568,7 @@ function shareCard(btn) {
   <a href="https://arxiv.org/abs/2611.08373" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">SLA：在持续预训练与下游训练中共同注入空间对齐监督</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2610.33127" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">Beyond Visible Speakers：结合上下文与说话人注册的主动说话人检测</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a><a href="https://arxiv.org/abs/2610.34707" target="_blank" rel="noopener" class="ai-paper-row"><span class="ai-paper-title">S2SND-v2：用说话人适配的 w2v-BERT 2.0 统一在线与离线说话人日志</span><span class="ai-paper-icon" aria-hidden="true">↗</span></a>
 </div>
   <!-- 视角雷达 -->
-  <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">本期来源地区 · 按报道计数</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">24</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:20%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">5</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#334155;min-width:48px;white-space:nowrap;">美国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:12%;background:#334155;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#d97706;min-width:48px;white-space:nowrap;">中东</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:8%;background:#d97706;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#64748b;min-width:48px;white-space:nowrap;">香港</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:8%;background:#64748b;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#475569;min-width:48px;white-space:nowrap;">英国智库</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:8%;background:#475569;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#0891b2;min-width:48px;white-space:nowrap;">亚洲</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:4%;background:#0891b2;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">学术</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:4%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div></div></div>
+  <div class="sidebar-block"><div class="heat-header" style="background:#1a1612;border-bottom:1px solid rgba(184,148,14,.2);">本期来源地区 · 按报道计数</div><div style="padding:6px 0 4px;"><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#1d4ed8;min-width:48px;white-space:nowrap;">西方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:100%;background:#1d4ed8;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">26</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#dc2626;min-width:48px;white-space:nowrap;">中国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:15%;background:#dc2626;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">4</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#d97706;min-width:48px;white-space:nowrap;">中东</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:11%;background:#d97706;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#334155;min-width:48px;white-space:nowrap;">美国官方</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:11%;background:#334155;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">3</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#64748b;min-width:48px;white-space:nowrap;">香港</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#64748b;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#475569;min-width:48px;white-space:nowrap;">英国智库</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:7%;background:#475569;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">2</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#0891b2;min-width:48px;white-space:nowrap;">亚洲</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#0891b2;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div><div style="display:flex;align-items:center;gap:7px;padding:5px 12px;"><span style="font-size:9px;font-family:sans-serif;font-weight:700;color:#7c3aed;min-width:48px;white-space:nowrap;">学术</span><div style="flex:1;background:rgba(0,0,0,.07);border-radius:2px;height:4px;"><div style="width:3%;background:#7c3aed;height:4px;border-radius:2px;"></div></div><span style="font-size:9px;color:#94a3b8;font-family:monospace;min-width:18px;text-align:right;">1</span></div></div></div>
   <!-- 经济日历 -->
   
   <!-- 持续追踪 -->
@@ -1564,7 +1581,7 @@ function shareCard(btn) {
   <div class="footer">
     <div class="footer-sources">
       <strong>本期展示来源（含延伸报道）</strong>：
-      Al Jazeera · BBC 国际 · BBC 财经 · Bloomberg · Defense.gov · FT · Hacker News · MIT Tech Review · NYT 财经 · RTHK 本地 · RUSI · SCMP · Stanford SEP · TechCrunch · The Guardian · 中新网教育 · 中科院科研进展 · 人民网高层动态 · 国家统计局发布 · 教育部工作动态
+      Al Jazeera · BBC 国际 · BBC 财经 · Bloomberg · CNBC · Defense.gov · FT · Hacker News · MIT Tech Review · NYT 财经 · RTHK 本地 · RUSI · SCMP · Stanford SEP · TechCrunch · The Guardian · 中新网教育 · 中科院科研进展 · 国家统计局发布 · 教育部工作动态
     </div>
     <div class="footer-note">
       简报 Jae Daily · AI 辅助整理 · 2026年11月12日 ·
@@ -1605,7 +1622,7 @@ function shareCard(btn) {
   window.addEventListener('pageshow',sync);
   bind();
 })();
-</script><script id="reading-route-data" type="application/json">{"edition":"2026-11-12","tasks":[{"id":"news:e6f4420616b02b9a3c6f","title":"台湾将派宏碁创办人施振荣出席深圳APEC并呼吁“对等”","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261112.html#card-e6f4420616b02b9a3c6f"},{"id":"paper:paper-2611-08373:content-97930e9f30e4","title":"SLA：在持续预训练与下游训练中共同注入空间对齐监督","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261112-42f988f4eb73.html#paper-2611-08373"},{"id":"learn:20261112:34fe15a2e277","title":"数据并行 DDP","kind":"learn","label":"基础课完整主线","minutes":15,"url":"/learn-20261112.html#lesson-core"},{"id":"health:20261112:health-break-sitting","title":"久坐：把走动绑到工作节点","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261112.html#health-today"}],"routes":[{"budget":10,"ids":["news:e6f4420616b02b9a3c6f","paper:paper-2611-08373:content-97930e9f30e4","health:20261112:health-break-sitting"]},{"budget":20,"ids":["news:e6f4420616b02b9a3c6f","learn:20261112:34fe15a2e277","health:20261112:health-break-sitting"]},{"budget":30,"ids":["news:e6f4420616b02b9a3c6f","paper:paper-2611-08373:content-97930e9f30e4","learn:20261112:34fe15a2e277","health:20261112:health-break-sitting"]}]}</script><script>
+</script><script id="reading-route-data" type="application/json">{"edition":"2026-11-12","tasks":[{"id":"news:e6f4420616b02b9a3c6f","title":"台湾将派宏碁创办人施振荣出席深圳APEC并呼吁“对等”","kind":"news","label":"报道摘要","minutes":2,"url":"/archive/20261112.html#card-e6f4420616b02b9a3c6f"},{"id":"paper:paper-2611-08373:content-97930e9f30e4","title":"SLA：在持续预训练与下游训练中共同注入空间对齐监督","kind":"paper","label":"中文解读速读","minutes":5,"url":"/research-editions/20261112-4a27f0d715a9.html#paper-2611-08373"},{"id":"learn:20261112:34fe15a2e277","title":"数据并行 DDP","kind":"learn","label":"基础课完整主线","minutes":15,"url":"/learn-20261112.html#lesson-core"},{"id":"health:20261112:health-break-sitting","title":"久坐：把走动绑到工作节点","kind":"health","label":"健康要点","minutes":3,"url":"/health-20261112.html#health-today"}],"routes":[{"budget":10,"ids":["news:e6f4420616b02b9a3c6f","paper:paper-2611-08373:content-97930e9f30e4","health:20261112:health-break-sitting"]},{"budget":20,"ids":["news:e6f4420616b02b9a3c6f","learn:20261112:34fe15a2e277","health:20261112:health-break-sitting"]},{"budget":30,"ids":["news:e6f4420616b02b9a3c6f","paper:paper-2611-08373:content-97930e9f30e4","learn:20261112:34fe15a2e277","health:20261112:health-break-sitting"]}]}</script><script>
 (() => {
   const panel = document.getElementById('reading-route');
   const source = document.getElementById('reading-route-data');
